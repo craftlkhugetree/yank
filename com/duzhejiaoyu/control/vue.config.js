@@ -1,0 +1,41 @@
+
+const path = require('path');
+const resolve = dir => {
+  return path.join(__dirname, dir);
+};
+
+module.exports = {
+  publicPath: process.env.NODE_ENV === "production" ? "/lres2022/control/" : "/",
+  outputDir: 'dist',
+  assetsDir: 'static',
+  filenameHashing: true, // false 来关闭文件名哈希
+  lintOnSave: false, // 关闭eslint
+  // 打包时不生成.map文件
+  productionSourceMap: false,
+  devServer: {
+    open: true,
+    // host: '160.255.2.232', //本机ip
+    host: 'localhost',
+    port: 8080,
+    // proxy: {
+    //   '/lres2022': {
+    //     target: 'http://172.20.0.116:11080/', //seat环境
+    //     secure: false,  // https接口为true
+    //     changeOrigin: true
+    //   },
+    // }
+  },
+  // webpack相关配置
+  chainWebpack: (config) => {
+    config.entry.app = ['./src/main.js']
+    config.resolve.alias.set('@', resolve('src'), 'vendor', resolve('src/vendor'))
+    config.plugin('html').tap(args => {
+      args[0].title = '艾思迈读者教育系统'
+      return args
+    })
+  },
+  // 第三方插件配置
+  pluginOptions: {
+
+  }
+}

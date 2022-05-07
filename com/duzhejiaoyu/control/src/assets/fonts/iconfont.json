@@ -1,0 +1,44 @@
+{
+  "id": "3202769",
+  "name": "读者教育",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "27813830",
+      "name": "题库",
+      "font_class": "menu-question",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "16873472",
+      "name": "menu-系统管理",
+      "font_class": "menu-xtgl",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "16873473",
+      "name": "menu-数据",
+      "font_class": "menu-chart",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "27813030",
+      "name": "考试",
+      "font_class": "menu-exam",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "27813031",
+      "name": "资料",
+      "font_class": "menu-train",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    }
+  ]
+}

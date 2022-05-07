@@ -1,0 +1,83 @@
+@import "./reset";
+
+html,
+body {
+    font-size: 28px;
+    font-weight: 400;
+    font-family: PingFang SC, Helvetica Neue, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+}
+
+/* 清除浮动 */
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* 单行省略 */
+.ellipsis {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.navbar-height {
+    height: 88px;
+}
+
+.tabbar-height {
+    height: 120px;
+}
+
+.nav-bar {
+    .van-nav-bar__content {
+        height: 88px;
+    }
+
+    .van-nav-bar__title {
+        font-size: 32px;
+        font-weight: 400;
+        color: #000000;
+        line-height: 45px;
+    }
+}
+
+// 时间线
+.van-steps {
+    .van-step--vertical .van-step__circle {
+        width: 24px;
+        height: 24px;
+        background: #C8D8FD;
+    }
+    .van-step--vertical .van-icon {
+        font-size: 28px;
+    }
+    .van-step--vertical .van-step__line {
+        width: 4px;
+        left: -32px;
+        background: #F3F5F9;
+    }
+}
+
+.orange-btn.van-button--default {
+    color: #ffffff;
+    background: #f68447;
+    border-color: #f68447;
+
+    &:hover,
+    &:focus {
+        background: #e3783f;
+        border-color: #e3783f;
+        color: #ffffff;
+    }
+
+    &.van-button--disabled, &.van-button--disabled:focus, &.van-button--disabled:hover {
+        background: #fac9a5;
+        border-color: #fac9a5;
+        color: #ffffff;
+    }
+}
