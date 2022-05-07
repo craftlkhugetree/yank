@@ -16,6 +16,8 @@ git merge new_branch（将分支 new_branch 合并到 master 分支）
 git svn dcommit（然后将所有已经合并到 master 分支的本地修改提交到 svn）
 
 git update-index --assume-unchanged
+git ls-files -v | grep '^h\ '
+
 git config --list
 
 ssh-keygen -t rsa -C "345823102@qq.com" 
@@ -46,6 +48,11 @@ ctrl + p 打开文件
 
 <style lang="scss" scoped>
 margin-left: calc(50% - 68px);
+
+$height: 70px;
+.main {
+  height: calc(100vh - #{$height});
+}
 
 // img 水平居中
 img {
