@@ -3,10 +3,11 @@ liken 123456    http://160.255.0.64:10086/
 208080338/123 208080337
 读者教育 http://172.20.0.116:11080/lres2022/rest/swagger-ui.html
 白马 http://app.dev.angke.com.cn/bsermipweb/rest/swagger-ui.html
-
+座位预约 svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
+  http://seat.dev.angke.cn/mseat/#/index 手机端
 # Git
 
-git svn clone -r HEAD --username=liken svn://160.255.0.56/01module/lres/03code/lresweb2022/mobile
+git svn clone -r HEAD --username=liken svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
 
 git show（查看上一次修改）
 git svn rebase === git pull
@@ -139,9 +140,7 @@ width: 100%;
 document.getElementsByTagName('html')[0].scrollTop = 0
 
 # regex
-^(?!._localhost)._$
-^(?!._?localhost)._$
-
+^(?!.*(localhost|z.angke.com.cn)).*$
 # vant
 <van-overlay :show="true">
     <div class="loading" @click.stop>
