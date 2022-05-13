@@ -1,25 +1,7 @@
-cancelreason: null
-createtime: "20211027152528"
-endtime: "1700"
-id: "4381c1c38f4244348786854cbffa875d"
-leavenum: 1
-leavetime: "20211027160203"
-leavetype: "1"
-orderdate: "20211027"
-ruleid: "0446261a71894e4e88f742cf6723968d"
-seatid: "bb28b40234454e8791aab6ae4543e7fb"
-seatname: "2"
-sectionid: "35f1cfaee14d4740ac56310e9ba086a8"
-sectionname: "监督举报区间"
-signtime: "20211027152538"
-starttime: "1200"
-status: "1"
-type: 2
-usemoon: null
-usenoon: null
-userid: "208080335"
-username: "王天宇"
 
+ "chrome.exe" --test-type --ignore-certificate-errors
+
+^(?!.*(seat.dev.angke.cn|z.angke.com.cn)).*$
 ^(?!._(localhost|z.angke.com.cn))._$
 body {
 font-family: "SF UI Text", "BlinkMacSystemFont", "Helvetica Neue", "Source Han Sans SC", "Segoe UI", "Roboto", "Microsoft Yahei", sans-serif;
