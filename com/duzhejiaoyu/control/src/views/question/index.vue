@@ -92,7 +92,7 @@
             type="primary"
             size="small"
             icon="el-icon-plus"
-            @click="$router.push('/question/add')"
+            @click="addType"
           >新增</el-button>
           <el-button type="primary" size="small" @click="setBatch">批量设置</el-button>
           <el-button class="bule-border" size="small" @click="deleteBatch">批量删除</el-button>
@@ -238,6 +238,10 @@ export default {
     questionTypeList: state => state.questionTypeList
   }),
   methods: {
+    addType() {
+      this.$router.push({path:'/question/add'});
+      this.$store.commit('setQType', this.questionType);
+    },
     // 下载模板
     downTemplate() {
       let url = `${window.g.url}question/downloadTemplate`
@@ -338,7 +342,7 @@ export default {
                   type: 'success',
                   message: `删除成功！`
                 })
-                this.getTableData()
+                this.getTableData(0, this.pageSize)
               } else {
                 this.$message({
                   showClose: true,
@@ -378,7 +382,7 @@ export default {
                   type: 'success',
                   message: `删除成功！`
                 })
-                this.getTableData()
+                this.getTableData(0, this.pageSize)
               } else {
                 this.$message({
                   showClose: true,

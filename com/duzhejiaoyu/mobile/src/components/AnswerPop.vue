@@ -128,17 +128,17 @@ export default {
       &.active,
       &:hover {
         color: #3a78fc;
-        background: #ebf1fe;
+        background: #EDEEFD;
         border-radius: 50%;
         border: 1px solid #92b4fc;
       }
       &.done {
         color: #ffffff;
-        background: #3a78fc;
+        background: #8289F1;
       }
       &.done-hover {
-        color: #92b4fc;
-        background: #3a78fc;
+        color: #ffffff;
+        background: #8289F1;
       }
       &.wrong {
         background: #FFF1F0;

@@ -43,7 +43,7 @@
       </el-popover>
     </div>
     <div class="tab-box">
-      <span>2598参与 · 1936 合格 / 636 不合格 · 88.8% 通过率</span>
+      <span>{{chosenExam.answerNum || 0}}参与 · {{chosenExam.passNum || 0}} 合格 / {{chosenExam.unpassNum || 0}} 不合格 · {{(chosenExam.passRate || 0) * 100}}% 通过率</span>
       <div class="right-btn">
         <el-select
           v-model="grade"
@@ -144,7 +144,7 @@
         :formatter="common.defaultFormat"
       ></el-table-column>
       <el-table-column prop="campusName" label="校区" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="createTime" label="考试时间" show-overflow-tooltip min-width="140" :formatter="common.timeFormat"></el-table-column>
+      <el-table-column prop="examTime" label="考试时间" show-overflow-tooltip min-width="140" :formatter="common.timeFormat"></el-table-column>
       <el-table-column prop="score" label="考试分数" show-overflow-tooltip></el-table-column>
       <el-table-column prop="isPass" label="考试状态" show-overflow-tooltip>
         <template slot-scope="scope">
@@ -178,7 +178,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { fetchExamList, fetchExamRecords } from '@/api/exam'
+import { fetchExamRecords } from '@/api/exam'
+import { fetchExamList } from '@/api/analysis'
 export default {
   data() {
     return {
@@ -201,7 +202,8 @@ export default {
       currentPage: 1,
       pageSize: 20,
       sort: null,
-      orderBy: null
+      orderBy: null,
+      chosenExam: {}
     }
   },
   computed: mapState({
@@ -214,6 +216,7 @@ export default {
       this.curExamId = item.id
       this.curExamName = item.name
       this.showPopover = false
+      this.chosenExam = item || {};
       this.getTableData(1, this.pageSize)
     },
     // 获取列表
@@ -261,6 +264,7 @@ export default {
           } else {
             this.examList = []
           }
+          this.chosenExam = this.examList[0] || {};
         })
         .catch(err => {
           this.userLoading = false
@@ -275,12 +279,13 @@ export default {
         let curExam = JSON.parse(exam)
         this.curExamId = curExam.id
         this.curExamName = curExam.name
+        this.query = curExam.name
       }
     }
   },
   created() {
-    this.getExamList()
     this.initExam()
+    this.getExamList()
     this.getTableData(this.currentPage, this.pageSize)
     if (this.gradeList.length == 0) {
       this.$store.dispatch('getGradeList')

@@ -65,7 +65,7 @@ let startAjax = function (options) {
                   headers: {
                     // "IDSTGC": getCookie('IDSTGC')
                     IDSTGC:
-                      getCookie("IDSTGC") || "883bc3de0c494ff3878e6a789aa5012b",
+                      getCookie("IDSTGC") || "1aecdd94392244b799479d81dfd3b41c",
                   },
                   data: options.isRep
                     ? options.data
@@ -117,7 +117,7 @@ let exportFile = function (url, isGet, params, fileName, fileType) {
       method: isGet ? "GET" : "POST",
       responseType: "blob",
       headers: {
-        IDSTGC: getCookie("IDSTGC") || "883bc3de0c494ff3878e6a789aa5012b",
+        IDSTGC: getCookie("IDSTGC") || "73a20404f48b4dd49ba9fe9169282a7e",
         // "IDSTGC": getCookie('IDSTGC') || "9bbcf08746984754838e537222e0e6d2"
       },
       data: params,

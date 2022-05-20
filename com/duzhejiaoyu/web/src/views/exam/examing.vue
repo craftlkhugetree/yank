@@ -47,16 +47,18 @@
           :src="img"
           :preview-src-list="curQuestion.photoList"
         ></el-image>
+          <!-- v-if="curTypeIndex=='0'" -->
         <el-radio-group
-          v-if="curTypeIndex=='0'"
+                      v-if="curQuestion.type == '3'"
           v-model="curQuestion.isTrue"
           @change="doneQuestion"
         >
           <el-radio :label="1">对</el-radio>
           <el-radio :label="0">错</el-radio>
         </el-radio-group>
+          <!-- v-else-if="curTypeIndex=='1'" -->
         <el-radio-group
-          v-else-if="curTypeIndex=='1'"
+                  v-else-if="curQuestion.type == '1'"
           v-model="curQuestion.chooseOptionId"
           @change="doneQuestion"
         >

@@ -66,6 +66,7 @@ export default new Vuex.Store({
         value: "3"
       }
     ],
+    qType: '3',
     // 题目类别
     questionTypeList: [{
         label: "判断题",
@@ -115,7 +116,10 @@ export default new Vuex.Store({
     },
     setUserTypeList(state, data) {
       state.userTypeList = data
-    }
+    },
+    setQType(state, data) {
+      state.qType = data
+    },
   },
 
   actions: {

@@ -114,7 +114,7 @@
             <el-col :span="1">{{index + 1}}</el-col>
             <!------------------------------ 判断题 ------------------------------>
             <el-col :span="6">
-              <question-tips ref="judgePool" :data="item.poolData" type="3">
+              <question-tips ref="judgePool" :data="item.poolData" type="3" :multi="editForm.campusIds.length * editForm.usertypeCodes.length">
                 <span style="margin-right:10px;">{{item.modelName}}</span>
               </question-tips>
               <div class="input-number half" style="margin-right:10px;">
@@ -141,7 +141,7 @@
             </el-col>
             <!------------------------------ 单选题 ------------------------------>
             <el-col :span="6">
-              <question-tips ref="singlePool" :data="item.poolData" type="1"></question-tips>
+              <question-tips ref="singlePool" :data="item.poolData" type="1" :multi="editForm.campusIds.length * editForm.usertypeCodes.length"></question-tips>
               <div class="input-number half" style="margin-right:10px;">
                 <el-input-number
                   v-model="item.singleNum"
@@ -166,7 +166,7 @@
             </el-col>
             <!------------------------------ 多选题 ------------------------------>
             <el-col :span="6">
-              <question-tips ref="multiplePool" :data="item.poolData" type="2"></question-tips>
+              <question-tips ref="multiplePool" :data="item.poolData" type="2" :multi="editForm.campusIds.length * editForm.usertypeCodes.length"></question-tips>
               <div class="input-number half" style="margin-right:10px;">
                 <el-input-number
                   v-model="item.multipleNum"
@@ -253,7 +253,10 @@ export default {
       } else {
         return callback()
       }
-    }
+    };
+    const validateContents = (rule, val, callback) => {
+
+    };
     return {
       loading: false,
       editForm: {
@@ -266,7 +269,8 @@ export default {
         ipEnd: null,
         campusIds: [],
         usertypeCodes: [],
-        isOrder: 1
+        isOrder: 1,
+        // contents: this.contents,
       },
       rules: {
         name: [{ required: true, trigger: 'change', message: '请输入考试名称' }],
@@ -275,7 +279,7 @@ export default {
         ipStart: [{ required: true, validator: validateIp, trigger: 'change' }],
         ipEnd: [{ required: true, validator: validateIp, trigger: 'change' }],
         campusIds: [{ required: true, trigger: 'change', message: '请选择适用校区' }],
-        usertypeCodes: [{ required: true, trigger: 'change', message: '请选择适用用户' }]
+        usertypeCodes: [{ required: true, trigger: 'change', message: '请选择适用用户' }],
       },
       detail: {},
       questionLoading: false,
@@ -294,14 +298,22 @@ export default {
         needLearn: 0,
         poolData: []
       },
-      contents: []
+      contents: [],
     }
   },
   computed: mapState({
     moduleList: state => state.moduleList,
     campusList: state => state.campusList,
-    userTypeList: state => state.userTypeList
+    userTypeList: state => state.userTypeList,
+    // newList() {
+    //   return JSON.parse(JSON.stringify(this.contents))
+    // }
   }),
+  // watch: {
+  //   newList() {
+  //     this.editForm.contents = this.contents;
+  //   }
+  // },
   methods: {
     changeIpOpen(val) {
       if(val == 0) {
@@ -313,7 +325,6 @@ export default {
     save() {
       this.$refs.editForm.validate(valid => {
         if (valid) {
-          this.loading = true
           let param = { ...this.editForm }
           param.startDate = this.editForm.examDate[0]
           param.endDate = this.editForm.examDate[1]
@@ -329,6 +340,15 @@ export default {
               param.contents.push(obj)
             }
           })
+          if (!param.contents.length) {
+            this.$message({
+              type: 'warning',
+              message: "没有设置题目！",
+              showClose: true
+            })
+            return
+          }
+          this.loading = true
           saveExam(param)
             .then(res => {
               this.loading = false
@@ -428,16 +448,24 @@ export default {
     debounceContentsPoolData: CommonJs.debounce(function () {
       this.resetContentsPoolData()
     }, 1000),
+    dySet(obj, str, val) {
+      if (obj[str] > val) {
+        this.$set(obj, str, val)
+      }
+    },
     // 重新获取题池数量
     async resetContentsPoolData() {
       for (let i = 0; i < this.contents.length; i++) {
-        let item = this.moduleList[i]
+        let item = this.moduleList[i] || {};
         let poolData = await this.getPoolData(item.id)
         this.contents[i].poolData = poolData
         this.$nextTick(() => {
-          this.contents[i].maxJudgeNum = this.$refs.judgePool[i].minNum
-          this.contents[i].maxSingleNum = this.$refs.singlePool[i].minNum
-          this.contents[i].maxMultipleNum = this.$refs.multiplePool[i].minNum
+          this.contents[i].maxJudgeNum = this.$refs.judgePool[i] && this.$refs.judgePool[i].minNum || 0;
+          this.contents[i].maxSingleNum = this.$refs.singlePool[i] && this.$refs.singlePool[i].minNum || 0
+          this.contents[i].maxMultipleNum = this.$refs.multiplePool[i] && this.$refs.multiplePool[i].minNum || 0;
+          this.dySet(this.contents[i], 'judgeNum', this.$refs.judgePool[i] && this.$refs.judgePool[i].minNum || 0)
+          this.dySet(this.contents[i], 'singleNum', this.$refs.singlePool[i] && this.$refs.singlePool[i].minNum || 0)
+          this.dySet(this.contents[i], 'multipleNum', this.$refs.multiplePool[i] && this.$refs.multiplePool[i].minNum || 0)
         })
       }
     },
@@ -483,12 +511,24 @@ export default {
       this.editForm.examDate = [data.startDate, data.endDate]
       this.editForm.campusIds = data.campuss ? data.campuss.map(i => i.id) : []
       this.editForm.usertypeCodes = data.usertypes ? data.usertypes.map(i => i.code) : []
-      this.contents = data.contents.map(i => {
+      // 删除的模块会没有modelName  
+      const d = data.contents && data.contents.filter(i => (i.modelId || i.modelId === 0) && i.modelName) 
+      this.contents = d.map(i => {
         return {
           ...i,
           poolData: []
         }
-      })
+      }) || [];
+      // 编辑状态下，获取接口没返回的模块。
+      const mList = this.moduleList.filter(m => !this.contents.some(c => c.modelId === m.id))
+      for (let i = 0; i < mList.length; i++) {
+        let item = mList[i]
+        this.contents.push({
+          modelId: item.id,
+          modelName: item.name,
+          ...this.content
+        })
+      }
       this.resetContentsPoolData()
     }
   },

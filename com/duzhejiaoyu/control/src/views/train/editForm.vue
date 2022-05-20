@@ -8,8 +8,8 @@
       <!---------------------------- 查询条件 ---------------------------->
       <div class="search-box-right" style="max-width: 100%">
         <el-button type="primary" size="small" @click="save" v-loading="loading">保存</el-button>
-        <el-button size="small" class="bule-border">手机端预览</el-button>
-        <el-button size="small" class="bule-border">网页端预览</el-button>
+        <!-- <el-button size="small" class="bule-border">手机端预览</el-button>
+        <el-button size="small" class="bule-border">网页端预览</el-button> -->
       </div>
     </div>
     <!---------------------------- 表单 ---------------------------->
@@ -42,6 +42,7 @@
           <div class="upload-box">
             <p class="img-des">支持格式 mpeg、mpg、dat、mp4、mkv</p>
             <video-file-upload
+              @transLoading="load"
               key="video"
               ref="videoUpload"
               type="video"
@@ -63,6 +64,7 @@
           <div class="upload-box">
             <p class="img-des">支持格式 pdf、doc、docx、xls、xlsx、ppt、pptx</p>
             <video-file-upload
+              @transLoading="load"
               key="file"
               ref="fileUpload"
               type="file"
@@ -128,7 +130,8 @@
             >{{item.name}}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item label="开启下载" prop="isDownload">
+         
+        <el-form-item label="开启下载" prop="isDownload" v-if="!(editForm.type == '3')">
           <div class="switch">
             <el-switch
               ref="switch"
@@ -197,6 +200,9 @@ export default {
     userTypeList: state => state.userTypeList
   }),
   methods: {
+    load(val) {
+      this.loading = val
+    },
     // 切换资料形式时  重置上传的文件
     resetFile() {
       this.$refs.videoUpload.reset()
@@ -234,22 +240,30 @@ export default {
             .then(res => {
               this.loading = false
               if (res.code == '000000') {
-                this.$confirm('您的资料已保存成功！', '保存成功', {
-                  confirmButtonText: '查看资料',
-                  cancelButtonText: this.id ? '返回' : '继续新增',
-                  type: 'success'
+                // this.$confirm('您的资料已保存成功！', '保存成功', {
+                //   confirmButtonText: '查看资料',
+                //   cancelButtonText: this.id ? '返回' : '继续新增',
+                //   type: 'success'
+                // })
+                //   .then(() => {
+                //     this.$router.push(`/train/view/${res.data}`)
+                //   })
+                //   .catch(() => {
+                //     if(this.id) {
+                //       this.$router.go(-1)
+                //     } else {
+                //       this.$refs.editForm.resetFields()
+                //       this.resetFile()
+                //     }
+                //   })
+                this.$message({
+                 showClose: true,
+                  type: 'success',
+                  message: '保存成功：'
                 })
-                  .then(() => {
-                    this.$router.push(`/train/view/${res.data}`)
-                  })
-                  .catch(() => {
-                    if(this.id) {
-                      this.$router.go(-1)
-                    } else {
-                      this.$refs.editForm.resetFields()
-                      this.resetFile()
-                    }
-                  })
+                setTimeout(()=> {
+                  this.$router.go(-1)
+                }, 500)
               } else {
                 this.$message({
                   showClose: true,

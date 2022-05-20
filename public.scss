@@ -1,0 +1,243 @@
+// css3
+.desc-box {
+    border: 1px solid #dbdbdb;
+    border-width: 1px 0;
+    padding: 20px 0;
+    margin: 20px 0;
+    display: flex;
+    img {
+      height: 100px;
+      width: 150px;
+      margin-right: 20px;
+    }
+    .desc {
+      flex: 1;
+      color: #7e8081;
+      line-height: 28px;
+      text-overflow: ellipsis;
+      &.hide {
+        height: 90px;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+      &.act {
+        height: "auto";
+      }
+      &::before {
+        content: "";
+        float: right;
+        width: 0px;
+        height: calc(100% - 24px); /*先随便设置一个高度*/
+        background: red;
+      }
+      .btn {
+        float: right;  //展开
+        /*其他装饰样式*/
+        clear: both;
+        border: 0px;
+      }
+    }
+// 标题单行省略号，内容多行行尾省略号
+ .learn-text {
+    width: 422px;
+    height: 131px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis; //...
+    .learn-title {
+      height: 45px;
+      display: block;
+      color: rgba(55, 59, 75, 1);
+      font-size: 32px;
+      white-space: nowrap;
+      text-overflow: ellipsis; //...
+      overflow: hidden;
+      line-height: 45px;
+      text-align: left;
+    }
+    .learn-content {
+      height: 74px;
+      display: block;
+      color: rgba(126, 128, 129, 1);
+      text-overflow: ellipsis; //...
+      // overflow: hidden;
+      font-size: 26px;
+      line-height: 37px;
+      text-align: left;
+      margin-top: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+
+      // &::before {
+      //   content: '...';
+      // }
+    }
+  }
+  https://blog.csdn.net/fly_666/article/details/117476287
+
+$height: 70px;
+.main {
+    margin-left: calc(50% - 68px);
+  height: calc(100vh - #{$height});
+}
+
+// img 水平居中
+img {
+clear: both;
+display: block;
+margin: auto;
+}
+// 透明底部 tab
+.tabbar-bottom {
+height: 120px;
+bottom: 100px;
+background: rgba(255, 255, 255, 0.9);
+box-shadow: 0px -3px 6px 0px rgba(0, 0, 0, 0.05);
+position: fixed;
+left: 0;
+z-index: 1;
+box-sizing: content-box;
+width: 100%;
+}
+
+// 图片配文字
+.step {
+  overflow-x: auto;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0px 4px 8px 0px rgba(3, 27, 78, 0.12);
+  border-radius: 5px;
+}
+.step-box {
+  flex: 2;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+  &.last {
+    flex: 1;
+    margin-right: 0;
+  }
+  &.active {
+    .step-item {
+      border-bottom: 4px solid #3a78fc;
+      border-radius: 2px;
+    }
+  }
+  .line {
+    width: 60px;
+    height: 20px;
+  }
+}
+.step-item {
+  padding: 20px;
+  display: inline-block;
+  position: relative;
+  &.last {
+    padding-left: 0;
+    padding-right: 10px;
+  }
+  img {
+    width: 60px;
+    height: 60px;
+    clear: both;
+    display: block;
+    margin: auto;
+  }
+  .tag {
+    width: 14px;
+    height: 29px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  p {
+    margin-top: 10px;
+    color: #373b4b;
+    line-height: 28px;
+    text-align: center;
+    white-space: nowrap;  // 关键，否则文字换行
+  }
+
+// 调用wangeditor时的html样式
+    /deep/ .dhtml {
+    color: #5f6464;
+    line-height: 24px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #dbdbdb;
+
+    table {
+      border: none;
+      border-collapse: collapse;
+    }
+    table td,
+    table th {
+      border: 1px solid black !important;
+      padding: 3px 5px;
+      min-width: 50px;
+      height: 20px;
+    }
+    table th {
+      border-right: 1px solid #ccc;
+      border-bottom: 2px solid #ccc;
+      text-align: center;
+      background-color: #f1f1f1;
+    }
+    blockquote {
+      display: block;
+      border-left: 8px solid #d0e5f2;
+      padding: 5px 10px;
+      margin: 10px 0;
+      line-height: 1.4;
+      font-size: 100%;
+      background-color: #f1f1f1;
+    }
+    code {
+      display: inline-block;
+      *display: inline;
+      *zoom: 1;
+      background-color: #f1f1f1;
+      border-radius: 3px;
+      padding: 3px 5px;
+      margin: 0 3px;
+    }
+    pre code {
+      display: block;
+    }
+    ul,
+    ol {
+      margin: 10px 0 10px 20px;
+    }
+    pre {
+      border: 1px solid #ccc;
+      background-color: #f8f8f8;
+      padding: 10px;
+      margin: 5px 0px;
+      font-size: 0.8em;
+      border-radius: 3px;
+    }
+    .ql-editor ul li {
+      list-style-type: disc; // 解决序列li前面的.不展示问题
+    }
+    .ql-editor ol li {
+      list-style-type: decimal; // 解决序列li前面的数字不展示问题
+    }
+    i {
+      font-style: italic !important;
+    }
+
+    // wangeditor本身斜体按钮不生效
+    // <div id="editor" class="unique"></div>
+    .unique {
+      i {
+        font-style: italic !important;
+      }
+    }
+  }

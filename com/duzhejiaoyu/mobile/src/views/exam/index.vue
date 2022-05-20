@@ -1,55 +1,58 @@
 <template>
-  <div class="exam" :style="tbHeight < 700 ? {} : { height: tbHeight + 'px' }">
-    <van-nav-bar
-      title="入馆考试"
-      class="nav-bar"
-      :border="false"
-      fixed
-    ></van-nav-bar>
-    <div class="navbar-height"></div>
-    <img class="title-bg" src="@/assets/img/exam-title.png" alt />
-    <div v-if="userInfo.isPassExam == '1'">
-      <div class="info">
-        <p class="success">恭喜，读书证已激活！</p>
-      </div>
-    </div>
-    <div v-else-if="!exam.id">
-      <div class="info">
-        <p>暂无入馆考试</p>
-      </div>
-    </div>
-    <div v-else>
-      <div class="info">
-        <p>
-          考试时间：{{
-            moment(exam.startDate, "YYYYMMDD").format("YYYY-MM-DD")
-          }}
-          至 {{ moment(exam.endDate, "YYYYMMDD").format("YYYY-MM-DD") }}
-        </p>
-        <p>请学习资料并参加考试，考试通过即可激活借书证</p>
-        <div v-if="exam.isPass == '1'">
-          <span class="success" v-if="exam.type == '1'"
-            >真棒，考了{{ exam.score }}分，读书证已激活！</span
-          >
-          <span class="success" v-else>恭喜，读书证已激活！</span>
+  <div>
+    <van-sticky>
+      <div class="exam1">
+        <van-nav-bar
+          title="入馆考试"
+          class="nav-bar"
+        ></van-nav-bar>
+        <img class="title-bg" src="@/assets/img/exam-title.png" alt />
+        <div v-if="userInfo.isPassExam == '1'">
+          <div class="info">
+            <p class="success">恭喜，读书证已激活！</p>
+          </div>
         </div>
-        <div v-else>
-          <van-button
-            v-if="exam.type == '1'"
-            class="orange-btn"
-            round
-            size="big"
-            :disabled="canClick"
-            @click="showConfirm(null)"
-            >立即考试</van-button
-          >
-          <p v-if="canClick" class="tips">
-            还需学习 {{ common.formatNeedTime(lastNeedLearn) }}
-          </p>
+        <div v-else-if="!exam.id">
+          <div class="info">
+            <p>暂无入馆考试</p>
+          </div>
+        </div>
+        <div v-if="!(userInfo.isPassExam == '1')">
+          <div class="info" v-if="exam.id">
+            <p>
+              考试时间：{{
+                moment(exam.startDate, "YYYYMMDD").format("YYYY-MM-DD")
+              }}
+              至 {{ moment(exam.endDate, "YYYYMMDD").format("YYYY-MM-DD") }}
+            </p>
+            <p>请学习资料并参加考试，考试通过即可激活借书证</p>
+            <div v-if="exam.isPass == '1'">
+              <span class="success" v-if="exam.type == '1'"
+                >真棒，考了{{ exam.score }}分，读书证已激活！</span
+              >
+              <span class="success" v-else>恭喜，读书证已激活！</span>
+            </div>
+            <div v-else>
+              <van-button
+                v-if="exam.type == '1'"
+                class="orange-btn"
+                round
+                size="big"
+                :disabled="canClick"
+                @click="showConfirm(null)"
+                >立即考试</van-button
+              >
+              <p v-if="canClick" class="tips">
+                还需学习 {{ common.formatNeedTime(lastNeedLearn) }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
+    </van-sticky>
+    <div v-if="!(userInfo.isPassExam == '1')"  class="exam" :style="tbHeight < 700 ? {} : { height: tbHeight + 'px' }">
       <!---------------------------- 普通考试 ----------------------->
-      <div class="module" v-if="exam.type == '1'">
+      <div class="module" v-if="exam.type == '1' || !exam.id">
         <div
           class="module-box"
           v-for="(item, index) in learnData"
@@ -116,6 +119,7 @@
         </div>
       </div>
     </div>
+    <div class="body-exam">&nbsp;</div>
     <!-------------------------------------- 确认弹窗 -------------------------------------->
     <confirm
       ref="confirm"
@@ -161,25 +165,19 @@ export default {
     userInfo: (state) => state.userInfo,
     tbHeight: (state) => state.tabbarHeight,
     canClick() {
-      return (
-        this.lastNeedLearn > 0 ||
-        this.exam.isPass == "1" 
-      );
+      return this.lastNeedLearn > 0;
     },
   }),
-  watch: {
-    userLearns() {
-      this.setLearnData();
-    },
-  },
   methods: {
     // 考试
     toExam() {
       // 当前考试内容：闯关考试为当前模块考试内容，普通考试为第一个考试内容
-      let content = this.exam.type == '1' ? this.exam.contents[0] :
-      this.curModelId
-        ? this.exam.contents.find((i) => i.modelId == this.curModelId)
-        : this.exam.contents[0];
+      let content =
+        this.exam.type == "1"
+          ? this.exam.contents[0]
+          : this.curModelId
+          ? this.exam.contents.find((i) => i.modelId == this.curModelId)
+          : this.exam.contents[0];
       this.$store.commit("setCurExam", {
         ...this.exam,
         content,
@@ -206,7 +204,6 @@ export default {
             let normalExams = data.normalExams || [];
             if (pointExams.length > 0) {
               this.exam = pointExams[0];
-              // this.moduleList = await this.$store.dispatch('getModuleList')
               this.moduleList = this.exam.contents.map((i, index) => {
                 return {
                   id: i.modelId,
@@ -218,18 +215,13 @@ export default {
             }
             if (normalExams.length > 0) {
               this.exam = normalExams[0];
-              this.moduleList = this.exam.models;
+              // this.moduleList = this.exam.models;
+              this.moduleList = await this.$store.dispatch("getModuleList");
             }
-            // 如果当前存在考试
-            if (this.exam.id) {
-              this.$store.commit("setCurExam", this.exam);
-              // 设置学习资料
-              this.setLearnData();
-              // 设置需要学习的时间
-              this.setLastNeedLearn();
-              // 设置考试记录
-              this.setExamRecord();
+            if (!this.exam.id) {
+              this.moduleList = await this.$store.dispatch("getModuleList");
             }
+            this.getLoginUserLearns();
           }
         })
         .catch((err) => {
@@ -244,6 +236,8 @@ export default {
           if (res.code == "000000") {
             let data = res.data || [];
             this.userLearns = data;
+            // 设置学习资料
+            this.setLearnData();
             return Promise.resolve(data);
           } else {
             return Promise.reject(res.msg);
@@ -256,7 +250,9 @@ export default {
     // 设置模块培训资料
     setLearnData() {
       this.learnData = this.moduleList.map((i) => {
-        let data = this.userLearns.filter((j) => j.modelIds.includes(i.id));
+        let data = this.userLearns.filter(
+          (j) => j.modelIds && j.modelIds.includes(i.id)
+        );
         return {
           ...i,
           learns: data,
@@ -266,7 +262,9 @@ export default {
         };
       });
       this.learnData.sort((a, b) => a.level - b.level);
-      this.$store.commit("setExamLearnData", this.learnData);
+      this.learnData = this.learnData.filter((l) => l.learns.length);
+      // 设置需要学习的时间
+      this.setLastNeedLearn();
     },
     // 获取登录人学习记录
     getLoginUserRecords() {
@@ -301,9 +299,17 @@ export default {
       // ——闯关考试
       if (this.exam.type == "2") {
         this.learnData.forEach((i) => {
-          let moduleRecords = this.userLearnRecords.filter((j) =>
-            j.modelIds.includes(i.id)
-          );
+          let moduleRecords = this.userLearnRecords.filter((j) => {
+            // j.modelIds.includes(i.id)
+            let t = j.modelIds || [];
+            if (typeof t === "string") {
+              t = t.split(",");
+            }
+            t.forEach((c, id) => {
+              t[id] = c + "";
+            });
+            return t.includes(i.id + "");
+          });
           i.learnTimes = moduleRecords.reduce((sum, cur) => {
             return sum + cur.duration * 60;
           }, 0);
@@ -315,14 +321,31 @@ export default {
           this.$set(i, "lastNeedLearn", lastNeedLearn);
         });
       }
+      // 设置考试记录
+      this.setExamRecord();
     },
     // 获取登录人当前试卷的考试记录
     getLoginUserExamRecords() {
       return getLoginUserExamRecords(this.exam.id)
         .then((res) => {
           if (res.code == "000000") {
+            const numTrans = (n) => {
+              let reg = /[0-9]+/;
+              if (reg.test(n)) {
+                return parseFloat(n);
+              }
+              return 0;
+            };
             let data = res.data || {};
             let result = data[0] || {};
+            if (this.exam.id) {
+              const tmp = data.filter((d) => d.examId === this.exam.id) || [];
+              tmp.forEach((t) => {
+                if (numTrans(result.createTime) < numTrans(t.createTime)) {
+                  result = t;
+                }
+              });
+            }
             this.$set(this.exam, "isPass", result.isPass);
             if (this.exam.type == "1") {
               this.$set(this.exam, "score", result.score || 0);
@@ -346,13 +369,14 @@ export default {
           this.$set(i, "isPass", obj.isPass || 0);
           this.$set(i, "score", obj.score || 0);
         });
-        this.$store.commit("setExamLearnData", this.learnData);
       }
+      this.$store.commit("setExamLearnData", this.learnData);
+      this.$store.commit("setCurExam", this.exam);
     },
   },
   created() {
-    this.getLoginUserLearns();
     this.getLoginUserRecords();
+    this.$store.dispatch("getUserInfo");
   },
 };
 </script>
@@ -361,7 +385,17 @@ export default {
 .exam {
   position: relative;
   width: 100%;
-  min-height: 700px;
+  min-height: calc(100vh + 120);
+  overflow-y: auto;
+  // background: url("~@/assets/img/exam-bg-1.png") no-repeat;
+  background-color: #fff5da;
+  background-size: contain;
+  text-align: center;
+}
+.exam1 {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh + 120);
   overflow-y: auto;
   background: url("~@/assets/img/exam-bg-1.png") no-repeat;
   background-color: #fff5da;
@@ -508,7 +542,9 @@ export default {
     height: 60px;
     line-height: 60px;
     color: #fff;
+    // background: url("https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnged378d3f1963654ad04b0a8b3aca42c3377c19ce545e1230ccebc8472bab64d6") no-repeat;
     background: url("~@/assets/img/exam-btn-bg.png") no-repeat;
+    background-size: contain;
   }
 }
 .locked-box {
@@ -523,5 +559,9 @@ export default {
     color: #616687;
     line-height: 42px;
   }
+}
+.body-exam{
+  background-color: #FFF5DA;
+  min-height: 1040px;
 }
 </style>

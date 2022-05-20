@@ -6,7 +6,7 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPl
 const IS_PRODUCTION = ['production', 'prod'].includes(process.env.NODE_ENV); //判断是否是生产环境
 
 module.exports = {
-    publicPath: process.env.NODE_ENV === 'production' ? '/web/' : '/',
+    publicPath: process.env.NODE_ENV === 'production' ? '/lres2022/web/' : '/',
     outputDir: 'dist',
     assetsDir: 'static',
     productionSourceMap: false, // 生产环境是否要生成 sourceMap  

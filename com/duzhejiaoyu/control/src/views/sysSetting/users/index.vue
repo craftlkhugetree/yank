@@ -229,9 +229,9 @@ export default {
     openNewbornLogin: state => state.newbornLogin
   }),
   methods: {
-    // 可选的行
+    // 可选的行--停借
     selectable(row, index) {
-      return row.status == '2'
+      return row.statusObj.value == '3'
     },
 
     // 选中的行

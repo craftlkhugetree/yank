@@ -3,6 +3,7 @@
     custom-class="confirm-dialog"
     :visible.sync="visible"
     width="400px"
+    :lock-scroll="false"
     :show-close="false"
     :close-on-click-modal="false"
   >

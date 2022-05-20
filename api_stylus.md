@@ -1,6 +1,9 @@
+# api
 
+# chrome
  "chrome.exe" --test-type --ignore-certificate-errors
 
+# stylus
 ^(?!.*(seat.dev.angke.cn|z.angke.com.cn)).*$
 ^(?!._(localhost|z.angke.com.cn))._$
 body {

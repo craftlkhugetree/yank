@@ -77,14 +77,16 @@ export default {
           this.$message({
             showClose: true,
             type: 'error',
-            message: `视频大小不能超过${this.size}MB！`
+            message: `大小不能超过${this.size}MB！`
           })
           return false
         }
       }
+
       // 上传视频
       this.file = file
       this.loading = true
+      this.$emit('transLoading', this.loading)
       const formData = new FormData()
       formData.append('file', file)
       let axiosSettings = {
@@ -104,7 +106,6 @@ export default {
       }
       axios(axiosSettings)
         .then(data => {
-          this.loading = false
           let res = data.data
           if (res.code == '000000') {
             this.result = '1'
@@ -123,10 +124,13 @@ export default {
             })
           }
           this.$refs.fileInput.value = null
+          this.loading = false
+          this.$emit('transLoading', this.loading)
         })
         .catch(err => {
           this.result = '0'
           this.loading = false
+          this.$emit('transLoading', this.loading)
           this.$message({
             showClose: true,
             type: 'error',

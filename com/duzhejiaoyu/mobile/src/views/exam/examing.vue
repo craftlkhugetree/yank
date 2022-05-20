@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="examing"
-  >
+  <div class="examing">
     <van-sticky>
       <van-nav-bar title="入馆考试" left-arrow @click-left="onClickLeft" />
     </van-sticky>
@@ -19,9 +17,12 @@
       </span>
       <div class="circle" @click.stop="$refs.answerPop.isPopShow = true">
         <div class="block2">
-          <span class="txt5">{{ pageNum || doneNum }}&nbsp;</span>
+          <span
+            class="txt5"
+            >{{ (pageNum &lt;= 0) ? "00" : (pageNum &lt; 10) ? "0" + pageNum : pageNum  }}</span
+          >
           <span class="word8"
-            >/&nbsp;{{
+            >&nbsp;/&nbsp;{{
               (total &lt;= 0) ? "00" : (total &lt; 10) ? "0" + total : total
             }}</span
           >
@@ -39,8 +40,8 @@
       <div style="padding: 0 10px">
         <div class="title">
           <h3>
-            {{ curTypeInfo.typename }}
-            <span>每题{{ curTypeInfo.score }}分</span>
+            ({{ curTypeInfo.typename }})
+            <!-- <span>每题{{ curTypeInfo.score }}分</span> -->
           </h3>
         </div>
         <div class="content" v-if="curQuestion && curQuestion.id">
@@ -56,8 +57,9 @@
             ><template v-slot:error>图片加载失败</template></van-image
           >
 
+            <!-- v-if="curTypeIndex == '0'" -->
           <van-radio-group
-            v-if="curTypeIndex == '0'"
+            v-if="curQuestion.type == '3'"
             v-model="curQuestion.isTrue"
             @change="doneQuestion"
             :disabled="!isExam"
@@ -67,31 +69,58 @@
               :style="
                 curQuestion.isTrue == '1' ? { background: '#8289F1' } : ''
               "
-              >对</van-radio
+              >对<template #icon="props">
+                <img  class="img-icon"
+                  :src="
+                    props.checked
+                      ? activeIconR
+                      : inactiveIconR
+                  "
+                /> </template
+            ></van-radio
             >
             <van-radio
+              checked-color="#fff"
               :name="0"
               :style="
                 curQuestion.isTrue == '0' ? { background: '#8289F1' } : ''
               "
-              >错</van-radio
+              >错<template #icon="props">
+                <img  class="img-icon"
+                  :src="
+                    props.checked
+                      ? activeIconR
+                      : inactiveIconR
+                  "
+                /> </template
+            ></van-radio
             >
           </van-radio-group>
+            <!-- v-else-if="curTypeIndex == '1'" -->
           <van-radio-group
-            v-else-if="curTypeIndex == '1'"
+          v-else-if="curQuestion.type == '1'"
             v-model="curQuestion.chooseOptionId"
             @change="doneQuestion"
             :disabled="!isExam"
           >
             <van-radio
+              checked-color="#fff"
               v-for="op in curQuestion.options"
               :key="op.id"
               :name="op.id"
               :style="
                 op.id === chooseOpId[pageNum] ? { background: '#8289F1' } : ''
               "
-              >{{ op.itemInfo }}</van-radio
-            >
+              >{{ op.itemInfo }}
+              <template #icon="props">
+                <img  class="img-icon"
+                  :src="
+                    props.checked
+                      ? activeIconR
+                      : inactiveIconR
+                  "
+                /> </template
+            ></van-radio>
           </van-radio-group>
           <van-checkbox-group
             v-else
@@ -99,6 +128,7 @@
             @change="checkQuestion"
             :disabled="!isExam"
           >
+            <!-- checked-color="#fff" -->
             <van-checkbox
               shape="square"
               v-for="op in curQuestion.options"
@@ -111,7 +141,14 @@
                   ? { background: '#8289F1' }
                   : ''
               "
-              >{{ op.itemInfo }}</van-checkbox
+              >{{ op.itemInfo }}<template #icon="props">
+                <img  class="img-icon"
+                  :src="
+                    props.checked
+                      ? activeIcon
+                      : inactiveIcon
+                  "
+                /> </template></van-checkbox
             >
           </van-checkbox-group>
         </div>
@@ -136,6 +173,7 @@
                 border-radius: 44px;
                 border: 1px solid #8289f1;
                 margin: 10px 0 50px 0;
+                color: #8289f1;
               "
               round
               >上一题</van-button
@@ -148,7 +186,7 @@
               type="primary"
               size="big"
               @click.stop="goQuestion('next')"
-              style="width: 150px; float: right; margin: 10px 0 50px 0;"
+              style="width: 150px; float: right; margin: 10px 0 50px 0"
               color="#8289F1"
               round
               >下一题</van-button
@@ -163,7 +201,7 @@
               color="#8289F1"
               round
               size="big"
-              style="width: 150px; float: right; margin: 10px 0 50px 0;"
+              style="width: 150px; float: right; margin: 10px 0 50px 0"
               @click.stop="wantSubmit"
               >我要交卷</van-button
             >
@@ -278,6 +316,10 @@ export default {
       dialogText: "",
       score: 0,
       submittingText: "交卷完成，成绩计算中…",
+      activeIcon: require("@/assets/img/kuanggou.png"),
+      inactiveIcon: require("@/assets/img/kuang.png"),
+      activeIconR: require("@/assets/img/yuangou.png"),
+      inactiveIconR: require("@/assets/img/yuan.png"),
     };
   },
   computed: mapState({
@@ -371,11 +413,13 @@ export default {
         this.chooseOpId[this.pageNum] = e;
         this.curQuestion.done = true;
       }
+      this.$forceUpdate();
     },
     // 多选题做题
     checkQuestion(val) {
       this.chooseOpId[this.pageNum] = val;
       this.curQuestion.done = val.length > 0 ? true : false;
+      this.$forceUpdate();
     },
     // 我要交卷
     wantSubmit() {
@@ -496,7 +540,7 @@ export default {
     // 设置题目
     setQuestions() {
       this.dataList.forEach((i) => {
-        i.questions = this.questions.filter((j) => j.type == i.type);
+        i.questions = this.questions.filter((j) => j.type == i.type) || [];
         i.questions.forEach((j) => {
           this.$set(j, "done", false);
           j.photoList = j.photos
@@ -537,7 +581,7 @@ export default {
             break;
         }
       });
-      this.dataList = this.dataList.filter((i) => i.total > 0);
+      this.dataList = this.dataList.filter((i) => i.total);
     },
     // 设置时间
     setTime() {
@@ -565,12 +609,13 @@ export default {
   width: 750px;
   margin: 0 auto;
   position: relative;
-  min-height: 1400px;
-  height: 100%;
-  background: url("~@/assets/img/exam-bg-3.png") no-repeat;
+  // min-height: 1400px;
+  min-height: calc(100vh + 220);
+  // height: 100%;
   background-color: #fff5da;
-  background-size: contain;
   .hh2 {
+    background-size: contain !important;
+    background: url("~@/assets/img/exam-bg-3.png") no-repeat;
     display: inline-block;
     padding-top: 20px;
     width: 100%;
@@ -598,8 +643,9 @@ export default {
       margin-top: -40px;
       margin-right: 20px;
       right: 0;
+      font-size: 28px;
+      color: #7e8081;
       strong {
-        font-size: 16px;
         font-weight: 600;
         color: #3a78fc !important;
         letter-spacing: 2px;
@@ -642,15 +688,19 @@ export default {
         line-height: 33px;
         text-align: left;
         margin-top: 22px;
-        padding-left: 10px;
+        // padding-left: 10px;
       }
     }
   }
 }
 
 .title {
-  padding-top: 68px;
-  margin: 10px 0;
+  float: right;
+  height: 40px;
+  font-size: 28px;
+  margin: 32px 60px 0 0;
+  font-weight: 400;
+  color: #7e8081;
 }
 .content {
   overflow-y: auto;
@@ -698,5 +748,24 @@ export default {
 }
 /deep/ .van-image {
   box-shadow: 0px 4px 8px 0px rgba(3, 27, 78, 0.12);
+}
+/deep/ .van-radio__icon {
+  // background-size: contain !important;
+  // background: url("~@/assets/img/yuan.png") no-repeat;
+  // background-color: rgb(196, 210, 228);
+}
+/deep/ .van-checkbox__icon {
+  // background-size: contain !important;
+  // background: url("~@/assets/img/kuang.png") no-repeat;
+  // background-color: rgb(196, 210, 228);
+}
+/deep/ .van-icon-success {
+  // background-size: contain !important;
+  // background: url("~@/assets/img/yuangou.png") no-repeat;
+  // color: rgb(130, 137, 241) !important;
+}
+.img-icon {
+  height: 40px;
+  width: 40px;
 }
 </style>

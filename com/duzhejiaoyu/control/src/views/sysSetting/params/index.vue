@@ -36,19 +36,21 @@
       <div class="params-box-content" v-loading="qjdlLoading">
         <label>全景导览：</label>
         <el-input
-          v-model="qjdlEditVal"
+          v-model.trim="qjdlEditVal"
           placeholder="请输入全景导览地址"
           size="small"
           style="width:300px;margin-right:10px;"
-          :class="{'is-error': !qjdlEditVal || !qjdlReg.test(qjdlEditVal)}"
+          :class="{'is-error': !qjdlReg.test(qjdlEditVal) && qjdlEditVal}"
         ></el-input>
+          <!-- :class="{'is-error': !qjdlEditVal || !qjdlReg.test(qjdlEditVal)}" -->
         <el-button
           type="primary"
           v-loading="urlLoading"
           size="small"
-          :disabled="qjdlEditVal == qjdl.val || !qjdlEditVal || !qjdlReg.test(qjdlEditVal)"
+          :disabled="!!((qjdlEditVal == qjdl.val || !qjdlReg.test(qjdlEditVal)) && qjdlEditVal)"
           @click="saveQjdl"
         >保存</el-button>
+          <!-- :disabled="qjdlEditVal == qjdl.val || !qjdlEditVal || !qjdlReg.test(qjdlEditVal)" -->
       </div>
     </div>
   </div>

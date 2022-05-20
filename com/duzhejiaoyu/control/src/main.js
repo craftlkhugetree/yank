@@ -28,6 +28,9 @@ Vue.prototype.util = util
 // common
 import common from './assets/js/common'
 Vue.prototype.common = common
+// lodash
+import _ from 'lodash'
+
 
 new Vue({
   router,

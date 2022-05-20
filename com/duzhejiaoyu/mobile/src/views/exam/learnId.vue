@@ -1,42 +1,92 @@
 <template>
-  <div class="page">
+  <div class="page" id="pages">
+    <!-- <div class="page" :style="{ height: sH }" id="pages"> -->
     <van-sticky>
-      <!-- <div class="model"> -->
       <van-nav-bar title="入馆考试" left-arrow @click-left="onClickLeft" />
-      <!-- </div> -->
     </van-sticky>
-    <div class="section4" @click="toLearnId">
-      <span class="infoBox2">学<br />习<br />更<br />多</span>
-    </div>
+
     <div class="learn-content">
       <!---------------------------- 标题和信息 ---------------------------->
       <div class="content-left">
-        <h3>{{ detail.name }}</h3>
-        <p class="sub">
-          {{ detail.watchCount }}阅读 · {{ detail.downloadCount }}下载
-        </p>
+        <h3 v-if="!(detail.type == '1')">{{ detail.name }}</h3>
+        <div class="sub" v-if="!(detail.type == '1')">
+          <p class="w">
+            {{ detail.watchCount }}阅读
+            {{
+              detail.type == "2" ? " . " + detail.downloadCount + "下载" : ""
+            }}
+            <!-- {{
+              detail.type == "2"
+                ? common.learnSizeFormat(detail.fileSize) + " ·"
+                : ""
+            }}
+            {{ common.defaultTimeFormat(detail.createTime) }} -->
+          </p>
+          <p v-if="detail.type == '2'" class="download" @click="downloadF">
+            <img src="@/assets/img/download.png" />下载
+          </p>
+        </div>
+
         <!---------------------------- 视频和文档 ---------------------------->
         <div class="video-box" v-if="detail.id">
           <video
             v-if="detail.type == '1'"
             ref="video"
-            controls
             :src="fileViewUrl + detail.id"
+            controls
+            x5-video-player-type="h5"
+            webkit-playsinline
+            playsinline
           >
             您的浏览器不支持HTML5 video标签
           </video>
-          <iframe
+          <!-- <iframe
             v-if="detail.type == '2'"
             ref="pdf"
             :src="fileViewUrl + detail.id"
             width="100%"
             height="450px"
+          ></iframe> -->
+          <iframe
+            v-if="detail.type == '2'"
+            :src="
+              './static/pdf/web/viewer.html?file=' + fileViewUrl + detail.id
+            "
+            class="iframepdf"
+            frameborder="0"
+            id="pdfContainer"
+            name="pdfContainer"
+            ref="pdf"
+            width="100%"
+            height="450px"
           ></iframe>
         </div>
+        <h3 v-if="detail.type == '1'" style="margin: 5px 0">
+          {{ detail.name }}
+        </h3>
+        <div class="sub" v-if="detail.type == '1'">
+          <p class="w">
+            {{ detail.watchCount }}阅读 ·
+            {{ detail.type == "1" ? detail.downloadCount + "下载" : "" }}
+          </p>
+          <p v-if="detail.type == '1'" class="download" @click="downloadF">
+            <img src="@/assets/img/download.png" />下载
+          </p>
+        </div>
+
         <!---------------------------- 封面和简介 ---------------------------->
         <div class="desc-box">
           <img :src="imgViewUrl + detail.cover" alt />
-          <div class="desc">{{ detail.desc }}</div>
+          <div class="desc" :class="{ hide: !isActive, act: isActive }">
+            <button
+              class="btn"
+              @click="isActive = !isActive"
+              v-if="detail.desc && detail.desc.length > 70"
+            >
+              {{ isActive ? "收起" : "展开" }}
+            </button>
+            {{ detail.desc }}
+          </div>
         </div>
         <!---------------------------- 在线文章 ---------------------------->
         <div
@@ -47,7 +97,10 @@
       </div>
       <!---------------------------- 其他学习 ---------------------------->
 
-      <div class="content-right">
+      <div class="content-right" id="content-right">
+        <div class="section4" @click="toLearnId">
+          <span class="infoBox2">学<br />习<br />更<br />多</span>
+        </div>
         <div class="learn-list">
           <h3>接下来学习</h3>
           <ul>
@@ -58,50 +111,16 @@
               @click="changeLearn(index)"
             >
               <i :class="`iconfont icon-learn-${item.type}`"></i>
-              <span class="title ellipsis">{{ item.name }}
-              <span class="size" v-if="item.type != 3">{{
-                common.learnSizeFormat(item.fileSize)
-              }}</span>
+              <span class="title ellipsis"
+                >{{ item.name }}
+                <span class="size" v-if="item.type != 3">{{
+                  common.learnSizeFormat(item.fileSize)
+                }}</span>
               </span>
               <p class="ellipsis">{{ item.desc }}</p>
             </li>
           </ul>
         </div>
-        <!-- <div class="learn-time">
-          <p>{{ curExam.type == "1" ? "学习总时长" : "本关卡已学习" }}</p>
-          <div class="time">
-            <span
-              v-for="(time, index) in common.formatNeedTime(nowLearnTime)"
-              :key="index"
-              :class="{ split: time == ':' }"
-              >{{ time }}</span
-            >
-          </div>
-          <p
-            v-if="curExam.isPass == '1' || curModel.isPass == '1'"
-            style="color: #48be74; font-size: 16px"
-          >
-            <span v-if="curExam.isPass == '1'"
-              >恭喜，考了{{ curExam.score }}分，考试已通过</span
-            >
-            <span v-if="curModel.isPass == '1'"
-              >恭喜，考了{{ curModel.score }}分，本关卡已通过</span
-            >
-          </p>
-          <div v-else>
-            <van-button
-              class="orange-btn"
-              round
-              size="large"
-              :disabled="lastNeedLearn > 0"
-              @click="toExam"
-              >立即考试</van-button
-            >
-            <div v-if="lastNeedLearn > 0" class="tips">
-              <span>还需学习 {{ common.formatNeedTime(lastNeedLearn) }}</span>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
@@ -125,6 +144,9 @@ export default {
       lastNeedLearn: 0, // 还需学习时长
       records: [],
       loading: false,
+      // sH: "auto",
+      top: "751px",
+      isActive: false,
     };
   },
   computed: mapState({
@@ -144,6 +166,21 @@ export default {
     },
   }),
   methods: {
+    downloadF() {
+      let f = this.detail.fileName;
+      let a = f.split(".") || [];
+      let len = a.length;
+      let ext = len && a[len - 1];
+      let left = f.indexOf("." + ext);
+      let name = f.substring(0, left);
+      this.util.exportFile(
+        "learn/download/" + this.detail.id,
+        true,
+        {},
+        name,
+        'pdf'
+      );
+    },
     onClickLeft() {
       this.$router.go(-1);
     },
@@ -222,9 +259,17 @@ export default {
 
       // 闯关考试
       if (this.curExam.type == "2") {
-        let moduleRecords = this.records.filter((j) =>
-          j.modelIds.includes(this.curModel.id)
-        );
+        let moduleRecords = this.records.filter((j) => {
+          // j.modelIds.includes(this.curModel.id)
+          let t = j.modelIds || [];
+          if (typeof t === "string") {
+            t = t.split(",");
+          }
+          t.forEach((c, id) => {
+            t[id] = c + "";
+          });
+          return t.includes(this.curModel.id + "");
+        });
         // 当前模块的学习时间
         this.nowLearnTime = this.curModel.learnTimes = moduleRecords.reduce(
           (sum, cur) => {
@@ -256,13 +301,24 @@ export default {
     this.getLoginUserRecords();
     this.startLearn(this.detail.id);
   },
+  // mounted() {
+  //   setTimeout(() => {
+  //     let h = document.body.scrollHeight;
+  //     let d = document.getElementById("content-right");
+  //     if (h > 1040) {
+  //       this.sH = h + d.scrollHeight + "px";
+  //     }
+  //     this.top = d.getBoundingClientRect().top + "px";
+  //   }, 1000);
+  // },
 };
 </script>
 
 <style lang="scss" scoped>
 .page {
   width: 750px;
-  max-height: 1334px;
+  min-height: 1040px;
+  // max-height: 1334px;
   background-color: rgba(255, 255, 255, 1);
   position: relative;
   .model {
@@ -273,8 +329,8 @@ export default {
   height: 152px;
   border-radius: 20px 0 0 20px;
   background-color: rgba(46, 56, 76, 0.5);
-  margin-top: 751px;
-  width: 32px;
+  margin-top: 0;
+  width: 46px;
   position: absolute;
   right: 0;
 }
@@ -291,6 +347,7 @@ export default {
   text-align: justify;
   overflow: hidden;
   text-overflow: ellipsis;
+  z-index: 9999;
 }
 .learn-content {
   margin: 0 32px;
@@ -301,18 +358,32 @@ export default {
   width: 100%;
   padding: 20px 0;
   h3 {
-    font-size: 30px;
+    font-size: 40px;
     font-weight: 600;
     color: #373b4b;
-    line-height: 28px;
+    line-height: 56px;
     margin-bottom: 10px;
+    height: auto;
   }
   .sub {
-    font-size: 13px;
+    font-size: 22px;
     font-weight: 400;
     color: #7e8081;
-    line-height: 22px;
-    margin-bottom: 10px;
+    height: 30px;
+    line-height: 30px;
+    margin: 10px 0;
+    vertical-align: middle;
+    .w {
+      float: left;
+    }
+    .download {
+      cursor: pointer;
+      float: right;
+      img {
+        width: 22px;
+        height: 22px;
+      }
+    }
   }
   video {
     width: 100%;
@@ -326,21 +397,38 @@ export default {
     display: flex;
     img {
       height: 100px;
-      width: auto;
-      max-width: 168px;
+      width: 150px;
       margin-right: 20px;
     }
     .desc {
       flex: 1;
       color: #7e8081;
-      line-height: 28px;
-      height: 90px;
-      display: -webkit-box;
+      line-height: 34px;
+      font-size: 24px;
       text-overflow: ellipsis;
-      //   overflow: hidden;
-      overflow-y: auto;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      &.hide {
+        height: 136px;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+      }
+      &.act {
+        height: "auto";
+      }
+      &::before {
+        content: "";
+        float: right;
+        width: 0px;
+        height: calc(100% - 24px); /*先随便设置一个高度*/
+        background: red;
+      }
+      .btn {
+        float: right;
+        /*其他装饰样式*/
+        clear: both;
+        border: 0px;
+      }
     }
   }
   .tag-box {
@@ -378,22 +466,25 @@ export default {
 .content-right {
   float: left;
   width: 100%;
+  margin-bottom: 120px;
 }
 
 .learn-list {
+  max-height: 600px;
   padding: 20px;
   background: #f5f6f9;
   border-radius: 5px;
   margin-bottom: 20px;
+  overflow-y: auto;
   h3 {
-    font-size: 20px;
+    font-size: 28px;
     font-weight: 600;
     color: #9ca1b1;
     line-height: 28px;
     margin-bottom: 20px;
   }
   ul {
-    height: 347px;
+    min-height: 300;
     overflow-y: auto;
   }
   li {
@@ -401,17 +492,17 @@ export default {
     border-bottom: 1px solid #dbdbdb;
     margin-bottom: 20px;
     cursor: pointer;
+    font-size: 32px;
     i {
-      font-size: 18px;
-      line-height: 26px;
+      height: 32px;
+      line-height: 32px;
       vertical-align: top;
       margin-right: 10px;
     }
     .title {
-      font-size: 16px;
       font-weight: 400;
       color: #373b4b;
-      line-height: 26px;
+      line-height: 32px;
       width: calc(100% - 80px);
     }
     .size {
@@ -419,10 +510,11 @@ export default {
       line-height: 26px;
       vertical-align: top;
       color: #7e8081;
+      float: right;
     }
     p {
       width: calc(100% - 30px);
-      font-size: 13px;
+      font-size: 26px;
       color: #7e8081;
       line-height: 26px;
       margin-top: 10px;
@@ -494,5 +586,12 @@ export default {
 }
 .orange-btn {
   width: 250px;
+}
+.iframepdf {
+  // width: 100%;
+  // height: 450px;
+  // overflow: hidden;
+  /* background: red; */
+  // position: relative;
 }
 </style>

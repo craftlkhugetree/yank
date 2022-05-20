@@ -55,3 +55,11 @@ export function getLoginUserAllExamRecords() {
         url: "user/loginUserExamRecords",
     })
 }
+
+// 获取登录人ip
+export function getIpAddress() {
+    return service.postAjax({
+        code: "url",
+        url: "user/getIpAdrress",
+    })
+}

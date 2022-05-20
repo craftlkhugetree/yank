@@ -9,8 +9,8 @@
       <img v-if="learn.cover" :src="fileUrl + learn.cover" alt />
       <img v-else :src="noPhoto" alt />
       <div class="learn-text">
-        <span class="learn-title">{{ learn.name }}</span>
-        <span class="learn-content">{{ learn.desc }}</span>
+        <span class="learn-title" :title="learn.name">{{ learn.name }}</span>
+        <span class="learn-content" :title="learn.desc">{{ learn.desc }}</span>
       </div>
     </div>
   </div>
@@ -30,14 +30,13 @@ export default {
       noPhoto,
     };
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     toLearnId(learn, index) {
-      this.$store.commit("setCurLearn",{
+      this.$store.commit("setCurLearn", {
         modelIndex: this.modelIndex,
-        learnIndex: index
-      })
+        learnIndex: index,
+      });
       this.$router.push(`/exam/learn/${learn.id}`);
     },
   },
@@ -71,14 +70,16 @@ export default {
     width: 422px;
     height: 131px;
     overflow: hidden;
-    text-overflow: ellipsis;
     overflow-wrap: break-word;
+    text-overflow: ellipsis; //...
     .learn-title {
       height: 45px;
       display: block;
       color: rgba(55, 59, 75, 1);
       font-size: 32px;
       white-space: nowrap;
+      text-overflow: ellipsis; //...
+      overflow: hidden;
       line-height: 45px;
       text-align: left;
     }
@@ -86,10 +87,20 @@ export default {
       height: 74px;
       display: block;
       color: rgba(126, 128, 129, 1);
+      text-overflow: ellipsis; //...
+      // overflow: hidden;
       font-size: 26px;
       line-height: 37px;
       text-align: left;
       margin-top: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+
+      // &::before {
+      //   content: '...';
+      // }
     }
   }
 }

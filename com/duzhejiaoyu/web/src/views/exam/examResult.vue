@@ -59,14 +59,15 @@
           :src="img"
           :preview-src-list="curQuestion.photoList"
         ></el-image>
-        <el-radio-group v-if="curTypeIndex=='0'" v-model="curQuestion.isTrue">
+        <el-radio-group  v-model="curQuestion.isTrue" disabled v-if="curQuestion.type == '3'">
+          <!-- v-if="curTypeIndex=='0'" -->
           <el-radio :label="1" disabled>对</el-radio>
           <el-radio :label="0" disabled>错</el-radio>
         </el-radio-group>
-        <el-radio-group v-else-if="curTypeIndex=='1'" v-model="curQuestion.chooseOptionId">
+        <el-radio-group v-else-if="curQuestion.type == '1'" v-model="curQuestion.chooseOptionId"  disabled>
           <el-radio v-for="op in curQuestion.options" :key="op.id" :label="op.id">{{op.itemInfo}}</el-radio>
         </el-radio-group>
-        <el-checkbox-group v-else v-model="curQuestion.chooseOptionIds">
+        <el-checkbox-group v-else v-model="curQuestion.chooseOptionIds" disabled>
           <el-checkbox v-for="op in curQuestion.options" :key="op.id" :label="op.id">{{op.itemInfo}}</el-checkbox>
         </el-checkbox-group>
       </div>

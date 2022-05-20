@@ -1,15 +1,16 @@
 <template>
   <div class="page">
+  <!-- <div class="page" :style="{ height: sH }"> -->
     <van-sticky>
-    <div class="model">
-      <van-nav-bar title="入馆考试" left-arrow @click-left="onClickLeft" />
-      <!---------------------------- 模块步骤条 ---------------------------->
-      <model-step
-        :list="examLearnData"
-        :exam="curExam"
-        @doFunc="getLoginUserRecords"
-      ></model-step>
-    </div>
+      <div class="model">
+        <van-nav-bar title="入馆考试" left-arrow @click-left="onClickLeft" />
+        <!---------------------------- 模块步骤条 ---------------------------->
+        <model-step
+          :list="examLearnData"
+          :exam="curExam"
+          @doFunc="getLoginUserRecords"
+        ></model-step>
+      </div>
     </van-sticky>
     <div class="card">
       <card-step
@@ -43,6 +44,7 @@ export default {
       lastNeedLearn: 0, // 还需学习时长
       records: [],
       loading: false,
+      sH: "auto",
     };
   },
   computed: mapState({
@@ -125,9 +127,17 @@ export default {
 
       // 闯关考试
       if (this.curExam.type == "2") {
-        let moduleRecords = this.records.filter((j) =>
-          j.modelIds.includes(this.curModel.id)
-        );
+        let moduleRecords = this.records.filter((j) => {
+          // j.modelIds.includes(this.curModel.id)
+          let t = j.modelIds || [];
+          if (typeof t === "string") {
+            t = t.split(",");
+          }
+          t.forEach((c, id) => {
+            t[id] = c + "";
+          });
+          return t.includes(this.curModel.id + "");
+        });
         // 当前模块的学习时间
         this.nowLearnTime = this.curModel.learnTimes = moduleRecords.reduce(
           (sum, cur) => {
@@ -139,7 +149,10 @@ export default {
       }
 
       this.lastNeedLearn = diff > 0 ? diff : 0;
-      this.$store.commit('setTime', {now: this.nowLearnTime, need: this.lastNeedLearn});
+      this.$store.commit("setTime", {
+        now: this.nowLearnTime,
+        need: this.lastNeedLearn,
+      });
     },
   },
   beforeDestroy() {
@@ -149,6 +162,14 @@ export default {
   created() {
     this.getLoginUserRecords();
   },
+  // mounted() {
+  //   setTimeout(() => {
+  //     let h = document.body.scrollHeight;
+  //     if (h > 1040) {
+  //       this.sH = h + 'px';
+  //     }
+  //   }, 2000);
+  // },
 };
 </script>
 
@@ -156,15 +177,16 @@ export default {
 .page {
   position: relative;
   width: 750px;
-  max-height: 1334px;
+  // max-height: 1334px;
   background-color: rgba(255, 255, 255, 1);
   .model {
     position: sticky;
   }
   .card {
     min-height: 1040px;
-    max-height: 1334px;
-    overflow-y: auto;
+    margin-bottom: 120px;
+    // max-height: 1334px;
+    // overflow-y: auto;
   }
 }
 </style>

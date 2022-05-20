@@ -5,6 +5,7 @@ liken 123456    http://160.255.0.64:10086/
 白马 http://app.dev.angke.com.cn/bsermipweb/rest/swagger-ui.html
 座位预约 svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
   http://seat.dev.angke.cn/mseat/#/index 手机端
+svn://160.255.0.56/01module/lres/03code/lresweb/src/main/webapp/mobile_nh
 # Git
 
 git svn clone -r HEAD --username=liken svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
@@ -21,6 +22,8 @@ git ls-files -v | grep '^h\ '
 
 git config --list
 
+git修改注释的方法：1、利用“git commit --amend -m”命令，可以在还没有push之前修改注释内容；2、利用“git push -f”命令，可以在push之后修改注释内容。
+
 ssh-keygen -t rsa -C "345823102@qq.com" 
 ssh -T git@github.com  // 测试
 
@@ -29,6 +32,12 @@ ssh -T git@github.com  // 测试
 
 npm config list
 
+# shell
+如果dir2目录不存在，则可以直接使用
+cp -r dir1 dir2
+如果dir2目录已存在，则需要使用
+cp -r dir1/. dir2
+如果这时使用cp -r dir1 dir2,则也会将dir1目录复制到dir2中
 # sed
 
 在第一行前插入文本
@@ -45,99 +54,40 @@ sed -i '$ d' .git/config
 ctrl + shift + o 查找函数类名
 ctrl + p 打开文件
 
-# css
-
-<style lang="scss" scoped>
-margin-left: calc(50% - 68px);
-
-$height: 70px;
-.main {
-  height: calc(100vh - #{$height});
-}
-
-// img 水平居中
-img {
-clear: both;
-display: block;
-margin: auto;
-}
-// 透明底部 tab
-.tabbar-bottom {
-height: 120px;
-bottom: 100px;
-background: rgba(255, 255, 255, 0.9);
-box-shadow: 0px -3px 6px 0px rgba(0, 0, 0, 0.05);
-position: fixed;
-left: 0;
-z-index: 1;
-box-sizing: content-box;
-width: 100%;
-}
-
-// 图片配文字
-.step {
-  overflow-x: auto;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  background: #ffffff;
-  box-shadow: 0px 4px 8px 0px rgba(3, 27, 78, 0.12);
-  border-radius: 5px;
-}
-.step-box {
-  flex: 2;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  cursor: pointer;
-  &.last {
-    flex: 1;
-    margin-right: 0;
-  }
-  &.active {
-    .step-item {
-      border-bottom: 4px solid #3a78fc;
-      border-radius: 2px;
-    }
-  }
-  .line {
-    width: 60px;
-    height: 20px;
-  }
-}
-.step-item {
-  padding: 20px;
-  display: inline-block;
-  position: relative;
-  &.last {
-    padding-left: 0;
-    padding-right: 10px;
-  }
-  img {
-    width: 60px;
-    height: 60px;
-    clear: both;
-    display: block;
-    margin: auto;
-  }
-  .tag {
-    width: 14px;
-    height: 29px;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  p {
-    margin-top: 10px;
-    color: #373b4b;
-    line-height: 28px;
-    text-align: center;
-    white-space: nowrap;  // 关键，否则文字换行
-  }
-</style>
-
+# js
 // 回到顶部
 document.getElementsByTagName('html')[0].scrollTop = 0
+1.document.body.scrollTop=document.documentElement.scrollTop=0 //页面滚动到顶部
+2.document.body.scrollIntoView()
+3.document.getElementById('site-nav').scrollIntoView()
+下面是一个小的例子：
+// 每次切换标题栏都从第一个开始展示
+        document.querySelector('.infinite-scroll-component').scrollTo(0,0)
+//选中当前想要回到dom元素，使用scrollTo(0,0),实现能够在切换中始终保持第一栏在顶部显示。
+
+// 下载
+      this.util.exportFile('learn/download', true, this.id, name, ext)  // false就是params对象。
+let exportFile = function (url, isGet, params, fileName, fileType) {
+    Axios({
+      url: window.g.url + url,
+      method: isGet ? "GET" : "POST",
+      responseType: "blob",
+      headers: {
+        IDSTGC: getCookie("IDSTGC") || "4c94867cb4854ede8ce3121f4a2a037e",
+      },
+      data: params,
+    }).then((res) => {
+      let url = window.URL.createObjectURL(res.data);
+      let link = document.createElement("a");
+      link.href = url;
+      link.style.display = "none";
+      link.setAttribute("download", fileName + "." + fileType);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    });
+}
 
 # regex
 ^(?!.*(localhost|z.angke.com.cn)).*$
@@ -148,3 +98,48 @@ document.getElementsByTagName('html')[0].scrollTop = 0
     </div>
 </van-overlay
 
+# Vue
+// 对于editForm.content.totalScore，如何设置校验规则。
+<el-col :span="12">
+            <el-form-item label="总分" prop="totalScore"></el-form-item>
+            <el-form-item prop="content.totalScore" style="margin-left: -100px" :rules="rules.totalScore">
+              <el-input
+                v-model="editForm.content.totalScore"
+                disabled
+              ></el-input>
+            </el-form-item>
+          </el-col>
+  let validateZero = (rule, val, callback) => {
+      if (val == "0") {
+        return callback(new Error("总分不能为零!"));
+      } else {
+        return callback();
+      }
+    };
+ totalScore: [
+          { required: true, validator: validateZero, trigger: "change" },
+        ],
+
+
+computed的值不能给data赋值，computed时还没有this呢。因为data里的数据是在mouted中执行函数才获取到数据，是在computed之后，所以在第一次computed计算时，data中数据还是空的，所以computed找不到data里的数据。
+
+watch数组list，可以 computed: {
+        newList(){ 
+           return JSON.parse(JSON.stringify(this.list)) // 深拷贝依赖
+        }
+    },
+    watch: {
+        newList(newVal, oldVal) {
+            console.log(newVal， this.list)
+            console.log(oldVal)
+        },
+    },
+
+change事件中，editForm的属性已改变，若要拿到旧值，就得用watch:
+watch: {
+    'editForm.type': {
+      handler(oldVal, newVal) {
+        console.log(oldVal, newVal);
+      }
+    }
+  },

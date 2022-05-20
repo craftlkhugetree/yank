@@ -58,14 +58,17 @@ let startAjax = function (options) {
         if (options && options.url && options.code) {
             getRealUrl(options.code, options.url).then(function (data) {
                 let ajaxSettings = {
-                    url: data,
-                    method: options.isGet ? 'GET' : 'POST',
-                    headers: {
-                        "IDSTGC": getCookie('IDSTGC')
-                        // "IDSTGC": getCookie('IDSTGC') || "6dca681bcfc94a97b11f88f223121820"
-                    },
-                    data: options.isRep ? (options.data) : (qs.stringify(options.data) || '')
-                }
+                  url: data,
+                  method: options.isGet ? "GET" : "POST",
+                  headers: {
+                    IDSTGC:
+                      getCookie("IDSTGC") || "a756cc42a1b5456ba88a62af0faf8135",
+                    // "IDSTGC": getCookie('IDSTGC') || "6dca681bcfc94a97b11f88f223121820"
+                  },
+                  data: options.isRep
+                    ? options.data
+                    : qs.stringify(options.data) || "",
+                };
                 return Axios(ajaxSettings).then(function (data) {
                     let orgindata = data;
                     let res = data.data;
@@ -102,25 +105,24 @@ let startAjax = function (options) {
 /** Function: 导出文件 */
 let exportFile = function (url, isGet, params, fileName, fileType) {
     Axios({
-        url: window.g.url + url,
-        method: isGet ? "GET" : "POST",
-        responseType: "blob",
-        headers: {
-            "IDSTGC": getCookie('IDSTGC')
-            // "IDSTGC": getCookie('IDSTGC') || "aefabf5747824ac3983eb18f774fd144"
-        },
-        data: params
-    }).then(res => {
-        let url = window.URL.createObjectURL(res.data);
-        let link = document.createElement("a");
-        link.href = url;
-        link.style.display = "none";
-        link.setAttribute("download", fileName + "." + fileType);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-    })
+      url: window.g.url + url,
+      method: isGet ? "GET" : "POST",
+      responseType: "blob",
+      headers: {
+        IDSTGC: getCookie("IDSTGC") || "4c94867cb4854ede8ce3121f4a2a037e",
+      },
+      data: params,
+    }).then((res) => {
+      let url = window.URL.createObjectURL(res.data);
+      let link = document.createElement("a");
+      link.href = url;
+      link.style.display = "none";
+      link.setAttribute("download", fileName + "." + fileType);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    });
 }
 
 /** Function: 判断是否为IE浏览器 */

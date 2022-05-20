@@ -1,5 +1,6 @@
 // var url = "http://app.dev.angke.com.cn"
-var url = "http://172.20.0.116:11080/";
+// var url = "http://172.20.0.116:11080/";
+var url = "http://172.20.0.116/";
 
 window.g = {
   // 配置服务器地址

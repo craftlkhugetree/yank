@@ -7,7 +7,7 @@
       :key="item.id"
     >
       <!-------------- 普通考试 -------------->
-      <div class="step-item" v-if="exam.type=='1'" @click="changeModel(index)">
+      <div class="step-item" v-if="exam.type=='1' || !curExam.id" @click="changeModel(index)">
         <img src="@/assets/img/learn-color.png" alt />
         <p>{{item.name}}</p>
       </div>
@@ -31,7 +31,8 @@ export default {
     list: Array
   },
   computed: mapState({
-    curLearn: state => state.curLearn
+    curLearn: state => state.curLearn,
+    curExam: state => state.curExam
   }),
   methods: {
     // 闯关考试是否可以点击： 不按顺序闯关 || 第一个模块 || 前一个模块已通过
@@ -42,7 +43,8 @@ export default {
     changeModel(index) {
       let model = this.list[index]
       // 可以点击的情况： 普通考试 || 不按顺序闯关 || 第一个模块 || 前一个模块已通过
-      if (this.exam.type == '1' || this.canClick(index)) {
+      // 没有考试时，学习资料为普通考试形式展示，原闯关资料也可以浏览
+      if (this.exam.type == '1' || this.canClick(index) || !this.curExam.id) {
         this.$store.commit('setCurLearn', {
           modelIndex: index,
           learnIndex: 0
@@ -88,6 +90,7 @@ export default {
   padding: 20px;
   display: inline-block;
   position: relative;
+  text-align: center;
   img {
     width: 60px;
     height: 60px;

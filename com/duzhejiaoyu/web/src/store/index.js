@@ -69,7 +69,7 @@ export default new Vuex.Store({
     },
     setUserInfo(state, data) {
       state.userInfo = data
-      state.userInfo.isPassExam = 0
+      // state.userInfo.isPassExam = 0
     },
     setIsFirstLogin(state, data) {
       state.isFirstLogin = data

@@ -153,13 +153,13 @@
         <el-table-column label="排序" align="center" width="124" fixed="right">
           <template slot-scope="scope">
             <div v-if="scope.row.id">
-              <span v-if="scope.$index == 0" class="disabled">
+              <span v-if="currentPage == 1 && scope.$index == 0" class="disabled">
                 <i class="el-icon-top"></i>上移
               </span>
               <span v-else @click="move('up',scope.row)">
                 <i class="el-icon-top"></i>上移
               </span>
-              <span v-if="scope.$index == total-1" class="disabled">
+              <span v-if="((currentPage-1) * pageSize) + scope.$index == total-1" class="disabled">
                 <i class="el-icon-bottom"></i>下移
               </span>
               <span v-else @click="move('down',scope.row)">
@@ -271,7 +271,7 @@ export default {
                   type: 'success',
                   message: `删除成功！`
                 })
-                this.getTableData()
+                this.getTableData(0, this.pageSize)
               } else {
                 this.$message({
                   showClose: true,
@@ -303,7 +303,7 @@ export default {
         .then(res => {
           this.loading = false
           if (res.code == '000000') {
-            this.getTableData()
+            this.getTableData(this.currentPage, this.pageSize)
           } else {
             this.$message({
               showClose: true,
