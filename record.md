@@ -1,11 +1,13 @@
 # Project
-liken 123456    http://160.255.0.64:10086/
+
+jenkins:   liken 123456 http://160.255.0.64:10086/
 208080338/123 208080337
 读者教育 http://172.20.0.116:11080/lres2022/rest/swagger-ui.html
 白马 http://app.dev.angke.com.cn/bsermipweb/rest/swagger-ui.html
 座位预约 svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
-  http://seat.dev.angke.cn/mseat/#/index 手机端
+http://seat.dev.angke.cn/mseat/#/index 手机端
 svn://160.255.0.56/01module/lres/03code/lresweb/src/main/webapp/mobile_nh
+
 # Git
 
 git svn clone -r HEAD --username=liken svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
@@ -22,22 +24,23 @@ git ls-files -v | grep '^h\ '
 
 git config --list
 
-git修改注释的方法：1、利用“git commit --amend -m”命令，可以在还没有push之前修改注释内容；2、利用“git push -f”命令，可以在push之后修改注释内容。
+git 修改注释的方法：1、利用“git commit --amend -m”命令，可以在还没有 push 之前修改注释内容；2、利用“git push -f”命令，可以在 push 之后修改注释内容。
 
-ssh-keygen -t rsa -C "345823102@qq.com" 
-ssh -T git@github.com  // 测试
-
+ssh-keygen -t rsa -C "345823102@qq.com"
+ssh -T git@github.com // 测试
 
 # npm
 
 npm config list
 
 # shell
-如果dir2目录不存在，则可以直接使用
+
+如果 dir2 目录不存在，则可以直接使用
 cp -r dir1 dir2
-如果dir2目录已存在，则需要使用
+如果 dir2 目录已存在，则需要使用
 cp -r dir1/. dir2
-如果这时使用cp -r dir1 dir2,则也会将dir1目录复制到dir2中
+如果这时使用 cp -r dir1 dir2,则也会将 dir1 目录复制到 dir2 中
+
 # sed
 
 在第一行前插入文本
@@ -55,6 +58,7 @@ ctrl + shift + o 查找函数类名
 ctrl + p 打开文件
 
 # js
+
 // 回到顶部
 document.getElementsByTagName('html')[0].scrollTop = 0
 1.document.body.scrollTop=document.documentElement.scrollTop=0 //页面滚动到顶部
@@ -62,36 +66,39 @@ document.getElementsByTagName('html')[0].scrollTop = 0
 3.document.getElementById('site-nav').scrollIntoView()
 下面是一个小的例子：
 // 每次切换标题栏都从第一个开始展示
-        document.querySelector('.infinite-scroll-component').scrollTo(0,0)
-//选中当前想要回到dom元素，使用scrollTo(0,0),实现能够在切换中始终保持第一栏在顶部显示。
+document.querySelector('.infinite-scroll-component').scrollTo(0,0)
+//选中当前想要回到 dom 元素，使用 scrollTo(0,0),实现能够在切换中始终保持第一栏在顶部显示。
 
 // 下载
-      this.util.exportFile('learn/download', true, this.id, name, ext)  // false就是params对象。
+this.util.exportFile('learn/download', true, this.id, name, ext) // false 就是 params 对象。
 let exportFile = function (url, isGet, params, fileName, fileType) {
-    Axios({
-      url: window.g.url + url,
-      method: isGet ? "GET" : "POST",
-      responseType: "blob",
-      headers: {
-        IDSTGC: getCookie("IDSTGC") || "4c94867cb4854ede8ce3121f4a2a037e",
-      },
-      data: params,
-    }).then((res) => {
-      let url = window.URL.createObjectURL(res.data);
-      let link = document.createElement("a");
-      link.href = url;
-      link.style.display = "none";
-      link.setAttribute("download", fileName + "." + fileType);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    });
+Axios({
+url: window.g.url + url,
+method: isGet ? "GET" : "POST",
+responseType: "blob",
+headers: {
+IDSTGC: getCookie("IDSTGC") || "4c94867cb4854ede8ce3121f4a2a037e",
+},
+data: params,
+}).then((res) => {
+let url = window.URL.createObjectURL(res.data);
+let link = document.createElement("a");
+link.href = url;
+link.style.display = "none";
+link.setAttribute("download", fileName + "." + fileType);
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+window.URL.revokeObjectURL(url);
+});
 }
 
 # regex
-^(?!.*(localhost|z.angke.com.cn)).*$
+
+^(?!._(localhost|z.angke.com.cn))._$
+
 # vant
+
 <van-overlay :show="true">
     <div class="loading" @click.stop>
       <van-loading size="36px" vertical>加载中...</van-loading>
@@ -99,47 +106,77 @@ let exportFile = function (url, isGet, params, fileName, fileType) {
 </van-overlay
 
 # Vue
-// 对于editForm.content.totalScore，如何设置校验规则。
+
+// iframe 内部输入框校验（富文本）,如果跨了子域，要在父页面跟子页面都设置 document.domain,值都是域名，不要前面的 www 什么的
+mounted() {
+let \_this = this;
+let frame = document.getElementsByClassName("ke-edit-iframe");
+if (frame && frame.length) {
+let w = frame[0].contentWindow; // 获取 iframe 内部 body
+let b = w.document.body;
+let MutationObserver =
+window.MutationObserver ||
+window.webkitMutationObserver ||
+window.MozMutationObserver;
+\_this.mutationObserver = new MutationObserver(function (mutations) {
+let tmp = \_this.transHtml(); // 给 editForm.dhtml 赋值
+\_this.$refs.editForm.validate((valid) => {})
+});
+\_this.mutationObserver.observe(b, {
+childList: true, // 子节点的变动（新增、删除或者更改）
+attributes: true, // 属性的变动
+characterData: true, // 节点内容或节点文本的变动
+subtree: true, // 是否将观察器应用于该节点的所有后代节点
+attributeFilter: ["class", "style"], // 观察特定属性
+attributeOldValue: true, // 观察 attributes 变动时，是否需要记录变动前的属性值
+characterDataOldValue: true, // 观察 characterData 变动，是否需要记录变动前的值
+});
+}
+},
+beforeDestroy() {
+this.mutationObserver.disconnect(); // 此处以后的不再监听
+},
+
+// 对于 editForm.content.totalScore，如何设置校验规则。
 <el-col :span="12">
-            <el-form-item label="总分" prop="totalScore"></el-form-item>
-            <el-form-item prop="content.totalScore" style="margin-left: -100px" :rules="rules.totalScore">
-              <el-input
+<el-form-item label="总分" prop="totalScore"></el-form-item>
+<el-form-item prop="content.totalScore" style="margin-left: -100px" :rules="rules.totalScore">
+<el-input
                 v-model="editForm.content.totalScore"
                 disabled
               ></el-input>
-            </el-form-item>
-          </el-col>
-  let validateZero = (rule, val, callback) => {
-      if (val == "0") {
-        return callback(new Error("总分不能为零!"));
-      } else {
-        return callback();
-      }
-    };
- totalScore: [
-          { required: true, validator: validateZero, trigger: "change" },
-        ],
+</el-form-item>
+</el-col>
+let validateZero = (rule, val, callback) => {
+if (val == "0") {
+return callback(new Error("总分不能为零!"));
+} else {
+return callback();
+}
+};
+totalScore: [
+{ required: true, validator: validateZero, trigger: "change" },
+],
 
+computed 的值不能给 data 赋值，computed 时还没有 this 呢。因为 data 里的数据是在 mouted 中执行函数才获取到数据，是在 computed 之后，所以在第一次 computed 计算时，data 中数据还是空的，所以 computed 找不到 data 里的数据。
 
-computed的值不能给data赋值，computed时还没有this呢。因为data里的数据是在mouted中执行函数才获取到数据，是在computed之后，所以在第一次computed计算时，data中数据还是空的，所以computed找不到data里的数据。
-
-watch数组list，可以 computed: {
-        newList(){ 
-           return JSON.parse(JSON.stringify(this.list)) // 深拷贝依赖
-        }
-    },
-    watch: {
-        newList(newVal, oldVal) {
-            console.log(newVal， this.list)
-            console.log(oldVal)
-        },
-    },
-
-change事件中，editForm的属性已改变，若要拿到旧值，就得用watch:
+watch 数组 list，可以 computed: {
+newList(){
+return JSON.parse(JSON.stringify(this.list)) // 深拷贝依赖
+}
+},
 watch: {
-    'editForm.type': {
-      handler(oldVal, newVal) {
-        console.log(oldVal, newVal);
-      }
-    }
-  },
+newList(newVal, oldVal) {
+console.log(newVal， this.list)
+console.log(oldVal)
+},
+},
+
+change 事件中，editForm 的属性已改变，若要拿到旧值，就得用 watch:
+watch: {
+'editForm.type': {
+handler(oldVal, newVal) {
+console.log(oldVal, newVal);
+}
+}
+},

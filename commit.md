@@ -63,3 +63,6 @@ el-dialog v-modal高度，scrollIntoView()；字符串的includes不准确；三
 
 2022/5/19
 1686 【PC端_入馆考试】限制IP访问后，在限制范围内的IP，不能参加考试
+
+2022/5/23
+feat：管理端富文本框从wangEditor改为angkeEditor，且手机端无需预览，管理端预览为富文本框内部的移动端预览。1659 【后台管理_培训资料】新增资料页面，手机端和PC端预览功能不生效
