@@ -1,16 +1,27 @@
 # api
 
 # chrome
- "chrome.exe" --test-type --ignore-certificate-errors
+
+"chrome.exe" --test-type --ignore-certificate-errors
 
 # stylus
-^(?!.*(seat.dev.angke.cn|z.angke.com.cn)).*$
+
+^(?!._(seat.dev.angke.cn|z.angke.com.cn))._$
 ^(?!._(localhost|z.angke.com.cn))._$
+html,
 body {
 font-family: "SF UI Text", "BlinkMacSystemFont", "Helvetica Neue", "Source Han Sans SC", "Segoe UI", "Roboto", "Microsoft Yahei", sans-serif;
 font-weight: bold;
 background-color: #C7EDCC !important;
-/_ background-color:FFF2E2 !important; _/
+/_ background-color:#606266 !important; _/
+}
+
+table,
+span,
+p,
+i,
+a,
+article {
 /_ //兼容不同浏览器 _/
 -webkit-filter: brightness(0.8);
 -o-filter: brightness(0.8);
@@ -20,7 +31,6 @@ filter: brightness(0.8);
 }
 
 @-moz-document domain("zhihu.com") {
-
 body {
 font-family: "SF UI Text", "BlinkMacSystemFont", "Helvetica Neue", "Source Han Sans SC", "Segoe UI", "Roboto", "Microsoft Yahei", sans-serif;
 }
@@ -145,5 +155,3 @@ color: #259;
 text-shadow: none;
 }
 }
-
-

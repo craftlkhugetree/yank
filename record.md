@@ -1,13 +1,3 @@
-# Project
-
-jenkins:   liken 123456 http://160.255.0.64:10086/
-208080338/123 208080337
-读者教育 http://172.20.0.116:11080/lres2022/rest/swagger-ui.html
-白马 http://app.dev.angke.com.cn/bsermipweb/rest/swagger-ui.html
-座位预约 svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
-http://seat.dev.angke.cn/mseat/#/index 手机端
-svn://160.255.0.56/01module/lres/03code/lresweb/src/main/webapp/mobile_nh
-
 # Git
 
 git svn clone -r HEAD --username=liken svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
@@ -25,6 +15,13 @@ git ls-files -v | grep '^h\ '
 git config --list
 
 git 修改注释的方法：1、利用“git commit --amend -m”命令，可以在还没有 push 之前修改注释内容；2、利用“git push -f”命令，可以在 push 之后修改注释内容。
+git 修改以前提交的注释：
+（1）git rebase -i HEAD~2 【数字指的是倒数第 n 次提交记录的注释】
+（2）pick 改成 edit 【输入 i 编辑模式，只需要将你需要修改的注释前的 pick 改为 edit 即可】
+（3）Esq 【退出编辑模式】
+（4）:wq 【保存退出】
+（5）git commit --amend 【同上有提示，第一行进行你真正需要的修改, 修改完后，保存退出】
+（6）git rebase --continue 【退出后，输入最后一步】
 
 ssh-keygen -t rsa -C "345823102@qq.com"
 ssh -T git@github.com // 测试
@@ -33,26 +30,10 @@ ssh -T git@github.com // 测试
 
 npm config list
 
-# shell
-
-如果 dir2 目录不存在，则可以直接使用
-cp -r dir1 dir2
-如果 dir2 目录已存在，则需要使用
-cp -r dir1/. dir2
-如果这时使用 cp -r dir1 dir2,则也会将 dir1 目录复制到 dir2 中
-
-# sed
-
-在第一行前插入文本
-sed -i '1 i\插入字符串' datafile
-在最后一行后插入文本
-sed -i '$ a\插入字符串' datafile
-在匹配行前插入一行
-sed -i '/pattern/ i "插入字符串"'' datafile
-删除最后一行
-sed -i '$ d' .git/config
-
 # vscode
+
+没有配置前 如果代码过长，vetur 会把尖括号整理到第二行换行， "prettier.htmlWhitespaceSensitivity": "ignore", //包裹文字时候结束标签的结尾尖括号掉到了下一行
+感叹号后回车，快捷生成 html
 
 ctrl + shift + o 查找函数类名
 ctrl + p 打开文件
@@ -107,6 +88,13 @@ window.URL.revokeObjectURL(url);
 
 # Vue
 
+路由传递数组参数：
+this.$router.push({
+          path: '/irrgate-manage/audit/audit/batch',
+          query: { data: JSON.stringify(this.checkedList)},
+        });
+this.checkedList = JSON.parse(this.$route.query.data);
+
 // iframe 内部输入框校验（富文本）,如果跨了子域，要在父页面跟子页面都设置 document.domain,值都是域名，不要前面的 www 什么的
 mounted() {
 let \_this = this;
@@ -122,6 +110,7 @@ window.MozMutationObserver;
 let tmp = \_this.transHtml(); // 给 editForm.dhtml 赋值
 \_this.$refs.editForm.validate((valid) => {})
 });
+// 开始监听 iframe 内部元素变动
 \_this.mutationObserver.observe(b, {
 childList: true, // 子节点的变动（新增、删除或者更改）
 attributes: true, // 属性的变动

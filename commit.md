@@ -1,3 +1,13 @@
+# Project
+
+jenkins: liken 123456 http://160.255.0.64:10086/
+208080338/123 208080337
+读者教育 http://172.20.0.116:11080/lres2022/rest/swagger-ui.html
+白马 http://app.dev.angke.com.cn/bsermipweb/rest/swagger-ui.html
+座位预约 svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
+http://seat.dev.angke.cn/mseat/#/index 手机端
+svn://160.255.0.56/01module/lres/03code/lresweb/src/main/webapp/mobile_nh
+
 https://720yun.com/t/c9fjr7syOu5
 
 
@@ -66,3 +76,18 @@ el-dialog v-modal高度，scrollIntoView()；字符串的includes不准确；三
 
 2022/5/23
 feat：管理端富文本框从wangEditor改为angkeEditor，且手机端无需预览，管理端预览为富文本框内部的移动端预览。1659 【后台管理_培训资料】新增资料页面，手机端和PC端预览功能不生效
+
+2022/5/25
+feat：pc、移动端的泵水审批，增加批量审批功能。 options换行复用。 props多个type用|。webpack：'st@tic': resolve('static');
+移动端按需引入ElementUi
+import { Table, TableColumn, Checkbox } from 'element-ui';
+Vue.use(Table).use(TableColumn).use(Checkbox)
+
+2022/5/26
+fix: 移动端audit表格高度NaN。
+移动端按需引入ElementUi
+
+2022/5/27
+feat：隐藏basicLayout；增加功能模块首页funModule；批量审批按钮是传参路由；批量审批归于详情页，判断isBatch，伸缩。默认跳到灌水审批。
+feat: 1、灌溉申请页面，灌溉日期后增加选择“全天”“上午”或“下午”；
+                  2、灌溉用水申请中，可自动显示本人名下的科研项目名称，进行选择；填写项目名称时，有红字提示“请规范详实填写项目名称”

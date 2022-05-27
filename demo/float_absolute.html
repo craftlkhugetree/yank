@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      .main {
+        position: absolute;
+        left: 100px;
+        height: 350px;
+        /* float: right; */
+      }
+      div {
+        width: 100px;
+        height: 100px;
+      }
+      .test1 {
+        background-color: red;
+      }
+      .test2 {
+        background-color: green;
+      }
+      .test3 {
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="test1"></div>
+      <div class="test2"></div>
+      <div class="test3"></div>
+    </div>
+    作为父容器时，是使用相对定位还是绝对定位：
+    当父一级div中只有一组子元素的时候，使用relative(相对定位)或absolute(绝对定位)都可以达到移动效果。
+    但当父容器中还有其他组的子元素时，就要考虑是否破快文档流（是否使用absolute进行页面布局）
+  </body>
+</html>
