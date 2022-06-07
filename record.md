@@ -39,11 +39,23 @@ ctrl + shift + o 查找函数类名
 ctrl + p 打开文件
 
 # js
+childNodes不是数组，而是类数组，所以没有filter函数，要转一下arr。默认元素宽度33%，如果是两个元素就50%平分宽度。
+setWidth() {
+      let dom = document.getElementById('prAuditTabs');
+      if (this.num == '2' && dom) {
+        let nodes = dom.childNodes;
+        var arr = Array.prototype.slice.call(nodes, 0);
+        let li = arr && arr.filter(n => n.nodeName === 'LI') || [];
+        li.forEach(l => {
+          l.style.width = "50%"
+        })
+      }
+    }
 
 // 回到顶部
 document.getElementsByTagName('html')[0].scrollTop = 0
 1.document.body.scrollTop=document.documentElement.scrollTop=0 //页面滚动到顶部
-2.document.body.scrollIntoView()
+2.document.body.scrollIntoView(true/ false)
 3.document.getElementById('site-nav').scrollIntoView()
 下面是一个小的例子：
 // 每次切换标题栏都从第一个开始展示
@@ -87,6 +99,86 @@ window.URL.revokeObjectURL(url);
 </van-overlay
 
 # Vue
+el-checkbox的勾选框颜色，不能用逗号来统一设置一组值，只能一个个值的设置：
+/deep/ .el-checkbox__input.is-checked .el-checkbox__inner {
+      background-color:#00B09B;
+      border-color:#00B09B;
+     }
+/deep/ .el-checkbox__input.is-indeterminate  .el-checkbox__inner {
+      background-color:#00B09B;
+      border-color:#00B09B; 
+}
+/deep/  .el-checkbox__input.is-checked + .el-checkbox__label {
+      color: #00B09B;
+     }
+/deep/  .el-checkbox.is-bordered.is-checked{
+      border-color: #00B09B;
+     }
+/deep/  .el-checkbox__input.is-focus .el-checkbox__inner{
+      border-color:  #00B09B;
+     }
+
+
+移动端el-table在数据请求后，固定列错位，解决办法就是让table重新布局。官方提供了doLayout方法。
+按照这个方法在请求得到数据的时候，用nextTick对table的DOM重新渲染。
+ this.$nextTick(() => {
+        // el-table加ref="multipleTable"
+        this.$refs.multipleTable.doLayout();
+      });
+试了下不生效，说明是别的问题。查看了表格中的最后一列，发现该列的宽度设置的较低，内存已经越出，导致每行错位。将该列的宽度调宽。恢复正常。 
+
+$nextTick转化pdf：
+    transToPdf(title, dom) {
+      const loading = this.$loading({
+        lock: true,
+        text: '下载中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
+
+      let _this = this;
+      let element = document.getElementById(dom); // 这个dom元素是要导出pdf的div容器
+      html2Canvas(element).then(function(canvas) {
+        var contentWidth = canvas.width;
+        var contentHeight = canvas.height;
+
+        //一页pdf显示html页面生成的canvas高度;
+        var pageHeight = contentWidth / 592.28 * 841.89;
+        //未生成pdf的html页面高度
+        var leftHeight = contentHeight;
+        //页面偏移
+        let position = 0;
+        //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+        var imgWidth = 555.28;
+        var imgHeight = 592.28 / contentWidth * contentHeight;
+
+        var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+        // 分页
+       var pdf = new JsPDF('', 'pt', 'a4');
+        // var pdf = new JsPDF('', 'pt', [contentWidth, contentHeight]); //不分页
+        // pdf.addImage(pageData, 'JPEG', 0, 0, contentWidth, contentHeight);
+
+        //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+        //当内容未超过pdf一页显示的范围，无需分页
+       if (leftHeight < pageHeight) {
+         pdf.addImage(pageData, 'JPEG', 20, 0, imgWidth, imgHeight);
+       } else {
+         while (leftHeight > 0) {
+           pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+           leftHeight -= pageHeight;
+           position -= 841.89;
+           //避免添加空白页
+           if (leftHeight > 0) {
+             pdf.addPage();
+           }
+         }
+       }
+        pdf.save(title + '.pdf');
+        loading.close();
+        _this.tmpTable = false;
+      });
+    },
 
 路由传递数组参数：
 this.$router.push({
