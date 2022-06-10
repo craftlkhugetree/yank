@@ -1,4 +1,31 @@
 // css3
+.imgs {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  .img-box {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    overflow: hidden;
+    img {
+      margin: 0 auto;
+    }
+    span {
+      // 确保文字处于img下方, 宽度4等分可以设置为25%
+      flex-basis: 100%;
+      // 左右固定，中间自适应可以让中间，flex-grow: 1
+    }
+  }
+}
+// 点击使img变色，必须配合外围的overflow
+.click {
+  transform: translateY(-60px);
+  //颜色、x轴偏移量、y轴偏移量
+  filter: drop-shadow(#fd7d18 0 60px);
+  -webkit-filter: drop-shadow(#fd7d18 0 60px); //兼容其它浏览器
+}
+
 
 水平粘性居中
 position: sticky;
@@ -77,6 +104,7 @@ CSS 改变文本可以采用伪元素生成
         height: 90px;
         display: -webkit-box; // 必须有，否则clamp可能不兼容
         overflow: hidden;
+        word-wrap: break-word;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
       }

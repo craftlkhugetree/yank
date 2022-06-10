@@ -121,4 +121,12 @@ feat: html2canvas,jspdf
 
 myRepairs:  status  0草稿； 1,2,3,4已报修
 pageQuery:  bizNode未处理；handledNode已处理；movedNode已转移。角色对应值 _START， _BM，_HQ
-keyword: 标题和内容。 标题增加了title字段，来应对搜索。
+        过滤里的filter中：keyword: 标题和内容。 标题增加了title字段，来应对搜索。
+/bmRepair/countFlag  {createId: userID}和 bizNode
+photos:  "id1,id2"
+
+2022/6/8
+feat: report/repair; 16000-6; childNodes; transToPdf
+
+2022/6/10
+feat:report pics,imgs css; 合并文件和函数; api.js, 'GET'。
