@@ -1,0 +1,18 @@
+# 读者教育：
+moment，lodash插件
+formatTime函数
+xlsx导入，预览pdf插件。富文本移动端预览。
+
+# 座位预约：
+table棋盘
+
+# 白马：
+public.scss公共样式。	style.css  icomoon修改底色。 transform原图到overflow:hidden，再改变图片底色。
+移动端按需引入element-ui
+路由设置默认prop
+导出pdf插件：jsPdf、html2Canvas
+上传图片并预览或删除
+
+# 网上订餐
+print LODOP
+transition name动画，可用于路由转换，if/show隐显。
