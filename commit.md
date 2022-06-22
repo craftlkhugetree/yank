@@ -11,9 +11,8 @@ svn://160.255.0.56/01module/lres/03code/lresweb/src/main/webapp/mobile_nh
 https://720yun.com/t/c9fjr7syOu5
 
 
-2022/5/6 读者教育
+# 2022/5/6 读者教育
 【feat】mixins:confirmDialog 4 exam and timing; result, examResult, examing; replace $message by Notify.
-
 
 【fix】toExam(normal exam is the 0 index，otherwise no content);modelStep last item's text nowrap; exam component's canClick is only 4 normal exam
 
@@ -25,7 +24,7 @@ https://720yun.com/t/c9fjr7syOu5
 【feat】answerPop
 【feat】examResult; publicPath
 
-2022/5/9 座位预约
+# 2022/5/9 座位预约
 【feat】座位预约，排序上移下移 sectionManage
 
 2022/5/10
@@ -77,7 +76,7 @@ el-dialog v-modal高度，scrollIntoView()；字符串的includes不准确；三
 2022/5/23
 feat：管理端富文本框从wangEditor改为angkeEditor，且手机端无需预览，管理端预览为富文本框内部的移动端预览。1659 【后台管理_培训资料】新增资料页面，手机端和PC端预览功能不生效
 
-2022/5/25
+# 2022/5/25 白马基地
 feat：pc、移动端的泵水审批，增加批量审批功能。 options换行复用。 props多个type用|。webpack：'st@tic': resolve('static');
 移动端按需引入ElementUi
 import { Table, TableColumn, Checkbox } from 'element-ui';
@@ -124,9 +123,41 @@ pageQuery:  bizNode未处理；handledNode已处理；movedNode已转移。角�
         过滤里的filter中：keyword: 标题和内容。 标题增加了title字段，来应对搜索。
 /bmRepair/countFlag  {createId: userID}和 bizNode
 photos:  "id1,id2"
+myTasks: bizNode,   status (integer, optional): 0待办1完成 ,
 
 2022/6/8
 feat: report/repair; 16000-6; childNodes; transToPdf
 
 2022/6/10
 feat:report pics,imgs css; 合并文件和函数; api.js, 'GET'。
+
+2022/6/13
+feat:handle/repaired
+
+2022/6/14
+一级菜单: 在线报修  
+二级菜单: 
+        我要报修 DISPLAYURL: "/repair/report"
+        后勤保修审批 DISPLAYURL: "/repair/hq_handle"    
+        白马保修审批 DISPLAYURL: "/repair/bm_handle"    
+一级菜单：我的消息 DISPLAYURL: "/mission/my_message"     
+
+实习审批，移动端   /practice-audit-bm
+实习审批，PC端，白马   /practive-BM-audit
+                后勤  /practive-HQ-audit
+
+
+2022/6/16
+feat: detail,editReport,list,report,window.g.url,router; mock sideBar
+        mobile fix: markscore=1; 更多暗色；badge left 50%；
+
+2022/6/17
+feat: move,judge;fix: curRole,checkbox,opinions,
+
+2022/6/20
+feat: hqList,bmList,pc端路由区分，移动端curRole点击区分。 报修办理的3个Tab后添加数量。
+feat: hqList,bmList,pc端路由区分，移动端curRole点击区分。 新增后勤角色在funModule的图片。
+fix: myMessage；批量转移。
+
+# 2022/6/21 线上订餐
+feat： loading, /dist；需求会。

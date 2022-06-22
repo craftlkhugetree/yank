@@ -23,6 +23,8 @@ git 修改以前提交的注释：
 （5）git commit --amend 【同上有提示，第一行进行你真正需要的修改, 修改完后，保存退出】
 （6）git rebase --continue 【退出后，输入最后一步】
 
+git log --since=2022-04-27 --until=2022-06-21 --author="liken" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END {printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }'
+
 ssh-keygen -t rsa -C "345823102@qq.com"
 ssh -T git@github.com // 测试
 
@@ -39,18 +41,27 @@ ctrl + shift + o 查找函数类名
 ctrl + p 打开文件
 
 # js
-childNodes不是数组，而是类数组，所以没有filter函数，要转一下arr。默认元素宽度33%，如果是两个元素就50%平分宽度。
+<!-- 在两个互斥的radio中，一定要有相同的name值，不然不能互斥选择。 -->
+        <input type="radio" name="sex" v-model="sex" value="男" />男
+        <input type="radio" name="sex" v-model="sex" value="女"/>女
+data {sex: ''},
+原文链接：https://blog.csdn.net/MelodyFreedom/article/details/117514664
+
+scrollTop一直为零可能是根本没有滚动，父元素高度大于子元素。若考虑兼容应当使用 document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset
+
+
+childNodes 不是数组，而是类数组，所以没有 filter 函数，要转一下 arr。默认元素宽度 33%，如果是两个元素就 50%平分宽度。
 setWidth() {
-      let dom = document.getElementById('prAuditTabs');
-      if (this.num == '2' && dom) {
-        let nodes = dom.childNodes;
-        var arr = Array.prototype.slice.call(nodes, 0);
-        let li = arr && arr.filter(n => n.nodeName === 'LI') || [];
-        li.forEach(l => {
-          l.style.width = "50%"
-        })
-      }
-    }
+let dom = document.getElementById('prAuditTabs');
+if (this.num == '2' && dom) {
+let nodes = dom.childNodes;
+var arr = Array.prototype.slice.call(nodes, 0);
+let li = arr && arr.filter(n => n.nodeName === 'LI') || [];
+li.forEach(l => {
+l.style.width = "50%"
+})
+}
+}
 
 // 回到顶部
 document.getElementsByTagName('html')[0].scrollTop = 0
@@ -92,49 +103,83 @@ window.URL.revokeObjectURL(url);
 
 # vant
 
+预览图片：
+import { ImagePreview } from 'vant';
+ImagePreview({images: [url], showIndex: false});
+
 <van-overlay :show="true">
     <div class="loading" @click.stop>
       <van-loading size="36px" vertical>加载中...</van-loading>
     </div>
-</van-overlay
+</van-overlay>
 
+# webpack
+'@': resolve('src'),
+img: "@/../static/images/quanbu",
+或者   'st@tic': resolve('static'),
+img: "st@tic/images/quanbu",
 # Vue
-el-checkbox的勾选框颜色，不能用逗号来统一设置一组值，只能一个个值的设置：
-/deep/ .el-checkbox__input.is-checked .el-checkbox__inner {
-      background-color:#00B09B;
-      border-color:#00B09B;
-     }
-/deep/ .el-checkbox__input.is-indeterminate  .el-checkbox__inner {
-      background-color:#00B09B;
-      border-color:#00B09B; 
+computed: {
+    tempCountPlusTempCount2() { 
+          return this.tempcount+this.tempcount2
+    }, 
+    ...mapState(['count','name']), // 映射 this.count 为 store.state.count
+    ...mapState({
+        nameAlias: 'name', // string   映射 this.nameAlias 为 store.state.name的值
+* // 用普通函数this指向vue实例,但是在箭头函数中this就不是指向vue实例了，所以这里必须用普通哈数
+        countplustempcount: function (state) { 
+          return this.tempcount + state.count
+        },
+        countplustempcount2 (state) {
+          return this.tempcount2 + state.count
+        } 
+    })
 }
-/deep/  .el-checkbox__input.is-checked + .el-checkbox__label {
-      color: #00B09B;
-     }
-/deep/  .el-checkbox.is-bordered.is-checked{
-      border-color: #00B09B;
-     }
-/deep/  .el-checkbox__input.is-focus .el-checkbox__inner{
-      border-color:  #00B09B;
-     }
 
 
-移动端el-table在数据请求后，固定列错位，解决办法就是让table重新布局。官方提供了doLayout方法。
-按照这个方法在请求得到数据的时候，用nextTick对table的DOM重新渲染。
- this.$nextTick(() => {
+
+1、在组件标签上绑定的事件是自定义事件，在组件模板里绑定的事件才是原生的事件。（自定义事件可以通过在子组件中通过this.$emit去触发，但是这样太麻烦）
+2、给组件标签上的事件添加‘.native’修饰符，就可以使事件变为原生点击事件而不再是自定义事件。
+
+
+el-form的validator必须每一个if-else都有callback，否则流程中断。
+
+
+el-checkbox 的勾选框颜色，不能用逗号来统一设置一组值，只能一个个值的设置：
+/deep/ .el-checkbox**input.is-checked .el-checkbox**inner {
+background-color:#00B09B;
+border-color:#00B09B;
+}
+/deep/ .el-checkbox**input.is-indeterminate .el-checkbox**inner {
+background-color:#00B09B;
+border-color:#00B09B;
+}
+/deep/ .el-checkbox**input.is-checked + .el-checkbox**label {
+color: #00B09B;
+}
+/deep/ .el-checkbox.is-bordered.is-checked{
+border-color: #00B09B;
+}
+/deep/ .el-checkbox**input.is-focus .el-checkbox**inner{
+border-color: #00B09B;
+}
+
+移动端 el-table 在数据请求后，固定列错位，解决办法就是让 table 重新布局。官方提供了 doLayout 方法。
+按照这个方法在请求得到数据的时候，用 nextTick 对 table 的 DOM 重新渲染。
+this.$nextTick(() => {
         // el-table加ref="multipleTable"
         this.$refs.multipleTable.doLayout();
-      });
-试了下不生效，说明是别的问题。查看了表格中的最后一列，发现该列的宽度设置的较低，内存已经越出，导致每行错位。将该列的宽度调宽。恢复正常。 
+});
+试了下不生效，说明是别的问题。查看了表格中的最后一列，发现该列的宽度设置的较低，内存已经越出，导致每行错位。将该列的宽度调宽。恢复正常。
 
 $nextTick转化pdf：
   transToPdf(title, domID, _this) {
     const loading = _this.$loading({
-      lock: true,
-      text: '下载中',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
-    });
+lock: true,
+text: '下载中',
+spinner: 'el-icon-loading',
+background: 'rgba(0, 0, 0, 0.7)'
+});
 
     let element = document.getElementById(domID); // 这个dom元素是要导出pdf的div容器
     html2Canvas(element).then(function(canvas) {
@@ -177,7 +222,8 @@ $nextTick转化pdf：
       loading.close();
       _this.isDomShow = false;
     });
-  }
+
+}
 
 路由传递数组参数：
 this.$router.push({
@@ -239,6 +285,7 @@ totalScore: [
 ],
 
 computed 的值不能给 data 赋值，computed 时还没有 this 呢。因为 data 里的数据是在 mouted 中执行函数才获取到数据，是在 computed 之后，所以在第一次 computed 计算时，data 中数据还是空的，所以 computed 找不到 data 里的数据。
+computed里的匿名函数是找不到this的，function可以。
 
 watch 数组 list，可以 computed: {
 newList(){
