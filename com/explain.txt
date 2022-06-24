@@ -1,5 +1,5 @@
 # 读者教育：
-moment，lodash插件
+moment，lodash插件  this.moment(new Date(this.goodsTime[0])).format("YYYY.MM.DD hh:mm")
 formatTime函数
 xlsx导入，预览pdf插件。富文本移动端预览。
 
@@ -16,3 +16,4 @@ public.scss公共样式。	style.css  icomoon修改底色。 transform原图到o
 # 网上订餐
 print LODOP
 transition name动画，可用于路由转换，if/show隐显。
+微信二维码接口。 websocket
