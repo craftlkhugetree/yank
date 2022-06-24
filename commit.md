@@ -161,3 +161,10 @@ fix: myMessage；批量转移。
 
 # 2022/6/21 线上订餐
 feat： loading, /dist；需求会。
+
+2022/6/23
+feat: cafeSetting; order/cafe; 订餐、净菜、货品预定； 时间处理和校验； $和|以及逗号分隔。
+
+2022/6/24
+fix: 列表展示所有餐厅，使适应orderway不是1的情况，没有sendtime等字段的情况。   时间禁选的pickerOptions要等到focus时才赋值。
+pickupTimeText公共函数产生新增加的tips。

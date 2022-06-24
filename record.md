@@ -284,6 +284,15 @@ totalScore: [
 { required: true, validator: validateZero, trigger: "change" },
 ],
 
+computed: {
+      // 控制显示的内容
+      computedTxt() {
+        return function(value) {  // computed带参数
+          return this.methodGetByteLen(value, 20)
+        }
+      }
+}
+
 computed 的值不能给 data 赋值，computed 时还没有 this 呢。因为 data 里的数据是在 mouted 中执行函数才获取到数据，是在 computed 之后，所以在第一次 computed 计算时，data 中数据还是空的，所以 computed 找不到 data 里的数据。
 computed里的匿名函数是找不到this的，function可以。
 
