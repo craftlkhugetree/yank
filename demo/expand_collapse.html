@@ -1,140 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      .wrapper {
-        /* 高度设置为 100% 失效的问题，关于这类问题网上的分析有很多，通常的解决方式是给父级指定一个高度，但是这里的高度是动态变化的，而且还有展开状态，高度更是不可预知，所以设置高度不可取。
-除此之外，其实还有另一种方式，那就是利用 flex 布局。大概的方法就是在 flex 布局 的子项中，可以通过百分比来计算变化高度 */
-        display: flex;
-        margin: 50px auto;
-        width: 800px;
-        overflow: hidden;
-        /*   resize: horizontal; */
-        border-radius: 8px;
-        padding: 15px;
-        box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
-      }
-      .text {
-        font-size: 20px;
-        overflow: hidden; /*保证text::after小块不会超出*/
-        text-overflow: ellipsis;
-        text-align: justify;
-        /* display: flex; */
-        /*   display: -webkit-box;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    .wrapper {
+      /* 高度设置为 100% 失效的问题，关于这类问题网上的分析有很多，通常的解决方式是给父级指定一个高度，但是这里的高度是动态变化的，而且还有展开状态，高度更是不可预知，所以设置高度不可取。
+除此之外，其实还有另一种方式，那就是利用 flex 布局。大概的方法就是在 flex 布局的子项中，可以通过百分比来计算变化高度 */
+      display: flex;
+      margin: 50px auto;
+      width: 800px;
+      overflow: hidden;
+      /*   resize: horizontal; */
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+    }
+
+    .text {
+      font-size: 20px;
+      overflow: hidden;
+      /*保证text::after小块不会超出*/
+      text-overflow: ellipsis;
+      text-align: justify;
+      /* display: flex; */
+      /*   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical; */
-        position: relative;
-        line-height: 1.5;
-        max-height: 4.5em;
-        transition: .3s max-height;
-      }
-      .text::before {
-        /* before和label按钮都浮动，before高度为总高减去按钮高度，使按钮位置固定在最后一行，所以父级元素不能设置固定高度，只能max-height*/
-        content: "";
-        height: calc(100% - 26px); /*行高20 * 1.5 = 30，按钮应当占据 20+(30-20)/2 高度*/
-        float: right;
-      }
-      .text::after {
-        /*after小块始终在最后，超过maxHeight的话，就被挤到下方，所以不会遮挡省略号和按钮。*/
-        content: "";
-        width: 999vw;
-        height: 999vh;
-        position: absolute;
-        box-shadow: inset calc(100px - 999vw) calc(30px - 999vw) 0 0 #fff;
-        margin-left: -100px;
-            /* background-color: red; */
-      }
-      .btn {
-        position: relative;
-        float: right;
-        /* 现在按钮到了伪元素的左侧，如何移到下面呢？很简单，清除一下浮动 clear: both; 就可以了,
+      position: relative;
+      line-height: 1.5;
+      max-height: 4.5em;
+      transition: .3s max-height;
+    }
+
+    .text::before {
+      /* before和label按钮都浮动，before高度为总高减去按钮高度，使按钮位置固定在最后一行，所以父级元素不能设置固定高度，只能max-height*/
+      content: "";
+      height: calc(100% - 26px);
+      /*行高20 * 1.5 = 30，按钮应当占据 20+(30-20)/2 高度*/
+      float: right;
+    }
+
+    .text::after {
+      /*after小块始终在最后，超过maxHeight的话，就被挤到下方，所以不会遮挡省略号和按钮。*/
+      content: "";
+      width: 100%;
+      height: 100%;
+      /* width: 999vw;
+        height: 999vh; */
+      position: absolute;
+      /* box-shadow: inset calc(100px - 999vw) calc(30px - 999vw) 0 0 #fff; */
+      margin-left: -100px;
+      background-color: red;
+    }
+
+    .btn {
+      position: relative;
+      float: right;
+      /* 现在按钮到了伪元素的左侧，如何移到下面呢？很简单，清除一下浮动 clear: both; 就可以了,
         它就会消除前边浮动给他带来的影响，也就是无视left,right样式中设置的float属性，把left,right看做普通文档流，因btn是块级元素会自动换行*/
-        clear: both; 
-        margin-left: 20px;
-        font-size: 16px;
-        padding: 0 8px;
-        background: #3f51b5;
-        line-height: 24px;
-        border-radius: 4px;
-        color: #fff;
-        cursor: pointer;
-        /* margin-top: -30px; */
-      }
-      .btn::after {
-        content: "展开";
-      }
-      .exp {
-        display: none;
-      }
-      .exp:checked + .text {
-        max-height: none;
-      }
-      .exp:checked + .text::after {
-        visibility: hidden;
-      }
-      .exp:checked + .text .btn::before {
-        visibility: hidden;
-      }
-      .exp:checked + .text .btn::after {
-        content: "收起";
-      }
-      .btn::before {
-        /* 没有 display: -webkit-box 怎么实现多行截断呢 ？ */
-        content: "...";
-        position: absolute;
-        left: -5px;
-        color: #333;
-        transform: translateX(-100%);
-      }
+      clear: both;
+      margin-left: 20px;
+      font-size: 16px;
+      padding: 0 8px;
+      background: #3f51b5;
+      line-height: 24px;
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+      /* margin-top: -30px; */
+    }
 
-      .test {
-       width: 20%;
-       height: 80px;
-      }
-      .collapse {
-  min-height: 44px;
-        width: 100%;
-        font-size: 12px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #172535;
-        line-height: 22px;
-        text-align: left;
-        display: -webkit-box; 
-        overflow: hidden;
-        word-wrap: break-word;
-        text-overflow: ellipsis;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-      }
-      .wrapper {
-        min-height: 44px;
-        width: 100%;
-        font-size: 14px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #172535;
-        line-height: 22px;
-        text-align: left;
-      
-      }
-      p {
+    .btn::after {
+      content: "展开";
+    }
 
-display: -webkit-box;
-overflow: hidden;
-word-wrap: break-word;
-text-overflow: ellipsis;
--webkit-box-orient: vertical;
--webkit-line-clamp: 2;
-}
-    </style>
-  </head>
-  <body>
-    <!-- 多数浏览器的默认字体大小均为16px。可设置CSS的font-size改变字体大小。浏览器最小字体一般为12px。
+    .exp {
+      display: none;
+    }
+
+    .exp:checked+.text {
+      max-height: none;
+    }
+
+    .exp:checked+.text::after {
+      visibility: hidden;
+    }
+
+    .exp:checked+.text .btn::before {
+      visibility: hidden;
+    }
+
+    .exp:checked+.text .btn::after {
+      content: "收起";
+    }
+
+    .btn::before {
+      /* 没有 display: -webkit-box 时实现多行截断，最后一行带省略号的方法 */
+      content: "...";
+      position: absolute;
+      left: -5px;
+      color: #333;
+      transform: translateX(-100%);
+    }
+
+
+    /* ===================================================其他例子1=================================================== */
+    .test {
+      width: 20%;
+      height: 80px;
+    }
+
+    .collapse {
+      min-height: 44px;
+      width: 100%;
+      font-size: 12px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #172535;
+      line-height: 22px;
+      text-align: left;
+      display: -webkit-box;
+      overflow: hidden;
+      word-wrap: break-word;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    /* ===================================================其他例子2=================================================== */
+    .wrapper2 {
+      min-height: 44px;
+      width: 100%;
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #172535;
+      line-height: 22px;
+      text-align: left;
+    }
+
+    p {
+      display: -webkit-box;
+      overflow: hidden;
+      word-wrap: break-word;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    /* ===================================================float文档流，文本流=================================================== */
+    .float-left {
+      width: 300px;
+      height: 300px;
+      float: left;
+      background-color: red;
+    }
+
+    .second {
+      width: 200px;
+      height: 200px;
+      background-color: green;
+      clear: left;
+    }
+    /* ===================================================缩小窗口，元素自动换行，而不是white-space: nowrap;消失=================================================== */
+    .flex0 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      /* overflow: hidden; */
+      /* 单行元素，希望在缩小窗口时子元素自动换行，而不是超出父元素，那么white-space不能是nowrap，否则不换行；同时父元素要设置width百分比；父元素高度也得是auto，否则会影响下方行。 */
+      /* white-space: nowrap; */  
+    }
+    .items {
+      background-color: green;
+      width: 400px;
+      height: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex0">
+    <div class="items"></div>
+    <div class="items" style="background-color: red;"></div>
+    <div class="items" style="background-color: black;"></div>
+  </div>
+  <div class="flex0" style="width: 50%;">
+    <span>多数浏览器的默认字体大小均为16px。可设置CSS的font-size改变字体大小。浏览器最小字体一般为12px。</span>
+    <span>多数浏览器的默认字体大小均为16px。可设置CSS的font-size改变字体大小。浏览器最小字体一般为12px。</span>
+    <span>多数浏览器的默认字体大小均为16px。可设置CSS的font-size改变字体大小。浏览器最小字体一般为12px。</span>
+    <span>多数浏览器的默认字体大小均为16px。可设置CSS的font-size改变字体大小。浏览器最小字体一般为12px。</span>
+  </div>
+  <br />
+  <!-- 多数浏览器的默认字体大小均为16px。可设置CSS的font-size改变字体大小。浏览器最小字体一般为12px。
     <style>
       html,
       body {
@@ -144,100 +207,114 @@ text-overflow: ellipsis;
     也可设置font-size:62.5%，使得1rem = 10px来约定字体大小。
     对于IE浏览器的字体计算浮点数并不精确，因此可设置为font-size:63%。 -->
 
-    <!-- 子元素字体大小的em是相对于父元素字体大小，但是元素的width/height/padding/margin用em的话是相对于该元素的font-size，text-indent也不例外。
+  <!-- 子元素字体大小的em是相对于父元素字体大小，但是元素的width/height/padding/margin用em的话是相对于该元素的font-size，text-indent也不例外。
     https://www.h5w3.com/153903.html -->
 
-    <!-- em 相对长度单位，相对于当前对象内文本的字体尺寸， 根据最近的父元素的大小变化而变化。
+  <!-- em 相对长度单位，相对于当前对象内文本的字体尺寸， 根据最近的父元素的大小变化而变化。
     rem 相对长度单位，相对于根元素（ 即 html 元素）font-size 的倍数，不会被它的父元素影响 IE9+、火狐 3.6+、 safari5.0+ 
     vw 相对于视口的宽度，视口被均分为 100 单位的vw 高版本浏览器均支持
     vh 相对于视口的高度，视口被均分为 100 单位的vh -->
 
-    <!-- 当文本较少时，此时是没有发生截断，也就是没有省略号的，但是“展开”按钮却仍然位于右下角，如何隐藏呢？
+  <!-- 当文本较少时，此时是没有发生截断，也就是没有省略号的，但是“展开”按钮却仍然位于右下角，如何隐藏呢？
     通常 js 的解决方式很容易，比较一下元素的 scrollHeight 和 clientHeight
     即可，然后添加相对应的类名。下面是伪代码 
     if (el.scrollHeight > el.clientHeight) { // 文本超出了 el.classList.add('trunk') } 
     CSS没有这类逻辑判断，我们需要从别的角度，采用 “障眼法”来实现。
     比如在这个场景，当没有发生截断的时候，表示文本完全可见了，这时，如果在文本末尾添加一个元素（红色小方块），为了不影响原有布局，这里设置了绝对定位。 -->
 
-    <!-- css中clear:both属性的作用是清除浮动，设置了浮动就会破坏文档流结构，影响后边的布局，此时在设置清除浮动便可解决这一问题，可以认为，设置了clear:both的当前元素会把前边元素中设有浮动属性的元素，当做没设浮动一样来看待，以此来消除其对自己的影响 -->
+  <!-- css中clear:both属性的作用是清除浮动，设置了浮动就会破坏文档流结构，影响后边的布局，此时在设置清除浮动便可解决这一问题，可以认为，设置了clear:both的当前元素会把前边元素中有浮动属性的元素，当做没浮动一样来看待，以此来消除其对自己的影响 -->
 
-    <!-- 同一个层叠上下文里面, 层叠顺序从后向前依次是:背景和边框、负z-index、块级盒、浮动盒、行内盒、z-index:0、正z-index.
+  <!-- 同一个层叠上下文里面, 层叠顺序从后向前依次是:背景和边框、负z-index、块级盒、浮动盒、行内盒、z-index:0、正z-index.
     伪元素相当于子元素，也就是包含在元素内的，二者不在同一个层叠上下文中。
     如果想实现层叠效果，需要元素和对应的伪元素在同一层叠上下文中，所以不能让元素创建层叠上下文。以下情况会创建层叠上下文 -->
-    <!-- 父元素和before/after伪类一起书写的时候，默认before/after伪类会在页面的上层，修改层级有两种解决方案，第一种方式是伪类设置 z-index:-1。
+  <!-- 父元素和before/after伪类一起书写的时候，默认before/after伪类会在页面的上层，修改层级有两种解决方案，第一种方式是伪类设置 z-index:-1。
     .a{ } .a:after{ z-index: -1 } 由于伪类设置了 z-index：-1，当页面中别的元素，例如背景，就会覆盖伪类，导致伪类无法被看到。
     第二种方案： .a{ transform-style: preserve-3d; } .a:after{ transform: translateZ(-1px) // Z轴方向位移-1px } -->
 
-    1、一个元素浮动或者绝对定位后，都会自动转换为块级元素，无论该元素本身是什么类型。
-    2、浮动只脱离文档。
-      绝对定位和fixed既脱离文档流，又脱离文本流。
-      文档流：1）块级元素大多为结构性标签：
-              div、table、form、ul、ol、dl、marquee(滚动文本)、blockquote(段落缩进)、pre(预格式化)、p、h1~h6、hr(水平分割线)
-              ①块级元素宽度高度可设置值；
-              ②块级元素宽度未设置时，默认100%；
-              ③块级元素中可以包含块级元素和行内元素；
-              ④块级元素独占一行；
-              2）行内元素大多为描述性标签：
-              span、a、b、strong、sup、sub、i、em、del、u、input、textarea、select、img、br(换行)
-              ①行内元素宽度高度内边距不可设置；
-              ②行内元素宽度和高度就是内容的宽度和高度；
-              ③行内元素中只可以包含行内元素，不可以包含块级元素；
-              ④行内元素不会换行；
-      文本流和文档流的定义本质是相同的，文档流是相对于盒子模型讲的，而文本流是相对于HTML中的文字段落来讲的。
-      概括的说就是对一系列字符的读取和输出的顺序，和文档流一样自上而下，从左至右排列。
-      有一个元素A（黑色块），利用float脱离文档流的时候，其他的盒子元素会无视元素A所占空间，但是其他元素中的文字却不会无视元素A，依然会为A让出位置，环绕在其周围。这时候就说元素A脱离了文档流，但是没有脱离文本流。
-    3、绝对定位（absolute）与浮动(float)的对比：
-      相同点：都会产生浮动，都会破坏文档流
-      不同点：float定位后，文档流其他文档会被绕开，不会被遮挡。绝对定位会覆盖其他内容。
-4、【display：inline-block属性会导致内容不居中，如果需要居中则要添加ververtical-align：top属性。】
-    5、html中标签<label></label>为表单元素定义文字标注，<label>属于内联元素，元素前后没有换行符，并且不可以设置高度。
-  　　若想要设置高度，需要设置<label>的display属性，默认属性是inline，此时元素会被显示为内联元素，元素没有换行符，只需要在inline后面加上block，即display:inline-block。此时<label>改为块元素，现在就可以修改<label>高度了。
+  1、一个元素浮动或者绝对定位后，都会自动转换为块级元素，无论该元素本身是什么类型。
+  2、浮动只脱离文档。
+  绝对定位和fixed既脱离文档流，又脱离文本流。
+  文档流：1）块级元素大多为结构性标签：
+  div、table、form、ul、ol、dl、marquee(滚动文本)、blockquote(段落缩进)、pre(预格式化)、p、h1~h6、hr(水平分割线)
+  ①块级元素宽度高度可设置值；
+  ②块级元素宽度未设置时，默认100%；
+  ③块级元素中可以包含块级元素和行内元素；
+  ④块级元素独占一行；
+  2）行内元素大多为描述性标签：
+  span、a、b、strong、sup、sub、i、em、del、u、input、textarea、select、img、br(换行)
+  ①行内元素宽度高度内边距不可设置；
+  ②行内元素宽度和高度就是内容的宽度和高度；
+  ③行内元素中只可以包含行内元素，不可以包含块级元素；
+  ④行内元素不会换行；
+  文本流和文档流的定义本质是相同的，文档流是相对于盒子模型讲的，而文本流是相对于HTML中的文字段落来讲的。
+  概括的说就是对一系列字符的读取和输出的顺序，和文档流一样自上而下，从左至右排列。
+  有一个元素A（黑色块），利用float脱离文档流的时候，其他的盒子元素会无视元素A所占空间，但是其他元素中的文字却不会无视元素A，依然会为A让出位置，环绕在其周围。这时候就说元素A脱离了文档流，但是没有脱离文本流。
+  3、绝对定位（absolute）与浮动(float)的对比：
+  相同点：都会产生浮动，都会破坏文档流
+  不同点：float定位后，文档流其他文档会被绕开，不会被遮挡。绝对定位会覆盖其他内容。
+  4、【display：inline-block属性会导致内容不居中，如果需要居中则要添加ververtical-align：top属性。】原因是inline-block元素内的元素基线发生了变化。
+  解决方法就是在此元素上设置一个vertical-align:middle/top/bottom。
+  5、html中标签<label></label>为表单元素定义文字标注，<label>属于内联元素，元素前后没有换行符，并且不可以设置高度。
+    　　若想要设置高度，需要设置<label>的display属性，默认属性是inline，此时元素会被显示为内联元素，元素没有换行符，只需要在inline后面加上block，即display:inline-block。此时<label>改为块元素，现在就可以修改<label>高度了。
 
-    <!-- left mark-up -->
-<span class="icon middle"></span>Centered?
+          <!-- left mark-up -->
+          <span class="icon middle"></span>Centered?
 
-<!-- right mark-up -->
-<span class="icon middle"></span>
-<span class="middle">Centered!</span>
-  
-  .icon   { display: inline-block;
-            /* size, color, etc. */ }
-  .middle { vertical-align: middle; }
-    6、The inline element’s baseline is the line, the characters are sitting on. Roughly speaking, the baseline is somewhere below the middle of the font’s height.
-    7、This sheds some light on our matter. Because the text on the left isn’t aligned at all, it sits on the baseline. 
-       The thing is, by aligning the box with vertical-align: middle we are aligning it to the middle of the lower case letters without ascenders (half of the x-height). So, characters with ascenders stand out at the top.
-    
-    <div class="wrapper">
-      <input id="exp1" class="exp" type="checkbox" />
-      <div class="text">
-        <!-- 在点击 label 的时候，实际上是点击了 input 元素 -->
-        <label class="btn" for="exp1"></label>
-        浮动元素是如何定位的
-        正如我们前面提到的那样，当一个元素浮动之后，它会被移出正常的文档流，然后向左或者向右平移，一直平移直到碰到了所处的容器的边框，或者碰到另外一个浮动的元素。
-        在下面的图片中，有三个红色的正方形。其中有两个向左浮动，一个向右浮动。要注意到第二个向左浮动的正方形被放在第一个向左浮动的正方形的右边。如果还有更多的正方形这样浮动，它们会继续向右堆放，直到填满容器一整行，之后换行至下一行。
-      </div>
-    </div>
+          <!-- right mark-up -->
+          <span class="icon middle"></span>
+          <span class="middle">Centered!</span>
 
-    <div class="wrapper">
-      <input id="exp2" class="exp" type="checkbox" />
-      <div class="text">
-        <label class="btn" for="exp2"></label>
-        浮动元素是如何定位的
-      </div>
-    </div>
+          .icon { display: inline-block;
+          /* size, color, etc. */ }
+          .middle { vertical-align: middle; }
+          6、The inline element’s baseline is the line, the characters are sitting on. Roughly speaking, the baseline is
+          somewhere below the middle of the font’s height.
+          7、This sheds some light on our matter. Because the text on the left isn’t aligned at all, it sits on the
+          baseline.
+          The thing is, by aligning the box with vertical-align: middle we are aligning it to the middle of the lower
+          case letters without ascenders (half of the x-height). So, characters with ascenders stand out at the top.
 
-    <div class="test">
-      <div class="collapse">
-        a;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdf
-      </div>
-    </div>
+          <div class="wrapper">
+            <input id="exp1" class="exp" type="checkbox" />
+            <div class="text">
+              <!-- 在点击 label 的时候，实际上是点击了 input 元素 -->
+              <label class="btn" for="exp1"></label>
+              浮动元素是如何定位的
+              正如我们前面提到的那样，当一个元素浮动之后，它会被移出正常的文档流，然后向左或者向右平移，一直平移直到碰到了所处的容器的边框，或者碰到另外一个浮动的元素。
+              在下面的图片中，有三个红色的正方形。其中有两个向左浮动，一个向右浮动。要注意到第二个向左浮动的正方形被放在第一个向左浮动的正方形的右边。如果还有更多的正方形这样浮动，它们会继续向右堆放，直到填满容器一整行，之后换行至下一行。
+            </div>
+          </div>
+
+          <div class="wrapper">
+            <input id="exp2" class="exp" type="checkbox" />
+            <div class="text">
+              <label class="btn" for="exp2"></label>
+              浮动元素是如何定位的
+            </div>
+          </div>
+
+          <div class="test">
+            <div class="collapse">
+              a;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdfa;lkjd;fsjakdf
+            </div>
+          </div>
 
 
-    <div style="width: 20%;height: 80px">
-      <div class="wrapper">
-        <p>
-nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-        </p>
-    </div> </div>
-  </body>
+          <div style="width: 20%;height: 80px">
+            <div class="wrapper2">
+              <p>
+                nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <div class="float-left">
+              123
+            </div>
+            <div class="second">
+              456
+            </div>
+          </div>
+</body>
 </html>
