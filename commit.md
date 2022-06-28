@@ -1,5 +1,5 @@
 # Project
-
+https://z.angke.com.cn/    账户  liken   密码  Liken123
 jenkins: liken 123456 http://160.255.0.64:10086/
 208080338/123 208080337
 读者教育 http://172.20.0.116:11080/lres2022/rest/swagger-ui.html
@@ -168,3 +168,7 @@ feat: cafeSetting; order/cafe; 订餐、净菜、货品预定； 时间处理和
 2022/6/24
 fix: 列表展示所有餐厅，使适应orderway不是1的情况，没有sendtime等字段的情况。   时间禁选的pickerOptions要等到focus时才赋值。
 pickupTimeText公共函数产生新增加的tips。
+
+2022/6/27
+fix: disabledTime && minDate
+fix: 货品预定类，默认日期1970不是[],而是[null, null]；  radio disable及保存提示
