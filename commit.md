@@ -172,3 +172,9 @@ pickupTimeText公共函数产生新增加的tips。
 2022/6/27
 fix: disabledTime && minDate
 fix: 货品预定类，默认日期1970不是[],而是[null, null]；  radio disable及保存提示
+fix: 橙色提示；超出开放时间用了单边或，不合理之处在于：处于当前端中，下一段肯定不符合；时间函数undefined
+
+2022/6/28
+fix: 编辑页面；期望函数expectFetch()；pc端支付成功提示。
+
+fix: orange-font >span； isDev

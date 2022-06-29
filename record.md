@@ -29,8 +29,18 @@ ssh-keygen -t rsa -C "345823102@qq.com"
 ssh -T git@github.com // 测试
 
 # npm
-
+npm config get cache // 查看本地缓存
 npm config list
+
+npm 的缓存机制到底是怎么样的呢？现在我们就来总结下：
+在安装资源的时候，npm 会根据 package-lock.json 中的 integrity、version、name 信息生成一个唯一的 key。
+然后用这个 key 经过 SHA256 算法生成一个 hash，根据这个 hash前四位 在 index-v5 目录中找到对应的缓存文件，该缓存文件中记录着该包的信息。
+根据该文件中的信息_shasum，我们在 content-v2 中去找对应的压缩包，这样就找到了对应的缓存资源的源码了。
+最后再将该压缩包解压到 node_modules 中，节省了网络开销和安装时间。
+
+lock文件发生冲突了怎么办？
+A: 首先，我们应该尽量避免冲突，在我们需要更新 package.json 文件的时候，不要手动去修改 package.json 中的依赖，使用 npm 命令更新/安装依赖；比如：npm update升级小版本、npm install @version 升级大版本、npm uninstall 删除依赖。同时，任何时候都不要手动修改 package-lock.json 文件。
+在遇到 lock 文件冲突的时候，那么应该先手动解决 package.json 的冲突，然后执行 npm install --package-lock-only，让 npm 自动帮你解冲突。
 
 # vscode
 
@@ -119,6 +129,25 @@ img: "@/../static/images/quanbu",
 或者   'st@tic': resolve('static'),
 img: "st@tic/images/quanbu",
 # Vue
+webpack的process.env需要自己配置：      
+    new webpack.DefinePlugin({
+      'process.env': require('../config/dev.env')
+    }),
+vue-cli有模式的概念，所以不用专门设置env，vue-cli-service serve 默认是development。也可以直接用--mode指定：   "serve": "vue-cli-service serve --mode production",
+有了模式就不用每次打包时都去更改 vue.config.js 文件了。比如在测试环境和生产环境， publicPath参数 （部署应用包时的基本 URL） 可能不同。遇到这种情况就可以在 vue.config.js 文件中，将 publicPath 参数设置为：
+publicPath: process.env.BASE_URL
+设置之后，再在各个 .env.[mode] 文件下对 BASE_URL变量 进行配置就行了，这样就避免了每次修改配置文件的尴尬。
+
+prop是单向绑定，不能直接更改数据，只能由父组件传输过来。可以用父组件sync，子组件emit的方式修改。
+解决办法：
+1、可以在子组件中 声明一个中间变量（value），把父组件传过来的值(item)赋值给中间变量(value),当单选切换时修改的数据为value,就不会报错
+2、使用.sync修饰符与$emit(update:xxx)
+父组件
+<comp :item.sync="item"></comp>
+子组件
+this.$emit('update:item',data)
+————————————————
+
 computed: {
     tempCountPlusTempCount2() { 
           return this.tempcount+this.tempcount2
