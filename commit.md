@@ -178,3 +178,6 @@ fix: 橙色提示；超出开放时间用了单边或，不合理之处在于：
 fix: 编辑页面；期望函数expectFetch()；pc端支付成功提示。
 
 fix: orange-font >span； isDev
+
+2022/6/30
+webpack按需引入lodash，require存在common里，不同模块引用。

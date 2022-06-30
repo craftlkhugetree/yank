@@ -1,4 +1,28 @@
 // css3
+module.exports= {
+  "plugins": {
+     "postcss-px-to-viewport": {      viewportWidth: 750,      viewportHeight: 1334,      unitPrecision: 3,      viewportUnit: 'vw',      selectorBlackList: ['.usepixel'],      minPixelValue: 1,      mediaQuery: false    }
+   }
+}
+其中几个配置项的含义如下：
+
+viewportWidth：视口宽度，这里设置为跟设计稿宽度一致；
+
+viewportHeight：视口高度，随便设置一个就可以；
+
+unitPrecision：转换后值的精度，3表示保留3位小数；
+
+viewportUnit：转换成什么视口单位，这里当然是vw；
+
+selectorBlackList：是一个选择符数组，对应声明中的像素单位不会转换；
+
+minPixelValue：最小像素值，大于等于这个值才会转换；
+
+mediaQuery：是否转换媒体查询中的像素。
+-----------------------------------
+  
+
+
 img图片保持尺寸，同时有背景色。 img {
   width: 80px;
   height: 80px;

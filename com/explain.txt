@@ -1,7 +1,9 @@
 # 读者教育：
 moment，lodash插件  this.moment(new Date(this.goodsTime[0])).format("YYYY.MM.DD hh:mm")
 formatTime函数
-xlsx导入，预览pdf插件。富文本移动端预览。
+xlsx导入，预览pdf插件。BaseUpload.vue   富文本移动端预览。
+移动端import 'lib-flexible'配合postcss-pxtorem解决移动端适配。  压缩图片。
+
 
 # 座位预约：
 table棋盘

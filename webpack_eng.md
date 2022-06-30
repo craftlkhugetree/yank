@@ -1,6 +1,14 @@
 0. npx webpack --config webpack.config.js
 可以去掉后面的默认参数
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+  plugins: [
+    new BundleAnalyzerPlugin(), // 使用默认配置
+  ],
+import {join} from 'lodash/join'; 用哪个导入哪个
+// 一些方法无法使用上述引入时，可尝试下面这种方式引入
+// import { debounce} from 'lodash/function'
+
 1. 
                        Asset       Size  Chunks                    Chunk Names
 main.7e2c49a622975ebd9b7e.js     544 kB       0  [emitted]  [big]  main
