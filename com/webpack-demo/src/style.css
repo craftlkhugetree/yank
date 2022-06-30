@@ -1,0 +1,9 @@
+.hello {
+  color: red;
+  background: url('./icon.png') repeat;
+}
+.hello::after {
+    clear: both;
+    content: '';
+    display: table;
+}
