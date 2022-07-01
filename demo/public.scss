@@ -1,4 +1,149 @@
 // css3
+伪类的效果可以通过添加实际的类来实现 
+p:first-child {
+    color: red;
+}
+伪元素/伪对象的效果可以通过添加实际的元素来实现 
+p::first-letter {
+    color: red;
+}
+所以它们的本质区别就是是否抽象创造了新元素
+
+* {
+  margin: 0;
+  padding: 0;
+}
+// 优先级高于html
+:root {
+  --color-base: #242731;
+  --button-default-bg: var(--color-base);
+}
+document.body.style.setProperty('--color-base', value); // js修改css3的var变量，动态改变scss中的样式
+  <select oninput="document.body.style.setProperty('--blend-mode', this.value)" size="12">
+        <option>normal</option>
+        <option>multiply</option>
+        <option>overlay</option>
+        <option>darken</option>
+    </select>
+https://wow.techbrood.com/fiddle/41577
+————————————————
+
+*选择器是这几个里面权重最低的(0,0,0)，但为什么能生效于html的子元素呢，
+这里涉及到了“css样式继承”， transparent、background、position这几个属性是不会被样式继承的，所以父元素html的background不会生效于子元素。
+此外，"继承的权重是最低的"，即便demo2继承了demo1的color:blue，依旧会是权重(0, 0, 0)的*会生效。
+
+lib-flexible 的REM适配方案是把一行分为10份，所以rooValue应当为设计稿宽度的1/10，
+我们的设计稿宽是750，所以应该设置为750/10 = 75，
+但是Vant建议设置为37.5，因为它是基于375写的，所以用vant时要按设计稿尺寸除以二，
+rootValue支持两种：
+数字：固定的数值
+函数：可以动态处理返回
+postcss-pxtorem 处理每个CSS⽂件的时候都会来调⽤这个函数
+它会把被处理的CSS⽂件相关的信息通过参数传递给该函数
+// postcss.config.js
+module.exports= {
+  plugins: {
+    autoprefixer: {},
+    'postcss-pxtorem': {
+      rootValue( {file}) {
+        return file.indexOf('vant') !==-1 ? 37.5: 75;
+      },
+      propList: ['*'],
+    },
+  },
+}
+链接：https://wenku.baidu.com/view/ae45c606ac45b307e87101f69e3143323968f504.html
+--------------------------------------------------------
+
+// 将移动端宽度10等分，计算出rem的px数
+document.addEventListener('DOMContentLoaded', function(e) {
+    document.getElementsByTagName('html')[0].style.fontSize=window.innerWidth / 10 + 'px';
+  }, false);
+
+
+// 父盒子塌陷问题解决办法：
+两个盒子呈嵌套关系，子盒子设置 margin-top时父盒子会随着子盒子同时下移，或者取两者中的最大值，
+产生margin塌陷,并且 margin-top看不到效果。
+由于margin值需要根据参照点来实现偏移的，当没有参照点时就出现了无法偏移的情况，所以需要手动给父元素设置一个点出来做子元素的偏移参照物。
+解决方法如下：
+1.给父盒子添加溢出隐藏：overflow：hidden；
+
+2.在父盒子中设置上边框：border-top;
+border-top: 1px solid transparet;
+设置透明上边框,不影响外观.
+
+3.在父盒子中设置上内边距：padding-top；
+padding-top:1px;
+
+4.给父盒子设置相对定位,子盒子设置绝对定位(子绝父相);
+position:relative;
+position:absolute;
+
+5.after伪类清除浮动。 外部盒子的after伪元素设置clear属性。
+用于解决浮动引起的盒子塌陷问题.
+#parent:after{
+clear: both;
+content: “”;
+width: 0;
+height: 0;
+display: block;
+visibility: hidden;
+}
+————————————————
+
+书写语法：box-shadow: inset   h-shadow   v-shadow   blur-radius   color;
+    inset 阴影类型为内阴影
+    outset 阴影类型为外阴影  （不添加时默认为外阴影，但是添加后反而会使得阴影无效，所以如果要想实现外阴影可以不加）
+    h-shadow----- 阴影的水平位移量 允许为负值
+    v-shadow----- 阴影垂直位移量 允许为负值
+    blur-radius-----阴影模糊半径 即阴影向外模糊的模糊范围  值越大越模糊 
+    color----- 阴影颜色，定义绘制阴影时所使用的颜色  
+————————————————
+书写语法：text-shadow: h-shadow v-shadow blur color; 
+h-shadow -----水平阴影的位置，允许负值 
+v-shadow -----垂直阴影的位置，允许负值 
+blur-----模糊的距离 （如果设置的是0，那么将和正常的文字清晰度一样）
+color------阴影的颜色
+————————————————
+
+
+// 红上黑下线性梯度
+background: linear-gradient(to bottom, red, black);
+// 字间距
+letter-spacing: 1px;
+
+// 色调360度不断旋转：
+.bird {
+  animation: pulse 5s linear infinite;
+}
+@keyframes pulse {
+  from {
+    filter: hue-rotate(0);
+  }
+
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+// 最后一行省略号
+@mixin ellipsis($line: 1, $substract: 0) {
+  @if $line==1 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+  }
+
+  width: 100% - $substract;
+  overflow: hidden;
+}
+
+
 module.exports= {
   "plugins": {
      "postcss-px-to-viewport": {      viewportWidth: 750,      viewportHeight: 1334,      unitPrecision: 3,      viewportUnit: 'vw',      selectorBlackList: ['.usepixel'],      minPixelValue: 1,      mediaQuery: false    }

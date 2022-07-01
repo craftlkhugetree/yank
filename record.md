@@ -111,6 +111,36 @@ window.URL.revokeObjectURL(url);
 
 ^(?!._(localhost|z.angke.com.cn))._$
 
+# jquery
+$('#obj1').appendTo($('#obj2')) 这个是将 $('#obj1')) 插入到 $('#obj2') 中作为最后一个元素
+ 
+$('#obj1').prependTo($('#obj2')) 这个是将 $('#obj1')) 插入到 $('#obj2') 中作为第一个子元素。
+ 
+$('#obj1').append($('#obj2')) 这个要注意方向了， 是将$('#obj2') 插入到 $('#obj1')作为最后一个元素，或者说是在$('#obj1')最后面添加子元素$('#obj2')
+————————————————
+ this是html元素，$(this)是变量名。$(this)=jquery(this)顾返回的是一个jQ对象。
+ this是dom对象不可以直接使用jQ中的方法，通过$(this)转换为jQ对象就可以使用jQ中的方法了。
+ 如下：this使用siblings()时会报错,而转为$(this)就可以使用该方法了。
+// bind events  
+$('.param-list .remove-param').live('click', function(){ 
+  $(this).parent().remove(); 
+  return false; 
+}); 
+————————————————
+ 
+var $test_a = $(".test :hidden");//带空格的jQuery选择器 
+上面这段代码是选取class为“test”的元素里面的隐藏元素。（后代选择器）
+ 
+var $test_b = $(".test:hidden");//不带空格的jQuery选择器 
+这上面的代码则是选取隐藏的class为“test”的元素
+ 
+$("select :selected");//这样才是正确的 
+$("select:selected").length;//不管任何时候，这个选择器都取不到元素，这个length必然是0 
+ 
+$("input :checked").length;//不正确的用法。不管任何时候，这个选择器都取不到元素，这个length必然是0 
+$("input:checked");//这样才是正确的 
+
+
 # vant
 
 预览图片：
@@ -123,17 +153,29 @@ ImagePreview({images: [url], showIndex: false});
     </div>
 </van-overlay>
 
-# webpack
+# Vue
+    <counter v-model:count="count"></counter>
+子组件： name: 'Counter',
+  props: ['count'],
+  emits: ['update:count']
+<!-- 多个`v-model`绑定、 -->
+<vModelText v-model:text="data1" v-model:num.numReg="numData">  </vModelText>
+  props:['text','num','numModifiers'],
+  emits:['update:text','update:num'],
+   this.$emit('update:num',val)
+.sync可以绑定多个父组件的变量
+
+
 '@': resolve('src'),
 img: "@/../static/images/quanbu",
 或者   'st@tic': resolve('static'),
 img: "st@tic/images/quanbu",
-# Vue
+
 webpack的process.env需要自己配置：      
     new webpack.DefinePlugin({
       'process.env': require('../config/dev.env')
     }),
-vue-cli有模式的概念，所以不用专门设置env，vue-cli-service serve 默认是development。也可以直接用--mode指定：   "serve": "vue-cli-service serve --mode production",
+vue.config.js有模式的概念，所以不用专门设置env，vue-cli-service serve 默认是development。也可以直接用--mode指定：   "serve": "vue-cli-service serve --mode production",
 有了模式就不用每次打包时都去更改 vue.config.js 文件了。比如在测试环境和生产环境， publicPath参数 （部署应用包时的基本 URL） 可能不同。遇到这种情况就可以在 vue.config.js 文件中，将 publicPath 参数设置为：
 publicPath: process.env.BASE_URL
 设置之后，再在各个 .env.[mode] 文件下对 BASE_URL变量 进行配置就行了，这样就避免了每次修改配置文件的尴尬。
@@ -147,6 +189,9 @@ prop是单向绑定，不能直接更改数据，只能由父组件传输过来�
 子组件
 this.$emit('update:item',data)
 ————————————————
+props写在路由里，可以让组件不必通过$route传参，实现解耦，使其不必捆绑在某些url或父组件里。
+
+provide---inject跨级传参
 
 computed: {
     tempCountPlusTempCount2() { 
