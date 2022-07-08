@@ -10,6 +10,9 @@ svn://160.255.0.56/01module/lres/03code/lresweb/src/main/webapp/mobile_nh
 
 https://720yun.com/t/c9fjr7syOu5
 
+https://authserver.njau.edu.cn/authserver/login?service=http%3A%2F%2Fbmjd.njau.edu.cn%2Fidsweb%2Frest%2FCas2Login%2Flogin%3FreqKey%3D4251609
+T2019037  020613xiu
+
 
 # 2022/5/6 读者教育
 【feat】mixins:confirmDialog 4 exam and timing; result, examResult, examing; replace $message by Notify.
@@ -181,3 +184,31 @@ fix: orange-font >span； isDev
 
 2022/6/30
 webpack按需引入lodash，require存在common里，不同模块引用。
+
+# 2022/07/01 服务监督
+http://app.dev.angke.com.cn/supervision-api/rest/swagger-ui.html
+
+2022/07/04
+fix:orderfood-m 年货类修改订单，不需要预期时间；pc端餐厅类型改为可以修改！
+fix: [serviceSupervision]i.USER.includes；新增用户时清空keyword；删除业务领域时直接调接口；新增用户时带出其已有的业务领域。
+
+fix:orderfood-pc 端餐厅类型改为可以修改,预定时间按钮统一置于下方。
+
+2022/07/05
+fix: orderfood-m 编辑页面期望日期。
+fix: orderfood-m 编辑页面期望日期未带出；各页面期望取餐未加粗。 orderfood-pc详情页 orderway == 3写反了；只有订餐才有几点几分。
+
+# 2022/07/06 白马科教资源
+白马科教资源需求会
+
+2022/07/07
+prdetail,prdialog 被多个组件调用，props和query的统一。  转化当天日期的函数ymd增加参数后可转化传入的日期。
+
+2022/07/08
+
+
+
+require，import动态 静态
+webpack cjs/esm 导入导出 通用
+minipack 模块过程
+Amazon deepracer

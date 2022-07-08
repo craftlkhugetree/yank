@@ -28,7 +28,7 @@ module.exports = {
         还有一个default~entry1~entry2.bundle.js（包含了a和b，也就是一组chunk）。
     */
     splitChunks: {
-      // 移除重复的依赖模块。需要注意的是，插件将 lodash 分离到单独的 chunk，并且将其从 main bundle 中移除。
+        // 移除重复的依赖模块。需要注意的是，插件将 lodash 分离到单独的 chunk，并且将其从 main bundle 中移除。
       chunks: 'all',
       // 利用 client 的长效缓存机制，命中缓存来消除请求，并减少向 server 获取资源，同时还能保证 client 代码和 server 代码版本一致。 
       cacheGroups: {

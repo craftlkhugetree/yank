@@ -7,3 +7,10 @@ Imagine the layout viewport as being a large image which does not change size or
 opaque 英[əʊˈpeɪk] 不透光的
 obscure 使模糊
 orientation 方向
+
+2. Phantom dependencies  npm3/yarn中的“幽灵依赖”指的是在项目内引用未在 package.json 中定义的包。扁平化的 node_modules 结构允许访问没有在 package.json 中声明的依赖。
+phantom	英[ˈfæntəm]
+
+3. webpack 在入口 chunk 中，包含了某些 **boilerplate**(引导模板)，特别是 runtime 和 manifest。（译注：boilerplate 指 webpack 运行时的引导代码）。
+
+4. AMD syntax is less intuitive(直觉的) than CJS.

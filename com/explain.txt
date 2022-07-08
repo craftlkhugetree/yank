@@ -1,6 +1,6 @@
 # 读者教育：
 moment，lodash插件  this.moment(new Date(this.goodsTime[0])).format("YYYY.MM.DD hh:mm")
-formatTime函数
+formatTime函数  common.formatTime(数字字符串, "yyyy.MM.dd")     this.util.formatTime(this.util.formatMYD(Date对象),"yyyyMMdd000000")
 xlsx导入，预览pdf插件。BaseUpload.vue   富文本移动端预览。
 移动端import 'lib-flexible'配合postcss-pxtorem解决移动端适配。  压缩图片。
 

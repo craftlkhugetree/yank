@@ -166,4 +166,41 @@ module.exports = {
 }
 index.html中已经没有对runtime~xxx.js的引用了，而是直接将其代码写入到了index.html中，故不会再请求文件，减少http请求。
 
+12. moment的locale语言包特别大，但是我们一般的项目只在国内用，也用不到那么多语言，是不是可以去掉呢？这时候你需要使用到webpack.IgnorePlugin。
+在vue.config.js文件，你需要添加以下代码
+const webpack = require('webpack')
+module.exports = {
+  chainWebpack: config => {
+    // 优化moment 去掉国际化内容
+    config
+    .plugin('ignore')
+    // 忽略/moment/locale下的所有文件
+    .use(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)) 
+  }
+}
 
+我们虽然按照上面的方法忽略了包含’./locale/'该字段路径的文件目录,但是也使得我们使用的时候不能显示中文语言了，这时候如果想用某一种语言应该怎么办呢?
+import moment from 'moment'
+//手动引入所需要的语言包
+import 'moment/locale/zh-cn';
+// 指定使用的语言
+moment.locale('zh-cn');
+更建议在项目中使用更轻量级的day.js代替moment
+
+链接：https://juejin.cn/post/6850037262441250829
+
+13. 用babel把代码文件转成commonjs或者esm就好了。不要使用webpack打包成一个js文件。否则无法按需加载。
+​webpack_require​.r：方法主要是标识该模块为es模块。
+​webpack_require​.d：方法是提供Getter给导出的方法、变量。
+
+
+
+14. 加上 toStringTag 属性，你的类也会有自定义的类型标签了：
+
+class ValidatorClass {
+  get [Symbol.toStringTag]() {
+    return "Validator";
+  }
+}
+
+Object.prototype.toString.call(new ValidatorClass()); // "[object Validator]"
