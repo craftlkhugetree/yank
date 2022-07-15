@@ -1,6 +1,9 @@
 # Project
 https://z.angke.com.cn/    账户  liken   密码  Liken123
 jenkins: liken 123456 http://160.255.0.64:10086/
+svn: liken123
+lanhu: 123456
+
 208080338/123 208080337
 读者教育 http://172.20.0.116:11080/lres2022/rest/swagger-ui.html
 白马 http://app.dev.angke.com.cn/bsermipweb/rest/swagger-ui.html
@@ -204,11 +207,106 @@ fix: orderfood-m 编辑页面期望日期未带出；各页面期望取餐未加
 2022/07/07
 prdetail,prdialog 被多个组件调用，props和query的统一。  转化当天日期的函数ymd增加参数后可转化传入的日期。
 
-2022/07/08
+2022/07/11
+feat: 角色：基地管理员
+功能
+① 资源库维护：卡片改成列表样式，操作增加“资源管理”，可进行资源的添加、删除和导入、开启关闭等基础管理操作；
 
+②　新增资源类型操作中，规则编辑框，文字可换行，换行后生成的协议文件排版中也换行，协议文件格式重新排版设计；
 
+③　资源管理操作：新增、下载模板、导入等操作规则同原来资源日常管理列表一样；
+
+备注：手机端资源类型及资源管理去掉
+
+2022/07/12
+feat：空闲资源idle；back()；router.js；api.js
+
+2022/07/13
+feat：申请记录及详情、领导审批、confirmDialog.vue、resProcess.vue区别于原有的灌溉进度条。
+
+2022/07/14
+feat：白马办审批及详情、完善进程条和审批记录(events，process)
+
+2022/07/15
+feat：我的资源，resDetail,
+
+        <template slot-scope="scope">
+          {{
+            scope.row.useCycle
+              ? scope.row.useCycle +
+                (scope.row.chargecycle === "月"
+                  ? "个月"
+                  : scope.row.chargecycle || "")
+              : "--"
+          }}
+        </template>
+
+   // 判断是学生、白马办还是后勤
+          const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
+          if (repair.children && repair.children[0]) {
+            const url = repair.children[0].DISPLAYURL;
+            const obj = {};
+            if ('/repair/report' === url) {
+              obj.start = 1;
+            } else if ('/repair/bm_handle' === url) {
+              obj.bm = 1;
+            } else if ('/repair/hq_handle' === url) {
+              obj.hq = 1;
+            }
+            sessionStorage.setItem('url4bizNode', JSON.stringify(obj))
+          }
+
+        // 资源库维护详情
+        {
+          path: "/jump/detail/:id",
+          name: "资源库维护详情",
+          component: () =>
+            import(
+              /* webpackChunkName: "bm" */ "../pages/resourceManagement/resDetail"
+            ),
+          props: route => ({
+            // 某类型下的资源编号
+            id: route.params.id,
+            indexCurrentPage: route.query.currentPage,
+            prevPage: route.query.prevPage,
+            // 资源类型
+            restypeid: route.query.restypeid,
+          })
+        },
+
+    goDetail(row) {
+      this.$router.push({
+        path: `/jump/detail/${row.id}`,
+        query: {
+          restypeid: row.eduTypeId,
+          currentPage: this.currentPage,
+          prevPage: "idle"
+        }
+      });
+    },
+
+        this.resList.forEach(r => {
+              const obj =
+                this.resTypeList.find(t => t.id === r.eduTypeId) || {};
+              r.typeName = obj.name || "";
+
+              let chargecycle = r.billingCycle + "";
+              let chargetype = r.billingMethod + "";
+              this.common.chargecycleFormatter(chargecycle, r);
+              this.common.chargetypeFormatter2(chargetype, r, "ct2", "ct1");   // m²、间；面积、房间；
+            });
+
+申请流程下载；协议agreementForm、交接单、申请表下载；  
+面积、房间。
+baseUpload；sideBar；utils
+本科生实习领导审批
+resDetail 强制退出
+
+空闲资源   path: "/idle-resource",
+资源入驻管理   path: "/resource-info-management"",
+费用   path: "/",
 
 require，import动态 静态
 webpack cjs/esm 导入导出 通用
-minipack 模块过程
+项目minipack 模块过程
 Amazon deepracer

@@ -264,7 +264,6 @@ Vue.component(Loading.name, Loading)
 ` // 方法二：前提是 Loading 有提供 install 这个方法  `
 Vue.use(Loading);
 
-
 <counter v-model:count="count"></counter>
 子组件： name: 'Counter',
   props: ['count'],
@@ -370,6 +369,23 @@ this.$nextTick(() => {
 试了下不生效，说明是别的问题。查看了表格中的最后一列，发现该列的宽度设置的较低，内存已经越出，导致每行错位。将该列的宽度调宽。恢复正常。
 
 el-table多个属性在一个prop里，用逗号隔开。
+
+合并某些行或列，灵活设置合计。
+objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+      if (this.applyInfoForm.resArr && this.applyInfoForm.resArr.length) {
+        if (rowIndex === this.applyInfoForm.resArr.length - 1) {
+          if (columnIndex === 0) {
+            //定位到6行0列的ID，告诉该单元格合并1行4列
+            return [1, 4];
+          } else if (columnIndex === 4) {
+            return [1, 1];
+          } else {
+            //定位到6行其他列，告诉该单元格不显示
+            return [0, 0];
+          }
+        }
+      }
+    }
 
 $nextTick转化pdf：
   transToPdf(title, domID, _this) {

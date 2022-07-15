@@ -13,7 +13,7 @@
 
 hello world!
 
-# 光标移动到 hello上，按ysiw]
+# 光标移动到 hello上，按ysiw]                 yciw会先开始插入模式
 
 [hello] world!
 
