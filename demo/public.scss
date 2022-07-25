@@ -1,4 +1,16 @@
 // css3
+如何使<pre>的内容自动换行呢？首先看一下<pre>的浏览器默认样式：
+都有这个white-space: pre，看看white-space的值描述：
+
+normal：默认。空白会被浏览器忽略。
+pre：空白会被浏览器保留。其行为方式类似 HTML 中的 <pre>标签。
+nowrap：文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+pre-wrap：保留空白符序列，但是正常地进行换行。
+pre-line：合并空白符序列，但是保留换行符。
+inherit：规定应该从父元素继承 white-space 属性的值。
+————————————————
+原文链接：https://blog.csdn.net/a1056244734/article/details/113882278
+
 伪类的效果可以通过添加实际的类来实现 
 p:first-child {
     color: red;
@@ -542,3 +554,49 @@ CSS 改变文本可以采用伪元素生成
           }
         }
       }
+
+
+
+      // & 用在嵌套的scss代码里，来引用父元素，&父选择器标识符并不仅仅用于链接伪类选择器，看如下scss代码实例： 
+      #content aside {
+        color: red;
+        body.ie & {
+          color: green
+        }
+      }
+      // 编译为css代码如下： 
+      #content aside {
+        color: red
+      };
+      body.ie #content aside {
+        color: green
+      }
+
+      // table的border='1' 没有边框，解决办法：
+      .normal-table {
+        background: rgba(247, 248, 249, 1);
+        table-layout: fixed;
+        width: 100%;
+        td {
+          border: 1px solid rgba(232, 235, 239, 1);
+          padding: 8px 13px;
+          white-space: normal;
+          word-break: break-all;
+          line-height: 16px;
+        }
+        & tr td:nth-child(2n+1) {
+          font-weight: bold;
+        }
+      }
+
+      55m<sup>2</sup>
+
+      // 设置bc的图片，必须铺满，否则浏览器伸缩时会露出来
+            background: url("../../../static/images/bm-charge-bg.png") no-repeat;
+            background-size: cover;
+
+            // 段落换行
+          pre {
+              white-space: pre-wrap;
+              word-wrap: break-word;
+            }

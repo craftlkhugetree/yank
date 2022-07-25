@@ -16,8 +16,16 @@ public.scss公共样式。	style.css  icomoon修改底色。 transform原图到o
 路由设置默认prop
 导出pdf插件：jsPdf、html2Canvas
 上传图片并预览或删除
+myMessage.vue  椭圆tab
 
 # 网上订餐
 print LODOP
 transition name动画，可用于路由转换，if/show隐显。
 微信二维码接口。 websocket
+
+# 服务监督pc
+日期optionPicker, disabled(){}
+
+# 白马二期
+科教资源：我的资源、空闲资源是教师；资源入驻管理、资源库维护是管理员。后者才能在资源入驻信息中修改日常联系人和联系方式。
+移动端多选：van-field van-popup van-checkbox-group；分页查询使用了触底查询，所以getList()需要返回Promise来配合触底函数。process进度条。

@@ -111,3 +111,8 @@ const data = [
       return pre
     },{})
     console.log(num,'num对象') //{红: 2, 黄: 2, 黑: 1, 蓝: 1} 
+
+
+  # // 在数组中查找最大值和最小值
+const arr = [1, 2, 3]; 
+Math.max(…arr); // 3

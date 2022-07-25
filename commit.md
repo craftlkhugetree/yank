@@ -1,3 +1,62 @@
+# net interface
+ const loading = this.$loading({
+          lock: true,
+          text: "提交审批中",
+          spinner: "el-icon-loading",
+          background: "rgba(0, 0, 0, 0.7)"
+        });
+
+        this.util
+          .postAjax({
+            code: this.global.code,
+            url,
+            isRep: true,
+            data: EduApplyEvent
+          })
+          .then(res => {
+            loading.close();
+            if (res && res.success === true) {
+              this.$message({
+                type: "success",
+                message,
+              });
+            } else {
+              this.$message({
+                type: "error",
+                message: res.data.message || '内部错误'
+              });
+            }
+          })
+          .catch(e => loading.close());
+ // 移动端
+    confirmCheckOut() {
+      this.$toast.loading({
+        message: "提交中...",
+        forbidClick: true,
+        duration: 0
+      });
+      this.util
+        .postAjax({
+          code: this.global.bmCode,
+          url: "/spres/saveCheckOut",
+          data: {
+            resId: this.checkOutRow.id
+          }
+        })
+        .then(res => {
+          this.$toast.clear();
+          if (res && res.success === true) {
+            this.$toast.success("已提交退出申请，请等待白马办审核");
+          } else {
+            this.$toast.fail(res.message || '内部错误');
+          }
+        })
+        .catch(err => {
+          this.$toast.clear();
+          this.$toast.fail(err || '内部错误');
+        });
+    },
+
 # Project
 https://z.angke.com.cn/    账户  liken   密码  Liken123
 jenkins: liken 123456 http://160.255.0.64:10086/
@@ -230,18 +289,24 @@ feat：白马办审批及详情、完善进程条和审批记录(events，proces
 2022/07/15
 feat：我的资源，resDetail,
 
-        <template slot-scope="scope">
-          {{
-            scope.row.useCycle
-              ? scope.row.useCycle +
-                (scope.row.chargecycle === "月"
-                  ? "个月"
-                  : scope.row.chargecycle || "")
-              : "--"
-          }}
-        </template>
+2022/07/18
+feat：编辑联系人；资源入驻管理
 
-   // 判断是学生、白马办还是后勤
+2022/07/19
+feat：协议agreementForm在新租和续租的对话框中，以及列表中的下载。
+
+2022/07/20
+feat：申请表、交接单
+feat：费用管理、费用结算；费用导出
+
+2022/07/21
+feat: 白马pc端资源入驻信息无限滚动。
+
+2022/07/25
+feat: 移动端bm我的资源、空闲资源，资源详情，入住资源及状态，入住资源伸缩，申请、续租表单。 resProcess。申请列表。三种文件，及对应预览和转化为pdf下载。
+fix: pc端搜索有时是resName；我的资源的resList不能是空闲。
+
+   // pc端判断是学生、白马办还是后勤
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
           if (repair.children && repair.children[0]) {
             const url = repair.children[0].DISPLAYURL;
@@ -256,57 +321,20 @@ feat：我的资源，resDetail,
             sessionStorage.setItem('url4bizNode', JSON.stringify(obj))
           }
 
-        // 资源库维护详情
-        {
-          path: "/jump/detail/:id",
-          name: "资源库维护详情",
-          component: () =>
-            import(
-              /* webpackChunkName: "bm" */ "../pages/resourceManagement/resDetail"
-            ),
-          props: route => ({
-            // 某类型下的资源编号
-            id: route.params.id,
-            indexCurrentPage: route.query.currentPage,
-            prevPage: route.query.prevPage,
-            // 资源类型
-            restypeid: route.query.restypeid,
-          })
-        },
 
-    goDetail(row) {
-      this.$router.push({
-        path: `/jump/detail/${row.id}`,
-        query: {
-          restypeid: row.eduTypeId,
-          currentPage: this.currentPage,
-          prevPage: "idle"
-        }
-      });
-    },
-
-        this.resList.forEach(r => {
-              const obj =
-                this.resTypeList.find(t => t.id === r.eduTypeId) || {};
-              r.typeName = obj.name || "";
-
-              let chargecycle = r.billingCycle + "";
-              let chargetype = r.billingMethod + "";
-              this.common.chargecycleFormatter(chargecycle, r);
-              this.common.chargetypeFormatter2(chargetype, r, "ct2", "ct1");   // m²、间；面积、房间；
-            });
-
-申请流程下载；协议agreementForm、交接单、申请表下载；  
-面积、房间。
+申请流程下载；帮助手册下载；
 baseUpload；sideBar；utils
 本科生实习领导审批
-resDetail 强制退出
+myResource资源id
+
 
 空闲资源   path: "/idle-resource",
 资源入驻管理   path: "/resource-info-management"",
-费用   path: "/",
+费用结算   path: "/resource-teacher-fee",
+费用管理   path: "/resource-BM-fee",
 
 require，import动态 静态
 webpack cjs/esm 导入导出 通用
 项目minipack 模块过程
 Amazon deepracer
+curl 登录  获取cookie

@@ -172,6 +172,29 @@ l.style.width = "50%"
 }
 }
 
+/** Function: 导出二进制流文件 */
+const exportFile = function (url, isGet, params, fileName, fileType) {
+    Axios({
+      url: window.g.ApiUrl2 + url,
+      method: isGet ? "GET" : "POST",
+      responseType: "blob",
+      headers: {
+        IDSTGC: getCookie("IDSTGC") || "7449714c09c049b693c2c03b6ffb2086"
+      },
+      data: params
+    }).then(res => {
+      let url = window.URL.createObjectURL(res.data);
+      let link = document.createElement("a");
+      link.href = url;
+      link.style.display = "none";
+      link.setAttribute("download", fileName + "." + fileType);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    });
+}
+
 // 回到顶部
 document.getElementsByTagName('html')[0].scrollTop = 0
 1.document.body.scrollTop=document.documentElement.scrollTop=0 //页面滚动到顶部
@@ -258,6 +281,8 @@ vue create 项目名
 vue -V  全局vue-cli的版本
 npm list vue  当前项目与vue相关的依赖
 
+v-show的直接子组件created不执行，要用watch监视传给子组件的参数来执行，$refs['child'].fun的执行也可能不及时。
+
 import Loading from '../components/loading'
 // 方法一：name 是组件的名字
 Vue.component(Loading.name, Loading)
@@ -338,6 +363,7 @@ el-form的validator必须每一个if-else都有callback，否则流程中断。
             }
 复杂属性的设置  <el-form-item  :prop="`attrList[${index}].attrv`">
 单个属性的校验  this.$refs['form'].validateField('baseList', valid => {})
+表单中的输入框无法输入，则要 @input=$forceUpdate() ！关键是form里没有预先定义这个属性！
 
 el-input 嵌套层级太多导致无法输入时（比如在el-form-item中），可以使用   @input=$forceUpdate //强制刷新
 
