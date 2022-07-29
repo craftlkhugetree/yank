@@ -53,7 +53,7 @@ A: 首先，我们应该尽量避免冲突，在我们需要更新 package.json 
 ctrl + shift + o 查找函数类名
 ctrl + p 打开文件
 
-# js  node
+# js  node webpack
 module和exports是Node.js给每个js文件内置的两个对象。module.exports是一个空对象，exports是对这个对象的引用。
 module.exports === exports，若直接赋值exports = {ex: 1}则二者不再相等；若属性赋值exports.ex = 1，则二者继续相等。
 *require引入的对象本质上是module.exports*
@@ -280,6 +280,21 @@ vue info
 vue create 项目名
 vue -V  全局vue-cli的版本
 npm list vue  当前项目与vue相关的依赖
+
+beforeCreate在这个生命周期函数中无法通过vm访问到data中的数据、methods中配置的方法，所以这里的this不是vm。
+created：在这个生命周期函数中可以通过vm访问到data中的数据、methods中配置的方法（在内存中），所以这里的this是vm。
+与 2.x 版本生命周期相对应的组合式 API：
+beforeCreate -> 使用 setup()
+created -> 使用 setup()
+beforeMount -> onBeforeMount
+mounted -> onMounted
+beforeUpdate -> onBeforeUpdate
+updated -> onUpdated
+beforeDestroy -> onBeforeUnmount
+destroyed -> onUnmounted
+errorCaptured -> onErrorCaptured
+————————————————
+
 
 v-show的直接子组件created不执行，要用watch监视传给子组件的参数来执行，$refs['child'].fun的执行也可能不及时。
 
@@ -581,3 +596,66 @@ XSS攻击：cross-site Scripting (跨站脚本攻击） 是一种注入代码攻
 将token存放在cookie中可以指定httponly，来防止被javascript读取，也可以指定secure ，来保证token只在HTTPS下传输。缺点是不符合Restful 最佳实践，容易受到CSRF攻击。
 CSRF跨站点请求伪造(Cross-Site Request Forgery)，跟XSS攻击一样，存在巨大的危害性。简单来说就是恶意攻击者盗用已经认证过的用户信息，以用户信息名义进行一些操作（如发邮件、转账、购买商品等等）。由于身份已经认证过，所以目标网站会认为操作都是真正的用户操作的。CSRF并不能拿到用户信息，它只是盗用的用户凭证去进行操作。
 ————————————————
+
+
+# 算法
+尾调用消除(Tail Call Elimination)或尾调用优化(Tail Call Optimization, TCO)。尾调用优化让位于尾位置的函数调用跟goto语句性能一样高，也因此使得高效的结构编程成为现实。
+然而，对于C++等语言来说，在函数最后 return g(x); 并不一定是尾递归——在返回之前很可能涉及到对象的析构函数，使得 g(x) 不是最后执行的那个。这可以通过返回值优化来解决。
+
+递归用于解决某些问题，比如深层遍历等问题很有效，但是用不好很容易导致栈溢出错误（stack overflow），就算不发生栈溢出，使用不善则会导致严重的性能问题。
+
+我们知道，函数调用会在内存形成一个“调用记录”，又称为“调用帧”（call frame），保存调用位置和内部变量等信息。递归导致的一系列嵌套函数的调用，会产生一系列的调用帧，所有的调用帧就形成了一个“调用栈”（call stack）。调用帧是保存在内存中的，当调用帧足够多的时候，就会出现栈溢出错误。
+
+首先，我们来看看阶乘的递归函数：
+// 仅限非严格模式
+function factorial(n) {
+    if (n <= 1) return 1
+    return n * arguments.callee(n-1)
+}
+ 
+// 严格模式和非严格莫是都可用
+var factorial = function f(n){
+    if (n <= 1) return 1
+    return n * f(n-1)
+}
+总结来说，递归有可能导致的问题主要有两个：比较差的性能问题和栈溢出错误。
+什么是尾递归？如果函数尾调用自身就成为尾递归。
+
+上述的例子，显然不属于尾递归，很明显可以看出，return 后面的语句并不只是函数的调用，还有乘法操作，故不属于尾递归。
+如何将优化之前的的表达式变成只有函数的调用而不包含其它额外的操作呢？
+我们就把函数返回的结果记为total，那么不妨在函数factorial加上第二个参数total，即把函数此次调用返回的结果当作第二个参数。
+# 尾递归可以保证函数执行时内存中始终只保留一个调用帧，这将永远不会发生栈溢出错误，也不会造成差的性能问题。前提是尾部只有一个函数调用，那么递归时就可以都覆盖到这个函数帧上。
+# 尾调用优化，尾调用是指某个函数的最后一步（不一定是出现在函数的尾部）是“纯粹地”调用另一个函数；而尾调用优化就是只保留内部函数的调用帧，节省内存。尾递归，尾调用自身，相当于普通的递归，由于只存在一个调用帧，不会发生“栈溢出”。
+// 阶乘尾递归之前
+function factorial(n) {
+    if (n <= 1) return 1
+    return n * factorial(n-1)
+}
+# 数学归纳法必须先确保 1，2都正确，才能假定n=m时成立，证明n=m+1也成立。
+// 尾递归之后
+function factorial(n, total = 1) {
+    if (n <= 1) return total
+    return factorial(n-1, n * total)
+}
+
+将著名的斐波那契数列进行尾递归优化：
+优化之前：
+function getFibo(n) {
+    if (n <= 2) return 1
+    return getFibo(n-1) + getFibo(n-2)
+}
+很明显，这不是尾递归。
+
+首先结果依赖前两项计算的结果，所以函数需要再额外添加两个参数，这两个参数分别是前两项的计算结果，类比上面的阶乘例子，我们暂且把上一项的计算结果和本次的计算结果分别记为a1和a2，由于本次计算的结果被我们记为了a2，所以当n<=2时，return 后面应该是a2了，即第一行和第二行代码就变为了：
+
+function getFibo(n, a1, a2){
+    if (n <= 2) return a2
+类比上面的例子，也很容易得到第三行的代码：首先第一个参数 n - 1 不变，因为改变后的函数的第一个参数是n。接下来第二个和第三个参数是我们添加上去的，最简单直接的方法还是令 n = 3，当n = 3 时，上一次结算的结果由第二行代码可知为a2，所以return 后面的函数的第二个参数确定下来了，即为a2，那么当 n = 3 时，本次计算的结果是多少呢，由第一行和第二行代码结合来看，可知当 n = 1 时的上一次计算结果为a1，那么我们可得当 n = 2 时的计算结果为 a2，故return 后面的表达式的第三个参数就为 a1 + a2，所以第三行代码就变成了：
+    return getFibo2(n-1, a2, a1 + a2); *** // 要保证尾调用里含有计算表达式，同时用if语句保证开头常量正确，再归纳总结。 ***
+
+function getFibo(n, a1 = 1, a2 = 1){
+    if (n <= 2) return a2
+    return getFibo2(n-1, a2, a1 + a2)
+}
+————————————————
+原文链接：https://blog.csdn.net/weixin_40920953/article/details/87392754

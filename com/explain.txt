@@ -11,19 +11,19 @@ BaseUpload.vue         formData.append('file',this.fileList[i]);  isGet;   isRep
 table棋盘
 
 # 白马：
-public.scss公共样式。	style.css  icomoon修改底色。 transform原图到overflow:hidden，再改变图片底色。
+public.scss公共样式。	移动端style.css  icomoon修改底色。 transform原图到overflow:hidden，再改变图片底色。
 移动端按需引入element-ui
 路由设置默认prop
 导出pdf插件：jsPdf、html2Canvas
 上传图片并预览或删除
 myMessage.vue  椭圆tab
 
-# 网上订餐
+# 南农网上订餐
 print LODOP
 transition name动画，可用于路由转换，if/show隐显。
 微信二维码接口。 websocket
 
-# 服务监督pc
+# 服务监督pc，暂无serviceSupervision
 日期optionPicker, disabled(){}
 
 # 白马二期

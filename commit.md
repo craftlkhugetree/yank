@@ -306,6 +306,19 @@ feat: 白马pc端资源入驻信息无限滚动。
 feat: 移动端bm我的资源、空闲资源，资源详情，入住资源及状态，入住资源伸缩，申请、续租表单。 resProcess。申请列表。三种文件，及对应预览和转化为pdf下载。
 fix: pc端搜索有时是resName；我的资源的resList不能是空闲。
 
+2022/07/26
+feat：移动端领导、白马办审核资源；资源入驻管理。缴纳水电费。费用管理和结算。
+fix：退出时直接用接口查出的类型和资源，不用liveList筛选出的。pdf样式padding调整。
+
+2022/07/27
+fix: pc端实习申请的餐食日期blur不更新；多选禁用在不同tab不同；更改水电上传图片按钮。学生信息表样式。
+
+空闲资源   path: "/idle-resource",
+资源入驻管理(原来的资源日常管理)   path: "/resource-info-management",
+费用结算   path: "/resource-teacher-fee",
+费用管理   path: "/resource-BM-fee",
+去掉科教资源的报修菜单
+
    // pc端判断是学生、白马办还是后勤
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
           if (repair.children && repair.children[0]) {
@@ -320,21 +333,15 @@ fix: pc端搜索有时是resName；我的资源的resList不能是空闲。
             }
             sessionStorage.setItem('url4bizNode', JSON.stringify(obj))
           }
-
-
-申请流程下载；帮助手册下载；
+空闲资源-申请流程下载；header-帮助手册下载；
 baseUpload；sideBar；utils
-本科生实习领导审批
-myResource资源id
 
-
-空闲资源   path: "/idle-resource",
-资源入驻管理   path: "/resource-info-management"",
-费用结算   path: "/resource-teacher-fee",
-费用管理   path: "/resource-BM-fee",
 
 require，import动态 静态
 webpack cjs/esm 导入导出 通用
 项目minipack 模块过程
 Amazon deepracer
-curl 登录  获取cookie
+
+
+form有初始值才能输入，才能双向绑定？
+doLayout才能保证移动端el-table某列可以用v-if，否则这一行不对齐。
