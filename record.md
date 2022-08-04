@@ -147,6 +147,20 @@ export default () => moment().format("YYYY Do MM");
 
 ```babel和webpack做的事情有一部分重叠， 例如都将js转化为ast并且做了一些transform， 然后再输出各自的目标代码。 但是两者的分工有所不同， babel主要做es语法的转换，确保最新的来的es特性能够以最快的速度deliver到开发者手中， 但是不负责模块的组合。 webpack更多的是将输入的各个模块用自己内部的一套逻辑将代码“链接”起来， 起胶水的作用， 并且目标是输出可以直接在浏览器中执行的代码。```
 
+*** 箭头函数 ***
+没有arguments，有...rest。无法通过 apply、call、bind 改变this指向。
+1. 对象方法中，不适用箭头函数
+getName1()通过箭头函数定义，而箭头函数是没有自己的this，会继承父作用域的this。
+const obj = {
+    name: '张三',
+    getName() {
+        return this.name
+    },
+    getName1: () => {
+        return this.name
+    }
+}
+因此obj.getName1()执行时，此时的作用域指向window，而window没有定义age属性，所有报空。
 
 <!-- 在两个互斥的radio中，一定要有相同的name值，不然不能互斥选择。 -->
         <input type="radio" name="sex" v-model="sex" value="男" />男
@@ -171,6 +185,28 @@ l.style.width = "50%"
 })
 }
 }
+
+*** 复制到剪切板的两种方法 ***
+      if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () {
+            console.log('Async: Copying to clipboard was successful!');
+          },
+          function (err) {
+            console.error('Async: Could not copy text: ', err);
+          }
+        );
+      } else {
+        const input = document.createElement('input');
+        document.body.appendChild(input);
+        input.setAttribute('value', text);
+        input.select();
+        if (document.execCommand('copy')) {
+          document.execCommand('copy');
+          console.log('复制成功');
+        }
+        document.body.removeChild(input);
+      }
 
 /** Function: 导出二进制流文件 */
 const exportFile = function (url, isGet, params, fileName, fileType) {
@@ -659,3 +695,35 @@ function getFibo(n, a1 = 1, a2 = 1){
 }
 ————————————————
 原文链接：https://blog.csdn.net/weixin_40920953/article/details/87392754
+
+
+# POST/GET
+1.前端向后端传输数据时，有get和post两种：
+如果是get传输，直接传在url后；如果是post传输，则在请求体body中传输。HTTP请求中的get请求和post请求参数的存放位置是不一样的。
+
+2.在body中的数据格式（post请求）：
+一种是 json 数据格式，另一种是 字符串。具体要用哪种格式取决于后端入参的格式
+
+如果后端接收json数据类型，post 的 headers 需要设置 { ‘content-type’: ’application/json’ }，传给后端的数据就形如 { ‘name’:’edward’, ‘age’:’25’ }
+如果后端接收的是（表单）字符串类型，post 的 headers 需设置 { ‘content-type’: ’application/x-www-form-urlencoded’ }，传输给后端的数据就形如 ‘name=edward&age=25’
+multipart/form-data(一般用来上传文件)
+为什么一般是给post请求设置content-type,get请求不需要设置吗？
+get 请求一般没有消息体body，而content-type 是用来指定消息体的格式的
+
+3.接口数据传输方式 form data、payload 和 Query String Parameters
+POST提交数据有两种数据传输方式，这两种方式浏览器是通过Content-Type来进行区分：
+如果是application/json或multipart/form-data的话，则为 request payload；json格式
+如果是 application/x-www-form-urlencoded的话，则为formdata方式；字符串
+如果是GET请求，则为Query String Parameters
+
+qs.stringfy()是将对象序列化成URL的形式，以&进行拼接。安装axios即可使用qs。
+axios默认数据格式为json,所以：
+1.当后端需要接收json格式的数据时,post请求头不需要设置请求头，数据格式也不需要我们去转换(若数据已经是json)；
+2.当后端需要接收字符串格式的数据时，我们需要给post请求头设置{ ‘content-type’: ’application/x-www-form-urlencoded’ }，
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+这个时候如果我们传的入参是一个 js 对象，这时候我们就需要用 qs 转换数据格式
+
+let  data = { name: 'edward', age: '25' }
+前者：JSON.stringfy(data)  //  ”{ 'name' : 'edward' , 'age' : '25' }”
+后者：qs.stringfy(data)  // 'name=edward&age=25'
+

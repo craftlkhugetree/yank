@@ -21,3 +21,5 @@ Because of the V8 engine whims,  突发奇想
 traverse 穿越
 seamlessly 无缝地
 
+$('body').delegate 代表、委托
+

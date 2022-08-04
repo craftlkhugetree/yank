@@ -29,3 +29,10 @@ transition name动画，可用于路由转换，if/show隐显。
 # 白马二期
 科教资源：我的资源、空闲资源是教师；资源入驻管理、资源库维护是管理员。后者才能在资源入驻信息中修改日常联系人和联系方式。
 移动端多选：van-field van-popup van-checkbox-group；分页查询使用了触底查询，所以getList()需要返回Promise来配合触底函数。process进度条。
+
+# 座位预约大屏
+二维码，ajax参数是否isForm
+      contentType: isForm ? 'application/x-www-form-urlencoded;charset=UTF-8' : 'application/json',
+	  data: isForm ? data : JSON.stringify(data),
+# 民国库
+tmpl，layer.js

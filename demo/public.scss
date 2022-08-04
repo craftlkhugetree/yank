@@ -603,3 +603,59 @@ CSS 改变文本可以采用伪元素生成
               white-space: pre-wrap;
               word-wrap: break-word;
             }
+// 隐藏滚动条
+.list::-webkit-scrollbar,
+.list::-webkit-scrollbar-thumb,
+.list::-webkit-scrollbar-track {
+  display: none;
+  margin-top: -1px;
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+// 想给tbody设置高度的时候，发现不起作用。原因是table的默认是display:table,
+// 如果想设置高度需要改成display:block/inline-block。这样改出现的问题是table的布局已经乱了，但是table高度不会超出外层div了。
+
+// 1.如果当前元素没有设置宽高属性的情况下，margin:0 auto是不起任何效果的；
+// 2.如果当前元素使用百分比设置宽高，margin:0 auto同样不起效果
+// 3.如果是行内元素，需要先转化为块级元素，行内块不行，必须是块级。
+
+// <img />标签没有独占一行，所以是行内元素，这没啥问题既然是行内元素为什么能够设置宽高呢？ 这个问题就要引申出下面部分了，<img />标签属于替换元素，具有内置的宽高属性，所以可以设置。
+// 可替换元素：
+// 浏览器根据元素的标签和属性，来决定元素的具体显示内容
+// 例如浏览器会根据 <img> 标签的src属性的值来读取图片信息并显示出来，而如果查看(X)HTML代码，则看不到图片的实际内容；又例如根据
+// <input>标签的type属性来决定是显示输入框，还是单选按钮等
+// (X)HTML中的 <img>、<input>、<textarea>、<select>、<object>都是替换元素。这些元素往往没有实际的内容，即是一个空元素
+
+
+// 每行三个，1-0.32*3=0.04，不能用justify-content，必须用margin模拟缝隙
+#noticeWrapper {
+  display: flex;
+  align-items: center;
+  margin: 50px 0 100px 0;
+  /* justify-content: space-between; */
+}
+#noticeWrapper .noticeBox {
+  width: 32%;
+  min-height: 72px;
+  cursor: pointer;
+}
+#noticeWrapper .noticeBox:not(:nth-child(3n)) {
+  margin-right: calc(4% / 2);
+}
+// 或者创建伪元素，并且flex:auto或者1；得加上justify-content
+// 或者计算出这一行差几个，然后hidden占位
+let tmpLen = tmp.length;
+        if (tmpLen < san) {
+          let diff = san - tmpLen;
+          for (let i = 1; i <= diff; i++) {
+            tmp.push({});
+          }
+          let timer = setInterval(() => {
+            if ($('#noticeWrapper').children().length) {
+              $(`#noticeWrapper > div`).slice(-diff).css({visibility: 'hidden'});
+              clearInterval(timer);
+            }
+          }, 100);
+        }

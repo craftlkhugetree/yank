@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+</head>
+
+<body>
+	<div class="box box_ clearfloat">
+		<div class="box_left">
+			<div class="left_top left_top_ clearfloat">
+				<span class="logo1"></span>
+				<span class="time">签到专用机</span>
+
+				<!---------------------------- 右侧座位表格 ---------------------------->
+				<div class="main">
+					<div class="left-main">
+						<ul class="icons-list" id="icons-list">
+						</ul>
+						<div class="line"></div>
+						<ul class="icons-list2" id="icons-list2">
+						</ul>
+					</div>
+
+					<div class="table-box">
+						<!-- <table class="seattable" id="seatTable"> -->
+						<table class="seattable">
+							<tbody id="seatTable"></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div id="qrcode_left"></div>
+			<ul class="left_down left_down_"></ul>
+
+			<script id="left_down_tpl" type="text/x-dot-template">
+          {{? it.length>0}}
+          	{{ for(var prop in it) { }}
+          	<li>
+          		<i class="li_time">{{=it[prop].signtime.substr(8,2)}}:{{=it[prop].signtime.substr(10,2)}}:{{=it[prop].signtime.substr(12,2)}}</i>
+          		<i class="li_name">{{=it[prop].username}}</i>
+          	</li>
+          	{{ } }}
+          {{??}}
+          <div class="li_empty">开启美好的一天！</div>
+          {{?}}
+        </script>
+		</div>
+		<div class="box_right box_right_">
+			<div class="right_top">
+				<h3></h3>
+				<h1></h1>
+			</div>
+			<div class="right_middle right_middle_"></div>
+			<script id="right_middle_tpl" type="text/x-dot-template">
+          <p>最</p>
+          <p>近</p>
+          <p>签</p>
+          <p>到</p>
+          <p>情</p>
+          <p>况</p>
+        </script>
+			<div id="qrcode"></div>
+		</div>
+	</div>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/doT.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.qrcode.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/base64.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/sign3.js" type="text/javascript" charset="utf-8"></script>
+</body>
+
+</html>

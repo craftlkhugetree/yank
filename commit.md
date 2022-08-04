@@ -67,8 +67,11 @@ lanhu: 123456
 读者教育 http://172.20.0.116:11080/lres2022/rest/swagger-ui.html
 白马 http://app.dev.angke.com.cn/bsermipweb/rest/swagger-ui.html
 座位预约 svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
-http://seat.dev.angke.cn/mseat/#/index 手机端
+http://seat.dev.angke.cn/mseat/#/index 手机端  admin/123
 svn://160.255.0.56/01module/lres/03code/lresweb/src/main/webapp/mobile_nh
+
+民国库 前端 http://172.20.1.251:8085/book/h5/index/index.html
+后台 http://172.20.1.251:8085/appportalweb/   admin/123
 
 https://720yun.com/t/c9fjr7syOu5
 
@@ -318,6 +321,32 @@ fix: pc端实习申请的餐食日期blur不更新；多选禁用在不同tab不
 费用结算   path: "/resource-teacher-fee",
 费用管理   path: "/resource-BM-fee",
 去掉科教资源的报修菜单
+
+2022/08/01
+fix: 移动端菜单隐藏
+fix: 网上订餐保存订餐地址作为默认。
+feat: 1、在区间管理列表添加  签到地址 操作，点击直接复制到剪切板里
+      2、签到地址生成规则：域名+ sign3.html?SECTIONID=
+# 座位预约大屏bigScreen
+feat: 1、按照设计图卡法新版签到页面 sign3.html
+2、链接需添加区间ID   sign3.html?SECTIONID=
+3、二维码生成规则：扫码信息为json格式。
+包含：
+appid:这个学工统一提供
+clickType：跳转类型，固定值为URL。
+clickContent:跳转内容，我们的访问链接，见sign.html。
+
+# 2022/08/02  民国库
+mgsjk
+
+2022/08/03
+feat: 用户端
+功能：1、若有处于弹框有效期内的公告，直接在首页弹出窗口展示
+2、在首页添加公告列表，显示3排序靠前3条通知公告
+
+2022/08/04
+feat: 3、添加新闻通知列表页和详情页
+
 
    // pc端判断是学生、白马办还是后勤
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
