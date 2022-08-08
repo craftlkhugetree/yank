@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bibliographies>
+<BibliographiesCount>1</BibliographiesCount>
+<Bibliography>
+<Type>Book</Type> <Language>zh-CHS</Language>
+<PrimaryTitle Lang="zh-CHS"> <![CDATA[{{DOUBLETITLE}}]]> </PrimaryTitle> 
+<Authors><Author><Info Lang="zh-CHS"><FullName><![CDATA[{{DOUBLEAUTHORDOU}}]]></FullName></Info></Author></Authors>
+<Publisher><![CDATA[{{DOUBLEPUBLISH}}]]></Publisher>	
+<Year><![CDATA[{{CREATEYEAR}}]]></Year>
+<PageScope><![CDATA[{{PAGECOUNT}}页]]></PageScope>
+</Bibliography> 
+</Bibliographies>

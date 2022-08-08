@@ -1,0 +1,102 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />-->
+		<!-- <link rel="stylesheet" href="css/animate.min.css"> -->
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/>
+		<!--<link rel="stylesheet" type="text/css" href="../css/style.css"/>-->
+		<link rel="icon" href="../img/favicon2.ico" type="image/x-icon"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/keleyidivpager.css"/>
+		<link href="../css/swiper.min.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link href="index.css" rel="stylesheet"/>
+		<title>民国文献数据库-关于我们</title>
+	</head>
+	<body>
+	
+			<div class="content">
+				<!--头部-->
+				<div class="lunbo" id="luobo">
+				    	<div class="titlePic">
+				    		<img src="../img/index_31.png" class="userIcon"/>
+				    		<div class="login-div" id="login-div">
+						    	<p class="login-title">会员登录</p>
+						    	<input type="text" id="uname" name="username" placeholder="请输入用户名">
+						    	<input type="password" id="pword" name="password" placeholder="请输入密码">
+						    	<input class="yzm" id="yzm" type="text" name="yzm" placeholder="请输入验证码">
+						    	<img class="yzmtp" id="yzmtp" onclick="javascript:changeCode()" src="/idsweb/rest/captcha/get" style="display: block;">
+						    	<p class="login-error"></p>
+						    	<button onclick="javascript:login()">登录</button>
+						    </div>
+				    	</div>
+					    
+					    <div class="search">
+					    	<input type="text" placeholder="    输入检索关键词" id="inputkeyword"/><img class="icon-search" src="../img/icon-search.png" />
+					    	
+						    <button type="button" class="seniorlocalsearchbutton">高级检索</button>
+						    <button type="button" class="classfiysearchbutton">分类浏览</button>
+					    </div>
+						  
+						
+						<div class="swiper-container">
+						    <div class="swiper-wrapper"></div>
+						    <!-- 如果需要分页器 -->
+						    <div class="swiper-pagination"></div>
+						   
+						</div>
+					   
+				</div>
+				<!--内容显示区-->
+				<div class="showContent">
+					    
+		    	  	  	 <!--书目显示区--> 
+		    	  	  	<div class="mgMaster">
+		    	  	  		<p class="resourceinfo"><a href="../index/index.html" target="_blank">首页</a>&nbsp;><span>关于我们</span></p>
+		    	  	  		<div class="showbookcontent">
+		    	  	  			<h4>关于我们</h4>
+		    	  	  			<div class="aboutContent">
+		    	  	  				<!-- <p>问典民国文献数据库是南京大学出版集团精心打造退出的一款全面反映民国时期（1911年至1949年）流传于存藏状况的大型图书文献典藏资源库。全面整合民国时期内国际问题核心研究资源、文献综述、时政评论以及档案资料汇编等构建而成的数字产品，真实再现了民国时期政治、经济、文化和商业生态。</p>
+								    <p>通过该数据库，可以全面了解民国时期的东西方思想文化交锋和学术研究概况，为事业研究人员和广大读者提供完整的文献信息服务。</p>
+									<p>该数据库内容收录广泛，涵盖了民国30多年间出版的各类图书10万余种，图书按照《中文普通图书统一著录条例》著录，按照《中国图书馆图书分类法》分类编排，同类图书多数按照出版年月排列，多卷本或同一著者著作尽量排在一起，少数以著者或者书名拼音字顺排列，所收图书全部写内容提要。资源类型为：知识点，报告，论文，珍惜档案，图书，讲义，图表，资讯等。</p> -->
+									<p>“问典”——南京大学出版社民国文献全文检索数据库项目，是南京大学出版社与南京龙瑞文化有限公司合作打造，以南京图书馆、南京大学图书馆和南京师范大学图书馆的馆藏民国文献为数据库的基本资源，精心推出的一款全面反映民国时期（1911—1949年）图书文献的大型典藏数字资源库，入选财政部2014年文化产业发展专项资金资助项目。</p>
+									<p>本数据库收录了民国38年间出版的各类图书近3万种，内容广泛，涵盖了民国时期政治、经济、文化、法律、军事、教育、文学、艺术、工商、金融、农林渔牧、地质矿产等多个门类。既有出版社出版的图书，也有政府机构、行业协会、大学和研究机构编纂的供内部参考使用的书籍，内容宏富，资料详实。资源类型为：图书、报告、论文、讲义、图表等。其中，1200余种文献可以进行全文检索，其余文献可以进行篇目检索。</p>
+									<p>此外，在资源库之外，我们还配置了民国行政区划、民国政府机构、民国时期纪年，以方便读者备查。通过本数据库，可以全面了解民国时期东西方思想文化交锋和学术研究概况，为研究人员和广大读者提供完整的文献信息服务。</p>
+									<p>本数据库收录的图书皆按照《普通图书著录规则》（GB/T 3792.2-2006）著录，按照《中国图书馆图书分类法》（第4版）分类编排。同时，所有图书还按教育部学科分类编排。同类图书多数按照出版年月排列，多卷本或同一作者著作尽量排列在一起，少数以作者或者书名拼音音顺排列。所有收录的图书都撰写内容提要。</p>
+									<p>本数据库为一期项目，今后，我们将进一步丰富资源库内容，逐步实现资源库内所有文献全文检索。</p>
+		    	  	  		    </div>
+		    	  	  	    </div>
+		    	  	  	
+				        </div>
+		        </div>
+		    </div>
+		    
+		    <!--底部-->
+		    <div class="bottom">
+				<img src="../img/logo_only.png"/>
+				<div class="bottomcontent"></div>
+			</div>
+            <!--//提示框-->
+            <div id="note">请输入关键词</div>
+		<script type="text/javascript" src="../js/jquery-1.8.3.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/jquery.tmpl.min.js" charset="utf-8"></script>
+		<script src="../js/layer.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script type="text/javascript" src="../js/bootstrap.min.js" charset="utf-8"></script>-->
+		<script src="../js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common/dkr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.pagination.min.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script src="../js/base64.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="index.js?v=20220622" type="text/javascript" charset="utf-8"></script>
+		<!--加载轮播图-->
+		<script id='swiperTemp' type='text/x-jquery-tmpl'>
+	         <div class="swiper-slide">
+	            <img src=${Img} />
+	         </div>
+	    </script>
+	</body>
+</html>

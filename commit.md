@@ -72,6 +72,7 @@ svn://160.255.0.56/01module/lres/03code/lresweb/src/main/webapp/mobile_nh
 
 民国库 前端 http://172.20.1.251:8085/book/h5/index/index.html
 后台 http://172.20.1.251:8085/appportalweb/   admin/123
+民国库向日葵：172 988 279      3ZW3oN
 
 https://720yun.com/t/c9fjr7syOu5
 
@@ -347,6 +348,10 @@ feat: 用户端
 2022/08/04
 feat: 3、添加新闻通知列表页和详情页
 
+2022/08/08
+feat: 书籍搜索弹框，高亮关键词，点击跳转该页。
+1、检索结果默认显示 5条，加载更多时再显示5条，没有更多数据时，加载更多按钮隐藏
+            2、检索未前端检索，通过加载 对应图书 docbook/main.xml   里面的内容进行检索
 
    // pc端判断是学生、白马办还是后勤
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};

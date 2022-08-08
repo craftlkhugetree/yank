@@ -34,5 +34,6 @@ transition name动画，可用于路由转换，if/show隐显。
 二维码，ajax参数是否isForm
       contentType: isForm ? 'application/x-www-form-urlencoded;charset=UTF-8' : 'application/json',
 	  data: isForm ? data : JSON.stringify(data),
+	  
 # 民国库
-tmpl，layer.js
+jquery tmpl模板 delegate事件，layer.js对话框，正则match exec，读取xml文件。

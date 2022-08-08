@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<style type="text/css">
+body {margin:0; padding:0;}/**使得页面四边没有空白**/
+div,img{
+	position:absolute;/**使得所有div都为绝对定位**/
+}
+
+.pagecss{
+	width:500px;/**页宽，排版简单的页面，该值为扫描件大小除以4，复杂页面除以2**/
+	height:870px;/**页高，排版简单的页面，该值为扫描件大小除以4，复杂页面除以2**/
+	background-image:url(img/bg_02.png);/**从书中扣取20X20px左右的颜色相对均匀的背景**/
+}
+.divcomm{
+	width:1px;/**div的宽度，跟字的大小一样**/
+	-webkit-writing-mode:vertical-rl;
+	-moz-writing-mode: vertical-rl;
+	-ms-writing-mode: tb-rl;/**兼容IE7竖排表达**/
+  	writing-mode: vertical-rl;/**竖排标准表达**/
+	writing-mode:tb-rl;/**兼容IE9竖排表达**/
+	z-index:100;/**文字zindex都为100**/
+}
+
+.div1{
+	font-family:"Microsoft YaHei","黑体","sans-serif";/**常用字体为"宋体","Microsoft YaHei","黑体"，看印刷体与哪个字体接近**/
+	font-size:24px;/**字大小，必须为px为单位**/
+	letter-spacing:2px;/**字间距，根据实际字间距做适当调整**/
+	width:1px;/**div的宽度，跟字的大小一样**/
+	-webkit-writing-mode:vertical-rl;
+	-moz-writing-mode: vertical-rl;
+	-ms-writing-mode: tb-rl;/**兼容IE7竖排表达**/
+  	writing-mode: vertical-rl;/**竖排标准表达**/
+	writing-mode:tb-rl;/**兼容IE9竖排表达**/
+	z-index:100;/**文字zindex都为100**/
+}
+.div2{
+	font-family:"宋体","sans-serif";
+	font-size:16px;
+	letter-spacing:0.2px;
+	width:1px;
+	-webkit-writing-mode:vertical-rl;
+	-moz-writing-mode: vertical-rl;
+	-ms-writing-mode: tb-rl;/**兼容IE7竖排表达**/
+  	writing-mode: vertical-rl;/**竖排标准表达**/
+	writing-mode:tb-rl;/**兼容IE9竖排表达**/
+	z-index:100;/**文字zindex都为100**/
+}
+.div3{
+	font-family:"宋体","sans-serif";
+	font-size:12px;
+	letter-spacing:1px;
+	width:1px;
+	-webkit-writing-mode:vertical-rl;
+	-moz-writing-mode: vertical-rl;
+	-ms-writing-mode: tb-rl;/**兼容IE7竖排表达**/
+  	writing-mode: vertical-rl;/**竖排标准表达**/
+	writing-mode:tb-rl;/**兼容IE9竖排表达**/
+	z-index:100;/**文字zindex都为100**/
+}
+.zz_blxleft{/**左则波浪线**/
+	border-bottom-width:0px;
+	border-top-width:0px;
+	border-left-width:3px;
+	border-right-width:0px;
+	border-style:double; 
+	z-index:1;
+}
+.zz_blxright{/**右则波浪线**/
+	border-bottom-width:0px;
+	border-top-width:0px;
+	border-left-width:0px;
+	border-right-width:3px;
+	border-style:double; 
+	z-index:1;
+}
+.zz_kxjhleft{/**左则空心句号**/
+	border-bottom-width:0px;
+	border-top-width:0px;
+	border-left-width:3px;
+	border-right-width:0px;
+	border-style:dashed; 
+	z-index:1;
+}
+.zz_kxjhright{/**右则空心句号**/
+	border-bottom-width:0px;
+	border-top-width:0px;
+	border-left-width:0px;
+	border-right-width:3px;
+	border-style:dashed; 
+	z-index:1;
+}
+
+.zz_sxjhleft{/**左则实心句号**/
+	border-bottom-width:0px;
+	border-top-width:0px;
+	border-left-width:3px;
+	border-right-width:0px;
+	border-style:dotted; 
+	z-index:1;
+}
+.zz_sxjhright{/**右则实心句号**/
+	border-bottom-width:0px;
+	border-top-width:0px;
+	border-left-width:0px;
+	border-right-width:3px;
+	border-style:dotted; 
+	z-index:1;
+}
+
+.zz_dhleft{/**左则顿号**/
+	border-bottom-width:0px;
+	border-top-width:0px;
+	border-left-width:3px;
+	border-right-width:0px;
+	border-style:dotted; 
+	z-index:1;
+}
+.zz_dhright{/**右则顿号**/
+	border-bottom-width:0px;
+	border-top-width:0px;
+	border-left-width:0px;
+	border-right-width:3px;
+	border-style:dotted; 
+	z-index:1;
+}
+
+.zz_sxleft{/**左则竖线**/
+	border-bottom-width:0px;
+	border-top-width:0px;
+	border-left-width:3px;
+	border-right-width:0px;
+	border-style:solid; 
+	z-index:1;
+}
+.zz_sxright{/**右则竖线**/
+	border-bottom-width:0px;
+	border-top-width:0px;
+	border-left-width:0px;
+	border-right-width:3px;
+	border-style:solid; 
+	z-index:1;
+}
+</style>
+<title>0005</title>
+</head>
+<body>
+<div class="pagecss">
+	<div style="font-size:8px;left:90px; top:110px;letter-spacing:0px; width:350px;overflow:hidden;">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	</div>
+	<a id="zj_1.1"></a>
+	<div class="div1" style="left:200px; top:15px;width:100px;height:150px;border:1px solid #000;" textdir="tb">
+	测试边框
+	</div>
+
+
+	<div class="divcomm" style="left:480px; top:125px;font-family:Microsoft YaHei,黑体,sans-serif;font-size: 19px;letter-spacing:2px;" textdir="tb">
+	编辑凡例
+	</div>
+	<div class="div2" style="left:440px; top:130px; " textdir="tb">
+	一<img style="position: relative;width:16px;height:16px;" src="img/0001_1.1_0001.png"/>代二百数十年间。遗闻轶事。上自宫围。下逮闾里。或者于名人记载。或述于故老传言。
+	</div>
+	<div class="div2" style="left:410px; top:150px; " textdir="tb">
+	考清史者往往欢其散失。未易徵稽。本编力为採辑。分类编辑。巨细无遗。本末俱备。可为
+	</div>
+	<div class="div2" style="left:380px; top:150px; " textdir="tb">
+	有清一代野史之总汇。因名曰清朝野史大观。
+	</div>
+	<div class="div2" style="left:350px; top:130px; " textdir="tb">
+	一本编分为五类。名有意旨。请述其略。
+	</div>
+	<img style="left:240px;top:50px;" src="img/0001_1.1_0005.png"/>
+	<div class="div2" style="left:320px; top:150px; " textdir="tb">
+	︵一︶清代文字。<span class="zz_blxleft">左则波浪</span>。<span class="zz_blxright">右则波浪</span>。<span class="zz_kxjhleft">左空心句</span>。<span class="zz_kxjhright">右空心句</span>。䚽于寓言。本编悉力钩稽。考
+	</div>
+	<div class="div2" style="left:290px; top:150px; " textdir="tb">
+	核实录。是为清宫遗闻。
+	</div>
+	<div class="div2" style="left:260px; top:150px; " textdir="tb">
+	︵二︶巨獄大案。<span class="zz_sxleft">左则竖线</span>。<span class="zz_sxright">右则竖线</span>。遂无直笔。本编旁徵博引。华见真情。内政外交。并
+	</div>
+	<div class="div2" style="left:230px; top:150px; " textdir="tb">
+	陈详是为清史料。
+	</div>
+	<div class="div2" style="left:200px; top:150px; " textdir="tb">
+	︵三︶名臣名将。<span class="zz_sxjhleft">右实心句</span>。<span class="zz_sxjhright">右实心句</span>。剧盗巨猾。本编穷源竞委。并蓄兼收。公论彰彰。用
+	</div>
+	<div class="div2" style="left:170px; top:150px; " textdir="tb">
+	昭懲劝是为清人逸事。
+	</div>
+	<div class="div2" style="left:140px; top:150px; " textdir="tb">
+	︵四︶名儒文苑。<span class="zz_dhleft">左则顿号</span>。<span class="zz_dhright">右则顿号</span>。流布艺林。本编据携刺取。乃据其华。詹詹小言。乐
+	</div>
+	<div class="div2" style="left:110px; top:150px; " textdir="tb">
+	然頣解。是为清朝艺苑。
+	</div>
+	<div class="div2" style="left:80px; top:150px; " textdir="tb">
+	︵五︶虞初之志。梼杌之言。怪诞离奇。更亦难数。本编撷採维严。宁缺无滥。既富于趣。益
+	</div>
+	<div class="div3" style="left:50px; top:185px; " textdir="tb">
+	编辑凡例test
+	</div>
+	<div class="div3" style="left:50px; top:680px; " textdir="tb">
+	一
+	</div>
+</div>
+</body>
+</html>

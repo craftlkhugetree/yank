@@ -1,0 +1,138 @@
+<!DOCTYPE>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />-->
+	<!-- <link rel="stylesheet" href="css/animate.min.css"> -->
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+	<!--<link rel="stylesheet" type="text/css" href="../css/style.css"/>-->
+	<link rel="icon" href="../img/favicon2.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/layer.css" />
+	<link rel="stylesheet" type="text/css" href="../css/keleyidivpager.css" />
+	<link href="../css/swiper.min.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link href="index.css" rel="stylesheet" />
+	<title>民国文献数据库-新闻通知</title>
+</head>
+
+<body>
+	<div id="showPoint"
+		style="position:absolute;display:none;border:1px solid silver;background:silver;padding:10px;z-index:999;">
+		<p class="p-download" data-text="Noteexpress">Noteexpress</p>
+		<p class="p-download" data-text="BibTeX">BibTeX</p>
+		<p class="p-download" data-text="EndNote">EndNote</p>
+		<p class="p-download" data-text="Refworks">Refworks</p>
+		<!-- <p class="p-download" data-text="RefMan">RefMan Export</p> -->
+		<p class="p-download" data-text="NoteFirst">NoteFirst</p>
+	</div>
+
+	<div class="content">
+		<!--头部-->
+		<div class="lunbo" id="luobo">
+			<div class="titlePic">
+				<img src="../img/index_31.png" class="userIcon" />
+				<div class="login-div" id="login-div">
+					<p class="login-title">会员登录</p>
+					<input type="text" id="uname" name="username" placeholder="请输入用户名">
+					<input type="password" id="pword" name="password" placeholder="请输入密码">
+					<input class="yzm" id="yzm" type="text" name="yzm" placeholder="请输入验证码">
+					<img class="yzmtp" id="yzmtp" onclick="javascript:changeCode()" src="/idsweb/rest/captcha/get"
+						style="display: block;">
+					<p class="login-error"></p>
+					<button onclick="javascript:login()">登录</button>
+				</div>
+			</div>
+		</div>
+		<!--内容显示区-->
+		<div class="showContent">
+			<!--分类-->
+			<div class="expertComment" style="display:none">
+				<img src="../img/filterPic.png" />
+				<ul class="tree"></ul>
+			</div>
+			<!--书目显示区-->
+			<div class="mgMaster">
+				<p class="resourceinfo">
+					<a href="javascript:void(0)" class="toStart">首页</a>&nbsp;>
+					<a href="javascript:void(0)" class="labelname ifExist"></a><span class="ifExist">&nbsp;></span>
+					<span class="tipsInfo">新闻通知</span>
+					<span class="keywords"></span>
+				</p>
+				<div class="showbookcontent"></div>
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<!--//返回顶部-->
+	<div class="backtop"><img src="../img/icon-top.png"></div>
+
+	<!--底部-->
+	<div class="bottom">
+		<img src="../img/logo_only.png" />
+		<div class="bottomcontent"></div>
+	</div>
+	<!--//提示框-->
+	<div id="note">请输入关键词</div>
+
+	<script type="text/javascript" src="../js/jquery-1.8.3.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/jquery.tmpl.min.js" charset="utf-8"></script>
+	<script src="../js/layer.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script type="text/javascript" src="../js/bootstrap.min.js" charset="utf-8"></script>-->
+	<script src="../js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common/dkr.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.pagination.min.js" type="text/javascript" charset="utf-8"></script>
+
+	<script src="../js/base64.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="index.js?v=20220622" type="text/javascript" charset="utf-8"></script>
+	<!--加载分类-->
+	<script id='categoryTemp' type='text/x-jquery-tmpl'>
+	            {{each Catalog}}
+		             <li title="${NAME}"><a href="javascript:void(0)" value="${BOOKIDS}" onclick="clickShowHide(this)" class="searchName">${NAME.length>9?NAME.substring(0,9)+'...':NAME}</a>
+		               <ul>
+				             {{each CHILDREN}}
+				                     <li title="${$value.NAME}"><a href="javascript:void(0)" value="${$value.BOOKIDS}" onclick="categoryFilterBook(this)">${$value.NAME.length>6?$value.NAME.substring(0,6)+'...':$value.NAME}</a><span>${$value.NUMBER}</span></li>
+							 {{/each}}
+					   </ul>
+		             </li>
+		        {{/each}}
+	    </script>
+	<!--分页-->
+	<script id='bookTemp' type='text/x-jquery-tmpl'>
+		<div id="div_pager"></div>
+		<p class="cateinfo">新闻通知</p>
+		<p class="searchinfo">检索结果有${total}条</p>
+		<div class="nnList"></div>
+	</script>
+	<!-- <div id="div_pager2"></div> -->
+	<!--列表-->
+	<script id='newsTableList' type='text/x-jquery-tmpl'>
+		<div class="noticeBox">
+			<div class="calendar">
+				<div class="month">
+					${month}
+				</div>
+				<div class="day">
+					{{= day}}
+				</div>
+			</div>
+			<div class="text">
+				<span class="ellipsis title" title='${name}'>
+					{{= name}}
+				</span>
+				<span class="more-ellipsis content" title='${content}'>
+					{{= content}}
+				</span>
+			</div>
+		</div>
+	</script>
+
+</body>
+
+</html>

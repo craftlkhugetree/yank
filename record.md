@@ -161,6 +161,16 @@ const obj = {
     }
 }
 因此obj.getName1()执行时，此时的作用域指向window，而window没有定义age属性，所有报空。
+2. 原型方法中，不适用箭头函数。
+3. 构造函数也不行！
+构造函数是通过 new 关键字来生成对象实例，生成对象实例的过程也是通过构造函数给实例绑定 this 的过程，而箭头函数没有自己的 this。因此不能使用箭头作为构造函数，也就不能通过 new 操作符来调用箭头函数。
+4. 动态上下文中的回调函数，比如绑定click事件。
+5. Vue 生命周期和 method 中也不能使用箭头函数
+Vue 本质上是一个对象，我们说过对象方法中，不适用箭头函数。他的本质上的和对象方法中，不适用箭头函数是一样的。
+那么我有一个问题：Vue不行，作为大热框架之一的 react 行吗？
+回答是：react 行
+因为 Vue组件本质上是一个 JS 对象；React 组件（非Hooks）他本质上是一个 ES6 的 class
+class中的方法如果是普通函数方法，该方法会绑定在构造函数的原型上；但是如果方式是箭头函数方法，该方法会绑定在构造函数上。通过上述方式调用class中的方法，无论是箭头函数方法还是普通函数方法，方法中的this都指向实例对象。
 
 <!-- 在两个互斥的radio中，一定要有相同的name值，不然不能互斥选择。 -->
         <input type="radio" name="sex" v-model="sex" value="男" />男
@@ -264,10 +274,6 @@ document.body.removeChild(link);
 window.URL.revokeObjectURL(url);
 });
 }
-
-# regex
-
-^(?!._(localhost|z.angke.com.cn))._$
 
 # jquery
 $('#obj1').appendTo($('#obj2')) 这个是将 $('#obj1')) 插入到 $('#obj2') 中作为最后一个元素

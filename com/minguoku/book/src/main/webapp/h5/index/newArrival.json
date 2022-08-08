@@ -1,0 +1,33 @@
+[{
+        "IMG": "../img/book2.png",
+        "BOOKNAME": "《诸葛亮》",
+        "PUBLISHNAME":"人民出版社"
+    }, {
+        "IMG": "../img/book1.png",
+        "BOOKNAME": "《资治通鉴》",
+        "PUBLISHNAME":"南京大学出版社"
+    },{
+        "IMG": "../img/book3.png",
+        "BOOKNAME": "《世界通史》",
+        "PUBLISHNAME":"商务出版社发行"
+    },{
+        "IMG": "../img/book1.png",
+        "BOOKNAME": "《资治通鉴》",
+        "PUBLISHNAME":"人民出版社"
+    },{
+        "IMG": "../img/book1.png",
+        "BOOKNAME": "《资治通鉴》",
+        "PUBLISHNAME":"人民出版社"
+    },{
+        "IMG": "../img/book1.png",
+        "BOOKNAME": "《资治通鉴》",
+        "PUBLISHNAME":"南京大学出版社"
+    },{
+        "IMG": "../img/book2.png",
+        "BOOKNAME": "《诸葛亮》",
+        "PUBLISHNAME":"人民出版社"
+    },{
+        "IMG": "../img/book1.png",
+        "BOOKNAME": "《资治通鉴》",
+        "PUBLISHNAME":"南京大学出版社"
+    }]

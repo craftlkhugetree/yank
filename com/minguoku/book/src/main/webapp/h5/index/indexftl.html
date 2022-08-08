@@ -1,0 +1,230 @@
+<!DOCTYPE>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />-->
+	<!-- <link rel="stylesheet" href="css/animate.min.css"> -->
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+	<meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1" />
+	<link rel="icon" href="../img/favicon2.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/jquery.bxslider.css" />
+	<link rel="stylesheet" type="text/css" href="../css/jquery.marquee.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/swiper.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css?v=20220325" />
+	<link href="index.css" rel="stylesheet" />
+	<title>民国文献数据库-首页</title>
+</head>
+
+<body>
+	<!--头部-->
+	<div class="lunbo">
+		<!--logo图片-->
+		<div class="titlePic">
+			<img src="../img/index_31.png" class="userIcon" />
+			<div class="login-div" id="login-div">
+				<p class="login-title">会员登录</p>
+				<input type="text" id="uname" name="username" placeholder="请输入用户名">
+				<input type="password" id="pword" name="password" placeholder="请输入密码">
+				<input class="yzm" id="yzm" type="text" name="yzm" placeholder="请输入验证码">
+				<img class="yzmtp" id="yzmtp" onclick="javascript:changeCode()" src="/idsweb/rest/captcha/get"
+					style="display: block;">
+				<p class="login-error"></p>
+				<button onclick="javascript:login()">登录</button>
+			</div>
+		</div>
+
+		<!--搜索关键词-->
+		<div class="search">
+			<input type="text" placeholder="    输入检索关键词" id="inputkeyword" /><img class="icon-search toSearch"
+				src="../img/icon-search.png"></img>
+			<button type="button" class="seniorindexsearchbutton">高级检索</button>
+			<button type="button" class="classfiysearchbutton">分类浏览</button>
+		</div>
+
+		<!--轮播banner-->
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+
+			</div>
+			<!-- 如果需要分页器 -->
+			<div class="swiper-pagination"></div>
+		</div>
+	</div>
+
+	<!--中部-->
+	<div class="content">
+		<!--<div class="showListInfo">
+						<div class="expertComment">
+						  	<img src="../img/expertcomment.png"/>
+						  	<div class="commentContent" id="commentContent">
+						  		<#list EXPERTCOMMENT as data>
+								   <p>【${data.EXPERTER}】 ${data.EXPERTERCOMMENT}</p>
+								</#list>
+						  	</div>
+						</div>
+		    	  	  	<div class="mgMaster">
+		    	  	  		<img src="../img/mgpeople.png"/>
+		    	  	  		<div class="commentContent" id="mgMaster">
+		    	  	  			<#list MGMASTERCOMMENT as data>
+		    	  	  				<p>
+		    	  	  					<#if data.NAME??>
+		    	  	  						【${data.NAME}】&nbsp;&nbsp;
+		    	  	  					</#if>
+			    	  	  				<#if data.BC??>
+			    	  	  					别称:${data.BC}&nbsp;&nbsp;  
+			    	  	  				</#if> 
+			    	  	  				<#if data.Z??>
+			    	  	  					字:${data.Z}&nbsp;&nbsp;  
+			    	  	  				</#if> 
+			    	  	  				<#if data.H??>
+			    	  	  					号:${data.H}&nbsp;&nbsp;
+			    	  	  				</#if> 
+			    	  	  				<#if data.JG??>
+			    	  	  					籍贯:${data.JG}&nbsp;&nbsp;
+			    	  	  				</#if>
+			    	  	  			</p>
+								</#list>
+		    	  	  		</div>
+							    
+						</div>
+						
+		    	    </div>-->
+
+		<div class="showListInfo clearfix">
+			<!--民国地区-->
+			<div class="location">
+				<!--<div class="titleimg"></div>-->
+				<h3>安徽省</h3>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;<span>南陵</span>&emsp;青弋，陽谷...</p>
+				<h3>福建省</h3>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;<span>詔安</span>&emsp;懷安，南詔...</p>
+				<h3>甘肅省</h3>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;<span>臨夏</span>&emsp;大夏，抱罕...</p>
+				<p class="more">
+					<a href="../Minguo/area.html" target="_blank">查看更多>></a>
+				</p>
+			</div>
+			<!--民国政府机构-->
+			<div class="government">
+				<!--<div class="governmentimg"></div>-->
+				<h3>南京临时政府</h3>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;临时大总统府...</p>
+				<!--<p><span>膚施</span>&emsp;金明，翟國，豐林，東夏</p>-->
+				<h3>北京政府</h3>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;甄拔特种司法人员委员会...</p>
+				<h3>伪中华民国临时政府</h3>
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;行政委员会...</p>
+				<p class="more">
+					<a href="../Minguo/government.html" target="_blank">查看更多>></a>
+				</p>
+			</div>
+			<!--民国时期纪年-->
+			<div class="annal">
+				<!--<div class="annalimg"></div>-->
+				<h3>1909年 已酉 宣统元年</h3>
+				<h3>1910年 庚戌 宣统二年</h3>
+				<h3>1911年 辛亥 宣统三年</h3>
+				<h3>1912年 壬子 </h3>
+				<h3>1913年 癸丑 </h3>
+				<p class="more">
+					<a href="../Minguo/annals.html" target="_blank">查看更多>></a>
+				</p>
+			</div>
+		</div>
+		<img style="width:1000px;" src="../img/newarrival.png" />
+		<!--滚动轮播-->
+		<div id="marquee1">
+			<ul>
+				<#list NEWARRIVAL as data>
+					<li>
+						<a href="javascript:void(0)" value="${data.BOOKDIR!}" name="${data.ZTTYPE!}"><img
+								src="${IMGURL!}${data.BOOKDIR!}/scanpic/s/0001.png" /></a>
+						<p><a href="javascript:void(0)" title="${data.TITLE!}" value="${data.BOOKDIR!}"
+								name="${data.ZTTYPE!}">${data.TITLE!}</a></p>
+						<p><a href="javascript:void(0)" value="${data.BOOKDIR!}" name="${data.ZTTYPE!}"
+								title="${data.PUBLISHNAME!}">${data.PUBLISHNAME!}</a></p>
+					</li>
+				</#list>
+			</ul>
+		</div>
+		<img style="width:1000px;" src="../img/newsNotice2.png" />
+		<!-- 新闻通知 -->
+		<div id="noticeWrapper"></div>
+		<span class="word8">查看更多&gt;&gt;</span>
+	</div>
+	<!--底部-->
+	<div class="bottom">
+		<img src="../img/logo_only.png" />
+		<div class="bottomcontent"></div>
+	</div>
+
+	<div id="note">请输入关键词</div>
+	<!--是否下载谷歌的提示-->
+
+	<div class="tipChrome"><span>建议使用谷歌浏览器，是否下载？</span><button class="downChrome">下载</button><button
+			class="cancelChrome">取消</button></div>
+
+	<script type="text/javascript" src="../js/jquery-1.8.3.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/jquery.tmpl.min.js" charset="utf-8"></script>
+	<!--		<script type="text/javascript" src="../js/bootstrap.min.js" charset="utf-8"></script>-->
+	<script type="text/javascript" src="../js/swiper.jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.kxbdmarquee.js"></script>
+	<script type="text/javascript" src="../js/layer.js"></script>
+	<script src="../js/common/dkr.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/base64.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="index.js?v=20220622" type="text/javascript" charset="utf-8"></script>
+	<!-- 数据渲染 start-->
+	<!--//专家评论和民国人物-->
+	<!--<script id='commentTemp' type='text/x-jquery-tmpl'>
+	         <p>{{= Name}}</p>
+	    </script>-->
+	<!--banner图-->
+	<script id='swiperTemp' type='text/x-jquery-tmpl'>
+	         <div class="swiper-slide">
+	            <img src={{= Img}} />
+	         </div>
+	    </script>
+
+	<!--最新上架-->
+	<!--<script id='newArrivalTemp' type='text/x-jquery-tmpl'>
+	         <li>
+				<a href="javascript:void(0)"><img src={{= IMG}} /></a>
+				<p><a href="javascript:void(0)">{{= BOOKNAME}}</a></p>
+				<p><a href="javascript:void(0)">{{= PUBLISHNAME}}</a></p>
+			</li>
+	    </script>-->
+	<!-- 新闻通知 -->
+	<script id='newsNotice' type='text/x-jquery-tmpl'>
+		<div class="noticeBox">
+			<div class="calendar">
+				<div class="month">
+					{{= month}}
+				</div>
+				<div class="day">
+					{{= day}}
+				</div>
+			</div>
+			<div class="text">
+				<span class="ellipsis title" title='{{= name}}'>
+					{{= name}}
+				</span>
+				<span class="more-ellipsis content" title='{{= content}}'>
+					{{= content}}
+				</span>
+			</div>
+		</div>
+	</script>
+
+	<!-- 新闻弹窗 -->
+	<script id="diagNews" type="text/x-jquery-tmpl">
+		<span class="title">{{= name}}</span>
+		<span class="releaseTime">{{= rTime }}</span>
+		<p>{{= content}}</p>
+	</script>
+</body>
+
+</html>

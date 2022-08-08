@@ -1,0 +1,160 @@
+<!DOCTYPE>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />-->
+	<!-- <link rel="stylesheet" href="css/animate.min.css"> -->
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+	<!--<link rel="stylesheet" type="text/css" href="../css/style.css"/>-->
+	<link rel="icon" href="../img/favicon2.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/layer.css" />
+	<link rel="stylesheet" type="text/css" href="../css/keleyidivpager.css" />
+	<link href="../css/swiper.min.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<link href="index.css" rel="stylesheet" />
+	<title>民国文献数据库-使用帮助</title>
+</head>
+
+<body>
+
+	<div class="content">
+		<!--头部-->
+		<div class="lunbo" id="luobo">
+			<div class="titlePic">
+				<img src="../img/index_31.png" class="userIcon" />
+				<div class="login-div" id="login-div">
+			    	<p class="login-title">会员登录</p>
+			    	<input type="text" id="uname" name="username" placeholder="请输入用户名">
+			    	<input type="password" id="pword" name="password" placeholder="请输入密码">
+			    	<input class="yzm" id="yzm" type="text" name="yzm" placeholder="请输入验证码">
+			    	<img class="yzmtp" id="yzmtp" onclick="javascript:changeCode()" src="/idsweb/rest/captcha/get" style="display: block;">
+			    	<p class="login-error"></p>
+			    	<button onclick="javascript:login()">登录</button>
+			    </div>
+			</div>
+
+			<!-- <div class="search">
+					    	<input type="text" placeholder="    输入检索关键词" class="inputkeywordclass"/><img class="icon-search" src="../img/icon-search.png" />
+					    	
+						    <button type="button" class="seniorlocalsearchbutton">高级检索</button>
+						    <button type="button" class="classfiysearchbutton">分类浏览</button>
+					    </div> -->
+
+
+			<!-- <div class="swiper-container">
+						    <div class="swiper-wrapper"></div> -->
+			<!-- 如果需要分页器 -->
+			<!-- <div class="swiper-pagination"></div>
+						   
+						</div> -->
+
+		</div>
+		<!--内容显示区-->
+		<div class="showContent">
+
+			<!--书目显示区-->
+			<div class="mgMaster">
+				<p class="resourceinfo"><a href="../index/index.html" target="_blank">首页</a>&nbsp;><span>使用帮助</span></p>
+				<div class="main clearfix">
+					<!-- <h4>关于我们</h4>
+		    	  	  			<div class="aboutContent">
+		    	  	  				<p>问典民国文献数据库是南京大学出版集团精心打造退出的一款全面反映民国时期（1911年至1949年）流传于存藏状况的大型图书文献典藏资源库。全面整合民国时期内国际问题核心研究资源、文献综述、时政评论以及档案资料汇编等构建而成的数字产品，真实再现了民国时期政治、经济、文化和商业生态。</p>
+								    <p>通过该数据库，可以全面了解民国时期的东西方思想文化交锋和学术研究概况，为事业研究人员和广大读者提供完整的文献信息服务。</p>
+								    <p>该数据库内容收录广泛，涵盖了民国30多年间出版的各类图书10万余种，图书按照《中文普通图书统一著录条例》著录，按照《中国图书馆图书分类法》分类编排，同类图书多数按照出版年月排列，多卷本或同一著者著作尽量排在一起，少数以著者或者书名拼音字顺排列，所收图书全部写内容提要。资源类型为：知识点，报告，论文，珍惜档案，图书，讲义，图表，资讯等。</p>
+									</div> -->
+
+					<div class="mainleft">
+						<h3>使用帮助</h3>
+						<div>
+							<p class="usenav act">文献检索</p>
+							<p class="usenav">在线阅读</p>
+							<p class="usenav">工具数据库</p>
+						</div>
+					</div>
+					<div class="mainright">
+						<div class="mainitem">
+							<h3>文献检索</h3>
+							<p>1）进入首页，在搜索框中输入检索关键字</p>
+							<img src="../img/usehelp-mainitem-01.png" alt="">
+							<p>2）回车或点击搜索图标，出现如下界面，检索出相应的图书并高亮显示</p>
+							<img src="../img/usehelp-mainitem-02.png" alt="">
+							<h3>高级检索</h3>
+							<p>1）进入首页，点击高级检索</p>
+							<img src="../img/usehelp-mainitem-03.png" alt="">
+							<p>2）填写信息，点击高级检索</p>
+							<img src="../img/usehelp-mainitem-04.png" alt="">
+							<p>3）出现如下界面，检索出相应的图书</p>
+							<img src="../img/usehelp-mainitem-05.png" alt="">
+						</div>
+						<div class="mainitem hide">
+							<h3>在线阅读</h3>
+							<p>1）通过检索进入图书列表页，点击阅读</p>
+							<img src="../img/usehelp-mainitem-11.png" alt="">
+							<p>2）或者点击详情，进入图书详情页，点击开始阅读</p>
+							<img src="../img/usehelp-mainitem-12.png" alt="">
+							<p>3）进入在线阅读界面，开始展示图书原页</p>
+							<img src="../img/usehelp-mainitem-13.png" alt="">
+							<p>4）点击右上角“文字”，可查阅加工后的文字页面</p>
+							<img src="../img/usehelp-mainitem-14.png" alt="">
+							<p>5）点击右上角“简体”，可查阅简体版的文字页面，简繁体可随意切换</p>
+							<img src="../img/usehelp-mainitem-15.png" alt="">
+							<p>6）点击右上角页码数，或者左侧目录，或者阅读区左右键，进行翻页查看</p>
+							<img src="../img/usehelp-mainitem-16.png" alt="">
+							<p>7）点击右上角“下载”，可下载当前阅读的原页</p>
+							<img src="../img/usehelp-mainitem-17.png" alt="">
+							<p>8）点击右上角“引用”，出现引用格式列表，点击即可下载该格式的引用信息</p>
+							<img src="../img/usehelp-mainitem-18.png" alt="">
+							<p>9）或者点击列表页“引用”，出现引用格式列表，点击即可下载该格式的引用信息</p>
+							<img src="../img/usehelp-mainitem-19.png" alt="">
+						</div>
+						<div class="mainitem hide">
+							<h3>工具数据库</h3>
+							<p>1）进入首页，有三个工具数据库：民国行政区划，民国政府机构，民国时期纪年</p>
+							<img src="../img/usehelp-mainitem-21.png" alt="">
+							<p>2）点击民国行政区划的“查看更多”，进入民国行政区划详情页面</p>
+							<img src="../img/usehelp-mainitem-22.png" alt="">
+							<p>3）点击民国政府机构的“查看更多”，进入民国政府机构详情页面</p>
+							<img src="../img/usehelp-mainitem-23.png" alt="">
+							<p>4）点击民国时期纪年的“查看更多”，进入民国时期纪年详情页面</p>
+							<img src="../img/usehelp-mainitem-24.png" alt="">
+							<p>5）也可以点击详情页右上角的数据库，进行数据库的切换</p>
+							<img src="../img/usehelp-mainitem-25.png" alt="">
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!--底部-->
+	<div class="bottom">
+		<img src="../img/logo_only.png" />
+		<div class="bottomcontent"></div>
+	</div>
+	<!--//提示框-->
+	<!-- <div id="note">请输入关键词</div> -->
+	<script type="text/javascript" src="../js/jquery-1.8.3.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/jquery.tmpl.min.js" charset="utf-8"></script>
+	<script src="../js/layer.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script type="text/javascript" src="../js/bootstrap.min.js" charset="utf-8"></script>-->
+	<script src="../js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common/dkr.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.pagination.min.js" type="text/javascript" charset="utf-8"></script>
+
+	<script src="../js/base64.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="index.js?v=20220622" type="text/javascript" charset="utf-8"></script>
+	<!--加载轮播图-->
+	<!-- <script id='swiperTemp' type='text/x-jquery-tmpl'>
+	         <div class="swiper-slide">
+	            <img src=${Img} />
+	         </div>
+	    </script> -->
+
+</body>
+
+</html>

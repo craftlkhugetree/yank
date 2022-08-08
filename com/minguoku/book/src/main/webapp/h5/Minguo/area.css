@@ -1,0 +1,169 @@
+
+.mainleft{
+	width: 195px;
+	height:100%;
+	background:rgba(250,246,232,1);
+	border:3px solid rgba(241,231,205,1);
+	padding: 30px 28px;
+	box-sizing: border-box;
+	float: left;
+	overflow-y:scroll ;
+}
+.mainleft>h3{
+	width: 100%;
+	height:25px;
+	font-size:19px;
+	color:rgba(112,87,56,1);
+	line-height:25px;
+	margin-bottom: 20px;
+}
+.mainleft>p{
+	width:100%;
+	height:19px;
+	font-size:14px;
+	color:rgba(112,87,56,1);
+	line-height:19px;
+	margin: 11px 0;
+	white-space:nowrap; 
+	overflow:hidden; 
+	text-overflow:ellipsis;
+}
+.mainleft>p:hover{
+	cursor: pointer;
+}
+.mainleft>p.act{
+	color:rgba(0,86,166,1);
+}
+.mainright{
+	width: calc(100% - 219px);
+	height: 100%;
+	margin-left: 12px;
+	background:rgba(249,246,232,1);
+	border:3px solid rgba(241,231,205,1);
+	float: right;
+	padding: 20px 15px;
+	box-sizing: border-box;
+	overflow-y:scroll ;
+}
+.tabletop>div{
+	float: left;
+	text-align: start;
+	line-height: 49px;
+	font-size:14px;
+	color:rgba(112,87,56,1);
+	padding-left: 20px;
+	box-sizing: border-box;
+	position: relative;
+}
+.tabletop>div.toponymy{
+	text-align: center;
+	padding: 0;
+	width: 154px;
+	height: 100%;
+}
+.tabletop>div>div{
+	display: inline-block;
+	width: 12px;
+	height: 15px;
+	top: 17px;
+	position: absolute;
+	margin-left: 5px;
+}
+.tabletop>div>div>i{
+	display: inline-block;
+	width: 100%;
+	height: 6px;
+}
+.toponymy .up,.originally .up{
+	width: 0; 
+	height: 0;
+ 	border-width: 6px;
+	border-style: solid;
+	border-color: transparent transparent #D6D0BE transparent;
+	position: absolute;
+	top: -5PX;
+}
+.toponymy .up.upact,.originally .up.upact{
+	border-color: transparent transparent #705838 transparent;
+	
+}
+.originally .down{
+	width: 0; 
+	height: 0;
+ 	border-width: 6px;
+	border-style: solid;
+	border-color:#D6D0BE transparent transparent transparent;
+	position: absolute;
+	bottom: -6px;
+}
+.toponymy .down{
+	width: 0; 
+	height: 0;
+ 	border-width: 6px;
+	border-style: solid;
+	border-color:#D6D0BE transparent transparent transparent;
+	bottom: -6px;
+	position: absolute;
+}
+.toponymy .down.downact,.originally .down.downact{
+	border-color:#705838 transparent transparent transparent;
+}
+.originally{
+	width: 214px;
+	height: 100%;
+}
+.orientation{
+	width: 344px;
+	height: 100%;
+}
+.evolution{
+	width: calc(100% - 712px);
+	height: 100%;
+}
+.tableline{
+	width: 100%;
+	min-height: 67px;
+	border-bottom: 1px solid #F1E7CD;
+}
+.tableline>div{
+	float: left;
+	font-size:14px;
+	color:rgba(112,87,56,1);
+	text-align: start;
+	padding: 20px;
+	box-sizing: border-box;
+}
+.tableline>div.toponymy_line{
+	width: 154px;
+	text-align: center;
+	line-height: 67px;
+	padding: 0;
+}
+.originally_line{
+	width: 214px;
+}
+.orientation_line{
+	width: 344px;
+}
+.evolution_line{
+	width: calc(100% - 712px);
+}
+.classfiy>div.area>i{
+	background: url(../img/location.png) no-repeat center center;
+}
+.classfiy>div.government>i{
+	background: url(../img/government2.png) no-repeat center center;
+}
+.classfiy>div.annal>i{
+	background: url(../img/annalcompare.png) no-repeat center center;
+}
+.area{
+	width:140px;
+	height:34px;
+	background:rgba(112,88,56,1);
+	border-radius:5px;
+	border:1px solid rgba(112,88,56,1);
+	font-size:14px;
+	color:rgba(248,244,229,1);
+	line-height:34px;
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />-->
+	<!-- <link rel="stylesheet" href="css/animate.min.css"> -->
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+	<meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1" />
+	<link rel="icon" href="../img/favicon2.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css" />
+	<!--<link rel="stylesheet" type="text/css" href="../css/jquery.bxslider.css"/>-->
+	<!--<link rel="stylesheet" type="text/css" href="../css/jquery.marquee.min.css"/>-->
+	<!--<link rel="stylesheet" type="text/css" href="../css/swiper.min.css"/>-->
+	<link rel="stylesheet" type="text/css" href="../css/layer.css" />
+	<link rel="stylesheet" type="text/css" href="../css/keleyidivpager.css" />
+	<link rel="stylesheet" type="text/css" href="../css/zTreeStyle/zTreeStyle.css" />
+	<!--<link rel="stylesheet" type="text/css" href="../css/common.css"/>-->
+	<link href="index.css?v=20220228" rel="stylesheet" />
+	<title>民国文献数据库-阅读</title>
+</head>
+
+<body>
+	<div class="content">
+		<div class="search">
+			<input type="text" placeholder="输入检索关键词" id="articleKeyword" /><img class="icon-search"
+				src="../img/icon-search.png" />
+			<a href="javascript:void(0)" class="toStart">首页</a>
+			<div class="operation">
+				<img src="../img/annalnocation1.png" /><a href="/book/h5/Minguo/area.html" target="_blank">民国地区</a>
+				<img src="../img/government2.png" /><a href="/book/h5/Minguo/government.html" target="_blank">民国政府机构</a>
+				<img src="../img/annalcompare.png" /><a href="/book/h5/Minguo/annals.html" target="_blank">民国时期纪年</a>
+				<img src="../img/icon-ref.png" /><a href="javascript:void(0)" id="appoint">引用</a>
+				<img src="../img/icon-download.png" /><a href="#" class="downloadBook">下载</a>
+			</div>
+		</div>
+		<div id="showPoint"
+			style="position:absolute;display:none;border:1px solid silver;background:silver;padding:10px;">
+			<p class="p-download" data-text="Noteexpress">Noteexpress</p>
+			<p class="p-download" data-text="BibTeX">BibTeX</p>
+			<p class="p-download" data-text="EndNote">EndNote</p>
+			<p class="p-download" data-text="Refworks">Refworks</p>
+			<!--<p class="p-download" data-text="RefMan">RefMan Export</p> -->
+			<p class="p-download" data-text="NoteFirst">NoteFirst</p>
+		</div>
+		<div class="introTypeSet">
+			<!--展示书的信息-->
+			<div class="bookInfo"></div>
+			<div class="showStyle">
+
+				阅读方式
+				<!-- <a href="javascript:void(0);" class="changeKeyword"><img src="../img/keyword.png"/></a> -->
+				<a href="javascript:void(0);" class="changeFont"><img src="../img/simplified.png" /
+						style="display:none"></a>
+				<a href="javascript:void(0);" class="word"><img src="../img/icon-txt.png" /></a>
+				<a href="javascript:void(0);" class="scan"><img src="../img/origin-page-active.png" /></a>
+
+			</div>
+		</div>
+		<div class="catalogContent">
+			<div class="catalog">
+				<h4>目录</h4>
+				<!--目录展示-->
+				<ul id="treeDemo" class="ztree"></ul>
+			</div>
+			<div class="showcontent" id="showcontentid">
+				<div class="zoomIn">
+					<div>
+						<a href="javascript:void(0);" class="fontAdd"><img src="../img/icon-plus.png" /></a>
+					</div>
+					<div>
+						<a href="javascript:void(0);" class="fontReduce"><img src="../img/icon-minus.png" /></a>
+					</div>
+					<p id="div_pager"></p>
+
+				</div>
+				<div class="articleContent">
+					<div class="leftBtn"><img src="../img/left.png"></div>
+					<div class="wordContent"></div>
+
+					<div class="scanning">
+						<!--<img src="../img/scanning.png"/>-->
+					</div>
+
+					<div class="allPicture">
+
+					</div>
+					<div class="rightBtn"><img src="../img/right.png"></div>
+				</div>
+				<!--//返回顶部-->
+				<div class="backtop"><img src="../img/icon-top.png"></div>
+			</div>
+		</div>
+
+	</div>
+	<div id="tipId"></div>
+	<!--//提示框-->
+	<div id="note">请输入关键词</div>
+	<!--//提示框-->
+	<div id="noWord">该书暂无文本数据</div>
+	<!--//提示框-->
+	<div id="searchWord">该书暂无文本数据,无法搜索</div>
+	<script type="text/javascript" src="../js/jquery-1.8.3.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/jquery.tmpl.min.js" charset="utf-8"></script>
+	<!--<script type="text/javascript" src="../js/bootstrap.min.js" charset="utf-8"></script>-->
+	<script src="../js/jquery.ztree.core.min.js?v=20220228" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/layer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common/dkr.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery.pagination.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/base64.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/common.js?v=22020318" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="../js/keleyidivpager.js" type="text/javascript" charset="utf-8"></script>-->
+	<script src="index.js?v=20220622" type="text/javascript" charset="utf-8"></script>
+	<!--加载书本信息-->
+	<script id='bookInfomationTemp' type='text/x-jquery-tmpl'>
+	         题名：${TITLE}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;责任者：${AUTHOR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主题词：${ZTNAME}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordShow">关键词：${HANSKEYWORD}</span>
+	    </script>
+	<!--<!-显示书的内容HTML-->
+	<script id='bookContentShowTemp' type='text/x-jquery-tmpl'>
+	      <iframe src="${PAGEHTML}" id="iframeId" name="iframename"></iframe>
+	    </script>
+	<!--<!-显示书的扫描图片-->
+	<script id='bookScanShowTemp' type='text/x-jquery-tmpl'>
+	         <img src="${SCANPICTURE}"/>
+	    </script>
+	<!-- 搜索弹窗 -->
+	<script id="search-book-keyword" type="text/x-jquery-tmpl">
+		<div class="search-content">
+				<span class="title" title="${title}">{{= title}}</span>
+					{{each arr}}
+						<p title="${$value.display}">{{html $value.html}}</p>
+						<div class="line"></div>
+						{{/each}}
+					</div>
+	</script>
+</body>
+
+</html>

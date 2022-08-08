@@ -1,0 +1,36 @@
+*{margin:0px; padding:0px;font-size: 1em;color: #BD986A;}
+
+.showContent{
+	height: 1013px;
+	margin-top: 54px;
+}
+
+.mgMaster > .resourceinfo{
+	text-align: left;
+	margin-bottom: 31px;
+	color: #0056A6;
+	line-height: 38px;
+    border-bottom: 1px solid #9A886E;
+}
+
+.resourceinfo span{
+	color: #000000;
+}
+
+.showbookcontent{
+	height: 850px;
+}
+
+.aboutContent p{
+	text-indent: 2em;
+    text-align: left;
+    overflow: hidden;
+	color: #000000;
+	line-height: 24px;
+}
+
+.showbookcontent h4{
+	line-height: 30px;
+}
+
+

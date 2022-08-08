@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="public.css"/>
+		<link rel="icon" href="../img/favicon2.ico" type="image/x-icon"/>
+		<link rel="stylesheet" type="text/css" href="government.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/zTreeStyle/zTreeStyle.css"/>
+		
+	</head>
+	<body>
+		<div class="outside clearfix">
+			<div class="top">
+				<!--<div class="search">
+		    		<input type="text" placeholder="输入检索关键词"/><img class="icon-search" src="../img/icon-search.png" />
+		    	</div>-->
+		    	<div class="classfiy">
+		    		<h4><a href="/book/h5/index/index.html">首页</a> > 民国政府机构</h4>
+	    			<div class="annal"><i></i><a href="./annals.html">民国时期纪年</a></div>
+	    			<div class="government"><i></i>民国政府机构</div>
+	    			<div class="area"><i></i><a href="./area.html">民国行政区划</a></div>
+	    		</div>
+			</div>
+			<div class="main clearfix">
+				<div class="mainleft">
+					<h3>政府分类</h3>
+					<ul id="treeDemo" class="ztree"></ul>
+				</div>
+				<div class="mainright">
+					
+				</div>
+				<script id="mainright_tpl" type="text/x-dot-template">
+					{{? it.NAME}}
+					<div class="dataline clearfix">
+						<div class="lineleft">名称</div>
+						<div class="lineright">{{=it.NAME}}</div>
+					</div>
+					{{?}}
+					{{? it.FULLNAME}}
+					<div class="dataline clearfix">
+						<div class="lineleft">全名</div>
+						<div class="lineright">
+							{{=it.FULLNAME}}
+						</div>
+					</div>
+					{{?}}
+					{{? it.MODIFYNAME}}
+					<div class="dataline clearfix">
+						<div class="lineleft">后改名</div>
+						<div class="lineright">
+							{{=it.MODIFYNAME}}
+						</div>
+					</div>
+					{{?}}
+					{{? it.ALIAS}}
+					<div class="dataline clearfix">
+						<div class="lineleft">别名</div>
+						<div class="lineright">
+							{{=it.ALIAS}}
+						</div>
+					</div>
+					{{?}}
+					{{? it.SETYEAR}}
+					<div class="dataline clearfix">
+						<div class="lineleft">设置年号</div>
+						<div class="lineright">
+							{{=it.SETYEAR}}
+						</div>
+					</div>
+					{{?}}
+					{{? it.SETTIME}}
+					<div class="dataline clearfix">
+						<div class="lineleft">设置时间</div>
+						<div class="lineright">
+							{{=it.SETTIME}}
+						</div>
+					</div>
+					{{?}}
+					{{? it.ABOLISHTIME}}
+					<div class="dataline clearfix">
+						<div class="lineleft">废止时间</div>
+						<div class="lineright">
+							{{=it.ABOLISHTIME}}
+						</div>
+					</div>
+					{{?}}
+					{{? it.POWER}}
+					<div class="dataline clearfix">
+						<div class="lineleft">执掌</div>
+						<div class="lineright">
+							{{=it.POWER}}
+						</div>
+					</div>
+					{{?}}
+					{{? it.GOVERNOR}}
+					<div class="dataline clearfix">
+						<div class="lineleft">行政主管</div>
+						<div class="lineright">
+							{{=it.GOVERNOR}}
+						</div>
+					</div>
+					{{?}}
+					{{? it.CHILDORG}}
+					<div class="dataline clearfix">
+						<div class="lineleft">下设机构</div>
+						<div class="lineright">
+							{{=it.CHILDORG}}
+						</div>
+					</div>
+					{{?}}
+				</script>
+			</div>
+		</div>
+		<script type="text/javascript" src="../js/jquery-1.8.3.js" charset="utf-8"></script>
+		<script src="../js/doT.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common/dkr.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../js/jquery.ztree.core.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="government.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="government1.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

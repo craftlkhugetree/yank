@@ -5,15 +5,16 @@
 "chrome.exe" --test-type --ignore-certificate-errors
 
 # stylus
-
+^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost)).*$
 ^(?!._(seat.dev.angke.cn|z.angke.com.cn))._$
 ^(?!._(localhost|z.angke.com.cn))._$
 html,
 body {
-font-family: "SF UI Text", "BlinkMacSystemFont", "Helvetica Neue", "Source Han Sans SC", "Segoe UI", "Roboto", "Microsoft Yahei", sans-serif;
-font-weight: bold;
-background-color: #C7EDCC !important;
-/_ background-color:#606266 !important; _/
+/*     font-family: "SF UI Text", "BlinkMacSystemFont", "Helvetica Neue", "Source Han Sans SC", "Segoe UI", "Roboto", "Microsoft Yahei", sans-serif; */
+    font-weight: bold;
+    background-color: #C7EDCC !important;
+     filter: brightness(0.8);
+    /*         background-color:#606266 !important; */
 }
 
 table,
@@ -21,13 +22,13 @@ span,
 p,
 i,
 a,
-article {
-/_ //兼容不同浏览器 _/
--webkit-filter: brightness(0.8);
--o-filter: brightness(0.8);
--moz-filter: brightness(0.8);
-filter: brightness(0.8);
-/_ //设置亮度值，范围：0-1 _/
+article, section {
+    /*          //兼容不同浏览器 */
+/*     -webkit-filter: brightness(0.8);
+    -o-filter: brightness(0.8);
+    -moz-filter: brightness(0.8);
+    filter: brightness(0.8); */
+    /*     //设置亮度值，范围：0-1 */
 }
 
 @-moz-document domain("zhihu.com") {

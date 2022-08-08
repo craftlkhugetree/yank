@@ -2,7 +2,7 @@
 正常模式下，键盘上按  "t4yy  这几个按键连续按完后就是复制了4行内容到 具名为t的寄存器里了。
 在正常模式下，"tp 就可以黏贴
 
-^ 到行首第一个字符，不像0和$
+^/== 到行首第一个字符，不像0和$
 # 向上查找当前所在单词
 * 向下查找当前所在单词
 f/F+字母  当前行搜索
@@ -12,11 +12,14 @@ zz 当前到中间
 zb 当前到底
 zt 当前到顶
 
+gv 刚才v的区域。
 vat 在html中选择标签对用t，o 在标签对跳转。
 % 函数花括号跳转
 
 g~iw单词转换大小写
 
+d2/foo 当前删除到第二个foo   d?foo 反过来找
+y3fz 从当前复制到第三个z
 Y 复制当前行
 c change; i当前光标处插入, cw从当前光标处删除到单词尾, ciw删除当前单词。 c进寄存器。
 C/D 当前光标删到行尾。
@@ -25,14 +28,14 @@ S 删除整行
 
 
 vat,dat,yat 在html中选择标签对用t，o 在标签对跳转。
-# cs,ds针对符号对内部所有；ysiw/viwS针对单词； v选中内容S符号对。
+# cs,ds针对符号对内部所有；ysiw/viwS针对单词； v选中内容S符号对。 w针对text，W针对objects。
 "hello world!"
 将光标移动到双引号内，按cs"'
 
 'hello world!'
 接着将光标放入其中，按cs'<q>
 
-q>hello world!</q>
+<q>hello world!</q>
 移除标签对用t，cst"   必须是简单标签对，不能是组件。
 
 hello world!
@@ -73,3 +76,25 @@ sed -i '$ a\插入字符串' datafile
 sed -i '/pattern/ i "插入字符串"'' datafile
 删除最后一行
 sed -i '$ d' .git/config
+
+# regex
+
+^(?!._(localhost|z.angke.com.cn))._$
+
+?<=pattern
+匹配这个位置之前为pattern的内容
+var str = '111$222'
+var reg = /(?<=\$)\d+/g
+str.match(reg) 
+// ["222", index: 4, input: "111$222", groups: undefined]
+多个匹配的且要匹配所在位置的，需要循环，且正则必须g结尾。
+while( res = reg.exec(str))
+{
+ console.log(res);
+}
+
+const xmlarray = str.split(/(<pagenumber pagenum=[^>]*\/>){1}/);会把正则字段在数组中保存一份
+
+str.replace(/<[^>]*>/g, '');去掉所有尖括号对,非“>”的字符可以有一个或多个，也可以没有。
+
+^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost)).*$
