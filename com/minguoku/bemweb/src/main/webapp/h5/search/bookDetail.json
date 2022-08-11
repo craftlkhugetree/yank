@@ -1,0 +1,23 @@
+{
+	"KEYWORD":"张学","BOOKTOTAL":"2000",
+	"Catalog":[{"CHILDREN":[],"NAME":"人物","NUMBER":0,"BOOKIDS":"NT0000001"},{"CHILDREN":[],"NAME":"地理","NUMBER":0,"BOOKIDS":"NT0000001"},
+	           {"CHILDREN":[{"NAME":"前端","NUMBER":"1","TYPE":"04","BOOKIDS":"NT0000001"},{"NAME":"测试","NUMBER":"1","TYPE":"04","BOOKIDS":"NT0000001"}],
+	               "NAME":"职位","NUMBER":2,"BOOKIDS":"NT0000001"},
+	           {"CHILDREN":[{"NAME":"商务印书馆","NUMBER":"1","TYPE":"05","BOOKIDS":"NT0000001"}],"NAME":"出版社","NUMBER":1,"BOOKIDS":"NT0000001"},
+	           {"CHILDREN":[],"NAME":"机构","NUMBER":0,"BOOKIDS":"NT0000001"}],
+	"BOOKLIST":[
+	    {
+	      "dir": "1",
+	      "filepath":"book.json",
+	      "id": "NT0000001"
+	    },{
+	      "dir": "1",
+	      "filepath":"book2.json",
+	      "id": "NT0000001"
+	    },{
+	      "dir": "1",
+	      "filepath":"book3.json",
+	      "id": "NT0000001"
+	    }
+	]          
+}

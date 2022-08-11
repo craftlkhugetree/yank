@@ -857,13 +857,13 @@ $(function () {
 
         $('.getMore').unbind();
         $('.getMore').click(e => getMore(e));
-        console.log(map, pieceList, searchUnit, allUnitCount);
+        // console.log(map, pieceList, searchUnit, allUnitCount);
         if (searchUnit >= allUnitCount) {
           $('.getMore').hide();
         } else {
           $('.getMore').show();
         }
-        $('#diagWrapper').unbind()
+        $('#diagWrapper').unbind();
         $('#diagWrapper').delegate('p', 'click', function () {
           isSearchOpen = false;
           let item = $.tmplItem(this);
@@ -879,6 +879,7 @@ $(function () {
       layer.open({
         type: 1,
         skin: 'dialog-class',
+        scrollbar:false,
         fix: true,
         maxmin: false,
         shadeClose: false,
@@ -902,6 +903,10 @@ $(function () {
        </div>
     </div>
 	  `,
+        success: function (layero, index) {
+          layero[0].childNodes[1].childNodes[0].classList.remove('layui-layer-close2');
+          layero[0].childNodes[1].childNodes[0].classList.add('layui-layer-close1');
+        },
         //   content: $('#diagWrapper'),
         cancel: function () {
           //右上角关闭回调
@@ -2198,7 +2203,7 @@ function pagingIsFile(pagehtml, treeNode, pageNum) {
       if (kkk != 0) {
         parent.removeChild(div);
       }
-      console.log(pageNum);
+      // console.log(pageNum);
 
       if (changeflag) {
         //选择的是简体

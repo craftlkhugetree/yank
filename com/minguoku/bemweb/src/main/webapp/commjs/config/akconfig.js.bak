@@ -1,0 +1,125 @@
+//测试
+/**
+*解决ExtJS TreePanel 在IE9、IE10下报错：无法获取未定义或 null 引用的属性ui
+*/
+
+Ext.Element.prototype.getAttributeNS=(Ext.isIE&&!(document.documentMode === 9)&&!(document.documentMode === 10) ) ? function(ns, name){
+        var d = this.dom;
+        var type = typeof d[ns+":"+name];
+        if(type != 'undefined' && type != 'unknown'){
+            return d[ns+":"+name];
+        }
+        return d[name];
+    } : function(ns, name){
+        var d = this.dom;
+        return d.getAttributeNS(ns, name) || d.getAttribute(ns+":"+name) || d.getAttribute(name) || d[name];
+    };
+
+
+//设置s.gif的本地路径，防止tree等组件显示时访问extjs官网的s.gif
+//Ext.BLANK_IMAGE_URL="/jalis/web/resources/images/default/s.gif";
+//Ext.BLANK_IMAGE_URL="resources/images/default/s.gif";
+//1.0.0.0.0 先搞个URL
+var akconfig={
+// 	url:"http://160.255.0.208:80/jalis/rest/",
+		 //url:"http://160.255.0.158:8080/bemweb/rest/",
+		url:"http://localhost/",
+		officalLiaryurl:"http://160.255.0.220:8080/bemweb/rest/",
+	// urlforswf:"http://wxdev.angke.com.cn/platform/",
+	// _setAllDisable : function(container) {
+
+	// 	// var dolist = [container];
+		
+	// 	for(var i=0;i<container.length;i++){
+	// 		Ext.getCmp(container[i]).setVisible(false);
+	// 	}
+		
+	// },
+	checkAuth:function(funID,useridParam){//权限控制 container按钮的数组ID 
+		if(typeof(funID)!='object'){
+			funID=[funID]
+		}
+		funID=JSON.stringify(funID);
+		var buttons=Ext.select("table.ak-auth").elements;
+		
+		var buttonsComponent=[];
+		
+		for(var i=0;i<buttons.length;i++){
+			//console.log(buttons[i].id);
+			 buttonsComponent[i]=Ext.getCmp(buttons[i].id);
+			 Ext.getCmp(buttons[i].id).setVisible(false);
+		}
+		Ext.Ajax.request({
+			// url:urls+'portal/getFunResAuth',
+	 		//url:'../../rest/main/getFunResAuth',
+	 		// url:urls+'user/getFunResAuth',
+	 		//url:'../../rest/main/getFunResAuth',
+	 		method:'post',
+	 		params:{funID:funID,auth:JSON.stringify({'userid':useridParam})},
+	 		success:function(response, options){
+	 			var json = eval('(' + response.responseText + ')');
+	 
+	 			for(var i=0;i<buttonsComponent.length;i++){
+					
+					Ext.getCmp(buttons[i].id).setVisible(json.item[buttonsComponent[i].akfun]);
+					//console.log(buttonsComponent[i].akfunID);
+	 				//if(!Ext.isEmpty(json[buttonsComponent[i].akfunID]) && !Ext.isEmpty(json[buttonsComponent[i].akfunID][buttonsComponent[i].akfun])){
+	 				//	buttonsComponent[i].setVisible(json[buttonsComponent[i].akfunID][buttonsComponent[i].akfun])
+	 				//}
+	 			}
+	 			
+	 		}
+	 	});
+	 // console.log(Ext.select('*').elements) // select * 和select xxx返回的对象不一样
+	 // for(var i=0;i<Ext.select('*').elements.length;i++){
+	 // 	if(typeof Ext.select('*').elements[i]=='object'){
+	 // 		console.log(Ext.select('*').elements[i])
+	 // 	}
+	 // }
+	}
+}
+//1.0.0.0.1 再来个报错提示
+
+//extjs ajax请求报错处理
+Ext.MessageBox.minWidth=300;
+function errbyextjs(response){
+ 	var json = eval('(' + response.responseText + ')'); 
+                   
+	if(!json.success){
+   
+    	return false;
+	}
+	return true;
+}
+function akwindowclose(){
+	window.close();
+}
+//1.0.2 添加Ajax报错提示
+//Ext.Ajax请求全局设置
+Ext.namespace('extex');
+extex.checkResponseAndSession = function(conn,response, options) {
+
+	var json = eval('(' + response.responseText + ')');
+	if(!json.success&&json.success!=undefined){
+		if(json.message){
+			Ext.Msg.alert('提示！',json.message);
+		}else{
+			Ext.Msg.alert('提示！',json.errInf.metailBusInf);
+		}
+		
+		
+	} 
+
+};
+(function(){
+	Ext.Ajax.timeout=600000;//默认超时2分钟
+	//set BasicForm's time out
+	
+	Ext.Ajax.on("requestcomplete", function(conn, response, option) {
+		extex.checkResponseAndSession(conn,response, option);
+	});
+	
+	Ext.Ajax.on("requestexception", function(conn, response, option) {
+		Ext.Msg.alert('提示！','网络错误码为：'+response.status);//简单处理网路报错
+	});
+})();

@@ -1,0 +1,18 @@
+[v-cloak]{
+	display: none;
+}
+.pici{
+	padding-left: 30px;
+}
+.error{
+	color: red;
+}
+.success{
+	color:green;
+}
+.working{
+	color:#eea236;
+}
+.normal{
+	
+}

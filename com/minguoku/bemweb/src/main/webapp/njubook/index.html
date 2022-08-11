@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>title</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/index.css" />
+	</head>
+
+	<body>
+		<div class="container-fluid" id="app">
+			<div class="row">
+				<div class="col-lg-3 pici">
+					<br>
+					<button class="btn btn-primary" @click="createIndexPage()">手动生成首页</button>
+					<h3 class="">检查批次图书marc数据完整性</h3>
+					<div>
+						<label class="checkbox" v-for="item in yuanshidir">
+							<input type="checkbox" v-model="selectyuanshi" :id=item :value=item> {{item}}
+						</label>
+					</div>
+					<button class="btn-primary" @click="cleanBox()">清空</button>
+					<button class="btn-success" @click="getFull()">开始检查</button>
+				</div>
+				<div class="col-lg-9" v-cloak>
+					<h2>加工原始图书</h2>
+					<button class="btn-success" @click="updatePICI('PICI_ALL')">检测全批次(时间较长)</button>
+					<button class="btn-info" @click="updatePICI('PICI_BLANK')">检测新批次</button>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>目录</th>
+								<th>图书数量</th>
+								<th>加工图书数</th>
+								<th>总tif文件数</th>
+								<th>加工tif文件数</th>
+								<th>重新检测</th>
+								<th>上次加工结果</th>
+								<th>加工</th>
+								<th>状态</th>
+								<th>更新时间</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr v-for="item in piciList">
+								<td :class="getResultClass(item.TIFNUM,item.TIFNUMJ,item.STATUS)">{{item.NAME}}</td>
+								<td>{{item.BOOKNUM}}</td>
+								<td>{{item.BOOKNUMJ}}</td>
+								<td>{{item.TIFNUM}}</td>
+								<td>{{item.TIFNUMJ}}</td>
+								<td><button class="btn-info" @click="updatePICI(item.NAME)">检测</button></td>
+								<td><button class="btn-primary" @click="getResult(item.RESULT,item.NAME)" data-toggle="modal" data-target="#result">查看</button></td>
+								<td>
+									<button class="btn-success" data-toggle="modal" data-target="#letConfirm" @click="setPI(item.NAME,'0')">缺失文件加工</button>
+									<button class="btn-danger" data-toggle="modal" data-target="#letConfirm" @click="setPI(item.NAME,'1')">重新加工</button>
+								</td>
+								<td><span :class="getResultClass(item.TIFNUM,item.TIFNUMJ,item.STATUS)">{{item.STATUS}}</span><button v-if="(item.STATUS=='加工中')" class="btn-warning" @click="getWorkInfo(item.ID)" data-toggle="modal" data-target="#infoModal">查看进度</button></td>
+								<td>{{formatDate(item.UPDATETIME)}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!--
+            	作者：269477398@qq.com
+            	时间：2019-09-30
+            	描述：信息弹出框
+            -->
+			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="infoModal">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">加工信息</h4>
+						</div>
+						<div class="modal-body">
+							<div v-html="workInfo">
+
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" @click="getWorkInfo()">刷新</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--
+            	作者：269477398@qq.com
+            	时间：2019-09-30
+            	描述：确认弹出框
+            -->
+			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="letConfirm">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">请确认</h4>
+						</div>
+						<div class="modal-body">
+							<div v-if="isAll=='0'">
+								只加工未加工的tif文件,速度较快，推荐。</br>
+								注意：<br />
+								<span style="color: red;">
+									若原来tif已经加工成功了，但是想要改变原同名tif(比如图片传错了)，又不想整个重新加工，
+									请到服务器：<br />
+									<span style="color: green;">'/mnt/cd/民国文献ALL/jiagong/{批次}/{图书}/scanpic/m/'</span><br />
+									删掉同名png文件即可
+								</span>
+							</div>
+							<div style="color: red;" v-if="isAll=='1'">
+								所有文件重新加工，包括已经加工过的tif文件，速度可能很慢。
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-info" data-dismiss="modal" @click="preWork(pici,isAll)">确认</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--
+            	作者：269477398@qq.com
+            	时间：2019-09-30
+            	描述：查看弹出框
+            -->
+			<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="result">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">加工反馈：{{result.NAME}}</h4>
+						</div>
+						<div class="modal-body">
+							<h4><span class="label label-success">共加工书目:{{result.bookNum}}</span></h4>
+							<h4><span class="label label-info">总tif数:{{result.tifNum}}</span></h4>
+							<h4><span class="label label-danger">错误tif数:{{result.errorTifNum}}</span></h4>
+							<h4 class="text-center">错误明细</h4>
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>序列</th>
+										<th>书名</th>
+										<th>tif文件名</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="(item,index) in result.errorInfoArr">
+										<td>{{index+1}}</td>
+										<td>{{item.bookName}}</td>
+										<td>{{item.tifName}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--
+            	作者：269477398@qq.com
+            	时间：2019-09-30
+            	描述：loading模态框
+            -->
+            <button id="loadingBtn" ref="loadingBtn" style="display: none;" data-toggle="modal" data-target="#loadingModal">loading</button>
+            <button id="closeBtn"  style="display: none;" data-dismiss="modal">关闭</button>
+			<div class="modal fade" id="loadingModal" backdrop="static" keyboard="false">
+				<div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
+					<div class="progress progress-striped active" style="margin-bottom: 0;">
+						<div class="progress-bar" style="width: 100%;"></div>
+					</div>
+					<h5 id="loadText">loading...</h5>
+				</div>
+			</div>
+
+		</div>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/dkr.js"></script>
+		<script type="text/javascript" src="js/dao.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+	</body>
+
+</html>

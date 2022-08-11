@@ -240,6 +240,51 @@ const exportFile = function (url, isGet, params, fileName, fileType) {
       window.URL.revokeObjectURL(url);
     });
 }
+// 原生js下载二进制流
+function d(type) {
+  let xmlResquest = new XMLHttpRequest();
+  //   let url = location.protocol + '//' + location.host + urls + `dataAnalysis/${type}DataExcel`;
+  let url = location.protocol + '//' + location.host + urls + `dataAnalysis/${type}DataExcel?data=`;
+  let param = JSON.stringify({ page: 1, start: 0 });
+  url += encodeURIComponent(param);
+  let fileName = type + '统计';
+  xmlResquest.open('get', url, true);
+  xmlResquest.responseType = 'blob';
+  xmlResquest.timeout = 0; // 设置超时时间
+  xmlResquest.onload = function (oEvent) {
+    const content = xmlResquest.response;
+    // 因为可能后端可能会传递json格式的报错信息，所以在接收信息的时候需要判断一下是否是json文件。如果是json文件，则为报错信息。不是json文件就是正常文本信息
+    let fileReader = new FileReader();
+    fileReader.onload = function () {
+      try {
+        let jsonData = JSON.parse(this.result); // 说明是普通对象数据，后台转换失败
+        if (jsonData.code) {
+        }
+      } catch (error) {
+        // 解析出错，可以下载，说明不是json对象
+        // const elink = document.createElement('a');
+        // elink.download = fileName;
+        // elink.style.display = 'none';
+        // const blob = new Blob([content]);
+        // elink.href = URL.createObjectURL(blob);
+        // document.body.appendChild(elink);
+        // elink.click();
+        // document.body.removeChild(elink);
+        let url = window.URL.createObjectURL(content);
+        let link = document.createElement('a');
+        link.href = url;
+        link.style.display = 'none';
+        link.setAttribute('download', fileName + '.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
+    };
+    fileReader.readAsText(content);
+  };
+  xmlResquest.send();
+}
 
 // 回到顶部
 document.getElementsByTagName('html')[0].scrollTop = 0
@@ -276,13 +321,69 @@ window.URL.revokeObjectURL(url);
 }
 
 # jquery
-$('#obj1').appendTo($('#obj2')) 这个是将 $('#obj1')) 插入到 $('#obj2') 中作为最后一个元素
- 
+$('selector1, selector2... , selectorN')    // 每一个选择器匹配到的元素合并后一起返回 (返回集合元素)
+// 层次选择器
+$('ancestor descentant')    // 选取ancestor元素里所有des(后代)元素  例: $('div span')
+$('parent > child')    // 选取parent下的child(子)元素  例: $('div > span')  选取div元素下元素名是span的子元素
+$('prev + next')    // 选择紧接在prev后面的next元素 例: $('.one + div') 选取class为one的下一个div同辈元素
+==> 使用 next() 代替    例: $('.one').next('div')
+
+$('prev ~ sblings')    // 选取prev元素之后的所有sblings元素  例: $('#two ~ div') 选取id为two的元素后面所有的div同辈元素
+==> 使用 nextAll()代替  例: $('#two').nextAll('div')
+// 过滤选择器
+1.1 基本过滤选择器
+
+:first  $('div:first')    // 获取第一个元素    选取所有div元素中第一个div元素
+:last  $('div:last')    // 和上面相反
+:not(selector)  $('input:not(.myClass)')    // 选取class不是myClass的input元素
+:even  $('input:even')    // 选取索引是偶数的元素
+:odd  $('input:odd')    // 选取索引是奇数的元素
+:eq(index)  $('input:eq(1)')    // 选取索引等于index的元素
+:gt(index)    // 选取索引大于index的元素
+:lt(index)    // 选取索引小于index的元素
+:header  $(':header')    // 选取所有的标题元素,例 h1 h2
+:animated  $('div:animated')  // 选取当前正在执行动画的所有元素
+:focus  $(':focus')    // 选取当前获取焦点的元素
+
+
+1.2 内容过滤选择器
+
+:contains(text)  $('div:contains('我')')    // 选取含有内容文本为 'text' 的元素
+:empty  $('div:empty')    // 选取不包含子元素或者文本的空元素
+:has(selector)  $('div:has(p)')    // 选取含有选择器所匹配元素的元素
+:parent  $('div:parent')    // 选取含有子元素或者文本的元素    集合元素
+
+
+1.3 可见性过滤选择器
+
+:hidden    // 选取所有不可见的元素 display:none  input type=hidden   visivility:hidden等
+$('input:hidden')    // 只选取input元素
+
+:visible    // 选取所有可见的元素
+$('div:visible')    // 选取所有可见的div元素
+
+// 从DOM中删除所有匹配的元素
+  $('ul li:eq(1)').remove()
+* $('ul li').remove('li[title != 苹果]')    // title 不等于 苹果的 li 元素删除
+// 和remove()一样, 也是从DOM中删除元素. 但需要注意: 这个方法不会把匹配的元素从jquery对象中删除
+// 因而可以将来在使用这些匹配的元素, 与remove() 不同的是, 所有绑定的事件, 附加数据会保留下来
+// 当需要移走一个元素，不久又将该元素插入DOM时，这种方法很有用。
+* $('ul li:eq(1)').detach()
+
+// 严格来说: empty()并不是删除节点, 而是清空节点, 它能清空元素中的所有后代节点
+  $('ul li:eq(1)').empty()    // 清除的是li元素里的文本
+// 如果单击<li>元素后需要在复制一个<li>元素, 可以使用clone() 方法来完成
+$('ul li').click(function(){
+  $(this).clone().append('ul')
+})
+ $(this).clone(true).appendTo('body')    // 在clone中加个true, 含义是复制元素的同时复制元素中所绑定的事件,因此该元素的副本也同样具有复制功能 
+
+* tmpl:
+$('#obj1').appendTo($('#obj2')) 这个是将 $('#obj1')) 插入到 $('#obj2') 中作为最后一个元素 
 $('#obj1').prependTo($('#obj2')) 这个是将 $('#obj1')) 插入到 $('#obj2') 中作为第一个子元素。
- 
 $('#obj1').append($('#obj2')) 这个要注意方向了， 是将$('#obj2') 插入到 $('#obj1')作为最后一个元素，或者说是在$('#obj1')最后面添加子元素$('#obj2')
 ————————————————
- this是html元素，$(this)是变量名。$(this)=jquery(this)顾返回的是一个jQ对象。
+ this是html元素，$(this)是变量名。$(this)=jquery(this)返回的是一个jQ对象。
  this是dom对象不可以直接使用jQ中的方法，通过$(this)转换为jQ对象就可以使用jQ中的方法了。
  如下：this使用siblings()时会报错,而转为$(this)就可以使用该方法了。
 // bind events  

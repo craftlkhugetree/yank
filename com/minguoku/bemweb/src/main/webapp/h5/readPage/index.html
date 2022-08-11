@@ -1,0 +1,108 @@
+<!DOCTYPE >
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />-->
+		<!-- <link rel="stylesheet" href="css/animate.min.css"> -->
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/>
+		<link rel="icon" href="../img/favicon2.ico" type="image/x-icon"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css"/>
+		<!--<link rel="stylesheet" type="text/css" href="../css/jquery.bxslider.css"/>-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/jquery.marquee.min.css"/>-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/swiper.min.css"/>-->
+		<link rel="stylesheet" type="text/css" href="../css/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/keleyidivpager.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/zTreeStyle/zTreeStyle.css"/>
+		<!--<link rel="stylesheet" type="text/css" href="../css/common.css"/>-->
+		<link href="index.css" rel="stylesheet"/>
+		<title>民国文献数据库-阅读</title>
+	</head>
+	<body>
+		    <div class="content">
+		    	<div class="search">
+		    		<input type="text" placeholder="输入关键搜索词" id="articleKeyword"/><img class="icon-search" src="../img/icon-search.png" />
+		    		<div class="operation">
+		    			<img src="../img/icon-ref.png"/><a href="javascript:void(0)" class="appoint">引用</a>
+		    			<img src="../img/icon-download.png"/><a href="#" class="downloadBook">下载</a>
+		    		</div>
+		    	</div>
+                <div class="introTypeSet">
+                	<!--展示书的信息-->
+                	<div class="bookInfo"></div>
+                	<div class="showStyle">
+                		
+                		阅读方式
+                		<a href="javascript:void(0);" class="changeFont"><img src="../img/simplified.png"/></a>
+                		<a href="javascript:void(0);" class="word"><img src="../img/icon-txt-active.png"/></a>
+                		<a href="javascript:void(0);" class="scan"><img src="../img/origin-page.png"/></a>
+                		
+                	</div>
+                </div>
+                <div class="catalogContent">
+                	<div class="catalog">
+                		<h4>目录</h4>
+                		<!--目录展示-->
+                		<ul id="treeDemo" class="ztree"></ul>
+                	</div>
+                	<div class="showcontent" id="showcontentid">
+                		<div class="zoomIn">
+                			<div>
+                			     <a href="javascript:void(0);" class="fontAdd"><img src="../img/icon-plus.png"/></a>	
+                			</div>
+                			<div>
+                			  <a href="javascript:void(0);" class="fontReduce"><img src="../img/icon-minus.png"/></a> 	
+                			</div>
+                			<p id="div_pager"></p>
+                			
+                		</div>
+                		<div class="articleContent">
+                			 <div class="wordContent"></div>
+                			 
+                			 <div class="scanning">
+                			 	<!--<img src="../img/scanning.png"/>-->
+                			 </div>
+                			 
+                			 <div class="allPicture">
+                			 	<!--<img src="../img/scanning.png"/>-->
+                			 	  <!--<div class="pictureLeft">
+                			 	  	 <img src="../img/scanning.png"/>
+                			 	  </div>
+                			 	  <div class="pictureRight">
+                			 	  	 <img src="../img/scanning.png"/>
+                			 	  </div>-->
+                			 </div>
+                		</div>
+                		<!--//返回顶部-->
+                        <div class="backtop"><img src="../img/icon-top.png"></div>
+                	</div>
+                </div>
+                
+			</div> 
+		   <div id="tipId"></div>
+		<script type="text/javascript" src="../js/jquery-1.8.3.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/jquery.tmpl.min.js" charset="utf-8"></script>
+		<!--<script type="text/javascript" src="../js/bootstrap.min.js" charset="utf-8"></script>-->
+		<script src="../js/jquery.ztree.core.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/layer.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common/dkr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.pagination.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/base64.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="../js/keleyidivpager.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="index.js" type="text/javascript" charset="utf-8"></script>
+		<!--加载书本信息-->
+		<script id='bookInfomationTemp' type='text/x-jquery-tmpl'>
+	         题名：${TITLE}&nbsp;&nbsp;&nbsp;&nbsp;作者：${AUTHOR}&nbsp;&nbsp;&nbsp;&nbsp;类别：${ZTNAME}&nbsp;&nbsp;&nbsp;&nbsp;关键词：${HANSKEYWORD}
+	    </script>
+	      <!--<!-显示书的内容HTML-->
+		<script id='bookContentShowTemp' type='text/x-jquery-tmpl'>
+	        
+             <iframe src="${PAGEHTML}" id="iframeId" name="iframename"></iframe>
+	    </script>
+	      <!--<!-显示书的扫描图片-->
+		<script id='bookScanShowTemp' type='text/x-jquery-tmpl'>
+	         <img src="${SCANPICTURE}"/>
+	    </script>
+	</body>
+</html>

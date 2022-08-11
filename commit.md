@@ -348,10 +348,22 @@ feat: 用户端
 2022/08/04
 feat: 3、添加新闻通知列表页和详情页
 
-2022/08/08
+2022/08/08 
 feat: 书籍搜索弹框，高亮关键词，点击跳转该页。
 1、检索结果默认显示 5条，加载更多时再显示5条，没有更多数据时，加载更多按钮隐藏
             2、检索未前端检索，通过加载 对应图书 docbook/main.xml   里面的内容进行检索
+
+# 2022/08/10 民国库后台
+feat: 菜单：客户管理》统计查询
+功能：查询、导出excel
+字段： 检索（客户名称、IP、检索关键词、账号、检索时间）  对应表 WXK_DOWNRECORD 
+            下载 （客户名称、IP 、书名、页码、账号、下载时间）对应表 WXK_SEARCHRECORD 
+           阅读（客户名称、IP、书名、账号、阅读时间）  对应表 WXK_READRECORD 
+
+            客户表：CRM_CUSTOMER
+            图书信息表： WXK_BOOK_CNMARC
+查询条件：客户、时间段
+D:\kxiangmu\mgsjk\03code\bemweb\src\main\webapp\view\classificationStats
 
    // pc端判断是学生、白马办还是后勤
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};

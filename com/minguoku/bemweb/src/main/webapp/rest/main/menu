@@ -1,0 +1,130 @@
+
+[{
+	"DISPLAYURL":"","ID":"1000100","NAME":"书目编辑管理","PID":"null","RCODE":"null","text":"书目编辑管理"
+	,"iconCls":"icon icon-xmqxgl",
+	"children":[{
+		"DISPLAYURL":"view/bookManager/index.html","leaf": true,"ID":"1000128","NAME":"标准文件导入","PID":"1000100","RCODE":"null","text":"标准文件导入"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/uploadExcel/index.html","leaf": true,"ID":"1000128","NAME":"图像文件导入","PID":"1000100","RCODE":"null","text":"图像文件导入"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/officialsManagement/index.html","leaf": true,"ID":"1000123","NAME":"职官库管理","PID":"1000100","RCODE":"null","text":"职官库管理"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/organizationManager/index.html","leaf": true,"ID":"1000140","NAME":"机构管理","PID":"1000100","RCODE":"null","text":"机构管理"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/personalManager/index.html","leaf": true,"ID":"1000124","NAME":"人物库管理","PID":"1000100","RCODE":"null","text":"人物库管理"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/geographicManager/index.html","leaf": true,"ID":"1000125","NAME":"地理库管理","PID":"1000100","RCODE":"null","text":"地理库管理"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/libraryManager/index.html","leaf": true,"ID":"1000126","NAME":"图书馆管理","PID":"1000100","RCODE":"null","text":"图书馆管理"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/publishOrgManager/index.html","leaf": true,"ID":"1000127","NAME":"出版机构库管理","PID":"1000100","RCODE":"null","text":"出版机构库管理"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/bookManager/index.html","leaf": true,"ID":"1000128","NAME":"图书管理","PID":"1000100","RCODE":"null","text":"图书管理"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/resourceClassfiyManager/index.html","leaf": true,"ID":"1000129","NAME":"资源分类库管理","PID":"1000100","RCODE":"null","text":"资源分类库管理"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"","ID":"1000130","NAME":"统计汇总","PID":"1000100","RCODE":"null","text":"统计汇总"
+		,"iconCls":"icon icon-xmqxgl","expanded":true,
+		"children":[{"DISPLAYURL":"view/dataAddStatistics/index.html","leaf": true,"ID":"10001301","NAME":"数据增量统计","PID":"1000130","RCODE":"null","text":"数据增量统计"},
+		{"DISPLAYURL":"view/personalWorkloadStatistics/index.html","leaf": true,"ID":"10001302","NAME":"个人工作量统计","PID":"1000130","RCODE":"null","text":"个人工作量统计"},
+		{"DISPLAYURL":"view/jobTypeSetting/index.html","leaf": true,"ID":"10001303","NAME":"工作类型设置","PID":"1000130","RCODE":"null","text":"工作类型设置"}
+		]
+		
+	}]
+	
+},{
+	"DISPLAYURL":"","ID":"10002550","NAME":"参数管理","PID":"null","RCODE":"null","text":"参数管理"
+	,"iconCls":"icon icon-xmqxgl",
+	"children":[{
+		"DISPLAYURL":"view/params/index.html","leaf": true,"ID":"10e00131","NAME":"参数管理","PID":"1000200","RCODE":"null","text":"参数管理"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	}]
+	
+},{
+	"DISPLAYURL":"","ID":"1000200","NAME":"客户服务管理","PID":"null","RCODE":"null","text":"客户服务管理"
+	,"iconCls":"icon icon-xmqxgl",
+	"children":[{
+		"DISPLAYURL":"view/customerManager/index.html","leaf": true,"ID":"1000131","NAME":"客户管理","PID":"1000200","RCODE":"null","text":"客户管理"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/remindDairy/index.html","leaf": true,"ID":"1000132","NAME":"提醒管理","PID":"1000200","RCODE":"null","text":"提醒管理"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	}]
+	
+},{
+	"DISPLAYURL":"","ID":"1000300","NAME":"客户服务统计","PID":"null","RCODE":"null","text":"客户服务统计"
+	,"iconCls":"icon icon-xmqxgl",
+	"children":[{
+		"DISPLAYURL":"view/custumerVisitedStatistics/index.html","leaf": true,"ID":"1000301","NAME":"客户访问统计","PID":"1000300","RCODE":"null","text":"客户访问统计"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/yearlyBookAccessStatistics/index.html","leaf": true,"ID":"1000302","NAME":"每年全书访问统计","PID":"1000300","RCODE":"null","text":"每年全书访问统计"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/monthlyBookThemeStatistics/index.html","leaf": true,"ID":"1000303","NAME":"每月书目主题访问统计","PID":"1000300","RCODE":"null","text":"每月书目主题访问统计"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/monthlyBookArticleStatistics/index.html","leaf": true,"ID":"1000304","NAME":"每月书目中文章访问统计","PID":"1000300","RCODE":"null","text":"每月书目中文章访问统计"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/authorSearchStatistics/index.html","leaf": true,"ID":"1000305","NAME":"作者搜索统计","PID":"1000300","RCODE":"null","text":"作者搜索统计"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/monthlyBookFailtureStatistics/index.html","leaf": true,"ID":"1000306","NAME":"每月书目访问失败统计","PID":"1000300","RCODE":"null","text":"每月书目访问失败统计"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/monthlyVisitedBookFailtureStatistics/index.html","leaf": true,"ID":"1000307","NAME":"每月访问失败的书目统计","PID":"1000300","RCODE":"null","text":"每月访问失败的书目统计"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/monthlyVisitedThemeFailtureStatistics/index.html","leaf": true,"ID":"1000308","NAME":"每月访问失败的主题统计","PID":"1000300","RCODE":"null","text":"每月访问失败的主题统计"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/monthlyVisitedArticleFailtureStatistics/index.html","leaf": true,"ID":"1000309","NAME":"每月文章访问失败统计","PID":"1000300","RCODE":"null","text":"每月文章访问失败统计"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/monthlyTitleSearchStatistics/index.html","leaf": true,"ID":"1000310","NAME":"每月标题搜索统计","PID":"1000300","RCODE":"null","text":"每月标题搜索统计"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	},{
+		"DISPLAYURL":"view/searchStatistics/index.html","leaf": true,"ID":"1000311","NAME":"搜索统计","PID":"1000300","RCODE":"null","text":"搜索统计"
+		,"iconCls":"icon icon-xmqxgl"
+		
+	}]
+	
+}]
+
+
+
+

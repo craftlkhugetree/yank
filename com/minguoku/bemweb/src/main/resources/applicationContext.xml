@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	    					http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+							http://www.springframework.org/schema/aop 
+							http://www.springframework.org/schema/aop/spring-aop-3.0.xsd  
+							http://www.springframework.org/schema/tx 
+							http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+							http://www.springframework.org/schema/task
+							http://www.springframework.org/schema/task/spring-task-3.2.xsd
+							http://www.springframework.org/schema/context 
+							http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<!-- 数据库连接池配置 jndi:jdbc/oa 
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/db2" />
+	</bean>
+	-->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"> 
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" /> <property name="url" 
+		value="jdbc:sqlserver://192.168.56.108:1433;DatabaseName=um" /> <property name="username" value="sa" 
+		/> <property name="password" value="passw0rd" /> </bean> <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" 
+		destroy-method="close"> <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" /> <property 
+		name="url" value="jdbc:oracle:thin:@192.168.56.108:1521:newisc" /> <property name="username" value="AUSER" 
+		/> <property name="password" value="password" /> </bean> -->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"> 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> <property name="url" value="jdbc:mysql://localhost:3306/db2" 
+		/> <property name="testOnBorrow" value="true" /> <property name="maxTotal" value="30" /> <property name="maxIdle" 
+		value="30" /> <property name="username" value="root" /> <property name="password" value="root" /> </bean> -->
+
+
+	<import resource="cfg/commAppSpring.xml" />
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/db2" />
+	</bean>
+	
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean name="beetlSqlScannerConfigurer" class="org.beetl.sql.ext.spring4.BeetlSqlScannerConfigurer">
+	    <!-- 哪些类可以自动注入 -->
+	    <property name="basePackage" value="org.beetl.sql.ext.spring4"/>
+	    <!-- 通过类后缀 来自动注入Dao -->
+	    <property name="daoSuffix" value="Dao"/>
+	    <property name="sqlManagerFactoryBeanName" value="sqlManagerFactoryBean"/>
+	</bean>
+	<bean id="sqlManagerFactoryBean" class="org.beetl.sql.ext.spring4.SqlManagerFactoryBean">
+	   <property name="cs" >
+	        <bean  class="org.beetl.sql.ext.spring4.BeetlSqlDataSource">
+	            <property name="masterSource" ref="dataSource"></property>
+	        </bean>
+	    </property>
+	    <property name="dbStyle">
+	        <bean class="org.beetl.sql.core.db.MySqlStyle"/>
+	    </property>
+	    <property name="sqlLoader">
+	        <bean class="org.beetl.sql.core.ClasspathLoader">
+	            <property name="sqlRoot" value="/sql"></property>
+	        </bean>
+	    </property>
+	     <property name="nc">
+	        <bean class="org.beetl.sql.core.UnderlinedNameConversion"/>
+	    </property>
+	    <property name="interceptors">
+	        <list>
+	            <bean class="org.beetl.sql.ext.DebugInterceptor"></bean>
+	            <bean class="org.beetl.sql.ext.SimpleCacheInterceptor">
+	            	<constructor-arg>
+	            		<list>
+	            		</list>
+	            	</constructor-arg>
+	            </bean>
+	        </list>
+	    </property>
+	</bean>
+	
+	<!-- task任务扫描注解 -->
+	<task:annotation-driven />
+	<context:component-scan base-package="cn.**.task"></context:component-scan>
+	
+	<!-- 本项目不用bpm 
+	<import resource="bpmSpring.xml" />
+	-->
+	<!--自动搜索@Controller标注的类 -->
+	<context:component-scan base-package="com.**.dao" />
+	<context:component-scan base-package="com.**.service" />
+	<context:component-scan base-package="cn.com.**.dao" />
+	<context:component-scan base-package="cn.com.**.service" />
+	<context:component-scan base-package="cn.com.angke.common.**"></context:component-scan>
+	
+</beans>

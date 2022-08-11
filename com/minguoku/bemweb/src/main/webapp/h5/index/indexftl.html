@@ -1,0 +1,151 @@
+<!DOCTYPE >
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />-->
+		<!-- <link rel="stylesheet" href="css/animate.min.css"> -->
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/>
+		<link rel="icon" href="../img/favicon2.ico" type="image/x-icon"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/jquery.bxslider.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/jquery.marquee.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link href="index.css" rel="stylesheet"/>
+		<title>民国文献数据库-首页</title>
+	</head>
+	<body>
+		<!--头部-->
+		<div class="lunbo">
+			    <!--logo图片-->
+			    <div class="titlePic">
+			    	<img src="../img/index_31.png" class="userIcon"/>
+			    </div>
+			    <!--搜索关键词-->
+			    <div class="search">
+			    	<input type="text" placeholder="    输入关键搜索词" id="inputkeyword"/><img class="icon-search" src="../img/icon-search.png"></img>
+				    <button type="button" class="seniorindexsearchbutton">高级搜索</button>
+				    <button type="button" class="classfiysearchbutton">分类浏览</button>
+			    </div>
+				  
+				  <!--轮播banner-->
+				<div class="swiper-container">
+				    <div class="swiper-wrapper">
+				    
+				    </div>
+				    <!-- 如果需要分页器 -->
+				    <div class="swiper-pagination"></div>
+				</div>
+		</div>
+		
+			<!--中部-->
+		    <div class="content">
+		    	    <div class="showListInfo">
+		    	  	    <!--专家评论-->
+						<div class="expertComment">
+						  	<img src="../img/expertcomment.png"/>
+						  	<div class="commentContent" id="commentContent">
+						  	</div>
+						</div>
+		    	  	    <!--民国人物-->
+		    	  	  	<div class="mgMaster">
+		    	  	  		<img src="../img/mgpeople.png"/>
+		    	  	  		<div class="commentContent" id="mgMaster">
+		    	  	  			<#list MGMASTERCOMMENT as data>
+		    	  	  				<p>【${data.NAME}】&nbsp;&nbsp;
+			    	  	  				<#if data.BC??>
+			    	  	  					别称:${data.BC}&nbsp;&nbsp;  
+			    	  	  				</#if> 
+			    	  	  				<#if data.Z??>
+			    	  	  					字:${data.Z}&nbsp;&nbsp;  
+			    	  	  				</#if> 
+			    	  	  				<#if data.H??>
+			    	  	  					号:${data.H}&nbsp;&nbsp;
+			    	  	  				</#if> 
+			    	  	  				<#if data.JG??>
+			    	  	  					籍贯:${data.JG}&nbsp;&nbsp;
+			    	  	  				</#if>
+			    	  	  			</p>
+								</#list>
+		    	  	  		</div>
+							    
+						</div>
+						
+		    	    </div>
+		    	  
+		    	  	<img src="../img/newarrival.png"/>
+		    	  	<!--滚动轮播-->
+	                <div id="marquee1">
+						<ul>
+							<#list NEWARRIVAL as data>
+								<li>
+									<a href="javascript:void(0)" value="${data.BOOKDIR}" name="${data.ZTTYPE}"><img src="${IMGURL}${data.BOOKDIR}/cover.jpg" /></a>
+									<p><a href="javascript:void(0)" title="${data.TITLE}" value="${data.BOOKDIR}" name="${data.ZTTYPE}">${data.TITLE}</a></p>
+									<p><a href="javascript:void(0)" value="${data.BOOKDIR}" name="${data.ZTTYPE}" title="${data.PUBLISHNAME}">${data.PUBLISHNAME}</a></p>
+								</li>
+							</#list>
+						</ul>
+					</div>
+                         
+		    </div>
+		 <!--底部-->
+		<div class="bottom">
+			<img src="../img/logo_only.png"/>
+			<div class="bottomcontent"></div>
+		</div>
+	
+		<div id="note">请输入关键词</div>
+		<!--是否下载谷歌的提示-->
+		
+		<div class="tipChrome"><span>建议使用谷歌浏览器，是否下载？</span><button class="downChrome">下载</button><button class="cancelChrome">取消</button></div>
+		
+	    <script type="text/javascript" src="../js/jquery-1.8.0.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/jquery.tmpl.min.js" charset="utf-8"></script>
+<!--		<script type="text/javascript" src="../js/bootstrap.min.js" charset="utf-8"></script>-->
+		<script type="text/javascript" src="../js/swiper.jquery.min.js" ></script>
+	    <script type="text/javascript" src="../js/jquery.kxbdmarquee.js" ></script>
+	    <script src="../js/common/dkr.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../js/base64.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="index.js" type="text/javascript" charset="utf-8"></script>
+		<!-- 数据渲染 start-->
+		<!--//专家评论和民国人物-->
+	    <!--<script id='commentTemp' type='text/x-jquery-tmpl'>
+	         <p>{{= Name}}</p>
+	    </script>-->
+	    <!--banner图-->
+	    <script id='swiperTemp' type='text/x-jquery-tmpl'>
+	         <div class="swiper-slide">
+	            <img src={{= Img}} />
+	         </div>
+	    </script>
+	    <!--最新上架-->
+	    <!--<script id='newArrivalTemp' type='text/x-jquery-tmpl'>
+	         <li>
+				<a href="javascript:void(0)"><img src={{= IMG}} /></a>
+				<p><a href="javascript:void(0)">{{= BOOKNAME}}</a></p>
+				<p><a href="javascript:void(0)">{{= PUBLISHNAME}}</a></p>
+			</li>
+	    </script>-->
+	    <!-- 数据渲染 end -->
+	    <!--底部显示-->
+	    <script id='footerTemp' type='text/x-jquery-tmpl'>
+	        <p class="operateGruide"><a href="#"><span>{{= ABOUTUS}}</span></a><span>|</span><a href="#"><span>{{= USEHELP}}</span></a><span>|</span><a href="#"><span>{{= DISCLAIMER}}</span></a><span>|</span><a href="#"><span>{{= CONNECT}}</span></a></p>
+	    	<p>{{= TIME}} &nbsp; {{= PROJECTNAME}}  &nbsp;&nbsp;&nbsp;&nbsp;    Copyright&nbsp;©&nbsp;{{= DEVEPMENTCOMPANY}}</p>
+	    	<p>项目创意：{{= PROJECTCREATION}}  &nbsp;&nbsp;&nbsp;&nbsp;技术支持：{{= USECOMPANY}}</p>
+	    </script>
+	    <!--加载用户名-->
+	    <script id='userLogoTemp' type='text/x-jquery-tmpl'>
+		    	<span>{{= SCHOOLNAME}}</span>
+	    </script>
+	    <!--头部logo加载客服电话-->
+	    <script id='headerLogoTemp' type='text/x-jquery-tmpl'>
+		    	<div>
+		    		<img src="../img/icon-tel.png"/>
+		    		<span class="custumerName">{{= CUSTOMERPHONENAME}}</span>
+		    	    <span class="custumerPhone">{{= CUSTOMERPHONE}}</span>
+		    	</div>
+	    </script>
+	</body>
+</html>

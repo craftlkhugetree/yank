@@ -445,7 +445,7 @@ body .dialog-class {
 	background: #FFFCF1;
 	box-shadow: 0px 4px 8px 0px rgba(109, 88, 59, 0.5000);
 	border-radius: 10px;
-	overflow-y: auto;
+	/* overflow-y: auto; */
 }
 
 .diagWrapper {
@@ -503,6 +503,11 @@ body .dialog-class {
 	height: 66px;
 	width: 100%;
 	border-bottom: 1px solid #9A886E;
+	position: sticky;
+	top: 0;
+	z-index: 99;
+	opacity: 1;
+	background: #FFFCF1
 }
 
 .diagWrapper .diagTitle .bookTitle {
@@ -557,4 +562,8 @@ body .dialog-class {
 
 .diagWrapper .getMore img {
 	display: inline-block;
+}
+#diagWrapper {
+	height: 450px;
+	overflow-y: auto;
 }

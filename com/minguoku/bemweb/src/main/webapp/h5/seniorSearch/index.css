@@ -1,0 +1,70 @@
+*{margin:0px; padding:0px;font-size: 1em;color: #BD986A;}
+
+.showContent{
+	height: 1013px;
+	margin-top: 43px;
+}
+.showContent div{
+	text-align: left;
+	color: #0056A6;
+}
+.showContent .inputValue{
+	border-top: 1px solid #9A886E;
+	border-bottom: 1px dotted #9A886E;
+	height: 284px;
+	margin-top: 68px;
+	padding: 0px 150px;
+	clear: both;
+}
+.showContent button{
+	background: #3D2717;
+	margin-top: 28px;
+	border: none;
+	width: 90px;
+	height: 36px;
+	outline: none;
+	color: #fff;
+}
+/*.inputValue p{
+	padding: 0px 182px;
+    text-align: left;
+}*/
+.inputValue .leftContent{
+	float: left;
+	height: 100%;
+    width: 322px;
+    padding: 40px 0px;
+    /*margin-left: 84px;*/
+}
+.inputValue .rightContent{
+	float: right;
+	height: 100%;
+    width: 322px;
+    padding: 40px 0px;
+    /*margin-right: 186px;*/
+}
+.leftContent p{
+	text-align: left;
+	height: 36px;
+}
+.leftContent p > input{
+	float: right;
+	width: 214px;
+	color: #000;
+	text-align: left;
+}
+.rightContent p{
+	text-align: left;
+	height: 36px;
+	color: #000;
+}
+.rightContent p > input{
+	float: right;
+	width: 214px;
+	text-align: left;
+}
+.leftContent p > span,.rightContent p > span{
+	color: #000;
+}
+
+ #inputtotal{position:absolute;width:150px;padding:8px;background:red;left:40%;z-index:9999;display:none;color: #fff;} 

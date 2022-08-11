@@ -1,0 +1,149 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />-->
+		<!-- <link rel="stylesheet" href="css/animate.min.css"> -->
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/>
+		<link rel="icon" href="../img/favicon2.ico" type="image/x-icon"/>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/keleyidivpager.css"/>
+		<link href="../css/swiper.min.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="../css/zTreeStyle/zTreeStyle.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link href="index.css" rel="stylesheet"/>
+		<title>民国文献数据库-分类浏览</title>
+	</head>
+	<body>
+	
+			<div class="content">
+				<!--头部-->
+				<div class="lunbo" id="luobo">
+				    	<div class="titlePic">
+				    		<img src="../img/index_31.png" class="userIcon"/>
+				    	</div>
+					    
+					    <div class="search">
+					    	<input type="text" placeholder="    输入关键搜索词" class="inputkeywordclass"/><img class="icon-search" src="../img/icon-search.png" />
+					    	<!--<input type="checkbox" name="category" value="财经" />结果内搜索-->
+					    	
+						    <button type="button" class="seniorlocalsearchbutton">高级搜索</button>
+						    <!--<button type="button" class="classfiylocalsearchbutton">分类浏览</button>-->
+					    </div>
+						  
+						
+						<div class="swiper-container">
+						    <div class="swiper-wrapper"></div>
+						    <!-- 如果需要分页器 -->
+						    <div class="swiper-pagination"></div>
+						   
+						</div>
+					   
+				</div>
+				<!--内容显示区-->
+				<div class="showContent">
+					    <!--分类-->
+					    <div class="expertComment">
+						  	<img src="../img/indexcategory.png"/>
+						  	
+						  	<ul id="myTab" class="nav nav-tabs">
+								<li class="active chineseGraph">
+									<a href="#home" data-toggle="tab">中图法</a>
+								</li>
+								<li class="subjecttab"><a href="#ios" data-toggle="tab">学科</a></li>
+							</ul>
+							
+							<div id="myTabContent" class="tab-content">
+								<div class="tab-pane fade in active" id="home">
+									<ul id="treeDemo" class="ztree"></ul>
+								</div>
+								<div class="tab-pane fade" id="ios">
+									<ul id="subjectDemo" class="ztree"></ul>
+								</div>
+								
+							</div>
+						  	
+						  	
+						</div>
+		    	  	  	 <!--书目显示区--> 
+		    	  	  	<div class="mgMaster">
+		    	  	  		<p class="resourceinfo">首页&nbsp;><span>分类搜索</span></p>
+		    	  	  		<div class="showbookcontent"></div>
+		    	  	  	</div>
+		    	  	  	<!--分页-->
+						<div id="div_pager"></div>
+				</div>
+		    </div>
+		    <!--底部-->
+		    <div class="bottom">
+				<img src="../img/logo_only.png"/>
+				<div class="bottomcontent"></div>
+			</div>
+            <!--//提示框-->
+            <div id="note">请输入关键词</div>
+		<script type="text/javascript" src="../js/jquery-1.8.3.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/jquery.tmpl.min.js" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/bootstrap.min.js" charset="utf-8"></script>
+		<script src="../js/layer.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/swiper.jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.ztree.core.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common/dkr.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.pagination.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/base64.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="index.js" type="text/javascript" charset="utf-8"></script>
+		<!--加载轮播图-->
+		<script id='swiperTemp' type='text/x-jquery-tmpl'>
+	         <div class="swiper-slide">
+	            <img src=${Img} />
+	         </div>
+	    </script>
+	   
+	    <!--加载书的信息-->
+	    <script id='bookTemp' type='text/x-jquery-tmpl'>
+  	  			<p class="cateinfo">图书</p>
+  	  		    <p class="searchinfo">搜索结果有${BOOKTOTAl}条</p>
+  	  		    <div class="bookDetail"></div>
+	    </script>
+	    <!--分页-->
+	    <script id='pageTemp' type='text/x-jquery-tmpl'>
+  	  		    <div class="book">
+			  	  			<div class="bookpicture">
+			  	  				<img src="${BOOKIMG}"/>
+			  	  			</div>
+			  	  			<div class="bookintroduce">
+			  	  				<h4 title="${TITLE}"><a href="../detail/index.html?DIR=${DIR}&ZTTYPE=${ZTTYPE}&LABEL=4" target="_blank" title="${TITLE}">${TITLE}</a></h4>
+			  	  				<p title="${AUTHOR}">责任者：${AUTHOR}</p>
+			  	  				<p title="${HOLDER}">出版社：${HOLDER}</p>
+			  	  				<p title="${CREATEYEAR}">出版时间：${CREATEYEAR}</p>
+			  	  				<p title="${ZTNAME}">分类：${ZTNAME}</p>
+			  	  				<p class="functionbutton"><img src="../img/icon-ref-blue.png" class="startreadimgQuote${ID}"/><span><a href="javascript:void(0)" value="${TITLE}" class="startreadbutton${ID}" onclick="quoteMethod(this)" name="${AUTHOR}" holder="${HOLDER}" createyear="${CREATEYEAR}" islook="${ISLOOK}">引用</a></span>&nbsp;&nbsp;<img src="../img/search_25.png"/><span><a href="../detail/index.html?DIR=${DIR}&ZTTYPE=${ZTTYPE}&LABEL=4" target="_blank" value="${ID}">详情</a></span>&nbsp;&nbsp;<img src="../img/search_05.png" class="startreadimg${ID}"/><span><a href="javascript:void(0)" dir="${DIR}" zttype="${ZTTYPE}" target="_blank" class="startreadbutton${ID}" onclick="readMethod(this)"  islook="${ISLOOK}">阅读</a></span></p>
+			  	  			</div>
+			  	  			<div class="bookcontent">
+			  	  				<p>${BOOKDETAIL}</p>
+			  	  			</div>
+			  	</div>
+			
+	    </script>
+	    <!--底部显示-->
+	    <script id='footerTemp' type='text/x-jquery-tmpl'>
+	        <p class="operateGruide"><a href="#"><span>${ABOUTUS}</span></a><span>|</span><a href="#"><span>${USEHELP}</span></a><span>|</span><a href="#"><span>${DISCLAIMER}</span></a><span>|</span><a href="#"><span>${CONNECT}</span></a></p>
+	    	<p>${TIME} &nbsp; ${PROJECTNAME}  &nbsp;&nbsp;&nbsp;&nbsp;    Copyright&nbsp;©&nbsp;${DEVEPMENTCOMPANY}</p>
+	    	<p>项目创意：${PROJECTCREATION}  &nbsp;&nbsp;&nbsp;&nbsp;技术支持：${USECOMPANY}</p>
+	    </script>
+	    <!--加载用户名-->
+	    <script id='userLogoTemp' type='text/x-jquery-tmpl'>
+		    	<span>{{= SCHOOLNAME}}</span>
+	    </script>
+	    <!--头部logo加载客服电话-->
+	    <script id='headerLogoTemp' type='text/x-jquery-tmpl'>
+		    	<div>
+		    		<img src="../img/icon-tel.png"/>
+		    		<span class="custumerName">{{= CUSTOMERPHONENAME}}</span>
+		    	    <span class="custumerPhone">{{= CUSTOMERPHONE}}</span>
+		    	</div>
+	    </script>
+	</body>
+</html>

@@ -1,0 +1,11 @@
+pageQuery
+===
+	select 
+	@pageTag(){
+		tt.*
+	@}  
+	from
+	(
+	select t1.* from ${tableName} t1 
+	) tt
+	where 1=1

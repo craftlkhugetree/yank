@@ -1,0 +1,175 @@
+*{margin:0px; padding:0px;font-size: 1em;color: #BD986A;text-align: center;}
+
+body{
+	background: url(../img/bg.png) no-repeat;
+	background-color:#fffcf1;
+	background-size: 100% 100%;
+}
+.lunbo > .titlePic{
+	position: absolute;
+	background: url(../img/logo.png);
+    left: 50%;
+    width: 1002px;
+    /*width: 100%;*/
+    margin-left: -500px;
+    top: 24px;
+    z-index: 100;
+}
+
+.titlePic > .userIcon{
+	margin: 32px 0px;
+    margin-left: -124px;
+}
+.titlePic > div{
+	float: right;
+	margin: 0px 31px;
+}
+.titlePic div > img{
+	margin: 22px 12px;
+    /*margin-left: -217px;*/
+}
+.titlePic div > .custumerName{
+	position: absolute;
+    top: 20px;
+}
+.titlePic div > .custumerPhone{
+	position: relative;
+    top: 10px;
+    font-weight: 600;
+}
+
+.search{
+	position: absolute;
+    left: 50%;
+    height: 42px;
+    top: 230px;
+    width: 816px;
+    margin-left: -408px;
+    z-index: 100;
+}
+.search > input{
+	width: 577px;
+    height: 38px;
+    background: #000000;
+    opacity: 0.7;
+    color: #fff;
+    border: none;
+    padding-left:20px;
+    text-align: left;
+    /*margin-right: 14px;*/
+}
+.search > button{
+	height: 38px;
+    width: 76px;
+    background: #000000;
+    opacity: 0.5;
+    color: #fff;
+    border: none;
+    outline: none;
+    margin: 0px 10px;
+    /*margin-right: 14px;*/
+}
+.search .icon-search{
+	/*background: url(../img/index_24.png);*/
+	/*background-repeat: no-repeat;*/
+	width: 20px;
+    height: 20px;
+    position: relative;
+    left: -28px;
+}
+
+/*子页面标题*/
+.content .lunbo > .titlePic{
+	position: relative;
+	background: url(../img/logo.png);
+    left: 50%;
+    width: 1002px;
+    /*width: 100%;*/
+    margin-left: -500px;
+    top: 28px;
+    clear: both;
+}
+
+/*子页面查询*/
+.content .lunbo > .search{
+	position: relative;
+    left: 50%;
+    height: 42px;
+    top: 110px;
+    width: 918px;
+    margin-left: -455px;
+    color: #fff;
+    /*width: 816px;
+    margin-left: -408px;*/
+}
+
+/*子页面查询复选框*/
+.search > input:nth-child(3){
+	margin-right: 8px;
+	/*width: 577px;
+    height: 38px;
+    background: #000000;
+    opacity: 0.5;
+    color: #fff;
+    border: none;
+    margin-right: 14px;*/
+}
+
+/*显示内容*/
+.content{
+	margin: 0 auto;
+	clear: both;
+	/*margin-top: 26px;*/
+	width: 1002px;
+	/*background-color:#F4F2E6;*/
+	
+}
+
+.content .lunbo .swiper-wrapper{width:100%;list-style: none;text-align: center;height: 182px;}
+.content .lunbo .swiper-wrapper .swiper-slide img{width:100%;height: 100%;}
+
+/*底部内容*/
+.bottom{
+	height: 166px;
+	/*padding: 40px;*/
+	clear: both;
+	text-align: center;
+	background-color:#1D2D41;
+}
+p span{
+	margin: 0 5;
+}
+
+.bottomcontent{
+	/*position: relative;
+    bottom: 10px;*/
+}
+
+.bottomcontent p{
+	margin: 0px;
+}
+.bottomcontent .operateGruide{
+	font-size: 16px;
+	margin-bottom: 4px;
+}
+
+.bottom img{
+	position: relative;
+    top: -30px;
+}
+
+ #note{position:absolute;width:150px;padding:8px;background:red;left:40%;z-index:9999;display:none;color: #fff;} 
+ 
+ .jump-ipt{
+	width: 52px;
+    height: 24px;
+}
+
+
+/*//引用标题的样式*/
+.layui-layer-title{
+	text-align: left;
+}
+.layui-layer-title span{
+	color: #000;
+}
