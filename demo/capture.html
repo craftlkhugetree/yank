@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div id="parent" class="flex-center">
+        parent
+        <p id="child" class="flex-center">
+            child
+            <span id='son' class="flex-center">
+                son
+                <a href="https://www.baidu.com" id="a-baidu">点我啊</a>
+            </span>
+        </p>
+    </div>
+</body>
+<style>
+    #parent {
+        background-color: bisque;
+        width: 700px;
+        height: 700px;
+
+    }
+
+    #child {
+        background-color: chocolate;
+        width: 500px;
+        height: 500px;
+    }
+
+    #son {
+        background-color: crimson;
+        width: 300px;
+        height: 300px;
+    }
+
+    .flex-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+    }
+</style>
+<script type="text/javascript">
+    const parent = document.getElementById("parent");
+    const child = document.getElementById("child");
+    const son = document.getElementById("son");
+
+    const baidu = document.getElementById("a-baidu");
+    baidu.addEventListener('click', function (e) {
+        e.preventDefault();
+    }, true)
+
+    window.addEventListener("click", function (e) {
+        // e.target.nodeName 指当前点击的元素, e.currentTarget.nodeName绑定监听事件的元素
+        console.log("window 捕获", e.target.nodeName, e.currentTarget.nodeName);
+    }, true);
+
+    parent.addEventListener("click", function (e) {
+        // stopImmediatePropagation()不仅阻止了事件流，连自身元素的其他相同类型的未执行事件也阻止了。
+        // e.stopImmediatePropagation(); 
+        // 不再派发事件。终止事件在传播过程的捕获、目标处理或起泡阶段进一步传播。调用该方法后，该节点上处理该事件的处理程序将被调用，事件不再被分派到其他节点。
+        // e.stopPropagation(); 
+        console.log("parent 捕获0", e.target.nodeName, e.currentTarget.nodeName);
+    }, true);
+    parent.addEventListener("click", function (e) {
+        // e.target.nodeName 指当前点击的元素, e.currentTarget.nodeName绑定监听事件的元素
+        console.log("parent 捕获", e.target.nodeName, e.currentTarget.nodeName);
+    }, true);
+
+    child.addEventListener("click", function (e) {
+        console.log("child 捕获", e.target.nodeName, e.currentTarget.nodeName);
+    }, true);
+
+    son.addEventListener("click", function (e) {
+        // e.stopImmediatePropagation(); 
+        console.log("son 捕获", e.target.nodeName, e.currentTarget.nodeName);
+    }, true);
+
+    parent.addEventListener("click", function (e) {
+        // e.stopImmediatePropagation();
+        console.log("parent 没useCapture", e.target.nodeName, e.currentTarget.nodeName);
+    });
+    window.addEventListener("click", function (e) {
+        // e.target.nodeName 指当前点击的元素, e.currentTarget.nodeName绑定监听事件的元素
+        console.log("window 冒泡", e.target.nodeName, e.currentTarget.nodeName);
+    }, false);
+
+    parent.addEventListener("click", function (e) {
+        console.log("parent 冒泡", e.target.nodeName, e.currentTarget.nodeName);
+    }, false);
+
+    child.addEventListener("click", function (e) {
+        console.log("child 冒泡", e.target.nodeName, e.currentTarget.nodeName);
+    }, false);
+
+    son.addEventListener("click", function (e) {
+        console.log("son 冒泡", e.target.nodeName, e.currentTarget.nodeName);
+    }, false);
+
+</script>
+
+</html>

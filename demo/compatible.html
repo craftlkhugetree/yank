@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <ul id="ul">
+        <li id="test1">1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+    </ul>
+</body>
+<script type="text/javascript">
+    const ul = document.querySelector("ul");
+    // 事件委托
+    ul.addEventListener('click', function (e) {
+        const target = e.target;
+        if (target.tagName.toLowerCase() === "li") {
+            const liList = this.querySelectorAll("li");
+            index = Array.prototype.indexOf.call(liList, target);
+            alert(`内容为${target.innerHTML}, 索引为${index}`);
+        }
+    })
+
+    // 非委托，给每个li绑定：
+    // const liList = document.getElementsByTagName("li");
+    // for(let i = 0; i<liList.length; i++){
+    //     liList[i].addEventListener('click', function(e){
+    //         alert(`内容为${e.target.innerHTML}, 索引为${i}`);
+    // 　　 })
+    // }
+    class BomEvent {
+        constructor(element) {
+            this.element = element;
+        }
+
+        addEvent(type, handler) {
+            if (this.element.addEventListener) {
+                //事件类型、需要执行的函数、是否捕捉
+                this.element.addEventListener(type, handler, false);
+            } else if (this.element.attachEvent) {
+                this.element.attachEvent('on' + type, function () {
+                    handler.call(element);
+                });
+            } else {
+                this.element['on' + type] = handler;
+            }
+        }
+
+        removeEvent(type, handler) {
+            if (this.element.removeEnentListener) {
+                this.element.removeEnentListener(type, handler, false);
+            } else if (element.datachEvent) {
+                this.element.detachEvent('on' + type, handler);
+            } else {
+                this.element['on' + type] = null;
+            }
+        }
+    }
+    let genE = new BomEvent(document.getElementById('test1'))
+    genE.addEvent('click', (e) => {
+        console.log(e);
+    })
+
+    // 阻止事件 (主要是事件冒泡，因为IE不支持事件捕获)
+    function stopPropagation(ev) {
+        if (ev.stopPropagation) {
+            ev.stopPropagation(); // 标准w3c
+        } else {
+            ev.cancelBubble = true; // IE
+        }
+    }
+    // 取消事件的默认行为
+    function preventDefault(event) {
+        if (event.preventDefault) {
+            event.preventDefault(); // 标准w3c
+        } else {
+            event.returnValue = false; // IE
+        }
+    }
+</script>
+<style>
+    #ul {
+        background-color: gray;
+        width: 700px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    li {
+        margin-bottom: 20px;
+        width: 80%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: lightgoldenrodyellow;
+        font-size: 20px;
+        font-weight: bold;
+    }
+</style>
+
+</html>

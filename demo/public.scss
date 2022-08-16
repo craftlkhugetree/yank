@@ -659,3 +659,69 @@ let tmpLen = tmp.length;
             }
           }, 100);
         }
+
+https: //juejin.cn/post/6844903917348732936
+进度条：
+<div class="progress" style="--percent: 14;"></div>
+<div class="progress" style="--percent: 41;"></div>
+<div class="progress" style="--percent: 94;"></div>
+
+.progress {
+  width: 400px;
+  height: 17px;
+  margin: 5px;
+  color: #fff;
+  background-color: #f1f1f1;
+  font-size: 12px;
+
+  &::before {
+    counter-reset: percent var(--percent);
+    content: counter(percent) "%"; // 文字显示
+
+    display: inline-block;
+    width: calc(100% * var(--percent) / 100); // 宽度计算
+    max-width: 100%; // 以防溢出
+    height: inherit;
+    text-align: right;
+    background-color: #2486ff;
+  }
+}
+鱼和熊掌不可兼得，如果只靠css，想在页面首次进入触发动画效果，那只有animation才能做到了😭
+.progress {
+  &::before {
+    // 移除width跟transition属性
+    animation: progress 1s ease forwards;
+  }
+
+  @keyframes progress {
+    from {
+      width: 0;
+    }
+    to {
+      width: calc(100% * var(--percent) / 100);
+    }
+  }
+}
+
+counter函数的作用是插入计数器的值，配合content属性可以把计数器里的值显示出来🎲，介绍用法之前，得先熟悉两个属性counter-reset跟counter-increment😎
+显示变量的时候，如果变量是string类型则可以直接显示var(--name)，如果是int类型，则需要借用counter函数😒
+
+counter-reset的作用是定义一个计数器：
+counter-reset: count1 0; // 声明一个计数器count1，并从0开始计算
+counter-reset: count2 1; // 声明一个计数器count2，并从1开始计算
+counter-reset: count3 0 count4 0 count5 0; // 声明多个计数器
+
+counter-increment使计数器的值递增，可以理解成javascript中的+=：
+counter-reset: count 0;
+counter-increment: count 2; // 使count自增2，当前count的值为2
+counter-increment: count -2; // 使count自增-2，当前count的值为-2
+
+1. 当a标签内容为空时，显示其href属性里面的值：
+<a href="https://juejin.cn/user/2911162518997064"></a>
+a {
+  &:empty {
+    &::after {
+      content: "链接内容为："attr(href);
+    }
+  }
+}
