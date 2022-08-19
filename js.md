@@ -352,7 +352,8 @@ console.log(p, 'normal');
 httphijack-Github      https://wenku.baidu.com/view/b2d2dace9889680203d8ce2f0066f5335a816725.html
 内联事件 <img src="{路径" onload="alert(/xss/)}" />
 通过输入框或者留言板内的输入，攻击者提前关闭src属性。
-
+静态模块：使用 MutationObserver 扫描。
+动态模块：通过 API 钩子来拦截路径属性(createElement, 给src赋值的api)。
 <body>
     <input type="text" id="text">
     <input type="button" id="s" value="按钮" onclick="test()">

@@ -39,6 +39,10 @@ article, section {
     filter: brightness(0.8); */
     /*     //设置亮度值，范围：0-1 */
 }
+.hx-warp,.left-toolbox,._1Jdfvb {
+    display: none !important
+}
+
 
 @-moz-document domain("zhihu.com") {
 body {

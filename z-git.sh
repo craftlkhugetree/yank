@@ -1,8 +1,9 @@
 #!/bin/sh
-
+# !-n 用于判断变量是否为空,注意只要有一个符号就不为空,空格也不行
 read -p  "请填写commit提交的信息:" msg
+echo $msg
 # 空值判断
-if [ ! $msg ]; then
+if [ ! -n "$msg" ]; then
   echo -e "\033[31m 终止提交，因为提交说明为空。\033[0m" 
 else
   echo -e "\033[32m \n 开始执行add-commit操作...... \033[0m"

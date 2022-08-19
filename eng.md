@@ -23,3 +23,7 @@ seamlessly 无缝地
 
 $('body').delegate 代表、委托
 
+ci：自动化流程配置或脚本修改——Continuous Integration/（Delivery|Deployment）持续集成/交付/部署
+revert 恢复
+chore 例行事物，无聊的工作。非 src 和 test 的修改，发布版本等。
+

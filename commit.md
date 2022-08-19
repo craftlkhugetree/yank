@@ -383,7 +383,11 @@ fix：重置报修表单；状态待维修；进展不显示报修人图片；�
 fix：续租提示为基地管理员；审批人charger()；opinions内v-else；
 feat：reportList,gLoading。1、右侧我的报修，显示查看详情按钮，点击后，报修内容展开下放显示，点击收起详情，收起内容
 
+2022/08/17
+fix：报修进展的图片被条件屏蔽；报修草稿编辑的title被覆盖；limitday；水电工无pc端菜单，移动端直接进入。
 
+2022/08/19
+fix：协议合计金额溢出；实习申请单；灌溉对话框的查询资源接口调用延后。 
 
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
@@ -407,7 +411,6 @@ require，import动态 静态
 webpack cjs/esm 导入导出 通用
 项目minipack 模块过程
 Amazon deepracer
-
 
 form有初始值才能输入，才能双向绑定？
 doLayout才能保证移动端el-table某列可以用v-if，否则这一行不对齐。
