@@ -502,3 +502,37 @@ function report(){
 }
 究竟是什么原因导致这个问题呢？
 分析是这样的，在函数report ()里，局部变量img设置属性src以后，浏览器并不是立即就发起请求，或者请求准备发起但是还没有真正发起（回忆下网络请求的几个状态值），而函数report执行完毕，浏览器开始做垃圾回收工作，包括局部变量，上报请求还没有开始img就被回收了，那么这次的上报就被取消了，上报失败。而把img放到window对象下作为全局变量，则避免了这个问题，所以即使report()函数的所有资源被回收，也不会影响到其上报
+
+
+  function readFile(url) {
+    var param;
+    $.ajax({
+      url: url, // 文件位置
+      type: 'GET', // 请求方式为get
+      async: false,
+      dataType: 'xml', // 返回数据格式为xml
+      success: function (data) {
+        param = data;
+        genXmlDocMap(data);
+      },
+    });
+    return param;
+  }
+});
+  axios({
+        url,
+        responseType: "blob",
+        data: {},
+        method: "GET",
+      })
+        .then(res => {
+          let url = window.URL.createObjectURL(res.data);
+          let link = document.createElement("a");
+          link.href = url;
+          link.style.display = "none";
+          link.setAttribute("download", fileName + "." + "docx");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+        })
