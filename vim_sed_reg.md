@@ -105,6 +105,7 @@ sed -i '$ d' .git/config
 # regex
 
 ^(?!._(localhost|z.angke.com.cn))._$
+^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost)).*$
 
 ?<=pattern
 匹配这个位置之前为pattern的内容
@@ -119,18 +120,60 @@ while( res = reg.exec(str))
 }
 
 const xmlarray = str.split(/(<pagenumber pagenum=[^>]*\/>){1}/);会把正则字段在数组中保存一份
-    const xmlarray = str.split(/(<title>[\d\D]*?<\/title>){1}/);  针对大量的括号对，要用贪心匹配。点号不表示\n，所有字符应该用[\d\D]或者[\s\S]
+    const xmlarray = str.split(/(<title>[\d\D]*?<\/title>){1}/);  针对大量的括号对，要用非贪心匹配。点号不表示\n，所有字符应该用[\d\D]或者[\s\S]
+或者加上  s  可以匹配换行符   console.log( /b.r/s.test('b\nr') )
+/foo/igs.flags;   // "gis"
+
 
 str.replace(/<[^>]*>/g, '');去掉所有尖括号对,非“>”的字符可以有一个或多个，也可以没有。
-
-
-^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost)).*$
 
 
 const reg = /(\d{3})(\d{2})(\d*)(\d{4})/
 let phoneNum = "15612345678"
 const res = phoneNum.replace(reg, '$1****$2****$3****$4')
 console.log(res) // "156****12****34****5678"
+
+
+非捕获分组：(?:表达式)，分组匹配之后，不需要的用 “?: ”语法过滤子表达式内容。也就是代码匹配，但是不保存。
+var str = '2022-04-21'
+var reg = /(\d{4})-(?:\d{2})-(\d{2})/
+var result = reg.exec(str)  // 得到的数组就不包括04了
+
+$1只匹配小括号内的内容
+保留两位小数的价格输入框，没有四舍五入:
+const changePiece = (e) =>{
+    // ?:将不要的匹配子项忽略
+    e.target.value = e.target.value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1');
+  }
+  return (
+    <div>
+       <input type="text" onKeyUp={ (e) => {changePiece(e)}} /> 
+    </div>
+  );
+
+
+当我们想匹配一个正确的 HTML 标签时，使用 "<[\w]+>.*<\/[\w]+>"。
+可以看到虽然可以匹配 HTML 开始和结束标签，但是却不能校验前后的一致性。如 “</span>” 并不是 “<div>” 的结束标签。
+我们可以把后面的部分改成 “<\/\1>” 其中 “\1” 就是引用第一个分组。这样一来我们就可以匹配正确的 HTML 标签了。
+
+断言 (Assertion)
+断言有些地方也叫环视(Lookaround)，它只进行子表达式的匹配，不占有字符，匹配到的内容不保存到最终的匹配结果。
+1)正向先行断言
+正向先行断言：(?=表达式)，指在某个位置往右看，所在的位置右侧必须匹配表达式。
+2)反向先行断言
+反向先行断言：(?!表达式)，指在某个位置往右看，不能存在表达式中的内容。
+3)正向后行断言
+正向后行断言：(?<=表达式)，指在某个位置往左看，存在表达式中的内容。
+(?<=我)喜欢
+如上就匹配了“喜欢”前面有“我”的字符串。
+4)反向后行断言
+反向后行断言：(?<!表达式)，指在某个位置往左看，不能存在表达式中的内容。
+(?<!我)喜欢
+如上就排除了“喜欢”前面有“我”的字符串。
+
+
+
+
 
 # whistle
 # 操作统计-民国库后台管理

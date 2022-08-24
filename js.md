@@ -536,3 +536,148 @@ function report(){
           document.body.removeChild(link);
           window.URL.revokeObjectURL(url);
         })
+
+
+1.在ecma规范中，eval存在直接调用和间接调用两种方式，而直接调用时上下文为当前执行环境，间接调用时上下文为全局环境
+2.直接调用eval时，为直接调用，而使用表达式计算得到的eval是间接调用
+这样就很明了了，eval('this')和(0,eval)('this')的区别是，一个是在当前执行环境下，一个是在全局执行环境下，后面的调用方式才可百分百确定指向的是全局宿主对象
+
+(global => {
+  // localStorage.getItem 有5%几率返回空字符串。
+  const _getItem = global.localStorage.getItem;
+  global.localStorage.getItem = function (...args) {
+    let result = _getItem.call(global.localStorage, ...args);
+    if (Math.random() < 0.05) {
+      result = '';
+    }
+    return result;
+  }
+})((0, eval)('this'));
+
+
+
+构造函数就是一个使用New操作符调用的函数，只有使用New调用时，构造函数里面的this对象才会指向实例，如果像如下调用：
+function Student(name,age){
+    this.name = name;
+    this.age = age;
+}
+var Tom = Student('Tom',12);
+访问Tom.name是未定义的，这是因为此时的this指向了window,访问window.name就会得到'Tom'。其实很多时候我们会忘掉使用New操作符去实例化一个对象，造成this晚绑定。如果想避免这种问题就需要使用如下构造方式：
+function Student(name,age){
+    if( this instanceof Student){
+        this.name = name;
+        this.age = age;
+    } else {
+        return new Student(name,age);
+    }
+}
+
+函数重写
+要理解惰性载入函数的原理，我们有必要先理解一下函数重写技术，由于一个函数可以返回另一个函数，因此可以在函数内部用新的函数来覆盖旧的函数。
+function sayHi() {
+    console.info('Hi');
+    sayHi = function() {
+        console.info('Hello');
+    }
+}
+我们第一次调用sayHi()函数时，控制台会打印出Hi，全局变量sayHi被重新定义，被赋予了新的函数，从第二次开始之后的调用都会打印出Hello。惰性载入函数的本质就是函数重写，惰性载入的意思就是函数执行的分支只会发生一次。
+————————————————
+原文链接：https://blog.csdn.net/heuguangxu/article/details/98615385
+
+// 下述方法存在两个问题，一是污染了全局变量
+// 二是每次调用都需要进行一次判断
+var t;
+function foo() {
+    if (t) return t;
+    t = new Date()
+    return t;
+}
+
+// 使用闭包来避免污染全局变量，
+// 但是还是没有解决每次调用都需要进行一次判断的问题
+var foo = (function() {
+    var t;
+    return function() {
+        if (t) return t;
+        t = new Date();
+        return t;
+    }
+})();
+
+// 函数也是一种对象，利用这个特性也可以解决
+// 和方案二一样，还差一个问题没有解决
+function foo() {
+    if (foo.t) return foo.t;
+    foo.t = new Date();
+    return foo.t;
+}
+
+// 利用惰性载入技巧，即重写函数
+var foo = function() {
+    var t = new Date();
+    foo = function() {
+        return t;
+    };
+    return foo();
+};
+
+https://www.cnblogs.com/forcheng/p/12960972.html
+在全局环境（全局执行上下文）中（在任何函数体外部的代码），this 始终指向全局对象
+在函数环境（函数执行上下文）中，绝大多数情况，函数的调用方式决定了 this 的值，这与调用函数的()左侧的部分 MemberExpression 的解释执行的结果的类型是不是 Reference 类型直接关联。
+
+value = 1
+var foo = {
+  value: 2,
+  bar: function () {
+    console.log(this.value)
+  }
+};
+
+foo.bar();   // 2
+(foo.bar)(); // 2
+
+(false || foo.bar)();   // 1
+(foo.bar = foo.bar)();  // 1
+(foo.bar, foo.bar)();   // 1
+在上述示例代码中：
+
+对于 (foo.bar)，foo.bar 被 () 包住，使用了分组运算符，查看规范 11.1.6 分组操作符，可知分组表达式不会调用 GetValue 方法， 所以 (foo.bar)仍旧是一个 Reference 类型，因此 this 为 Reference 类型的 base 对象，即 foo。
+对于 (false || foo.bar)，有逻辑与算法，查看规范 11.11 二元逻辑运算符，可知二元逻辑运算符调用了 GetValue 方法，所以false || foo.bar不再是一个 Reference 类型，因此 this 为 undefined，非严格模式下，被隐式转化为 global 对象。
+对于 (foo.bar = foo.bar)，有赋值运算符，查看规范 11.13.1 简单赋值，可知简单赋值调用了 GetValue 方法，所以foo.bar = foo.bar不再是一个 Reference 类型，因此 this 为 undefined，非严格模式下，被隐式转化为 global 对象。
+对于 (foo.bar, foo.bar)，有逗号运算符，查看规范 11.14 逗号运算符，可知逗号运算符调用了 GetValue 方法，所以foo.bar, foo.bar不再是一个 Reference 类型，因此 this 为 undefined，非严格模式下，被隐式转化为 global 对象。
+
+
+function foo() {
+  console.log(this)
+}
+
+function bar() {
+  'use strict'
+  console.log(this)
+}
+
+foo() // global
+bar() // undefined
+
+// foo 标识符对应的 Reference
+var fooReference = {
+  base: EnvironmentRecord,
+  propertyName: 'foo',
+  strict: false
+}
+
+// bar 标识符对应的 Reference
+var barReference = {
+  base: EnvironmentRecord,
+  propertyName: 'bar',
+  strict: true
+}
+上述代码中，对于 fooReference，根据函数调用规范可知其 this = getThisValue(fooReference) = GetBase(fooReference).ImplicitThisValue() = undefined，而 barReference 也是一样。
+但为什么 foo() 输出的是 global 全局对象而不是 undefined 呢？这是因为在非严格模式下， 当 this 的值为 undefined 时，会被隐式转换为全局对象。而在严格模式下，指定的 this 不再被封装为对象。
+
+
+ajax请求是一种官方推出的请求方式，通过xhr对象去实现，jsonp是民间发明，script标签实现的请求。
+ajax是一个异步请求，jsonp是一个同步请求
+ajax存在同源检查，jsonp不存在同源检查，后端无需做解决跨域的响应头。
+ajax支持各种请求的方式，而jsonp只支持get请求
+ajax的使用更加简便，而jsonp的使用较为麻烦。

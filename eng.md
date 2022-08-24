@@ -27,4 +27,8 @@ ci：自动化流程配置或脚本修改——Continuous Integration/（Deliver
 revert 恢复
 chore 例行事物，无聊的工作。非 src 和 test 的修改，发布版本等。
 arrears 欠费
+Deque 双向队列
+facade  [fəˈsɑːd] 表面
+safari [səˈfɑːri] 
+
 

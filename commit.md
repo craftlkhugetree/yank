@@ -76,8 +76,13 @@ svn://160.255.0.56/01module/lres/03code/lresweb/src/main/webapp/mobile_nh
 
 https://720yun.com/t/c9fjr7syOu5
 
+南农正式：
 https://authserver.njau.edu.cn/authserver/login?service=http%3A%2F%2Fbmjd.njau.edu.cn%2Fidsweb%2Frest%2FCas2Login%2Flogin%3FreqKey%3D4251609
 T2019037  020613xiu
+读者教育：
+http://172.20.1.236/lres/control  reader/123
+http://172.20.1.236/lres/web/index.html     208080337/888
+http://172.20.1.236/lres/mobile/index.html
 
 
 # 2022/5/6 读者教育
