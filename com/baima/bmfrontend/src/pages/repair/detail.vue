@@ -104,7 +104,7 @@
           <span :title="item.content" :class="index == 0 ? 'first' : ''">{{
             item.content
           }}</span>
-          <div class="imgs">
+          <div class="imgs" v-if="item.eventType && item.eventType != 1">
             <el-image
               :src="viewUrl + g.ID"
               alt
@@ -120,7 +120,7 @@
         </el-timeline-item>
       </el-timeline>
     </div>
-    
+
     <div v-show="isConsumer()">
       <div class="middle">
         <h2>维修评价</h2>
@@ -129,12 +129,11 @@
       <judge ref="judge" :rInfo="rInfo"></judge>
     </div>
 
-    <template
-      v-if="!(disProgress.length &lt; progress.length) && progress.length > 1"
-    >
+    <!-- <template v-if="!(disProgress.length &lt; progress.length) && progress.length > 1"> -->
+    <template v-if="!isHandle">
       <el-divider></el-divider>
       <div
-        @click.stop="collapse"
+        @click.stop="collapseOut"
         class="my-button plain-green"
         style="float: right"
       >
@@ -191,6 +190,7 @@ export default {
   methods: {
     // id查询
     findById(id) {
+      this.$store.commit('setGLoading', true)
       findId(id)
         .then(res => {
           if (res && res.success) {
@@ -200,10 +200,16 @@ export default {
             ).name;
             this.transPhotos(res.data, this.imgs);
             this.genProgress();
+            if(!this.isHandle) {
+              // this.changeExpand(id)
+            }
           } else {
           }
+          this.$store.commit('setGLoading', false)
         })
-        .catch(err => {});
+        .catch(err => {
+          this.$store.commit('setGLoading', false)
+        });
     },
     // transfer photos to array
     transPhotos(obj, arr) {
@@ -231,7 +237,8 @@ export default {
         obj.createName = r.createName;
         obj.content = r.content;
         this.transPhotos(r, obj.imgs);
-        this.progress.unshift(obj);
+        this.progress.push(obj);
+        // this.progress.unshift(obj);
       }
       this.disProgress =
         this.progress.length > 1 ? this.progress.slice(0, 1) : this.progress;
@@ -243,11 +250,26 @@ export default {
           ? this.progress
           : this.progress.slice(0, 1);
     },
+    collapseOut() {
+      this.$parent._props.tableData.forEach(t => {
+        t.isExpand = false
+      })
+    },
+    changeExpand(id) {
+      this.$parent._props.tableData.forEach(t => {
+        if (t.id === id) {
+          t.isExpand = true;
+        } else {
+          t.isExpand = false;
+        }
+      });
+      this.$forceUpdate()
+    },
     // 获取进展对象
     getProgressObj(item) {
       const r = this.rInfo;
       const et = item.eventType;
-      let obj = { imgs: [] };
+      let obj = { imgs: [], eventType: et };
       if (et == "1") {
         obj.name = "报修";
         obj.time = r.applyTime;
@@ -271,7 +293,7 @@ export default {
           obj.name =
             "转移" +
             (r.bizNode === bizNode.bm
-              ? "到白马管理员"
+              ? "到基地管理员"
               : r.bizNode === bizNode.hq
               ? "到后勤管理员"
               : "");
@@ -283,7 +305,8 @@ export default {
         obj.createName = item.createName;
         this.transPhotos(item, obj.imgs);
       }
-      this.progress.unshift(obj);
+      this.progress.push(obj);
+      // this.progress.unshift(obj);
     },
     // 评价
     toJudge(id) {
@@ -300,6 +323,7 @@ export default {
     // 触发tab
     triggerTab(str) {
       this.$parent.$data.activeTab = str;
+      this.$parent.changeTab();
     }
   }
 };
@@ -399,13 +423,13 @@ export default {
   }
 }
 .select-open {
-  animation: slide-down 0.5s ease-in;
-  transition: 0.3s ease-in;
+  animation: slide-down 2s ease-in;
+  transition: 2s ease-in;
   transform-origin: 50% 0;
 }
 .select-close {
   transform: scaleY(1);
-  transition: transform 0.8s;
+  transition: transform 1s;
   transform-origin: top center;
 }
 
@@ -564,8 +588,9 @@ export default {
   }
 }
 .span-sp {
-  width: 164px;
-  height: 17px;
+  width: 100%;
+  // height: 17px;
+  white-space: normal;
   font-size: 12px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;

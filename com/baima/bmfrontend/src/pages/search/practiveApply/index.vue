@@ -55,11 +55,22 @@
           {{scope.row.prendtime ? util.formatTime(scope.row.prendtime, "yyyy.MM.dd") : "--"}}
         </template>
       </el-table-column>
+      <el-table-column prop="applytime" label="申请时间" align="center" width="200">
+        <template slot-scope="scope">
+              {{common.formatTime(scope.row.applytime, 'yyyy-MM-dd hh:mm:ss')}}
+        </template>
+      </el-table-column>
       <el-table-column prop="applystatus" label="审批状态" align="center">
         <template slot-scope="scope">
-          <span
+          <!-- <span
             :class="common.statusColor('','',scope.row.applystatus)"
-          >{{common.processFormatter("","",scope.row.applystatus)}}</span>
+          >{{common.processFormatter("","",scope.row.applystatus)}}</span> -->
+          <span :class="common.statusColorPractice('','',scope.row.applystatus)">{{common.processFormatterPractice("","",scope.row.applystatus)}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="approver" label="审批人" align="center">
+        <template slot-scope="scope">
+          {{ charger(scope.row) }}
         </template>
       </el-table-column>
       <el-table-column label="操作" fixed="right" width="100" align="center">
@@ -103,6 +114,19 @@ export default {
       auditList: [],
       pageLoading: false,
     };
+  },
+  computed: {
+    charger() {
+      return function(row) {
+        let obj =
+          this.$store.state.leaderList.find(l => l.id === row.approver) || {};
+        let name
+        if (row && row.events && row.events.length && row.events[0].eventtype != 1 && row.events[0].eventtype != 2) {
+          name = row.events[0].eventername || name;
+        }
+        return name || "--";
+      };
+    }
   },
   methods: {
     // 选择学院

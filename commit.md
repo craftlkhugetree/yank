@@ -84,6 +84,12 @@ http://172.20.1.236/lres/control  reader/123
 http://172.20.1.236/lres/web/index.html     208080337/888
 http://172.20.1.236/lres/mobile/index.html
 
+座位预约：
+http://seat.dev.angke.cn/seatweb/#/section-manage
+http://seat.dev.angke.cn/mseat/#/index
+seat 123
+https://tsgzwyy.xijing.edu.cn/seatweb/index.html    
+用户名 seat   密码  Seat@52333181
 
 # 2022/5/6 读者教育
 【feat】mixins:confirmDialog 4 exam and timing; result, examResult, examing; replace $message by Notify.
@@ -393,6 +399,11 @@ fix：报修进展的图片被条件屏蔽；报修草稿编辑的title被覆盖
 
 2022/08/19
 fix：协议合计金额溢出；实习申请单；灌溉对话框的查询资源接口调用延后。 
+2022/08/25
+fix：座位预约occupyList,showList
+feat：座位预约renameId(), 补墙去空
+  
+
 
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};

@@ -6,7 +6,7 @@
         <el-tab-pane label="转移" name="move"></el-tab-pane>
       </el-tabs>
     </div>
-    <el-divider></el-divider>
+    <el-divider style=""></el-divider>
 
     <el-form
       style=" font-family: PingFangSC-Regular, PingFang SC;"
@@ -260,7 +260,7 @@ export default {
     this.diagBody =
       this.curRole === roleId.bm
         ? "是否转移至后勤管理员？"
-        : "是否转移至白马管理员？";
+        : "是否转移至基地管理员？";
   }
 };
 </script>

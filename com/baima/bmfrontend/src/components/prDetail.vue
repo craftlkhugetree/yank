@@ -8,20 +8,29 @@
         <i class="el-icon-back"></i>
         <span>返回</span>
       </div>
-      <div class="my-button green" style="border-radius: 16px; float: right; width: 150px" @click="downStd">
+      <div
+        class="my-button green"
+        style="border-radius: 16px; float: right; width: 150px"
+        @click="downStd"
+      >
         <i class="el-icon-printer"></i>
         <span>下载学生信息表</span>
       </div>
-      <div class="my-button green" style="border-radius: 16px; float: right; margin: auto 20px; width: 150px" @click="downloadForm">
+      <div
+        class="my-button green"
+        style="border-radius: 16px; float: right; margin: auto 20px; width: 150px"
+        @click="downloadForm"
+      >
         <i class="el-icon-printer"></i>
         <span>下载申请表</span>
       </div>
-
     </div>
 
     <!--进度条-->
-    <process :applyInfoForm="applyInfoForm" :processData="processData"></process>
-
+    <process
+      :applyInfoForm="applyInfoForm"
+      :processData="processData"
+    ></process>
 
     <!--申请信息和审批意见-->
     <div class="audit-content" style="margin-top: 20px" v-loading="loading">
@@ -34,27 +43,31 @@
         <table class="normal-table" style="table-layout: fixed;width: 100%">
           <tr>
             <td>学院名称</td>
-            <td>{{applyInfoForm.orgname}}</td>
+            <td>{{ applyInfoForm.orgname }}</td>
             <td>班级名称</td>
-            <td>{{applyInfoForm.classname}}</td>
+            <td>{{ applyInfoForm.classname }}</td>
             <td>课程名称</td>
-            <td>{{applyInfoForm.coursename}}</td>
+            <td>{{ applyInfoForm.coursename }}</td>
             <td>实习人数</td>
-            <td>{{applyInfoForm.prpersonnum}}</td>
+            <td>{{ applyInfoForm.prpersonnum }}</td>
           </tr>
           <tr>
             <td>实习日期</td>
-            <td>{{common.formatTime(applyInfoForm.prstarttime, "yyyy.MM.dd")}}~{{common.formatTime(applyInfoForm.prendtime, "yyyy.MM.dd")}}</td>
+            <td>
+              {{
+                common.formatTime(applyInfoForm.prstarttime, "yyyy.MM.dd")
+              }}~{{ common.formatTime(applyInfoForm.prendtime, "yyyy.MM.dd") }}
+            </td>
             <td>申请人</td>
-            <td>{{applyInfoForm.applyername}}</td>
+            <td>{{ applyInfoForm.applyername }}</td>
             <td>联系电话</td>
-            <td>{{applyInfoForm.applymobile}}</td>
+            <td>{{ applyInfoForm.applymobile }}</td>
             <td>负责教师</td>
-            <td>{{applyInfoForm.leadername}}</td>
+            <td>{{ applyInfoForm.leadername }}</td>
           </tr>
           <tr>
             <td>联系电话</td>
-            <td>{{applyInfoForm.leadermobile}}</td>
+            <td>{{ applyInfoForm.leadermobile }}</td>
             <td>参与教师</td>
             <td colspan="5">
               <a @click="dialogVisible = true">点击查看全部详情</a>
@@ -62,12 +75,12 @@
           </tr>
           <tr>
             <td>实习内容</td>
-            <td colspan="7">{{applyInfoForm.prcontent}}</td>
+            <td colspan="7">{{ applyInfoForm.prcontent }}</td>
           </tr>
         </table>
       </div>
       <!-- 住宿信息 -->
-      <div v-if="applyInfoForm.issleep=='1'" style="margin-bottom: 20px">
+      <div v-if="applyInfoForm.issleep == '1'" style="margin-bottom: 20px">
         <div class="item-title">
           <img src="../../static/images/bm-stay-info.png" alt />
           <span>住宿信息</span>
@@ -75,14 +88,24 @@
         <table class="normal-table" style="table-layout: fixed;width: 100%">
           <tr>
             <td>住宿日期</td>
-            <td colspan="3">{{common.formatTime(applyInfoForm.sleepstarttime, "yyyy.MM.dd")}}~{{common.formatTime(applyInfoForm.sleependtime, "yyyy.MM.dd")}}</td>
+            <td colspan="3">
+              {{
+                common.formatTime(applyInfoForm.sleepstarttime, "yyyy.MM.dd")
+              }}~{{
+                common.formatTime(applyInfoForm.sleependtime, "yyyy.MM.dd")
+              }}
+            </td>
             <td>住宿人数</td>
-            <td colspan="3">男：{{applyInfoForm.sleepboynum}}，女：{{applyInfoForm.sleepgirlnum}}</td>
+            <td colspan="3">
+              男：{{ applyInfoForm.sleepboynum }}，女：{{
+                applyInfoForm.sleepgirlnum
+              }}
+            </td>
           </tr>
         </table>
       </div>
       <!-- 餐食信息 -->
-      <div v-if="applyInfoForm.iseat=='1'" style="margin-bottom: 20px">
+      <div v-if="applyInfoForm.iseat == '1'" style="margin-bottom: 20px">
         <div class="item-title">
           <img src="../../static/images/bm-eat-info.png" alt />
           <span>餐食信息</span>
@@ -90,11 +113,23 @@
         <table class="normal-table" style="table-layout: fixed;width: 100%">
           <tr>
             <td>用餐开始时间</td>
-            <td>{{common.formatTime(applyInfoForm.eatstarttime, "yyyy.MM.dd")}}（{{applyInfoForm.eatstarttype}}）</td>
+            <td>
+              {{
+                common.formatTime(applyInfoForm.eatstarttime, "yyyy.MM.dd")
+              }}（{{ applyInfoForm.eatstarttype }}）
+            </td>
             <td>用餐结束时间</td>
-            <td>{{common.formatTime(applyInfoForm.eatendtime, "yyyy.MM.dd")}}（{{applyInfoForm.eatendtype}}）</td>
+            <td>
+              {{
+                common.formatTime(applyInfoForm.eatendtime, "yyyy.MM.dd")
+              }}（{{ applyInfoForm.eatendtype }}）
+            </td>
             <td>用餐人数</td>
-            <td colspan="3">总人数：{{applyInfoForm.eatpersonnum}}，民族生人数：{{applyInfoForm.eatmpersonnum}}</td>
+            <td colspan="3">
+              总人数：{{ applyInfoForm.eatpersonnum }}，民族生人数：{{
+                applyInfoForm.eatmpersonnum
+              }}
+            </td>
           </tr>
         </table>
       </div>
@@ -107,23 +142,25 @@
         <table class="normal-table" style="table-layout: fixed;width: 100%">
           <tr>
             <td>实习条件</td>
-            <td colspan="7">{{applyInfoForm.prconditions}}</td>
+            <td colspan="7">{{ applyInfoForm.prconditions }}</td>
           </tr>
           <tr>
             <td>学生信息表</td>
             <td colspan="7">
               <div class="table-file">
                 <img src="../../static/images/appendix.png" />
-                <span style="max-width: calc(100% - 140px);" class="ellipsis">{{stdFile}}</span>
+                <span style="max-width: calc(100% - 140px);" class="ellipsis">{{
+                  stdFile
+                }}</span>
                 <!-- <span style="max-width: calc(100% - 140px);" class="ellipsis">{{stuinfofile.TITLE}}</span> -->
                 <div class="operate">
                   <span @click="stdVisible = true">
-                  <!-- <span @click="common.previewFile(stuinfofile.ID)"> -->
+                    <!-- <span @click="common.previewFile(stuinfofile.ID)"> -->
                     <img src="../../static/images/bm-file-view-green.png" alt />
                     预览
                   </span>
                   <span @click="downTemp">
-                  <!-- <span @click="downloadFile(stuinfofile.ID)"> -->
+                    <!-- <span @click="downloadFile(stuinfofile.ID)"> -->
                     <img src="../../static/images/bm-file-down-green.png" alt />
                     下载
                   </span>
@@ -142,9 +179,11 @@
         </div>
 
         <div
-          v-if="auditList && auditList.length ==0 && operType === 'view'"
+          v-if="auditList && auditList.length == 0 && operType === 'view'"
           style="margin-bottom: 20px;"
-        >暂无审批内容</div>
+        >
+          暂无审批内容
+        </div>
         <div
           v-else
           class="inner-item"
@@ -154,22 +193,26 @@
         >
           <div class="part">
             <span v-show="item.eventtype == '3'">单位领导审批意见:</span>
-            <span v-show="item.eventtype == '4'">白马办审批意见:</span>
+            <span v-show="item.eventtype == '4'">基地审批意见:</span>
             <span v-show="item.eventtype == '5'">后勤审批意见:</span>
           </div>
           <div class="advice-content">
             <div class="text">
               <span style="margin-right: 25px">
                 <label>审批人:</label>
-                <span>{{item.eventername}}</span>
+                <span>{{ item.eventername }}</span>
               </span>
-              <span>{{item.eventtime}}</span>
+              <span>{{ item.eventtime }}</span>
             </div>
-            <div>{{item.eventnote}}</div>
+            <div>{{ item.eventnote }}</div>
           </div>
         </div>
         <!-- 审批操作 -->
-        <opinions ref="opinions" v-if="operType === 'audit'" :auditDev="auditDev"></opinions>
+        <opinions
+          ref="opinions"
+          v-if="operType === 'audit'"
+          :auditDev="auditDev"
+        ></opinions>
       </div>
 
       <!--操作按钮-->
@@ -178,7 +221,11 @@
           <span>审批不通过</span>
         </div>
 
-        <div style="margin-left: 20px" class="my-button green" @click="operate('1')">
+        <div
+          style="margin-left: 20px"
+          class="my-button green"
+          @click="operate('1')"
+        >
           <span>审批通过</span>
         </div>
       </div>
@@ -193,14 +240,19 @@
       :close-on-click-modal="false"
     >
       <div class="teacher-list">
-        <el-row :gutter="20" v-for="item in teacherList" :key="item.id" class="teacher-item">
+        <el-row
+          :gutter="20"
+          v-for="item in teacherList"
+          :key="item.id"
+          class="teacher-item"
+        >
           <el-col :span="10" style="border-right: 3px solid #f3f5f9">
             <img src="../../static/images/bm-teacher-avater.png" alt />
-            {{item.teachername}}
+            {{ item.teachername }}
           </el-col>
           <el-col :span="14">
             <img src="../../static/images/bm-teacher-phone.png" alt />
-            {{item.teachermobile}}
+            {{ item.teachermobile }}
           </el-col>
         </el-row>
       </div>
@@ -217,48 +269,56 @@
       width="80%"
       :close-on-click-modal="false"
     >
-     <el-table
-      :data="stdList"
-      stripe
-      style="width: 100%"
-      height="250"
-      ref="table"
-    >
-      <el-table-column type="index"> </el-table-column>
-      <el-table-column
-        v-for="(item, index) in tableT"
-        :prop="item.name"
-        :label="item.label"
-        :key="item.name + index"
-        align="center"
-        :width="index == 3 ? 200 : ''"
+      <el-table
+        :data="stdList"
+        stripe
+        style="width: 100%"
+        height="250"
+        ref="table"
+        :header-cell-style="{ background: '#F3F5F9' }"
       >
-      </el-table-column>
-    </el-table> 
+        <el-table-column type="index" label="序号"></el-table-column>
+        <el-table-column
+          v-for="(item, index) in tableT"
+          :prop="item.name"
+          :label="item.label"
+          :key="item.name + index"
+          align="center"
+          :width="index == 3 ? 200 : ''"
+        >
+        </el-table-column>
+      </el-table>
       <div slot="footer" class="dialog-footer">
         <div class="my-button" @click="stdVisible = false">关闭</div>
       </div>
     </el-dialog>
     <div id="tmpTable" v-show="isDomShow">
-        <h2>本科生实习申请</h2>
-          <table border="1" cellspacing="0">
-            <thead>
-           <tr>
-             <th v-for="(h, i) in dataTitle" :key="i">{{h}}</th>
-           </tr>
-            </thead>
-            <tbody>
-           <tr v-for="(tr, i) in studentList" :key="tr.idcard + i">
-             <td>{{tr.classname}}</td>
-             <td>{{tr.username}}</td>
-             <td>{{tr.userid}}</td>
-             <td>{{tr.idcard}}</td>
-             <td>{{tr.sex}}</td>
-             <td>{{tr.national}}</td>
-           </tr>
-            </tbody>
-        </table>
+      <h2>本科生实习申请</h2>
+      <table border="1" cellspacing="0">
+        <thead>
+          <tr>
+            <th v-for="(h, i) in dataTitle" :key="i">{{ h }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(tr, i) in studentList" :key="tr.idcard + i" class="trClassFlag">
+            <td>{{ tr.classname }}</td>
+            <td>{{ tr.username }}</td>
+            <td>{{ tr.userid }}</td>
+            <td>{{ tr.idcard }}</td>
+            <td>{{ tr.sex }}</td>
+            <td>{{ tr.national }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
+    <student-apply
+      v-show="stdApply"
+      :form="applyInfoForm"
+      style="margin-left: -2000px"
+    >
+    </student-apply>
   </div>
 </template>
 
@@ -269,7 +329,15 @@ import breadCrumb from "../components/breadcrumb";
 import * as XLSX from "xlsx";
 export default {
   components: {
-    Opinions,process,breadCrumb
+    Opinions,
+    process,
+    breadCrumb,
+    studentApply: () => import("@/components/stdApplyInfo")
+  },
+  computed: {
+    isRearService() {
+      return JSON.parse(sessionStorage.getItem("url4bizNode")).hq === 1;
+    }
   },
   props: {
     id: String,
@@ -278,21 +346,21 @@ export default {
       default: "view"
     },
     auditDev: String,
-    breadList:Array,
+    breadList: Array,
 
-    indexCurrentPage:Number | String,
-    indexActiveName:String,
+    indexCurrentPage: Number | String,
+    indexActiveName: String
   },
   data() {
     return {
-      row: {},
+      stdApply: false,
       isDomShow: false,
       studentList: [],
       dataTitle: ["班级", "姓名", "学号", "身份证号", "性别", "民族"],
       tableT: [],
       stdList: [],
       stdVisible: false,
-      stdFile: '学生信息表',
+      stdFile: "学生信息表",
       loading: false,
       downUrl: window.g.ApiUrl3 + "rest/FileOut/down?ID=", // 下载地址
       applyInfoForm: {}, // 申请信息表格
@@ -300,64 +368,106 @@ export default {
       stuinfofile: {}, // 学生信息表
       auditList: [], // 审核列表
       dialogVisible: false,
-      processData:[
-        {hideLine:true,num:1,date:"",active:true,text:"申请时间",status:"success"},
-        {hideLine:false,num:2,date:"",active:false,text:"单位领导审批",status:"fail"},
-        {hideLine:false,num:3,date:"",active:false,text:"白马办审批",status: ""},
-        {hideLine:false,num:4,date:"",active:false,text:"后勤审批",status: "", rearService: 1}
-      ],
-      isRearService: 0,
+      processData: [
+        {
+          hideLine: true,
+          num: 1,
+          date: "",
+          active: true,
+          text: "申请时间",
+          status: "success"
+        },
+        {
+          hideLine: false,
+          num: 2,
+          date: "",
+          active: false,
+          text: "单位领导审批",
+          status: "fail"
+        },
+        {
+          hideLine: false,
+          num: 3,
+          date: "",
+          active: false,
+          text: "基地审批",
+          status: ""
+        }
+      ]
     };
   },
 
   methods: {
     // 申请单下载
-    downloadForm(){
+    downloadForm() {
       // type 1下载2预览
-      this.util.getUrlByCode(this.global.code,"/prapply/applyForm").then(res=>{
-        window.open(res+"?id="+ this.row.id+"&type=" + 1)
-      })
+      // this.util
+      //   .getUrlByCode(this.global.code, "/prapply/applyForm")
+      //   .then(res => {
+      //     window.open(res + "?id=" + this.id + "&type=" + 1);
+      //   });
+      this.stdApply = true;
+
+      let that = this;
+      // this.$nextTick(() =>
+      //   that.common.transToPdf(this.applyInfoForm.classname + "申请表", "stdApply", that)
+      // );
+      this.common.outPutPdfFn(that, 'stdApply', 'normal-table', this.applyInfoForm.classname + "申请表")
     },
     downStd() {
-      let stdList = this.row.students || [];
+      let stdList = this.stdList || [];
       stdList.forEach(s => {
-        s.sex = s.sex == '1' ? '男' : '女';
-      })
+        s.sex = s.sex == "1" ? "男" : "女";
+      });
       this.studentList = stdList;
+      // this.studentList = stdList.concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList)
       this.isDomShow = true;
       let that = this;
-      this.$nextTick(() => that.common.transToPdf('学生信息表', 'tmpTable', that))
+      // this.$nextTick(() =>
+      //   that.common.transToPdf("学生信息表", "tmpTable", that)
+      // );
+      this.common.outPutPdfFn(that, 'tmpTable', 'trClassFlag', "学生信息表", true)
     },
     // 下载学生信息表
     downTemp() {
       const data = [this.dataTitle];
       this.stdList.forEach(s => {
-        let arr = [s.classname, s.username, s.userid, s.idcard, s.sex, s.national];
+        let arr = [
+          s.classname,
+          s.username,
+          s.userid,
+          s.idcard,
+          s.sex,
+          s.national
+        ];
         data.push(arr);
-      })
+      });
       const loading = this.$loading({
-          lock: true,
-          text: "提交审批中",
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
+        lock: true,
+        text: "提交审批中",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)"
+      });
       try {
         let ws = XLSX.utils.aoa_to_sheet(data);
         let wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws);
         XLSX.writeFile(wb, "学生信息表.xlsx");
-        loading.close()
+        loading.close();
       } catch (e) {
-        loading.close()
+        loading.close();
       }
     },
-    downloadFile(id){
-      window.open(this.downUrl+id,"_blank")
+    downloadFile(id) {
+      window.open(this.downUrl + id, "_blank");
     },
     back() {
       window.history.go(-1);
-      sessionStorage.setItem("activeName",this.indexActiveName);
-      sessionStorage.setItem("currentPage",JSON.stringify(this.indexCurrentPage));
+      sessionStorage.setItem("activeName", this.indexActiveName);
+      sessionStorage.setItem(
+        "currentPage",
+        JSON.stringify(this.indexCurrentPage)
+      );
     },
 
     //添加常用字段
@@ -380,7 +490,7 @@ export default {
     },
 
     //审核操作
-   /* operate(type) {
+    /* operate(type) {
       let eventnote = this.$refs.opinions.eventnote;
       if (!eventnote) {
         this.$message({
@@ -431,12 +541,12 @@ export default {
 
     //审核操作
     operate(type) {
-      if(!this.$refs.opinions.eventnote){
+      if (!this.$refs.opinions.eventnote) {
         this.$message({
-          type: 'warning',
-          message: '请输入审批意见!'
+          type: "warning",
+          message: "请输入审批意见!"
         });
-      }else {
+      } else {
         let params = {
           eventnote: this.$refs.opinions.eventnote,
           eventresult: type,
@@ -445,11 +555,11 @@ export default {
         };
 
         const loading = this.$loading({
-                  lock: true,
-                  text: "提交审批中",
-                  spinner: 'el-icon-loading',
-                  background: 'rgba(0, 0, 0, 0.7)'
-                });
+          lock: true,
+          text: "提交审批中",
+          spinner: "el-icon-loading",
+          background: "rgba(0, 0, 0, 0.7)"
+        });
         this.util
           .postAjax({
             code: this.global.code,
@@ -460,24 +570,22 @@ export default {
           .then(res => {
             // console.log(res);
             loading.close();
-            if(res.success){
+            if (res.success) {
               this.addOpenUse();
               this.$message({
-                type: type=="0" ? "error" : "success",
+                type: type == "0" ? "error" : "success",
                 message: type == "0" ? "审批不通过" : "审批通过"
               });
               this.back();
-            }else{
+            } else {
               // console.log(res);
               this.$message({
-                type:"warning",
-                message:res.data.message
+                type: "warning",
+                message: res.data.message
               });
             }
           });
       }
-
-
     },
 
     //获取详情接口
@@ -495,11 +603,25 @@ export default {
           this.loading = false;
           if (res.success == true) {
             this.applyInfoForm = res.item.apply || {};
+            this.$set(this.applyInfoForm, 'events', JSON.parse(JSON.stringify(res.item.events)))
+            this.$set(this.applyInfoForm, 'students', res.item.students)
+            this.$set(this.applyInfoForm, 'teachers', res.item.teachers)
+            if (this.applyInfoForm.iseat == 1) {
+              this.processData.push({
+                hideLine: false,
+                num: 4,
+                date: "",
+                active: false,
+                text: "后勤审批",
+                status: "",
+                rearService: 1
+              });
+            }
             this.teacherList = res.item.teachers || [];
             this.stdList = res.item.students || [];
             this.stdList.forEach(s => {
-              s.sex = s.sex == '1' ? '男' : '女';
-            })
+              s.sex = s.sex == "1" ? "男" : "女";
+            });
             // if (this.applyInfoForm.iseat == '1') {
             //   this.processData.push({hideLine:false,num:4,date:"",active:false,text:"后勤审批",status: ""})
             // }
@@ -550,7 +672,7 @@ export default {
 
             //进程时间
             res.item.events.forEach(v => {
-              v.eventtime = this.util.formatTime(v.eventtime,"yyyy.MM.dd");
+              v.eventtime = this.util.formatTime(v.eventtime, "yyyy.MM.dd");
               switch (v.eventtype) {
                 case "1":
                   this.processData[0].date = v.eventtime;
@@ -559,23 +681,26 @@ export default {
                   this.processData[1].date = v.eventtime;
                   this.processData[1].text = "单位领导审批";
                   this.processData[1].active = true;
-                  this.processData[1].status = v.eventresult == 1 ? "success" :"fail";
+                  this.processData[1].status =
+                    v.eventresult == 1 ? "success" : "fail";
                   break;
                 case "4":
                   this.processData[2].date = v.eventtime;
-                  this.processData[2].text = "白马办审批";
+                  this.processData[2].text = "基地审批";
                   this.processData[2].active = true;
-                  this.processData[2].status = v.eventresult == 1 ? "success" :"fail";
+                  this.processData[2].status =
+                    v.eventresult == 1 ? "success" : "fail";
                   break;
                 case "5":
                   this.processData[3].date = v.eventtime;
                   this.processData[3].text = "后勤审批";
                   this.processData[3].active = true;
                   this.processData[3].rearService = undefined;
-                  this.processData[3].status = v.eventresult == 1 ? "success" :"fail";
+                  this.processData[3].status =
+                    v.eventresult == 1 ? "success" : "fail";
                   break;
               }
-            })
+            });
           } else {
             this.$message({
               showClose: true,
@@ -597,10 +722,8 @@ export default {
 
   created() {
     this.getDetail();
-    this.isRearService = this.$route.query.isRearService;
-    this.row = JSON.parse(this.$route.query.data);
     let title = this.dataTitle;
-    let name = ["classname", "username", "userid", "idcard", 'sex', 'national'];
+    let name = ["classname", "username", "userid", "idcard", "sex", "national"];
     name.forEach((n, id) => {
       let obj = { name: n, label: title[id] };
       this.tableT.push(obj);
@@ -618,10 +741,10 @@ export default {
 .normal-table td {
   vertical-align: middle;
 }
-.table-file{
+.table-file {
   vertical-align: middle;
- 
-  img{
+
+  img {
     width: 14px;
     height: 14px;
     vertical-align: middle;
@@ -629,20 +752,21 @@ export default {
   span {
     vertical-align: middle;
   }
-.operate {
-  float: right;
+  .operate {
+    float: right;
 
-  span {
-    cursor: pointer;
-    color: #00b09b;
-    font-size: 12px;
-    margin-right: 10px;
+    span {
+      cursor: pointer;
+      color: #00b09b;
+      font-size: 12px;
+      margin-right: 10px;
+    }
   }
 }
-}
 #tmpTable {
+  padding: 100px 10px;
   margin-top: 3000px;
-  width: 100%;
+  width: 900px;
   h2 {
     margin: 20px;
     text-align: center;
@@ -651,7 +775,8 @@ export default {
     width: 70%;
     margin: 0 auto;
   }
-  th, td {
+  th,
+  td {
     text-align: center;
     line-height: 30px;
     border: 1px solid black;

@@ -79,7 +79,8 @@ export default {
         url: this.url,
         method: "POST",
         headers: {
-          IDSTGC: this.getCookie("IDSTGC") || "f0f70addb0f34a9995d3e1138e51c952"
+          // IDSTGC: this.getCookie("IDSTGC")
+          IDSTGC: this.getCookie("IDSTGC") || "ec2ac8075ed34081a8668f0fc800cc76"
         },
         data: formData
       };

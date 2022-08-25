@@ -1,6 +1,7 @@
 <template>
   <div class="baoxiu">
     <h2>我要报修</h2>
+    <div @click.stop="reset4Form" class="my-button green reset">重置表单</div>
     <el-divider></el-divider>
     <!-- 报修信息 -->
     <el-form
@@ -174,6 +175,14 @@ export default {
     }
   },
   methods: {
+    // 重置表单
+    reset4Form() {
+      this.editForm.campus = "";
+      this.editForm.area = "";
+      this.editForm.content = "";
+      this.editForm.mobile = "";
+      this.reset()
+    },
     // 点击上传
     uploadFile() {
       this.$refs.upload.$refs.uploaddom.click();
@@ -281,6 +290,7 @@ export default {
         tmp[name] = this.editForm[name];
       }
       this.editForm = tmp;
+      this.files = [];
     },
     reset() {
       this.files = [];
@@ -314,13 +324,21 @@ export default {
 <style lang="scss" scoped>
 .baoxiu {
   h2 {
-    display: block;
+    display: inline-block;
     height: 25px;
     font-size: 18px;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
     color: #172535;
     line-height: 25px;
+  }
+  .reset {
+    height: 25px;
+    line-height: 25px;
+    width: 80px;
+    display: inline-block;
+    margin-left: 20px;
+    cursor: pointer;
   }
 }
 /deep/ .el-divider.el-divider--horizontal {

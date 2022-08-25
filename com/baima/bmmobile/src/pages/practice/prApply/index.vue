@@ -50,7 +50,7 @@
         prop="applystatus"
         label="审批进度"
         align="center"
-        :formatter="common.processFormatter"
+        :formatter="common.processFormatterPractice"
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column label="操作" fixed="right" width="110" align="center">
@@ -71,7 +71,7 @@
             @click="reCall(scope.row)"
           >撤回</span>
           <span
-            v-if="scope.row.applystatus === '3'"
+            v-if="scope.row.applystatus === '6'"
             style="color:#814ef5;padding:0 5px;font-weight:bold"
             @click="common.downloadApplyForm(scope.row.id)"
           >申请表</span>

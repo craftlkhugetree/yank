@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { roleId } from "@/assets/js/options";
+import { roleId } from '@/assets/js/options';
 export default {
   data() {
     return {
@@ -59,12 +59,19 @@ export default {
       if (this.curRole === '16000-5') {
         // 研究生
         this.tabmenu = [
-          { icon: 'icon-bmg-file', text: '农服信息', path: '/service-info-view' },
+          // { icon: 'icon-bmg-file', text: '农服信息', path: '/service-info-view' },
           { icon: 'icon-bmg-water', text: '灌溉用水', path: '/irrgate-apply' },
           { icon: 'zxbx', text: '在线报修', path: '/report' },
         ];
+      } else if (this.curRole === '16000-7') {
+        // 本科生
+        this.tabmenu = [
+          // { icon: 'icon-bmg-file', text: '农服信息', path: '/service-info-view' },
+          // { icon: 'icon-bmg-water', text: '灌溉用水', path: '/irrgate-apply' },
+          { icon: 'zxbx', text: '在线报修', path: '/report' },
+        ];
       } else if (this.curRole === roleId.bm) {
-        // 白马办
+        // 基地
         this.tabmenu[0].path = '/service-info';
         this.tabmenu[1].path = '/edures-bm';
         this.tabmenu[2].path = '/irrgate-manage';
@@ -72,11 +79,15 @@ export default {
         this.tabmenu[4].path = '/repair';
       } else if (this.curRole === '16000-2') {
         // 单位领导
-        this.tabmenu[0].path = '/service-info-view';
-        this.tabmenu[1].path = '/edures-leader';
-        this.tabmenu[2].path = '/irrgate-apply';
-        this.tabmenu[3].path = '/practice-audit-leader';
-        this.tabmenu.pop()
+        // this.tabmenu[0].path = '/service-info-view';
+        // this.tabmenu[1].path = '/edures-leader';
+        // this.tabmenu[2].path = '/irrgate-apply';
+        // this.tabmenu[3].path = '/practice-audit-leader';
+        // this.tabmenu.pop()
+        this.tabmenu = [
+          { icon: 'icon-bmg-practice', text: '本科生实习', path: '/practice-audit-leader' },
+          { icon: 'icon-bmg-house', text: '科教资源', path: '/edures-leader' },
+        ];
       } else if (this.curRole === '16000-1') {
         // 教职工
         this.tabmenu[0].path = '/service-info-view';

@@ -3,7 +3,7 @@
     <van-nav-bar ref="navBar" title="本科生实习" :border="false"       right-text="功能首页"
       @click-right="$router.push('/fun-module')"/>
     <!-- Tab页 -->
-    <van-tabs
+    <!-- <van-tabs
       ref="tabs"
       v-model="activeTab"
       :border="false"
@@ -13,23 +13,23 @@
     >
       <van-tab title="实习申请" name="apply"></van-tab>
       <van-tab title="实习审批" name="audit"></van-tab>
-    </van-tabs>
-    <apply v-if="activeTab === 'apply'"></apply>
-    <audit v-else operDev="leader"></audit>
+    </van-tabs> -->
+    <!-- <apply v-if="activeTab === 'apply'"></apply> -->
+    <audit operDev="leader"></audit>
   </div>
 </template>
 
 <script>
-import Apply from "./prApply/index"
+// import Apply from "./prApply/index"
 import Audit from "./prAudit/index"
 export default {
   components: {
-    Apply,
+    // Apply,
     Audit
   },
   data() {
     return {
-      activeTab: sessionStorage.getItem("curPrTab") || "apply"
+      // activeTab: sessionStorage.getItem("curPrTab") || "apply"
     };
   },
   methods: {

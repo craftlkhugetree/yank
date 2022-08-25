@@ -95,7 +95,7 @@
               style="margin-left: 10px"
             >
               <img :src="require(`st@tic/images/batch_approve.png`)" />
-              <span>批量审批</span>
+              <span>批量办理</span>
             </div>
           </div>
           <!-- 状态图标 -->
@@ -424,11 +424,14 @@ export default {
             });
             this.clearForm();
             this.getList(1);
+            this.isChecked = false;
+            this.isIndeterminate = false;
           } else {
             this.$message({
               showClose: true,
               type: "warning",
-              message: res.message
+              message:
+                (res.data && res.data.message) || res.message || "内部错误"
             });
           }
         })
@@ -562,7 +565,8 @@ export default {
     // 获取状态数量
     getCount() {
       let params = { handledNode: this.selfRole() };
-      params.status = this.status == "-1" ? "2,3,4" : this.status;
+      params.status = "2,3,4";
+      // params.status = this.status == "-1" ? "2,3,4" : this.status;
       if (this.dateTime && this.dateTime.length) {
         params.starttime = this.transTime(this.dateTime[0]);
         params.endtime = this.transTime(this.dateTime[1]);
@@ -606,7 +610,7 @@ export default {
     // 点击状态图标
     clickImg(item) {
       this.status = item.val;
-      this.getList(1);
+      this.apis();
     },
     // 列表和状态角标
     apis(type) {
@@ -651,7 +655,7 @@ export default {
     this.diagBody =
       this.curRole === roleId.bm
         ? "是否转移至后勤管理员？"
-        : "是否转移至白马管理员？";
+        : "是否转移至基地管理员？";
   }
 };
 </script>
@@ -797,19 +801,19 @@ export default {
 }
 
 /deep/ .el-checkbox__input.is-checked .el-checkbox__inner {
-  background-color: #00b09b;
-  border-color: #00b09b;
+  background-color: #00b09b !important;
+  border-color: #00b09b !important;
 }
 
 /deep/ .el-checkbox__input.is-indeterminate .el-checkbox__inner {
-  background-color: #00b09b;
-  border-color: #00b09b;
+  background-color: #00b09b !important;
+  border-color: #00b09b !important;
 }
 /deep/ .el-checkbox.is-checked .el-checkbox__label {
-  color: #383a48;
+  color: #383a48 !important;
 }
 /deep/ .el-checkbox__input.is-focus .el-checkbox__inner {
-  border-color: #00b09b;
+  border-color: #00b09b !important;
 }
 
 .elRadio {

@@ -43,7 +43,7 @@ import options from "./assets/js/options";
 Vue.prototype.options = options;
 
 /* eslint-disable no-new */
-new Vue({
+export default new Vue({
   el: '#app',
   router,
   store,

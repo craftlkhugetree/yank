@@ -61,13 +61,13 @@
       <div class="my-pagination" v-if="totalPage > limit">
         <span>显示{{limit}}条，共{{totalPage}}条</span>
         <el-pagination class="my-el-pagination" background layout="prev, pager, next" :total="totalPage" :page-size="limit"
-                       :current-page="currentPage" small @current-change="getCurrentChange"></el-pagination>
+                       :current-page="parseInt(currentPage)" small @current-change="getCurrentChange"></el-pagination>
       </div>
 
       <!--弹框-->
       <el-dialog class="res-apply-dialog" :title="(dialogType == 'add' )? '资源申请新增' : '资源申请编辑'" v-if="dialogFormVisible" :visible.sync="dialogFormVisible"
                  width="700px" :close-on-click-modal="false">
-        <apply-form ref="child" :form="form" :formLabelWidth="formLabelWidth"></apply-form>
+        <apply-form v-if="dialogFormVisible" ref="child" :form="form" :formLabelWidth="formLabelWidth"></apply-form>
         <div slot="footer" class="dialog-footer">
           <div class="my-button" @click="dialogFormVisible = false">取 消</div>
           <div class="my-button plain-green"  @click="submit(0)">保 存</div>
@@ -276,7 +276,7 @@
                   worker:apply.worker,
                   workermobile:apply.workermobile,
                   irrestypeid:apply.irrestypeid,
-                  irdate: type == "edit" ?apply.irdate : new Date(), 
+                  irdate: type == "edit" ?apply.irdate : this.util.formatMYD(new Date()), 
                   note:apply.note,
                   resids:JSON.parse(JSON.stringify(arr)),
                   daytype: apply.daytype
@@ -392,8 +392,9 @@
                })
              });*/
             form2.resList=arr;
-            let time = this.dialogType === 'edit' && form.irdate ? form.irdate : new Date(form.irdate || new Date()).getTime();
-            form2.irdate=form.irdate ? this.util.formatTime(time, "yyyyMMdd000000") : "";
+            let time = form.irdate || this.util.formatMYD(new Date())
+            // let time = this.dialogType === 'edit' && form.irdate ? form.irdate : new Date(form.irdate || new Date()).getTime();
+            form2.irdate= this.util.formatTime(time, "yyyyMMdd000000");
 
 
             const loading = this.$loading({

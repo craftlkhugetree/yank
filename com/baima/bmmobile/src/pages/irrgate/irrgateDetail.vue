@@ -38,7 +38,7 @@
         </van-cell>
         <van-cell title="灌溉类型" :value="detail.typename" />
         <van-cell title="资源编号" :value="detail.rescodes" />
-        <van-cell title="灌溉日期" :value="detail.irdate" />
+        <van-cell title="灌溉日期" :value="detail.irdate + ' ' + timeRange" />
         <van-cell title="备注信息" :value="detail.note || '--'" />
       </div>
     </div>
@@ -161,7 +161,17 @@ export default {
   components: {
     BasicProcess,
   },
-  computed: {},
+  computed: {
+    timeRange() {
+      const timeOption = [
+          { text: "全天", value: 1 },
+          { text: "上午", value: 2 },
+          { text: "下午", value: 3 },
+      ];
+      let obj = timeOption.find(t => t.value == this.detail.daytype) || {}
+      return obj.text || ''
+    }
+  },
   data() {
     return {
       activeName: -1,

@@ -1,6 +1,6 @@
-import util from "./util";
-import global from "./global";
-import store from "../../store";
+import util from './util';
+import global from './global';
+import store from '../../store';
 import html2Canvas from 'html2canvas';
 import JsPDF from 'jspdf';
 
@@ -269,7 +269,7 @@ export default {
         return '单位领导审批中';
         break;
       case '2':
-        return '白马办审批中';
+        return '基地审批中';
         break;
       case '3':
         return '已完成';
@@ -287,8 +287,8 @@ export default {
   },
   //表格内入驻状态格式转化
   useStateFormatter(row, column, cellValue) {
-    switch (cellValue) {
-      case '1':
+    switch (cellValue + '') {
+      case '0':
         return '空闲';
         break;
       case '2':
@@ -319,31 +319,58 @@ export default {
   //缴费状态格式转化
   payFormatter(row, column, cellValue) {
     switch (cellValue) {
-      case '1':
+      case '0':
         return '未支付';
         break;
-      case '2':
+      case '1':
         return '已支付';
         break;
     }
   },
   // 计费周期
-  chargecycleFormatter(value) {
-    let newValue = '';
-    switch (value) {
+  chargecycleFormatter(value, object) {
+    if (!object) {
+      let newValue = '';
+      switch (value) {
+        case '1':
+          newValue = '天';
+          break;
+        case '2':
+          newValue = '月';
+          break;
+        case '3':
+          newValue = '年';
+          break;
+        default:
+          newValue = '--';
+      }
+      return newValue;
+    } else {
+      switch (value) {
+        case '3':
+          object.chargecycle = '年';
+          break;
+        case '1':
+          object.chargecycle = '天';
+          break;
+        case '2':
+          object.chargecycle = '月';
+          break;
+      }
+      return;
+    }
+  },
+  chargetypeFormatter2(type, object, ct2 = 'chargetype', ct1) {
+    switch (type) {
       case '1':
-        newValue = '天';
+        object[ct2] = 'm²';
+        ct1 ? (object[ct1] = '面积') : null;
         break;
       case '2':
-        newValue = '月';
+        object[ct2] = '间';
+        ct1 ? (object[ct1] = '房间') : null;
         break;
-      case '3':
-        newValue = '年';
-        break;
-      default:
-        newValue = '--';
     }
-    return newValue;
   },
   // 计费方式  type : name名称 / unit单位
   chargetypeFormatter(value, type) {
@@ -497,10 +524,10 @@ export default {
    * @param {*} value
    */
   moneyFormatter(row, column, value) {
-    if (value) {
+    if (value !== null && value !== undefined && value !== '') {
       return BigDecimal.round(value, 2);
     } else {
-      return '0';
+      return '--';
     }
   },
 
@@ -584,6 +611,175 @@ export default {
       }
       pdf.save(title + '.pdf');
       _this.isDomShow = false;
+      _this[domID] = false;
+      _this.$toast.clear();
     });
+  },
+
+  outPutPdfFn(that, domID, itemClass, title, useClass) {
+    let vm = that;
+    const A4_WIDTH = 592.28;
+    const A4_HEIGHT = 841.89;
+    // $myLoading 自定义等待动画组件，实现导出事件的异步等待交互
+    vm.$nextTick(() => {
+      // dom的id。
+      let target = document.getElementById(domID);
+      let tTop = target.getBoundingClientRect().top;
+      let pageHeight = (target.scrollWidth / A4_WIDTH) * A4_HEIGHT;
+      // let pageHeight = A4_HEIGHT;
+      // 获取分割dom，此处为class类名为item的dom
+      // let lableListID = target.getElementsByClassName(itemClass);
+            let arr = useClass
+              ? Array.from(target.getElementsByClassName(itemClass))
+              : Array.from(target.children);
+      let lableListID = arr.filter(t => t && t.getBoundingClientRect);
+      console.log(target, arr, lableListID);
+      // 进行分割操作，当dom内容已超出a4的高度，则将该dom前插入一个空dom，把他挤下去，分割
+      for (let i = 0; i < lableListID.length; i++) {
+        let lTop = lableListID[i].getBoundingClientRect().top;
+        // let diff = lableListID[i].offsetTop + lableListID[i].offsetHeight;
+        let diff = lTop - tTop;
+        console.log(lTop, tTop, diff, pageHeight);
+        let multiple = Math.ceil(
+          // (lableListID[i].offsetTop + lableListID[i].offsetHeight) / pageHeight
+          diff / pageHeight
+        );
+        if (this.isSplit(lableListID, i, pageHeight, tTop)) {
+          let divParent = lableListID[i].parentNode; // 获取该div的父节点
+          let newNode = document.createElement('div');
+          newNode.className = 'emptyDiv';
+          newNode.style.background = '#fff';
+          // let _H = multiple * pageHeight - diff;
+          // let _H = pageHeight - diff;
+          let _H = lableListID[i].clientHeight;
+          newNode.style.height = _H + 30 + 'px';
+          newNode.style.width = '100%';
+          divParent.insertBefore(newNode, lableListID[i]);
+          console.log(_H, lableListID[i]);
+          let next = lableListID[i].nextSibling; // 获取div的下一个同一层级节点
+          // 判断兄弟节点是否存在
+          if (next) {
+            // 存在则将新节点插入到div的下一个兄弟节点之前，即div之后
+            // divParent.insertBefore(newNode, next);
+          } else {
+            // 不存在则直接添加到最后,appendChild默认添加到divParent的最后
+            // divParent.appendChild(newNode);
+          }
+          tTop = newNode.getBoundingClientRect().top;
+        }
+      }
+      this.transToPdf(title, domID, that);
+    });
+  },
+  // 判断是否需要添加空白div
+  isSplit(nodes, index, pageHeight, tTop) {
+    // 计算当前这块dom是否跨越了a4大小，以此分割
+    if (
+      // nodes[index].offsetTop + nodes[index].offsetHeight < pageHeight &&
+      nodes[index].getBoundingClientRect().top - tTop < pageHeight &&
+      nodes[index].getBoundingClientRect().top + nodes[index].clientHeight - tTop > pageHeight &&
+      nodes[index].clientHeight < pageHeight / 3
+      // nodes[index + 1] &&
+      // nodes[index + 1].getBoundingClientRect().top - tTop > pageHeight
+      // nodes[index + 1].offsetTop + nodes[index + 1].offsetHeight > pageHeight
+    ) {
+      return true;
+    }
+    return false;
+  },
+  // 科教资源逗号分隔value
+  comma(obj, str) {
+    return (obj && obj[str] && obj[str].split(',')) || [];
+  },
+
+  // 量词月而不是月份
+  cycleUnit(obj) {
+    return obj.useCycle || obj.useCycle === 0
+      ? obj.useCycle + (obj.chargecycle === '月' ? '个月' : obj.chargecycle)
+      : '--';
+  },
+
+  //资源申请类型
+  useTypeFormatter(row, column, cellValue) {
+    switch (cellValue + '') {
+      case '1':
+        return '入驻';
+        break;
+      case '2':
+        return '续租';
+        break;
+      case '3':
+        return '退出';
+        break;
+    }
+  },
+
+  // 科教资源表格内颜色和状态
+  actionColor2(role, now, h, row) {
+    if (row.status == 8) {
+      return 'status-red';
+    } else if (row.status == 9) {
+      return 'status-blue';
+    } else if (now && now.indexOf('LD') > -1) {
+      return 'status-orange';
+    } else if (now && now.indexOf('BM') > -1) {
+      return 'status-orange';
+    } else if (row.status == 2) {
+      return 'status-green';
+    }
+  },
+  processFormatter2(role, now, h, row) {
+    if (row.status == 8) {
+      return '已驳回';
+    } else if (row.status == 9) {
+      return '已撤回';
+    } else if (now && now.indexOf('LD') > -1) {
+      return '领导审批中';
+    } else if (now && now.indexOf('BM') > -1) {
+      return '基地审批中';
+    } else if (row.status == 2) {
+      return '已完成';
+    }
+  },
+  resStateFormatterJump(row, column, cellValue) {
+    switch (cellValue) {
+      case 1:
+        return '开启';
+        break;
+      case 0:
+        return '关闭';
+        break;
+    }
+  },
+  processFormatterPractice(row, column, cellValue) {
+    switch (cellValue) {
+      case '0':
+        return '草稿';
+        break;
+      case '1':
+        return '单位领导审批中';
+        break;
+      case '2':
+        return '基地审批中';
+        break;
+      case '3':
+        return '后勤审批中';
+        break;
+      case '6':
+        return '已完成';
+        break;
+      case '7':
+        return '系统退回';
+        break;
+      case '8':
+        return '已驳回';
+        break;
+      case '9':
+        return '已撤回';
+        break;
+      default:
+        return '无状态';
+        break;
+    }
   },
 };

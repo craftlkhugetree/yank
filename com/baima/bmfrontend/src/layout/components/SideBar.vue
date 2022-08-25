@@ -4,7 +4,7 @@
       <img src="../../../static/images/logo.png" alt="logo" />
       <h1 v-if="!collapse">基地科教资源管理信息平台</h1>
     </div>
-   <!-- <el-menu
+    <!-- <el-menu
       v-loading="loading"
       :default-active="'/' + $route.path.split('/')[1]"
       background-color="#1B2032"
@@ -30,7 +30,7 @@
         </el-menu-item>
          <el-menu-item index="/irrigate-audit">
            <i class="icomoon icon-menu-edit-records"></i>
-           <span slot="title">白马办待审批列表</span>
+           <span slot="title">基地待审批列表</span>
          </el-menu-item>
          <el-menu-item index="/irrigate-worker">
            <i class="icomoon icon-menu-edit-records"></i>
@@ -44,7 +44,7 @@
         </template>
         <el-menu-item index="/post-info">
           <i class="icomoon icon-menu-all"></i>
-          <span slot="title">白马办发布信息</span>
+          <span slot="title">基地发布信息</span>
         </el-menu-item>
         <el-menu-item index="/view-info">
           <i class="icomoon icon-menu-all"></i>
@@ -66,7 +66,7 @@
         </el-menu-item>
         <el-menu-item index="/practive-BM-audit">
           <i class="icomoon icon-menu-all"></i>
-          <span slot="title">白马办审批</span>
+          <span slot="title">基地审批</span>
         </el-menu-item>
       </el-submenu>
       <el-submenu index="4">
@@ -96,7 +96,7 @@
         </el-menu-item>
         <el-menu-item index="/resource-BM-audit">
           <i class="icomoon icon-menu-all"></i>
-          <span slot="title">白马办审批</span>
+          <span slot="title">基地审批</span>
         </el-menu-item>
         <el-menu-item index="/repair-list">
           <i class="icomoon icon-menu-all"></i>
@@ -157,23 +157,36 @@
          </el-menu-item>
     </el-menu> -->
 
-    <el-menu v-loading="loading" :default-active="'/' + $route.path.split('/')[1]"
-             background-color="#1B2032"
-             text-color="#B8BBBE"
-             active-text-color="#FFFFFF"
-             :collapse="collapse"
-             :collapse-transition="false"
-             mode="vertical"
-             router >
-      <template v-for="item in menuData" >
-        <el-menu-item v-if="item.ISLEAF === '1'" :key="item.ID" :index="urlFormat(item.DISPLAYURL)" @click="toUrl(item.DISPLAYURL)">
-          <i style="display: inline-block;margin-right: 8px" :class="item.ICONCLS"></i>
+    <el-menu
+      v-loading="loading"
+      :default-active="'/' + $route.path.split('/')[1]"
+      background-color="#1B2032"
+      text-color="#B8BBBE"
+      active-text-color="#FFFFFF"
+      :collapse="collapse"
+      :collapse-transition="false"
+      mode="vertical"
+      router
+    >
+      <template v-for="item in menuData">
+        <el-menu-item
+          v-if="item.ISLEAF === '1'"
+          :key="item.ID"
+          :index="urlFormat(item.DISPLAYURL)"
+          @click="toUrl(item.DISPLAYURL)"
+        >
+          <i
+            style="display: inline-block;margin-right: 8px"
+            :class="item.ICONCLS"
+          ></i>
           <span slot="title">{{ item.NAME }}</span>
         </el-menu-item>
         <el-submenu v-if="item.ISLEAF === '0'" :key="item.ID" :index="item.ID">
           <template slot="title">
-
-            <i style="display: inline-block;margin-right: 8px" :class="item.ICONCLS"></i>
+            <i
+              style="display: inline-block;margin-right: 8px"
+              :class="item.ICONCLS"
+            ></i>
             <span>{{ item.NAME }}</span>
           </template>
           <el-menu-item
@@ -181,7 +194,10 @@
             :key="child.ID"
             :index="child.DISPLAYURL"
           >
-            <i style="display: inline-block;margin-right: 8px" :class="child.ICONCLS"></i>
+            <i
+              style="display: inline-block;margin-right: 8px"
+              :class="child.ICONCLS"
+            ></i>
             <span slot="title">{{ child.NAME }}</span>
           </el-menu-item>
         </el-submenu>
@@ -195,14 +211,14 @@ import menutree from "./menutree";
 
 export default {
   name: "SideBar",
-  components:{
+  components: {
     menutree
   },
   data() {
     return {
       loading: false,
       menuData: [],
-      gid:""
+      gid: ""
     };
   },
   props: {
@@ -261,36 +277,72 @@ export default {
           url: "Portal/getUserMenu",
           data: {
             menupid: "16000-0",
-            gid:this.gid
+            gid: this.gid
           }
         })
         .then(res => {
           this.loading = false;
           this.menuData = res;
-
-          // 判断是学生、白马办还是后勤
-          const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
+          // this.menuData.unshift({
+          //   "LEVELCODE": "00i011",
+          //   "ICONCLS": "message-icon",
+          //   "PID": "16000-033",
+          //   "DISPLAYURL": "/prapply/leadership",
+          //   "ID": "16000-g33",
+          //   "text": "ld统计",
+          //   "leaf": true,
+          //   "iconCls": "message-icon",
+          //   "URL": "",
+          //   "ISLEAF": "1",
+          //   "NAME": "ld学生统计"
+          // })
+          // this.menuData.unshift({
+          //   "LEVELCODE": "00i007006",
+          //   "PID": "16000-841253",
+          //   "DISPLAYURL": "/resource-teacher-fee",
+          //   "ID": "16000-8-63123215",
+          //   "text": "申请审批ld",
+          //   "leaf": true,
+          //   "URL": "",
+          //   "ISLEAF": "1",
+          //   "NAME": "费用结算"
+          // })
+          // this.menuData.unshift({
+          //   "LEVELCODE": "00i007006",
+          //   "PID": "16000-841233",
+          //   "DISPLAYURL": "/resource-BM-fee",
+          //   "ID": "16000-38-6312321",
+          //   "text": "申请审批ld",
+          //   "leaf": true,
+          //   "URL": "",
+          //   "ISLEAF": "1",
+          //   "NAME": "费用管理"
+          // })
+          // 判断是学生、基地还是后勤
+          const repair = this.menuData.find(m => "在线报修" === m.NAME) || {};
+          sessionStorage.removeItem("url4bizNode");
+          const obj = {};
           if (repair.children && repair.children[0]) {
             const url = repair.children[0].DISPLAYURL;
-            const obj = {};
-            if ('/repair/report' === url) {
+            // 教职工、本科生、研究生
+            if ("/repair/report" === url) {
               obj.start = 1;
-            } else if ('/repair/bm_handle' === url) {
+            } else if ("/repair/bm_handle" === url) {
               obj.bm = 1;
-            } else if ('/repair/hq_handle' === url) {
+            } else if ("/repair/hq_handle" === url) {
               obj.hq = 1;
             }
-            sessionStorage.setItem('url4bizNode', JSON.stringify(obj))
+            sessionStorage.setItem("url4bizNode", JSON.stringify(obj));
           }
 
           // 判断是否有“用户组管理”，如果有则是管理员
-          if(res.some(i => i.NAME === "用户组管理" )) {
+          if (res.some(i => i.NAME === "用户组管理")) {
             this.$store.commit("setIsAdmin", true);
           } else {
             this.$store.commit("setIsAdmin", false);
           }
-          
-         /* // 如果是刚进入系统，则跳转到第一个菜单
+
+          /* // 如果是刚进入系统，则跳转到第一个菜单
           if (this.$route.path === "/") {
             let url=this.menuData[0].DISPLAYURL || this.menuData[0].children[0].DISPLAYURL
             this.$router.push(url);
@@ -302,23 +354,25 @@ export default {
           // 如果是刚进入系统，则跳转到第一个菜单
           if (this.$route.path === "/") {
             // 从南农用户组进入时  会丢失掉gid参数  替换url中的&符号以保留gid参数
-            let href = window.location.href
-            if(href.includes("___")) {
-              href = href.replace(/___/g,"&");
-              window.location.href = href
+            let href = window.location.href;
+            if (href.includes("___")) {
+              href = href.replace(/___/g, "&");
+              window.location.href = href;
             }
             // 判断是否存在路由
-            if(urlRouter) {
+            if (urlRouter) {
               this.$router.push(urlRouter);
             } else {
-              let url=this.menuData[0].DISPLAYURL || this.menuData[0].children[0].DISPLAYURL
+              let url =
+                this.menuData[0].DISPLAYURL ||
+                this.menuData[0].children[0].DISPLAYURL;
               this.$router.push(url);
             }
           }
 
-         if(urlRouter){
-           localStorage.removeItem("urlRouter");
-         }
+          if (urlRouter) {
+            localStorage.removeItem("urlRouter");
+          }
           // console.log("menuData",this.menuData);
         });
     }
@@ -343,8 +397,8 @@ export default {
     width: 100%;
     height: 75px;
     line-height: 55px;
-    color: #00CBA9;
-    background: #3C435E;
+    color: #00cba9;
+    background: #3c435e;
     text-align: center;
     vertical-align: middle;
     padding: 12px 20px;
@@ -366,7 +420,7 @@ export default {
       text-align: left;
     }
   }
-  
+
   .el-menu {
     width: 100%;
     height: 100%;
@@ -416,4 +470,3 @@ export default {
   }
 }
 </style>
-

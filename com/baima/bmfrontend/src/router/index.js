@@ -1,9 +1,9 @@
-import Vue from "vue"
-import Router from "vue-router"
+import Vue from "vue";
+import Router from "vue-router";
 
-Vue.use(Router)
+Vue.use(Router);
 
-import BasicLayout from "../layout/BasicLayout"
+import BasicLayout from "../layout/BasicLayout";
 import store from "../store";
 
 const router = new Router({
@@ -54,7 +54,7 @@ const router = new Router({
         },
         {
           path: "irrigate-audit",
-          name: "白马办灌溉审批",
+          name: "基地灌溉审批",
           component: () =>
             import(/* webpackChunkName: "bm" */ "../pages/irrigateAudit/index")
           /* props: (route) => ({
@@ -118,13 +118,13 @@ const router = new Router({
         },
         {
           path: "post-info",
-          name: "白马办发布信息",
+          name: "基地发布信息",
           component: () =>
             import(/* webpackChunkName: "bm" */ "../pages/serviceInfo/postInfo")
         },
         {
           path: "BM-view-info",
-          name: "白马办查看信息",
+          name: "基地查看信息",
           component: () =>
             import(/* webpackChunkName: "bm" */ "../pages/serviceInfo/viewInfo")
         },
@@ -224,10 +224,10 @@ const router = new Router({
             ]
           })
         },
-        //实习申请白马办审核
+        //实习申请基地审核
         {
           path: "practive-BM-audit",
-          name: "白马办审核",
+          name: "基地审核",
           component: () =>
             import(/* webpackChunkName: "bm" */ "../pages/prBMAudit/index")
           /* props: (route) => ({
@@ -243,7 +243,7 @@ const router = new Router({
         },
         {
           path: "practive-BM-audit/audit-detail/:id",
-          name: "白马办审核-详情",
+          name: "基地审核-详情",
           component: () =>
             import(/* webpackChunkName: "bm" */ "../components/prDetail"),
           props: route => ({
@@ -268,7 +268,7 @@ const router = new Router({
         },
         {
           path: "practive-BM-audit/audit-operate/:id",
-          name: "白马办审核-审核",
+          name: "基地审核-审核",
           component: () =>
             import(/* webpackChunkName: "bm" */ "../components/prDetail"),
           props: route => ({
@@ -302,6 +302,21 @@ const router = new Router({
               /* webpackChunkName: "bm" */ "../pages/resourceManagement/resourceType/index"
             )
         },
+        //资源类型跳转
+        {
+          path: "resource-type-management/jump",
+          name: "资源类型跳转",
+          component: () =>
+            import(
+              /* webpackChunkName: "bm" */ "@/pages/resourceManagement/rescourceInfo/jump"
+            ),
+          props: route => ({
+            id: route.query.id,
+            typeName: route.query.typeName,
+            indexCurrentPage: route.query.currentPage
+          })
+        },
+
         //资源信息管理
         /*{
         path: "resource-type-management/info-list/:id",
@@ -312,20 +327,17 @@ const router = new Router({
         })
       },*/
 
-        //资源信息管理
+        //资源入驻管理
         {
           path: "resource-info-management",
-          name: "资源信息管理",
+          name: "资源入驻管理",
           component: () =>
             import(
               /* webpackChunkName: "bm" */ "../pages/resourceManagement/rescourceInfo/index2"
-            ),
-          props: route => ({
-            id: route.query.id
-          })
+            )
         },
 
-        //资源信息管理详情
+        //资源入驻管理详情
         {
           path: "/resource-info-management/detail/:id",
           // path: "/resource-type-management/info-list/:id/detail/:id",
@@ -338,6 +350,7 @@ const router = new Router({
             id: route.params.id,
             restypeid: route.query.restypeid,
             indexCurrentPage: route.query.currentPage,
+            indexActiveName: route.query.activeName,
             prevPage: "resource-type-management",
             breadList: [
               {
@@ -356,7 +369,7 @@ const router = new Router({
           })
         },
 
-        //资源申请
+        //我的资源
         {
           path: "/resource-apply",
           name: "资源信息申请",
@@ -370,8 +383,17 @@ const router = new Router({
         })*/
         },
 
-        //资源详情
-        //资源信息管理详情
+        // 空闲资源
+        {
+          path: "/idle-resource",
+          name: "空闲资源",
+          component: () =>
+            import(
+              /* webpackChunkName: "bm" */ "../pages/resourceManagement/idleResource/index"
+            )
+        },
+
+        //我的资源详情
         {
           path: "/resource-apply/detail/:id",
           name: "资源信息管理详情",
@@ -384,6 +406,7 @@ const router = new Router({
             restypeid: route.query.restypeid,
             indexCurrentPage: route.query.currentPage,
             indexActiveName: route.query.activeName,
+            limitday: route.query.limitday,
             prevPage: "resource-apply",
             breadList: [
               {
@@ -399,6 +422,24 @@ const router = new Router({
                 name: "详情"
               }
             ]
+          })
+        },
+
+        // 资源库维护详情
+        {
+          path: "/jump/detail/:id",
+          name: "资源库维护详情",
+          component: () =>
+            import(
+              /* webpackChunkName: "bm" */ "../pages/resourceManagement/resDetail"
+            ),
+          props: route => ({
+            // 某类型下的资源编号
+            id: route.params.id,
+            indexCurrentPage: route.query.currentPage,
+            prevPage: route.query.prevPage,
+            // 资源类型
+            restypeid: route.query.restypeid
           })
         },
 
@@ -423,6 +464,7 @@ const router = new Router({
           props: route => ({
             id: route.params.id,
             indexCurrentPage: route.query.currentPage,
+            indexActiveName: route.query.activeName,
             breadList: [
               {
                 path: "",
@@ -462,6 +504,7 @@ const router = new Router({
             id: route.params.id,
             indexCurrentPage: route.query.currentPage,
             indexActiveName: route.query.activeName,
+            auditDev: "leader",
             breadList: [
               {
                 path: "",
@@ -509,20 +552,44 @@ const router = new Router({
           })
         },
 
-        //白马办审核列表
+        //基地审核列表
         {
           path: "/resource-BM-audit",
-          name: "白马办审核列表",
+          name: "基地审核列表",
           component: () =>
             import(
               /* webpackChunkName: "bm" */ "../pages/resourceManagement/resourceAudit/BMAudit"
             )
         },
+        // 费用管理
+        {
+          path: "/resource-BM-fee",
+          name: "基地缴费",
+          component: () =>
+            import(
+              /* webpackChunkName: "bm" */ "../pages/resourceManagement/fee"
+            ),
+          props: route => ({
+            identity: "bm"
+          })
+        },
+        // 费用结算
+        {
+          path: "/resource-teacher-fee",
+          name: "教师查看费用",
+          component: () =>
+            import(
+              /* webpackChunkName: "bm" */ "../pages/resourceManagement/fee"
+            ),
+          props: route => ({
+            identity: "teacher"
+          })
+        },
 
-        //白马办查看详情
+        //基地查看详情
         {
           path: "/resource-BM-audit/detail/:id",
-          name: "白马办查看详情",
+          name: "基地查看详情",
           component: () =>
             import(
               /* webpackChunkName: "bm" */ "../pages/resourceManagement/resourceAudit/detail"
@@ -531,6 +598,7 @@ const router = new Router({
             id: route.params.id,
             indexCurrentPage: route.query.currentPage,
             indexActiveName: route.query.activeName,
+            auditDev: "bm",
             breadList: [
               {
                 path: "",
@@ -548,10 +616,10 @@ const router = new Router({
           })
         },
 
-        //白马办审核
+        //基地审核
         {
           path: "/resource-BM-audit/audit/:id",
-          name: "白马办审核",
+          name: "基地审核",
           component: () =>
             import(
               /* webpackChunkName: "bm" */ "../pages/resourceManagement/resourceAudit/audit"
@@ -621,6 +689,20 @@ const router = new Router({
           component: () =>
             import(/* webpackChunkName: "bm" */ "../pages/summary/spresUse")
         },
+        // 科教资源类型的空闲资源
+        {
+          path: "/spresUnusedList/:id",
+          name: "资源未使用情况表",
+          component: () =>
+            import(
+              /* webpackChunkName: "bm" */ "../pages/summary/spResUnusedList.vue"
+            ),
+          props: route => ({
+            typeName: route.query.typeName,
+            id: route.params.id
+          })
+        },
+
         //各类科教资源使用状况明细表
         {
           path: "/spresUseHistory",
@@ -665,6 +747,19 @@ const router = new Router({
             )
         },
 
+        // 单位领导统计科研项目
+        {
+          path: "/projectHistory/leadership",
+          name: "本院科研项目统计",
+          component: () =>
+            import(
+              /* webpackChunkName: "bm" */ "../pages/summary/projectHistory"
+            ),
+          props: () => ({
+            isLeader: true
+          })
+        },
+
         //统计本科生实习
         {
           path: "/prapply",
@@ -672,7 +767,16 @@ const router = new Router({
           component: () =>
             import(/* webpackChunkName: "bm" */ "../pages/summary/prapply")
         },
-
+        // 单位领导统计本科生实习
+        {
+          path: "/prapply/leadership",
+          name: "本院基地学生实习统计",
+          component: () =>
+            import(/* webpackChunkName: "bm" */ "../pages/summary/prapply"),
+          props: () => ({
+            isLeader: true
+          })
+        },
         //统计水资源调配
         {
           path: "/irapply",

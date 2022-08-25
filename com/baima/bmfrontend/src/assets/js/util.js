@@ -3,6 +3,7 @@
 import setting from "./projectSettings.js";
 import axios from "axios";
 import qs from "qs";
+import tVue from '@/main.js'
 
 let Axios = axios;
 axios.defaults.headers.post["Content-Type"] =
@@ -63,9 +64,11 @@ let startAjax = function(options) {
             url: data,
             method: options.isGet ? "GET" : "POST",
             headers: {
-              // IDSTGC: getCookie("IDSTGC") || "69a9a8b5c5bc430893081fb973f22c9b"
-              // IDSTGC: getCookie("IDSTGC") || "6220b41bf0f94955af2042e69c072aa9"
-              IDSTGC: getCookie("IDSTGC") || "dce718dc870842a3b045721ec62c5bc2"
+              IDSTGC: getCookie("IDSTGC") || "625da24a4c044a99bb625f118e9c4ab3"
+              // IDSTGC: getCookie("IDSTGC") || "888b36dc6c924f8385f521f9385490af"
+              // IDSTGC: getCookie("IDSTGC") || "05df6b8242aa464ebe06618bcbf57012"
+              // IDSTGC: getCookie("IDSTGC") || "3a2ac70ebf42409ba7e330804283467a"
+              // IDSTGC: getCookie("IDSTGC")
             },
             data: options.isRep
               ? options.data
@@ -110,6 +113,39 @@ let startAjax = function(options) {
     }
   });
 };
+
+/** Function: 导出文件 */
+const exportFile = function (url, isGet, params, fileName, fileType) {
+  const loading = tVue.$loading({
+    lock: true,
+    text: "导出中",
+    spinner: "el-icon-loading",
+    background: "rgba(0, 0, 0, 0.7)"
+  });
+    Axios({
+      url: window.g.ApiUrl2 + url,
+      method: isGet ? "GET" : "POST",
+      responseType: "blob",
+      headers: {
+        IDSTGC: getCookie("IDSTGC") || "6def528273844606aed1955df4775a44"
+      },
+      data: params
+    }).then(res => {
+      let url = window.URL.createObjectURL(res.data);
+      let link = document.createElement("a");
+      link.href = url;
+      link.style.display = "none";
+      link.setAttribute("download", fileName + "." + fileType);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      loading.close();
+    }).catch(e => {
+      loading.close();
+    });
+}
+
 /** Function :获取cookie , Created By HarryC on 2019/1/31 0031 */
 let getCookie = function(name) {
   let arr,
@@ -151,7 +187,7 @@ let formatTime = function(time, format) {
       );
       break;
     default:
-      throw "Ow<这是一条来自common的提示：format参数输入错误";
+      throw "Ow<这是一条来自common的提示：format参数输入错误" + time + format;
   }
   let timeString = format
     .replace(/YYYY/gi, dateObj.getFullYear() + "")
@@ -163,8 +199,8 @@ let formatTime = function(time, format) {
   return timeString;
 };
 //返回当前时间的年月日 2019-05-20
-var ymd = function() {
-  var myDate = new Date();
+var ymd = function(transDate) {
+  var myDate = transDate || new Date();
   var month = myDate.getMonth() + 1;
   if (month >= 1 && month <= 9) {
     //月
@@ -210,10 +246,11 @@ var formatName = function(name) {
 };
 
 export default {
+  exportFile,
   global,
   //返回当前的年月日
-  formatMYD() {
-    return ymd();
+  formatMYD(date) {
+    return ymd(date);
   },
   slicetime() {
     return slicetime();

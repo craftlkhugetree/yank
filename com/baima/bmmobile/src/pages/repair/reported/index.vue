@@ -310,9 +310,9 @@ export default {
       getCountFlag(params)
         .then(res => {
           if (res && res.success) {
-                   this.$set(this.img[1], 'count', 0);
-                this.$set(this.img[2], 'count', 0);
-                this.$set(this.img[3], 'count', 0);
+            this.$set(this.img[1], 'count', 0);
+            this.$set(this.img[2], 'count', 0);
+            this.$set(this.img[3], 'count', 0);
             let total = 0;
             res.data &&
               res.data.forEach(r => {
@@ -344,6 +344,7 @@ export default {
     clickImg(item) {
       this.status = item.val;
       this.getList(1);
+      this.getCount()
       this.$forceUpdate();
     },
   },

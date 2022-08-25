@@ -284,7 +284,6 @@
 
           //资源状态开启和关闭
           changeStatus(resstatus,num,id){
-            // debugger;
             let ids="";
             switch (num) {
               case "more":

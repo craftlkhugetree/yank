@@ -3,376 +3,248 @@
     <!-- 筛选 -->
     <div ref="searchBar">
       <van-search v-model="keyword" shape="round" placeholder="请输入资源编号" @search="onSearch" />
+      <basic-select
+        title="选择资源类型"
+        :value="eduTypeName"
+        :list="resTypeList"
+        optionName="name"
+        optionValue="id"
+        top="146px"
+        @chooseItem="chooseResType"
+      />
     </div>
-    <!-- tab标签页 -->
-    <div class="tabs more-tabs" ref="tableTabs">
-      <li
-        class="ellipsis"
-        :class="{'active': activeTab === item.id}"
-        v-for="(item,index) in tabs"
-        :key="item.id"
-        @click="changeTab(item,index)"
-      >{{item.name}}</li>
-    </div>
+
     <div class="tabs-bottom"></div>
     <!-- 表格 -->
-    <el-table :data="tableData" style="width: 100%;" :height="tableHeight" :border="false">
-      <!-- <el-table-column type="selection" width="45" align="center" fixed="left"></el-table-column> -->
-      <el-table-column prop="rescode" label="资源编号" align="center" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="area" label="面积(m²)" align="center" show-overflow-tooltip></el-table-column>
-      <el-table-column
-        prop="price"
-        :label="'单价(元/'+common.chargecycleFormatter(curResTypeDetail.chargecycle)+'/'+common.chargetypeFormatter(curResTypeDetail.chargetype)+')'"
-        align="center"
-        show-overflow-tooltip
-        :formatter="common.moneyFormatter"
-        min-width="120"
-      ></el-table-column>
-      <el-table-column
-        prop="liveinfo"
-        v-if="usestatus === '3'"
-        label="入驻信息"
-        align="center"
-        show-overflow-tooltip
-      >
-        <el-table-column
-          prop="liveinfo.orgname"
-          label="学院名称"
-          align="center"
-          :formatter="common.defaultFormatter"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="liveinfo.projectname"
-          label="项目名称"
-          align="center"
-          :formatter="common.defaultFormatter"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="liveinfo.classleadername"
-          label="负责人"
-          align="center"
-          :formatter="common.defaultFormatter"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="liveinfo.classleadermobile"
-          label="联系方式"
-          align="center"
-          :formatter="common.defaultFormatter"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="liveinfo.applyendtime"
-          label="退出时间"
-          align="center"
-          :formatter="common.dateFormatter"
-          show-overflow-tooltip
-        ></el-table-column>
-        <el-table-column
-          prop="liveinfo.waterFee"
-          label="待缴费用(元)"
-          align="center"
-          show-overflow-tooltip
-          :formatter="common.moneyFormatter"
-          min-width="100"
-        >
-          <template slot-scope="scope">
-            水费：{{scope.row.liveinfo ? common.money(scope.row.liveinfo.waterFee) : "0"}},
-            电费：{{scope.row.liveinfo ? common.money(scope.row.liveinfo.eleFee) : "0"}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="liveinfo.limitDay"
-          label="剩余使用时间(天)"
-          align="center"
-          show-overflow-tooltip
-          min-width="120"
-        >
-          <template slot-scope="scope">
-            <span
-              :style="{'color': (scope.row.liveinfo && scope.row.liveinfo.limitDay <= 30) ? '#fe3e61' : '#1c2026'}"
-            >{{scope.row.liveinfo ? scope.row.liveinfo.limitDay : "--"}}</span>
-          </template>
-        </el-table-column>
+    <el-table
+      ref="resTable"
+      :data="resList"
+      style="width: 100%;"
+      :height="tableHeight"
+      :border="false"
+      @selection-change="handleSelectionChange"
+      empty-text="当前无空闲资源，请及时关注。"
+    >
+      <el-table-column type="selection" align="center" fixed="left"></el-table-column>
+      <el-table-column prop="typeName" label="资源类型" align="center"></el-table-column>
+      <el-table-column prop="name" label="资源编号" align="center"></el-table-column>
+      <el-table-column prop="area" label="面积(㎡)" width="100" align="center"></el-table-column>
+
+      <el-table-column prop="price" :label="'单价'" align="center" width="150">
+        <template slot-scope="scope">
+          {{
+            common.moneyFormatter('', '', scope.row.price) +
+              (scope.row.billingCycle && scope.row.billingMethod
+                ? '元/' + scope.row.chargecycle + '/' + scope.row.ct2
+                : '元/' + '--' + '/' + '--')
+          }}
+        </template>
       </el-table-column>
-      <el-table-column
-        prop="usestatus"
-        label="入驻状态"
-        v-if="usestatus === '3'"
-        align="center"
-        show-overflow-tooltip
-        :formatter="common.useStateFormatter"
-      ></el-table-column>
+
       <el-table-column label="操作" fixed="right" width="110" align="center">
         <template slot-scope="scope">
-          <span style="color:#00b09b;padding:0 5px;font-weight:bold" @click="toDetail(scope.row)">详情</span>
+          <span style="color:#00b09b;padding:0 5px;font-weight:bold" @click="toDetail(scope.row)">
+            详情
+          </span>
           <span
-            v-if="scope.row.resstatus === '1' && usestatus === '1'"
+            v-if="usestatus === '1'"
             style="color:#1788fb;padding:0 5px;font-weight:bold"
-            @click="toApply(scope.row)"
-          >申请</span>
-          <span
-            v-if="scope.row.usestatus === '3'"
-            style="color:#faac16;padding:0 5px;font-weight:bold"
-            @click="toRepair(scope.row)"
-          >报修</span>
-          <!-- 续租：已入驻 并且 没有续租申请 并且 没有 退出申请 并且 剩余时间小于30天 -->
-          <span
-            v-if="scope.row.usestatus === '3' && (!scope.row.hasXuzApply && !scope.row.hasExitApply) && (scope.row.liveinfo && scope.row.liveinfo.limitDay <= 30)"
-            style="color:#1788fb;padding:0 5px;font-weight:bold"
-            @click="toExtend(scope.row)"
-          >续租</span>
-          <!-- 退出：已入驻 并且 没有续租申请 并且 没有 退出申请 -->
-          <span
-            v-if="scope.row.usestatus ==='3' && (!scope.row.hasXuzApply && !scope.row.hasExitApply)"
-            style="color:#fe3e61;padding:0 5px;font-weight:bold"
-            @click="toCheckOut(scope.row)"
-          >退出</span>
+            @click="toApply([scope.row])"
+          >
+            申请
+          </span>
         </template>
       </el-table-column>
       <!-- 无限加载 -->
       <div slot="append">
         <van-loading v-show="loading" type="spinner" color="#b6bdc6" />
         <p v-show="!finishTable && !loading" @click="getMoreData">点击加载更多</p>
-        <p v-show="finishTable && tableData.length > 0" style="cursor:none;">到底啦</p>
+        <p v-show="finishTable && resList.length > 0" style="cursor:none;">到底啦</p>
       </div>
     </el-table>
-    <!-- 合计待缴费用 -->
-    <div class="btns big-line" v-if="usestatus === '3'">
-      <van-cell title="合计待缴费用:" :value="common.money(totalFee) + ' 元'"></van-cell>
-    </div>
-    <!-- 新增申请 -->
+    <!-- 批量申请 -->
     <div class="btns" v-if="usestatus === '1'">
-      <van-button :disabled="!activeTab" icon="plus" round type="primary" @click="toApply">新增申请</van-button>
+      <van-button :disabled="!selectedIds" :icon="batchPng" round type="primary" @click="batch">
+        批量申请
+      </van-button>
     </div>
 
-    <!-- 是否确定退出 -->
-    <van-action-sheet
-      v-model="showConfirmCheckOut"
-      :actions="[{name: '确定退出', color: '#fe3e61'}]"
-      @select="confirmCheckOut"
-      cancel-text="取消"
-    />
+    <confirm-dialog
+      :diagTitle="diagTitle"
+      :diagBody="diagBody"
+      :dVisible="dVisible"
+      :hasCancel="false"
+      v-if="dVisible"
+      @confirm="doSubmit"
+      @dropdown="dVisible = false"
+    ></confirm-dialog>
   </div>
 </template>
 
 <script>
+import { eduResourcePageQuery, eduTypeList } from '@/assets/js/api';
+
 export default {
+  name: "IdleRes",
+  components: {
+    basicSelect: () => import('@/components/BasicSelect'),
+    confirmDialog: () => import('@/components/confirmDialog'),
+  },
   data() {
     return {
-      keyword: "",
-      activeTab: "",
-      curResTypeDetail: {},
+      dVisible: false,
+      diagTitle: '',
+      diagBody: '',
+      batchPng: require(`st@tic/imgs/batch_approve.png`),
+      selectedIds: '', //多选框值
+      selected: [], //多选框值
+      keyword: '',
+      eduTypeId: '',
+      eduTypeName: '',
+      resTypeList: [],
       tabs: [],
       tableHeight: 0,
       currentPage: 1,
+      total: 0,
       limit: 10,
-      tableData: [],
+      resList: [],
       loading: false,
       finishTable: false,
-      totalFee: 0,
-      showConfirmCheckOut: false,
-      checkOutRow: ""
     };
   },
   props: {
     id: String,
-    usestatus: String // 我的资源（已入驻"3"）、空闲资源（空闲"1"）
+    usestatus: String, // 我的资源（已入驻"3"）、空闲资源（空闲"1"）
   },
   computed: {
     userInfo() {
       return this.$store.state.userInfo;
-    }
+    },
   },
   watch: {
     usestatus() {
       this.getList(1);
     },
-    activeTab() {
-      this.getList(1);
-    }
   },
   methods: {
-    // 返回
-    goBack() {
-      this.$router.go(-1);
+    // 对话框确定按钮
+    doSubmit() {
+      this.dVisible = false;
+    },
+    // 选择类型
+    chooseResType(item) {
+      this.eduTypeName = item.name;
+      this.eduTypeId = item.id;
+      this.getList(1);
     },
     // 搜索
     onSearch() {
       this.getList(1);
     },
-    // 切换tab
-    changeTab(item, index) {
-      this.activeTab = item.id;
-      this.curResTypeDetail = item;
-      this.scrollToTab(index);
-      sessionStorage.setItem("curEduResType", JSON.stringify(item));
-      sessionStorage.setItem("curEduResTab" + this.usestatus, this.activeTab);
+
+    // 批量申请
+    batch() {
+      if (!this.selectedIds) {
+        this.$toast.fail('请先选择资源');
+        return;
+      }
+      if (!this.normalize(this.selected)) {
+        this.diagTitle = '请选择同一类型资源';
+        this.diagBody = '批量申请时，请选择同一类型资源进行申请。';
+        this.dVisible = true;
+        return;
+      }
+      this.toApply(this.selected);
     },
-    // 新增申请
-    toApply(row) {
-      let resid = row.id || null;
-      let rescode = row.rescode || "";
-      this.$router.push(
-        `/edures-staff/res-apply/1/${this.activeTab}/${resid}/?rescode=${rescode}`
-      );
+
+    // 单个申请
+    toApply(arr) {
+      let eduResourceIds = arr.map(r => r.id);
+      let resid = eduResourceIds.join(',')
+      this.$router.push(`/edures-staff/res-apply/1/${arr[0].eduTypeId}/${resid}`);
     },
-    // 续租
-    toExtend(row) {
-      // let liveInfo = {
-      //   ...row.liveinfo,
-      //   rescodes: row.rescode
-      // }
-      // sessionStorage.setItem("liveInfo",JSON.stringify(liveInfo));
-      let resid = row.id || null;
-      sessionStorage.setItem("lastEndTime", row.liveinfo.applyendtime);
-      this.$router.push(
-        `/edures-staff/res-apply/2/${this.activeTab}/${resid}/?rescode=${row.rescode}`
-      );
+
+    // 类型是否唯一
+    normalize(arr) {
+      if (arr && arr.length) {
+        const obj = {};
+        arr.forEach(a => {
+          if (obj[a.eduTypeId]) {
+            obj[a.eduTypeId]++;
+          } else {
+            obj[a.eduTypeId] = 1;
+          }
+        });
+        return Object.keys(obj).length === 1;
+      }
+      return false;
     },
+
     // 详情页面
     toDetail(row) {
-      this.$router.push(
-        `/edures-staff/res-list/${this.activeTab}/detail-res/${row.id}`
-      );
-    },
-    // 报修
-    toRepair(row) {
-      let repairMsg = {
-        orgid: row.liveinfo.orgid,
-        sprestypeid: row.restypeid,
-        rescode: row.rescode
-      };
-      sessionStorage.setItem("repairMsg", JSON.stringify(repairMsg));
-      this.$router.push(`/edures-staff/res-list/call-repair-res/${row.id}`);
-    },
-    // 退出
-    toCheckOut(row) {
-      this.showConfirmCheckOut = true;
-      this.checkOutRow = row;
-    },
-    // 确认退出
-    confirmCheckOut() {
-      this.$toast.loading({
-        message: "提交中...",
-        forbidClick: true,
-        duration: 0
-      });
-      this.showConfirmCheckOut = false;
-      this.util
-        .postAjax({
-          code: this.global.bmCode,
-          url: "/spres/saveCheckOut",
-          data: {
-            resId: this.checkOutRow.id
-          }
-        })
-        .then(res => {
-          this.$toast.clear();
-          if (res.success == true) {
-            this.$toast.success("已提交退出申请，请等待白马办审核");
-            this.getList(1);
-          } else {
-            this.$toast.fail("退出失败" + "\n" + res.message);
-          }
-        })
-        .catch(err => {
-          this.$toast.clear();
-          this.$toast.fail("退出失败" + "\n" + err);
-        });
+      this.$router.push(`/edures-staff/res-list/${row.eduTypeId}/detail-res/${row.id}/${'idle'}`);
     },
 
-    // 滚动Tab
-    scrollToTab(index) {
-      let clientWidth = document.documentElement.offsetWidth;
-      let tabs = this.$refs.tableTabs;
-      let curLi = tabs.getElementsByTagName("li")[index];
-      let curWidth = curLi.offsetWidth + curLi.offsetLeft;
-      if (
-        curWidth > clientWidth - 50 &&
-        curLi.offsetLeft >= tabs.scrollLeft + 50
-      ) {
-        // 当前tab左侧距离+自身宽度 > 屏幕宽度 并且 当前tab左侧距离 > tabs滚动距离 时，tabs向左滚动
-        tabs.scrollLeft += curLi.offsetWidth;
-      } else if (curLi.offsetLeft <= tabs.scrollLeft + 50) {
-        // 当前tab左侧距离 < tabs滚动距离，tabs向左滚动
-        tabs.scrollLeft -= curLi.offsetWidth;
-      }
-      sessionStorage.setItem("tabScroll" + this.usestatus, tabs.scrollLeft);
-    },
-
-    // 获取合计待缴费用
-    getTotalFee() {
-      this.util
-        .postAjax({
-          code: this.global.bmCode,
-          url: "/spreselec/needPayAll"
-        })
-        .then(res => {
-          if (res.success) {
-            this.totalFee = res.item.needAllPay || 0;
-          }
-        });
-    },
     // 加载更多数据
     getMoreData() {
       this.getList(this.currentPage + 1).then(list => {
-        this.tableData = this.tableData.concat(list);
+        this.resList = this.resList.concat(list);
+        this.finishTable = this.resList.length == this.total;
       });
     },
-    // 获取列表
+    //获取资源列表
     getList(page) {
       return new Promise((resolve, reject) => {
         this.loading = true;
-        let params = {
-          page: page,
-          limit: this.limit,
-          usestatus: this.usestatus,
-          resstatus: "1" // 开启的资源
+        const filter = {
+          useState: 0,
+          status: 1,
+          name: this.keyword || undefined,
+          eduTypeId: this.eduTypeId || undefined,
         };
-        if (this.activeTab) {
-          params.restypeid = this.activeTab;
-        }
-        if (this.keyword) {
-          params.rescode = this.keyword;
-        }
-        if (this.usestatus === "3") {
-          params.userid = this.userInfo.ID;
-        }
-        this.util
-          .postAjax({
-            code: this.global.bmCode,
-            url: "/spres/pageList?date=" + new Date().getTime(),
-            data: {
-              params: JSON.stringify(params)
-            }
-          })
+        const params = {
+          page: page || this.currentPage,
+          limit: this.limit,
+          filter,
+        };
+        eduResourcePageQuery(params)
           .then(res => {
             this.loading = false;
-            if (res.success == true) {
-              let list = res.items || [];
-              if (page === 1) {
-                this.tableData = list;
-              }
-              this.finishTable = list.length < this.limit ? true : false;
+            if (res && res.success === true) {
+              this.total = res.total;
               this.currentPage = page;
+              let list = res.data || [];
+
+              list.forEach(r => {
+                const obj = this.resTypeList.find(t => t.id === r.eduTypeId) || {};
+                r.typeName = obj.name || '';
+                r.rules = obj.rules || '';
+
+                let chargecycle = r.billingCycle + '';
+                let chargetype = r.billingMethod + '';
+                this.common.chargecycleFormatter(chargecycle, r);
+                this.common.chargetypeFormatter2(chargetype, r, 'ct2', 'ct1');
+              });
+              if (page === 1) {
+                this.resList = list;
+              }
+              this.finishTable = list.length < this.limit || list.length === res.total;
+              this.$nextTick(() => {
+                this.$refs.resTable.doLayout();
+              });
               resolve(list);
             } else {
-              // this.finishTable = true;
-              this.$toast.fail("获取数据失败" + "\n" + res.message);
+              this.$toast.fail('获取数据失败' + '\n' + (res.message || '内部错误'));
               reject(res);
             }
           })
           .catch(err => {
             this.loading = false;
-            // this.finishTable = true;
-            // this.$toast.fail("获取数据失败" + "\n" + err);
             reject(err);
           });
       });
     },
+
     // 设置表格的高度
     setTableHeight() {
       this.$nextTick(() => {
@@ -380,85 +252,69 @@ export default {
         let tabsHeight = this.$parent.$refs.tabs.$el.offsetHeight || 0;
         let navBarHeight = this.$parent.$refs.navBar.offsetHeight || 0;
         let searchBarHeight = this.$refs.searchBar.offsetHeight || 0;
-        let tableTabsHeigth = this.$refs.tableTabs.offsetHeight || 0;
+        // let tableTabsHeigth = this.$refs.tableTabs.offsetHeight || 0;
         let tabBarHeight = this.$parent.$parent.$refs.tabBar.$el.offsetHeight || 0;
         this.tableHeight =
           domHeight -
           tabsHeight -
           navBarHeight -
           searchBarHeight -
-          tableTabsHeigth -
+          // tableTabsHeigth -
           tabBarHeight -
           20;
       });
-    }
+    },
+
+    //多选框
+    handleSelectionChange(val) {
+      let arr = [];
+      val.forEach(v => {
+        arr.push(v.id);
+      });
+      this.selected = val;
+      this.selectedIds = arr.join(',').toString();
+    },
+
+    //获取资源类型列表
+    getResTypeList() {
+      eduTypeList({}).then(res => {
+        if (res.success == true) {
+          this.resTypeList = res.data;
+          this.resTypeList.forEach(r => {
+            let chargecycle = r.billingCycle + '';
+            let chargetype = r.billingMethod + '';
+            this.common.chargecycleFormatter(chargecycle, r);
+            this.common.chargetypeFormatter2(chargetype, r, 'ct2', 'ct1');
+          });
+          this.getList(this.currentPage);
+        }
+      });
+    },
   },
   created() {
-    // 获取资源类型列表
-    this.common
-      .getEduResTypeList()
-      .then(res => {
-        this.tabs = res;
-        this.$nextTick(() => {
-          // 判断是否存在当前tab的缓存
-          let curEduResTab = sessionStorage.getItem(
-            "curEduResTab" + this.usestatus
-          );
-          if (curEduResTab && curEduResTab !== undefined) {
-            this.activeTab = curEduResTab;
-            this.curResTypeDetail =
-              res.filter(i => i.id === curEduResTab)[0] || {};
-          } else {
-            this.activeTab = res[0] ? res[0].id : "";
-            this.curResTypeDetail = res[0] || {};
-          }
-          sessionStorage.setItem(
-            "curEduResTab" + this.usestatus,
-            this.activeTab
-          );
-          sessionStorage.setItem(
-            "curEduResType",
-            JSON.stringify(this.curResTypeDetail)
-          );
-
-          // tab滚动到当前tab
-          if (this.$refs.tableTabs) {
-            this.$refs.tableTabs.scrollLeft =
-              sessionStorage.getItem("tabScroll" + this.usestatus) || 0;
-          }
-
-          // 获取列表
-          this.getList(1);
-
-          // 设置表格高度
-          this.setTableHeight();
-        });
-      })
-      .catch(() => {});
-
-    // 获取合计待缴费用
-    if (this.usestatus === "3") {
-      this.getTotalFee();
-    }
-  }
+    this.getResTypeList();
+    // 设置表格高度
+    this.setTableHeight();
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.big-line {
-  width: 100%;
-  margin: 0;
-  padding: 0 15px;
-  text-align: left;
-  opacity: 1;
-  .van-cell {
-    background: #fff3dc;
-    box-shadow: 0 2px 2px 0 rgba(182, 189, 198, 0.3);
-    border-radius: 5px;
-    .van-cell__value {
-      color: #faac16;
-      font-weight: bold;
-    }
-  }
+/deep/ .el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: #00b09b;
+  border-color: #00b09b;
+}
+/deep/ .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: #00b09b;
+  border-color: #00b09b;
+}
+/deep/ .el-checkbox__input.is-checked + .el-checkbox__label {
+  color: #00b09b;
+}
+/deep/ .el-checkbox.is-bordered.is-checked {
+  border-color: #00b09b;
+}
+/deep/ .el-checkbox__input.is-focus .el-checkbox__inner {
+  border-color: #00b09b;
 }
 </style>

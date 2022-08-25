@@ -20,20 +20,10 @@
           top="188px"
           @chooseItem="chooseResType"
         />
-        <!-- <basic-select
-          style="width: 32%"
-          title="学院"
-          :value="orgName"
-          :list="orgList"
-          optionName="name"
-          optionValue="id"
-          top="188px"
-          @chooseItem="chooseOrg"
-        />-->
         <basic-select-org
           style="width: 32%"
           :showPicker.sync="showOrgPicker"
-          title="学院"
+          title="选择学院"
           :value="orgName"
           top="188px"
           @selectItem="chooseOrg"
@@ -69,6 +59,7 @@
         label="灌溉日期"
         align="center"
         :formatter="common.dateFormatter"
+        width="120"
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column
@@ -92,6 +83,7 @@
       <el-table-column
         prop="rescodes"
         label="资源编号"
+        width="120"
         align="center"
         show-overflow-tooltip
       ></el-table-column>
@@ -99,9 +91,10 @@
         prop="applyername"
         label="申请人"
         align="center"
+        width="120"
         show-overflow-tooltip
       ></el-table-column>
-      <el-table-column prop="applystatus" label="状态" align="center" show-overflow-tooltip>
+      <el-table-column prop="applystatus" label="状态" width="120" align="center" show-overflow-tooltip>
         <template slot-scope="scope">
           <span :class="common.statusColor('', '', scope.row.applystatus)">
             {{ common.statusFormatter('', '', scope.row.applystatus) }}
@@ -191,6 +184,7 @@ export default {
       tableHeight: 0,
       loading: false,
       finishTable: false,
+      total: 0
     };
   },
   // computed: {
@@ -271,6 +265,7 @@ export default {
     getMoreData() {
       this.getList(this.currentPage + 1).then(list => {
         this.tableData = this.tableData.concat(list);
+        this.finishTable = this.tableData.length == this.total;
       });
     },
     // 获取列表
@@ -307,10 +302,11 @@ export default {
             if (res.success == true) {
               let bmList = res.item ? res.item.bmList || {} : {};
               let list = bmList.list || [];
+              this.total = bmList.total || 0
               if (page === 1) {
                 this.tableData = list;
               }
-              this.finishTable = list.length < this.limit ? true : false;
+              this.finishTable = list.length < this.limit || list.length == this.total;
               this.currentPage = page;
               resolve(list);
             } else {

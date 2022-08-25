@@ -281,7 +281,8 @@
         <el-form-item
           label="住宿日期"
           :label-width="formLabelWidth"
-          prop="sleepdaterange">
+          prop="sleepdaterange"
+        >
           <!-- :rules="[
             {
               type: 'array',
@@ -381,13 +382,19 @@
         ></el-switch>
       </div>
     </div>
+    <div id="fItem20220707" v-if="form.iseat == 1">
+      <el-form-item
+        label="如果实习期间遇特殊情况不用餐，请提前联系基地后勤保障科56217123，以免造成浪费。"
+      ></el-form-item>
+    </div>
 
     <el-row v-if="form.iseat == '1'">
       <el-col :span="24">
         <el-form-item
           label="用餐日期(请先选择实习日期)"
           :label-width="formLabelWidth"
-          prop="eatdaterange">
+          prop="eatdaterange"
+        >
           <!-- :rules="[
             {
               type: 'array',
@@ -397,7 +404,7 @@
             }
           ]"
         > -->
-          <el-date-picker
+          <!-- <el-date-picker
             style="width: 100%"
             v-model="form.eatdaterange"
             type="daterange"
@@ -409,14 +416,68 @@
             @blur="val => dateRangeChange(val, 'eatdate', form.eatdaterange)"
             :clearable="false"
             :disabled="!form.prdaterange"
-          ></el-date-picker>
+          ></el-date-picker> -->
+          <div class="flex-div">
+            <div>
+              <el-date-picker
+                v-model="form.eatstarttime"
+                type="date"
+                placeholder="开始日期"
+                :picker-options="pickerOptionsSleep"
+                :disabled="!form.prdaterange"
+                :clearable="false"
+                style="width: 180px"
+                @blur="$forceUpdate()"
+              >
+              </el-date-picker>
+              <el-select
+                v-model="form.eatstarttype"
+                placeholder="请选择"
+                style="width: 90px"
+              >
+                <el-option
+                  v-for="item in optionsMeal"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </div>
+            <span>至</span>
+            <div>
+              <el-date-picker
+                v-model="form.eatendtime"
+                type="date"
+                placeholder="结束日期"
+                :picker-options="pickerOptionsSleep"
+                :disabled="!form.prdaterange"
+                :clearable="false"
+                style="width: 180px"
+                @blur="$forceUpdate()"
+              >
+              </el-date-picker>
+              <el-select
+                v-model="form.eatendtype"
+                placeholder="请选择"
+                style="width: 90px"
+              >
+                <el-option
+                  v-for="item in optionsMeal"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </div>
+          </div>
         </el-form-item>
       </el-col>
     </el-row>
 
-    <el-row v-if="form.iseat == '1'" style="margin-top: -10px">
+    <!-- <el-row v-if="form.iseat == '1'" style="margin-top: -10px">
       <el-col :span="12">
-        <!--        :rules="[{ required: form.iseat == '1', message: '请选择餐食', trigger: 'blur' }]"-->
         <el-form-item
           prop="eatstarttype"
           :rules="[
@@ -441,7 +502,6 @@
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <!--        :rules="[{ required: form.iseat == '1', message: '请选择请选择餐食', trigger: 'blur' }]"-->
         <el-form-item
           prop="eatendtype"
           :rules="[
@@ -462,7 +522,7 @@
           </div>
         </el-form-item>
       </el-col>
-    </el-row>
+    </el-row> -->
 
     <el-row v-if="form.iseat == '1'">
       <el-col :span="12">
@@ -705,7 +765,7 @@
       :modal-append-to-body="false"
       :modal="false"
       :show-close="false"
-      width="30%"
+      width="50%"
     >
       <template #title>
         <div class="diag">
@@ -731,7 +791,7 @@
 
 <script>
 import upload from "../components/BaseUpload";
-import { nation_data } from "../assets/js/options";
+import { nation_data, optionsMeal } from "../assets/js/options";
 import * as XLSX from "xlsx";
 export default {
   name: "applyDialog",
@@ -753,6 +813,7 @@ export default {
       diagType: "",
       dVisible: false,
       nation_data,
+      optionsMeal,
       dataTitle: [["班级", "姓名", "学号", "身份证号", "性别", "民族"]],
       tableT: [],
       tableData: [],
@@ -789,7 +850,12 @@ export default {
         /* prstarttime: [{ required: true, message: '请选择实习开始日期', trigger: 'change' }],
           prendtime: [{ required: true, message: '请选择实习结束日期', trigger: 'change' }],*/
         prdaterange: [
-          { required: true, message: "请选择实习日期", trigger: "change", type: 'array', }
+          {
+            required: true,
+            message: "请选择实习日期",
+            trigger: "change",
+            type: "array"
+          }
         ],
         applyername: [
           { required: true, message: "请选择申请人", trigger: "change" }
@@ -814,38 +880,45 @@ export default {
 
         sleepdaterange: [
           {
-            type: 'array',
+            type: "array",
             required: this.form.issleep == "1",
             message: "请选择住宿日期",
             trigger: "change"
           }
         ],
         // sleepboynum: [{ required: true, message: '请输入驻宿人数', trigger: 'blur' }],
-        /*eatstarttime: [{ required:  this.form.iseat =='1', message: '请选择用餐开始日期', trigger: 'change' }],
-          eatendtime: [{ required:  this.form.iseat =='1', message: '请选择用餐结束日期', trigger: 'change' }],*/
+        // eatstarttime: [{ required:  this.form.iseat =='1', message: '请选择用餐开始日期', trigger: 'change' }],
+        // eatendtime: [{ required:  this.form.iseat =='1', message: '请选择用餐结束日期', trigger: 'change' }],
 
         eatdaterange: [
           {
-            type: 'array',
             required: this.form.iseat == "1",
-            message: "请选择用餐日期",
-            trigger: "change"
+            // message: "请选择用餐日期",
+            validator: (r, v, cb) => {
+              if (!this.form.eatstarttime || !this.form.eatendtime) {
+                return cb(new Error("请选择用餐日期"));
+              } else if (!this.form.eatstarttype || !this.form.eatendtype) {
+                return cb(new Error("请选择用餐类型"));
+              } else {
+                cb();
+              }
+            }
           }
         ],
-        eatstarttype: [
-          {
-            required: this.form.iseat == "1",
-            message: "请选择用餐类型",
-            trigger: "change"
-          }
-        ],
-        eatendtype: [
-          {
-            required: this.form.iseat == "1",
-            message: "请选择用餐类型",
-            trigger: "change"
-          }
-        ],
+        // eatstarttype: [
+        //   {
+        //     required: this.form.iseat == "1",
+        //     message: "请选择用餐类型",
+        //     trigger: "change"
+        //   }
+        // ],
+        // eatendtype: [
+        //   {
+        //     required: this.form.iseat == "1",
+        //     message: "请选择用餐类型",
+        //     trigger: "change"
+        //   }
+        // ],
         eatpersonnum: [
           {
             required: this.form.iseat == "1",
@@ -884,6 +957,15 @@ export default {
       return this.$store.state.leaderList;
     }
   },
+  watch: {
+    "form.prstarttime": {
+      // 'form.prdaterange': {
+      handler(old, newVal) {
+        this.pickerOptionsSleep = this.disabledDateSleep();
+      },
+      deep: true // 引用类型数据，需要进行深度监听模式，不然无法进行触发回调
+    }
+  },
   methods: {
     // 学生信息表数据细节校验。name可能是字符串（导入文件）或者对象（转化后的表格数组），对应的n为索引或者对象的key
     regCheck(obj) {
@@ -898,7 +980,10 @@ export default {
           type: "warning",
           message
         });
-      } else if ((n == 3 || n === "idcard") && !this.util.regExps.idCard.test(i)) {
+      } else if (
+        (n == 3 || n === "idcard") &&
+        !this.util.regExps.idCard.test(i)
+      ) {
         message = `身份证号'${i}'不符合规则，请重新输入！`;
         this.$message({
           duration: 5000,
@@ -1035,7 +1120,11 @@ export default {
           return true;
         }
       });
-      let [obj] = this.tableData.splice( index, 1, Object.assign({}, row, { show: false }));
+      let [obj] = this.tableData.splice(
+        index,
+        1,
+        Object.assign({}, row, { show: false })
+      );
       try {
         this.checkAllTable();
       } catch (e) {
@@ -1047,7 +1136,7 @@ export default {
       if (this.diagType === "del") {
         this.tableData.splice(this.curRow, 1);
       } else if (this.diagType === "submit") {
-        this.$emit('submitDiag', 1)
+        this.$emit("submitDiag", 1);
       } else if (this.diagType === "import") {
         this.dVisible = false;
         this.checkAllTable();
@@ -1270,7 +1359,7 @@ export default {
         disabledDate(time) {
           let limitDay = parseInt(that.limitDay);
           let nDate = new Date(
-            new Date().setDate(new Date().getDate() + parseInt(limitDay))
+            new Date().setDate(new Date().getDate() + parseInt(limitDay) + 1)
           ).getTime();
           return (
             time.getTime() <
@@ -1329,7 +1418,7 @@ export default {
         case "prdate":
           this.form.prstarttime = arr[0];
           this.form.prendtime = arr[1];
-
+          this.$set(this.form, "prstarttime", arr[0]);
           break;
         case "sleepdate":
           this.form.sleepstarttime = arr[0];
@@ -1440,16 +1529,24 @@ export default {
     });
 
     this.tableData = this.studentList.map(s => {
-      let obj = {...s};
-      obj.sex = obj.sex == '1' ? '男' : '女'
+      let obj = { ...s };
+      obj.sex = obj.sex == "1" ? "男" : "女";
       return obj;
-    })
+    });
     let title = this.dataTitle[0];
     let name = ["classname", "username", "userid", "idcard"];
     name.forEach((n, id) => {
       let obj = { name: n, label: title[id] };
       this.tableT.push(obj);
     });
+  },
+  mounted() {
+    this.form.eatstarttime = this.form.eatstarttime
+      ? new Date(this.common.formatTime(this.form.eatstarttime, "yyyy-MM-dd"))
+      : null;
+    this.form.eatendtime = this.form.eatendtime
+      ? new Date(this.common.formatTime(this.form.eatendtime, "yyyy-MM-dd"))
+      : null;
   }
 };
 </script>
@@ -1475,6 +1572,13 @@ export default {
     content: "";
   }
 }
+/deep/ #fItem20220707 .el-form-item__label {
+  color: #f56c6c;
+  &::after {
+    content: "";
+  }
+}
+
 .std-btn {
   width: 28px;
   text-align: center;
@@ -1528,55 +1632,60 @@ export default {
     width: 72px;
   }
 }
-.my-button{
+.my-button {
   display: inline-block;
   //box-shadow:0px 0px 4px 0px rgba(226,226,226,0.3);
-  border-radius:5px;
-  width:100px;
-  height:32px;
+  border-radius: 5px;
+  width: 100px;
+  height: 32px;
   line-height: 32px;
   text-align: center;
   color: #606266;
   font-size: 13px;
-  border:1px solid #DCDFE6;
-  text-decoration: none!important;
-  .image{
+  border: 1px solid #dcdfe6;
+  text-decoration: none !important;
+  .image {
     width: 15px;
     height: 15px;
     vertical-align: top;
     margin-top: 9px;
   }
 
-  &.samll{
+  &.samll {
     width: auto;
     min-width: 70px;
     height: 24px;
     line-height: 24px;
   }
 
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 
-  &.round{
+  &.round {
     border-radius: 16px;
   }
 
-  &.green{
-    background: #00B09B;
-    color:#ffffff;
-    border-color: #00B09B;
+  &.green {
+    background: #00b09b;
+    color: #ffffff;
+    border-color: #00b09b;
   }
 
-  &.plain-green{
-    color:#00B09B;
-    border-color: #00B09B;
+  &.plain-green {
+    color: #00b09b;
+    border-color: #00b09b;
   }
-  &.grey{
-    background:#E2E2E2;
+  &.grey {
+    background: #e2e2e2;
     color: #999999;
-    border-color: #E2E2E2;
+    border-color: #e2e2e2;
   }
-
+}
+.flex-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  // white-space: normal;
 }
 </style>

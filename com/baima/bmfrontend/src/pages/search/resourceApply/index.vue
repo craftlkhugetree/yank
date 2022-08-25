@@ -25,33 +25,62 @@
     <!--表格-->
     <el-table class="my-table" :data="applyList" style="width: 100%" stripe v-loading="loading">
       <el-table-column
-        prop="usetype"
+        prop="useType"
         label="申请类型"
         align="center"
         :formatter="common.useTypeFormatter"
       ></el-table-column>
-      <el-table-column prop="typename" label="资源类型" align="center"></el-table-column>
-      <el-table-column prop="rescodes" label="资源编号" align="center"></el-table-column>
-      <el-table-column prop="orgname" label="学院名称" align="center"></el-table-column>
-      <el-table-column prop="classleadername" label="负责教师" align="center"></el-table-column>
-      <el-table-column prop="usecycle" label="时长" align="center">
-        <template
-          slot-scope="scope"
-        >{{scope.row.usecycle ? scope.row.usecycle : "--"}}{{scope.row.chargecyclename}}</template>
-      </el-table-column>
-      <el-table-column prop="applystatus" label="审批状态" align="center">
+      <el-table-column prop="createTime" label="申请时间" align="center" width="200">
         <template slot-scope="scope">
-          <span
-            :class="common.statusColor('','',scope.row.applystatus)"
-          >{{common.processFormatter("","",scope.row.applystatus)}}</span>
+              {{common.formatTime(scope.row.createTime, 'yyyy-MM-dd hh:mm:ss')}}
         </template>
       </el-table-column>
-      <el-table-column
+      <el-table-column prop="eduTypeName" label="资源类型" align="center"></el-table-column>
+      <el-table-column prop="resnames" label="资源编号" align="center"></el-table-column>
+      <el-table-column prop="orgName" label="学院名称" align="center"></el-table-column>
+      <el-table-column prop="classfeeLeaderName" label="负责教师" align="center"></el-table-column>
+      <el-table-column prop="useCycle" label="时长" align="center">
+        <template
+          slot-scope="scope"
+        >
+        <!-- {{scope.row.useCycle ? scope.row.useCycle : "--"}}{{scope.row.chargecyclename}} -->
+           {{ common.cycleUnit(scope.row) }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="status" label="审批状态" align="center">
+        <template slot-scope="scope">
+          <span
+            :class="
+              common.actionColor2(
+                'BM',
+                scope.row.handleNode,
+                scope.row.historyNode,
+                scope.row
+              )
+            "
+            >{{
+              common.processFormatter2(
+                "BM",
+                scope.row.handleNode,
+                scope.row.historyNode,
+                scope.row
+              )
+            }}</span
+          >
+        </template>
+      </el-table-column>
+      <el-table-column prop="approver" label="审批人" align="center">
+        <template slot-scope="scope">
+          {{ charger(scope.row) }}
+        </template>
+      </el-table-column>
+
+      <!-- <el-table-column
         prop="actionstatus"
         label="状态"
         align="center"
         :formatter="common.applyLiveStatusFormatter"
-      ></el-table-column>
+      ></el-table-column> -->
       <el-table-column label="操作" fixed="right" width="150" align="center">
         <template slot-scope="scope">
           <div class="table-btn green" @click="goDetail(scope.row)">详情</div>
@@ -94,7 +123,20 @@ export default {
       loading: false,
     };
   },
-
+  computed: {
+    charger() {
+      return function(row) {
+        let obj =
+          this.$store.state.leaderList.find(l => l.id === row.approver) || {};
+        let name;
+        // let name = obj.name;
+        if (row && row.events && row.events.length && row.events[0].eventType != 1) {
+          name = row.events[0].createName;
+        }
+        return name || "--";
+      };
+    }
+  },
   methods: {
     // 选择学院
     changeOrg(value) {
@@ -156,6 +198,12 @@ export default {
             this.common.chargecycleFormatter2(this.applyList);
             params.orgname = this.$refs.orgSelect.orgname;
             sessionStorage.setItem("resSearchParams", JSON.stringify(params));
+            this.applyList.forEach(r => {
+              let chargecycle = r.billingCycle + "";
+              let chargetype = r.billingMethod + "";
+              this.common.chargecycleFormatter(chargecycle, r);
+              this.common.chargetypeFormatter2(chargetype, r, "ct2", "ct1");
+            });
           }
         });
     },

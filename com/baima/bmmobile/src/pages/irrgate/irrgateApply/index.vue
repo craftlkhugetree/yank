@@ -87,7 +87,7 @@
       <div slot="append">
         <van-loading v-show="loading" type="spinner" color="#b6bdc6" />
         <p v-show="!finishTable && !loading" @click="getMoreData">点击加载更多</p>
-        <p v-show="finishTable && tableData.length > 0" style="cursor:none;">到底啦</p>
+        <p v-show="finishTable && tableData.length" style="cursor:none;">到底啦</p>
       </div>
     </el-table>
 
@@ -125,7 +125,8 @@ export default {
         { text: "草稿箱", value: "2" }
       ],
       currentPage: 1,
-      limit: 5,
+      limit: 10,
+      total: 0,
       tableData: [],
       tableHeight: 0,
       loading: false,
@@ -207,6 +208,7 @@ export default {
       this.getList(this.currentPage + 1)
         .then(list => {
           this.tableData = this.tableData.concat(list);
+          this.finishTable = this.tableData.length === this.total;
         })
         .catch(() => {});
     },
@@ -236,6 +238,7 @@ export default {
           .then(res => {
             this.loading = false;
             if (res.success == true) {
+              this.total = res.total
               let applyerList = res.item ? res.item.applyerList || {} : {};
               let list = applyerList.list || [];
               if (page === 1) {
@@ -245,7 +248,7 @@ export default {
                   this.latestId = list[0] ? list[0].id : "";
                 }
               }
-              this.finishTable = list.length < this.limit ? true : false;
+              this.finishTable = list.length < this.limit || list.length === res.total;
               this.currentPage = page;
               resolve(list);
             } else {

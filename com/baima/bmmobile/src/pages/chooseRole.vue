@@ -49,6 +49,7 @@ export default {
     setCurRole(item) {
       sessionStorage.setItem("curRole", item.ID);
       let path = "";
+      let funM = '/fun-module';
       switch (item.ID) {
         case "16000-1":
           path = "/service-info-view";
@@ -61,13 +62,13 @@ export default {
           break;
         case "16000-4":
           path = "/irrgate-worker";
+          funM = "/irrgate-worker";
           break;
         case "16000-5":
           path = "/service-info-view";
         case roleId.hq:
           path = "/practice-audit-bm";
       }
-      const funM = '/fun-module';
       this.$router.push(funM || path);
 
       // 判断消息是否在有效期内

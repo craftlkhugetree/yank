@@ -1,5 +1,5 @@
 <template>
-  <div v-loading.fullscreen.lock="loading">
+  <div v-loading.fullscreen.lock="loading || $store.state.gLoading">
     <div class="common-content" style="padding: 10px 20px">
       <!------------------------- 查询区域 ------------------------->
       <div class="search-group div-flex clearfix">
@@ -80,11 +80,11 @@
       <div class="container" style="float: right; min-height:1000px;">
         <list
           :isReport="true"
-          v-show="!isDetail"
           ref="list"
           :total="total"
           :tableData="tableData"
           :activeTab="activeTab"
+          :isDetail="isDetail"
           @getList="getList"
           @trigger="trigger"
         >
@@ -108,8 +108,6 @@
             </div>
           </div>
         </list>
-        <!------------------------- 详情 ------------------------->
-        <detail ref="detail" v-show="isDetail" :activeTab="activeTab"></detail>
       </div>
     </div>
 
@@ -145,11 +143,10 @@ import { getCountFlag, getMyRepairs, deleteId } from "@/assets/js/api";
 import { repairStatus } from "@/assets/js/options";
 
 export default {
-  name: "ReportList",
+  name: "Report",
   components: {
     EditReport: () => import("./editReport"),
-    List: () => import("./list"),
-    Detail: () => import("./detail")
+    List: () => import("./reportList")
   },
   data() {
     return {
@@ -179,12 +176,12 @@ export default {
       if (type === "delete") {
         this.deleteRes(obj);
       }
-      if (type === "detail") {
-        this.toDetail(obj);
-      }
-      if (type === "judge") {
-        this.toJudge(obj);
-      }
+      // if (type === "detail") {
+      //   this.toDetail(obj);
+      // }
+      // if (type === "judge") {
+      //   this.toJudge(obj);
+      // }
     },
     // 改变loading
     setLoading(bool) {
@@ -212,25 +209,13 @@ export default {
     },
     // 搜索
     onSearch() {
-      this.getCount();
-      this.getList(1);
+      this.apis();
     },
     // 编辑页面
     toEdit(id) {
       this.$refs.edit.findById(id);
     },
-    // 报修详情
-    toDetail(id) {
-      this.isDetail = true;
-      this.$nextTick(() => {
-        this.$refs.detail.findById(id);
-        this.$refs.detail.$refs.judge && this.$refs.detail.$refs.judge.genR();
-      });
-    },
-    // 评价
-    toJudge(row) {
-      this.toDetail(row.id);
-    },
+
     // 删除
     deleteRes(row) {
       this.diagTitle = "确认";
@@ -298,9 +283,18 @@ export default {
             if (res && res.success) {
               this.total = res.total;
               let list = res.data || [];
+              list.forEach(l => {
+                l.isExpand = false;
+              });
               this.tableData = list;
               this.currentPage = page;
               this.limit = limit || this.limit;
+              let timer = setInterval(() => {
+                if (this.$refs.edit) {
+                  this.$refs.edit.reset4Form();
+                  clearInterval(timer);
+                }
+              }, 500);
               resolve(list);
             } else {
               this.$message({
@@ -319,7 +313,8 @@ export default {
     },
     // 获取状态数量
     getCount() {
-      let params = { createId: this.userId };
+      // 报修的数量有全部，维修则是已处理的全部
+      let params = { createId: this.userId, status: "1,2,3,4" };
       if (this.dateTime && this.dateTime.length) {
         params.starttime = this.transTime(this.dateTime[0]);
         params.endtime = this.transTime(this.dateTime[1]);
@@ -330,9 +325,9 @@ export default {
       getCountFlag(params)
         .then(res => {
           if (res && res.success) {
-                this.$set(this.img[1], 'count', 0);
-                this.$set(this.img[2], 'count', 0);
-                this.$set(this.img[3], 'count', 0);
+            this.$set(this.img[1], "count", 0);
+            this.$set(this.img[2], "count", 0);
+            this.$set(this.img[3], "count", 0);
             let total = 0;
             res.data &&
               res.data.forEach(r => {
@@ -363,7 +358,7 @@ export default {
     // 点击状态图标
     clickImg(item) {
       this.status = item.val;
-      this.getList(1);
+      this.apis();
     },
     // 子组件触发
     apis(type) {

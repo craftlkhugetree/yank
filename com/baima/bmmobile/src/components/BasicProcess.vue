@@ -2,11 +2,12 @@
   <div class="basic-process">
     <div
       class="step"
-      v-for="item in data.filter(d => !d.rearService)"
+      v-for="item in data"
       :key="item.id"
-      :style="{'width': 100/data.filter(d => !d.rearService).length + '%'}"
+      :style="{'width': 100 / (data.length) + '%'}"
       :class="{'success': item.status === 'success', 'fail': item.status === 'fail'}"
     >
+      <!-- :style="{'width': 100/data.filter(d => !d.rearService).length + '%'}" -->
       <div class="step-head">
         <div class="title-line"></div>
         <div class="title-icon" v-show="!item.des" ></div>

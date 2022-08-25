@@ -83,6 +83,12 @@
         ></base-switch>
         <transition name="van-fade">
           <div class="form-box-content" v-if="eatInfo.iseat === '1'">
+            <van-cell >
+              <span style="color:#faac16;font-size:12px;float: left">
+                如果实习期间遇特殊情况不用餐，请提前联系基地后勤保障科56217123，以免造成浪费。
+              </span>
+            </van-cell>
+
             <van-field
               readonly
               clickable

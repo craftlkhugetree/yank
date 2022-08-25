@@ -42,14 +42,16 @@ Vue.use(Toast);
 Toast.setDefaultOptions({ duration: 2500 });
 
 // 按需引入ElementUi
-import { Table, TableColumn, Checkbox, Dropdown, Input, DropdownItem, DropdownMenu } from 'element-ui';
+import { Table, TableColumn, Checkbox, Dropdown, Input, DropdownItem, DropdownMenu, Image, Alert } from 'element-ui';
 Vue.use(Table)
   .use(TableColumn)
   .use(Checkbox)
   .use(Dropdown)
   .use(Input)
   .use(DropdownMenu)
-  .use(DropdownItem);
+  .use(DropdownItem)
+  .use(Image)
+  .use(Alert)
 
 new Vue({
   el: '#app',

@@ -1,7 +1,12 @@
 <template>
   <div>
-      <van-nav-bar ref="navBar" title="科教资源" :border="false" right-text="功能首页"
-      @click-right="$router.push('/fun-module')"/>
+    <van-nav-bar
+      ref="navBar"
+      title="科教资源"
+      :border="false"
+      right-text="功能首页"
+      @click-right="$router.push('/fun-module')"
+    />
     <!-- Tab页 -->
     <van-tabs
       ref="tabs"
@@ -11,43 +16,47 @@
       title-active-color="#00b09b"
       @click="changeTab"
     >
-      <van-tab title="我的资源" name="myres"></van-tab>
       <van-tab title="空闲资源" name="freeres"></van-tab>
+      <van-tab title="我的资源" name="myres"></van-tab>
       <van-tab title="申请记录" name="apply"></van-tab>
-      <van-tab title="报修记录" name="repair"></van-tab>
+      <!-- <van-tab title="报修记录" name="repair"></van-tab> -->
+      <van-tab title="费用结算" name="fee"></van-tab>
     </van-tabs>
-    <res-list :key="1" v-if="activeTab === 'myres'" usestatus="3"></res-list>
     <res-list :key="2" v-if="activeTab === 'freeres'" usestatus="1"></res-list>
+    <my-res :key="1" v-if="activeTab === 'myres'" usestatus="3"></my-res>
     <apply-list v-if="activeTab === 'apply'"></apply-list>
-    <repair v-if="activeTab === 'repair'" :applyerid="userInfo.ID"></repair>
+    <!-- <repair v-if="activeTab === 'repair'" :applyerid="userInfo.ID"></repair> -->
+    <fee v-if="activeTab === 'fee'" :identity="'teacher'"></fee>
   </div>
 </template>
 
 <script>
-import ResList from "./resApply/resList"
-import ApplyList from "./resApply/applyList"
-import Repair from "./resRepair"
+import ResList from './resApply/resList';
+import ApplyList from './resApply/applyList';
+// import Repair from './resRepair';
 export default {
   components: {
     ResList,
     ApplyList,
-    Repair
+    // Repair,
+    MyRes: () => import('./resApply/myRes'),
+    Fee: () => import('./resApply/fee'),
   },
   data() {
     return {
-      activeTab: sessionStorage.getItem("curEduTab") || "myres"
+      activeTab: sessionStorage.getItem('curEduTab') || 'freeres',
     };
   },
   computed: {
     userInfo() {
-      return this.$store.state.userInfo
-    }
+      return this.$store.state.userInfo;
+    },
   },
   methods: {
     changeTab(name) {
-      sessionStorage.setItem("curEduTab",name);
-    }
-  }
+      sessionStorage.setItem('curEduTab', name);
+    },
+  },
 };
 </script>
 

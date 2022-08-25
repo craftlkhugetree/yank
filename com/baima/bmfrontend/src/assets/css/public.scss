@@ -480,10 +480,8 @@ h3 {
 .more-ellipsis{
   display: -webkit-box;
   -webkit-box-orient:vertical;
-  text-overflow: ellipsis;
   overflow : hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
   -webkit-line-clamp: 2;
 }
 

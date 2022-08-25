@@ -66,7 +66,7 @@
                 />
               </div>
               <span :class="index == 0 ? 'first' : ''">{{ item.content }}</span>
-              <div class="imgs">
+              <div class="imgs" v-if="item.eventType && item.eventType != 1">
                 <img
                   :src="fileUrl + g.ID"
                   alt
@@ -92,7 +92,7 @@
     <div class="middle" v-if="isConsumer()">维修评价</div>
     <div class="form-box rear" v-if="isConsumer()">
       <span>还没有收到你的评价信息</span>
-      <van-button round type="primary" @click="toJudge(rInfo.id)">立即评价</van-button>
+      <van-button style="margin-bottom: 10px" round type="primary" @click="toJudge(rInfo.id)">立即评价</van-button>
     </div>
 
     <!-- 转移确认框 -->
@@ -208,7 +208,7 @@ export default {
         obj.createName = r.createName;
         obj.content = r.content;
         this.transPhotos(r, obj.imgs);
-        this.progress.unshift(obj);
+        this.progress.push(obj);
       }
       this.disProgress = this.progress.length > 2 ? this.progress.slice(0, 2) : this.progress;
     },
@@ -221,7 +221,7 @@ export default {
     getProgressObj(item) {
       const r = this.rInfo;
       const et = item.eventType;
-      let obj = { imgs: [] };
+      let obj = { imgs: [], eventType: et };
       if (et == '1') {
         obj.name = '报修';
         obj.time = r.applyTime;
@@ -245,7 +245,7 @@ export default {
           obj.name =
             '转移' +
             (r.bizNode === bizNode.bm
-              ? '到白马管理员'
+              ? '到基地管理员'
               : r.bizNode === bizNode.hq
               ? '到后勤管理员'
               : '');
@@ -257,7 +257,7 @@ export default {
         obj.createName = item.createName;
         this.transPhotos(item, obj.imgs);
       }
-      this.progress.unshift(obj);
+      this.progress.push(obj);
     },
     // 评价
     toJudge(id) {
@@ -275,7 +275,7 @@ export default {
     move() {
       this.dVisible = true;
       this.diagBody =
-        this.curRole === roleId.bm ? '是否转移至后勤管理员？' : '是否转移至白马管理员？';
+        this.curRole === roleId.bm ? '是否转移至后勤管理员？' : '是否转移至基地管理员？';
     },
     // 维修
     repair() {
@@ -448,6 +448,7 @@ export default {
     font-weight: 400;
     color: #888888;
     line-height: 20px;
+    margin: 20px auto;
   }
   /deep/ .van-button__text {
     color: #fff;

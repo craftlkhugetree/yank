@@ -817,20 +817,20 @@ export default {
 }
 
 /deep/ .el-checkbox__input.is-checked .el-checkbox__inner {
-      background-color:#00B09B;
-      border-color:#00B09B;
+      background-color:#00B09B !important;
+      border-color:#00B09B !important;
      }
 /deep/ .el-checkbox__input.is-indeterminate  .el-checkbox__inner {
-      background-color:#00B09B;
-      border-color:#00B09B; 
+      background-color:#00B09B !important;
+      border-color:#00B09B !important; 
 }
 /deep/  .el-checkbox__input.is-checked + .el-checkbox__label {
-      color: #00B09B;
+      color: #00B09B !important;
      }
 /deep/  .el-checkbox.is-bordered.is-checked{
-      border-color: #00B09B;
+      border-color: #00B09B !important;
      }
 /deep/  .el-checkbox__input.is-focus .el-checkbox__inner{
-      border-color:  #00B09B;
+      border-color:  #00B09B !important;
      }
 </style>

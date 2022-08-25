@@ -76,9 +76,11 @@ let startAjax = function (options) {
           method: options.isGet ? 'GET' : 'POST',
           timeout: 3000,
           headers: {
-            // IDSTGC: getCookie('IDSTGC') || 'da3ebedd9d594e00a768805afe999993',
-            IDSTGC: getCookie('IDSTGC') || 'beef0109b7ec4b98be0cc92b5a35c291',
-            // IDSTGC: getCookie('IDSTGC') || 'f116dc5194b04a0b98a7245c71398905',
+            // IDSTGC: getCookie('IDSTGC') || 'de481410b47e4e19956b0f488595b381',
+            IDSTGC: getCookie('IDSTGC') || 'f5c353e3109d4397bd6886453ba504e7',
+            // IDSTGC: getCookie('IDSTGC') || '05df6b8242aa464ebe06618bcbf57012',
+            // IDSTGC: getCookie("IDSTGC") || "3a2ac70ebf42409ba7e330804283467a"
+            // IDSTGC: getCookie('IDSTGC') //|| 'beef0109b7ec4b98be0cc92b5a35c291',
           },
           data: options.isRep ? options.data : qs.stringify(options.data) || '',
         };
@@ -204,8 +206,32 @@ var formatName = function (name) {
   return name.charAt(0) + Array(name.length).join('*');
 };
 
+/** Function: 导出文件 */
+const exportFile = function (url, isGet, params, fileName, fileType) {
+    Axios({
+      url: window.g.bm + url,
+      method: isGet ? "GET" : "POST",
+      responseType: "blob",
+      headers: {
+        IDSTGC: getCookie("IDSTGC") || "7449714c09c049b693c2c03b6ffb2086"
+      },
+      data: params
+    }).then(res => {
+      let url = window.URL.createObjectURL(res.data);
+      let link = document.createElement("a");
+      link.href = url;
+      link.style.display = "none";
+      link.setAttribute("download", fileName + "." + fileType);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    });
+}
+
 export default {
   global,
+  exportFile,
   //返回当前的年月日
   formatMYD() {
     return ymd()

@@ -46,7 +46,7 @@
       <el-table-column prop="prstarttime" label="实习日期" sortable align="center" :formatter="prTimeFormatter"></el-table-column>
       <el-table-column prop="applystatus" label="审批进度" align="center">
         <template slot-scope="scope">
-          <span :class="common.statusColor('','',scope.row.applystatus)">{{common.processFormatter("","",scope.row.applystatus)}}</span>
+          <span :class="common.statusColorPractice('','',scope.row.applystatus)">{{common.processFormatterPractice("","",scope.row.applystatus)}}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" fixed="right" width="150" align="center">
@@ -100,7 +100,7 @@
         searchForm:{},
         applyList:[],  //申请列表
         dialogFormVisible: false,
-        form: {},
+        form: {eatstarttime: '', eatendtime:''},
         formLabelWidth: '120px',
         applyStatus:this.options.prApplyStatus,   //状态列表
         codeList:JSON.parse(sessionStorage.getItem("codeList")) ,  //资源编号列表
@@ -399,8 +399,8 @@
         form.prendtime=form.prendtime ? this.util.formatTime(form.prendtime,"yyyyMMdd000000") : "";
         form.sleepstarttime=form.sleepstarttime ? this.util.formatTime(form.sleepstarttime,"yyyyMMdd000000") : "";
         form.sleependtime=form.sleependtime ? this.util.formatTime(form.sleependtime,"yyyyMMdd000000") : "";
-        form.eatstarttime=form.eatstarttime　? this.util.formatTime(form.eatstarttime,"yyyyMMdd000000") : "";
-        form.eatendtime=form.eatendtime ? this.util.formatTime(form.eatendtime,"yyyyMMdd000000") : "";
+        form.eatstarttime=form.eatstarttime　? this.util.formatTime(this.util.formatMYD(form.eatstarttime),"yyyyMMdd000000") : "";
+        form.eatendtime=form.eatendtime ? this.util.formatTime(this.util.formatMYD(form.eatendtime),"yyyyMMdd000000") : "";
 
         // console.log("form2",form);
 
@@ -419,7 +419,7 @@
         })
           .then(res => {
             loading.close();
-            if(res.success == true){
+            if(res && res.success === true){
               this.dialogFormVisible = false;
               this.$message({
                 type:"success",
@@ -447,7 +447,7 @@
       //提交
       submit(type){
         this.$refs.child.checkAllTable();
-        let form=this.$refs.child.form;
+        let form = {...this.$refs.child.form};
         this.studentList = this.$refs.child.tableData.map(t => {
           let obj = {...t};
           obj.sex = obj.sex === '男' ? 1 : 0;
@@ -455,12 +455,13 @@
         });
         // console.log(form, this.studentList);
 
+        // 暂存未要求校验
         if(type == 0){
           this.submitData(type,form)
         }else if(type == 1 || type==2){
           this.$refs.child.$refs.form.validate((valid) => {
             if (valid) {
-              let form=this.$refs.child.form;
+              let form= {...this.$refs.child.form};
               let teacherList=this.$refs.child.teacherList;
 
               if(teacherList && teacherList.length == 0){
@@ -485,13 +486,19 @@
                 else if(form.issleep == "1" && form.sleepstarttime < form.prstarttime){
                   this.$message({
                     type:"warning",
-                    message:"住宿开始日期不能晚于实习开始日期"
+                    message:"住宿开始日期不能早于实习开始日期"
                   })
                 }
-                else if(form.issleep == "1" && form.eatstarttime < form.prstarttime){
+                else if(form.iseat == "1" && (!form.eatstarttime || !form.eatendtime)){
                   this.$message({
                     type:"warning",
-                    message:"用餐开始日期不能晚于实习开始日期"
+                    message:"请选择用餐日期"
+                  })
+                }
+                else if(form.iseat == "1" && this.util.formatTime(this.util.formatMYD(form.eatstarttime),"yyyyMMdd000000") < form.prstarttime){
+                  this.$message({
+                    type:"warning",
+                    message:"用餐开始日期不能早于实习开始日期"
                   })
                 }
 

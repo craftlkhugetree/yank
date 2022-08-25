@@ -45,6 +45,7 @@
         :default-date="common.defaultDate(editForm.prtime, true)"
         :min-date="prMinDate"
         :max-date="new Date(2050,1,1)"
+        :allow-same-day="true"
       />
       <van-field
         v-model="editForm.applyername"
@@ -192,7 +193,7 @@ export default {
   computed: {
     // 最小可选时间
     prMinDate() {
-      let days = parseInt(this.ruleDay) || 0;
+      let days = (parseInt(this.ruleDay) || 0) + 1;
       return this.common.DateAdd("天", days, new Date());
     }
   },

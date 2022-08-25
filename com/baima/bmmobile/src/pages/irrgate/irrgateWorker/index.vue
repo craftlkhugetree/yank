@@ -121,6 +121,7 @@
         prop="worker"
         label="田间值守人"
         align="center"
+        width="120"
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column

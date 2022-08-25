@@ -41,7 +41,7 @@ export default {
   },
   created() {
    sessionStorage.setItem('repairTab', 'pending'); 
-  }
+  },
 };
 </script>
 

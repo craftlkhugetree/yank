@@ -1,26 +1,26 @@
 // 性别
 const applyStatus = [
-    { name: "草稿", id: "0" },
-    { name: "审批中", id: "1" },
-    { name: "未接收", id: "2" },
-    { name: "已完成", id: "3" },
-    { name: "已驳回", id: "8" },
-    { name: "已撤回", id: "9" },
-]
+  { name: "草稿", id: "0" },
+  { name: "审批中", id: "1" },
+  { name: "未接收", id: "2" },
+  { name: "已完成", id: "3" },
+  { name: "已驳回", id: "8" },
+  { name: "已撤回", id: "9" }
+];
 
 //资源申请单状态
 const resApplyStatus = [
-  { name: "单位领导审批中", id: "1" },
-  { name: "白马办审批中", id: "2" },
-  { name: "已完成", id: "3" },
+  { name: "单位领导审批中", id: "1", handleNode: "LD" },
+  { name: "基地审批中", id: "1", handleNode: "BM" },
+  { name: "已完成", id: "2" },
   { name: "已驳回", id: "8" },
-  { name: "已撤回", id: "9" },
-]
+  { name: "已撤回", id: "9" }
+];
 
 /*//温网室资源申请单状态
 const resApplyStatus2 = [
   { name: "单位领导审批中", id: "1" },
-  { name: "白马办审批中", id: "2" },
+  { name: "基地审批中", id: "2" },
   { name: "已完成", id: "3" },
   { name: "已驳回", id: "8" },
   // { name: "已撤回", id: "9" },
@@ -30,14 +30,13 @@ const resApplyStatus2 = [
 const prApplyStatus = [
   { name: "草稿", id: "0" },
   { name: "单位领导审批中", id: "1" },
-  { name: "白马办审批中", id: "2" },
-  { name: "已完成", id: "3" },
+  { name: "基地审批中", id: "2" },
+  { name: "后勤审批中", id: "3" },
+  { name: "已完成", id: "6" },
   { name: "系统退回", id: "7" },
   { name: "已驳回", id: "8" },
-  { name: "已撤回", id: "9" },
-]
-
-
+  { name: "已撤回", id: "9" }
+];
 
 //资源状态
 const resStatus = [
@@ -45,22 +44,39 @@ const resStatus = [
   { name: "未入驻", id: "2" },
   { name: "已入驻", id: "3" },
   { name: "已退出", id: "4" },
-  { name: "申请中", id: "5" },
-]
+  { name: "申请中", id: "5" }
+];
 
+// 新资源状态
+const resNewStatus = [
+  { name: "空闲", id: "0" },
+  { name: "占用", id: "1" },
+];
 //号码验证
-const testPhone = {pattern: /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/, message: '手机格式不正确', trigger: 'blur'}
+const testPhone = {
+  pattern: /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/,
+  message: "手机格式不正确",
+  trigger: "blur"
+};
 
-var userInfo={};
+var userInfo = {};
 
-var jzgList=[];
+var jzgList = [];
 
 //资源类型列表
-var resTypeList=[];
+var resTypeList = [];
 
 export default {
-  applyStatus,resStatus,testPhone,userInfo,jzgList,resApplyStatus,resTypeList,prApplyStatus
-}
+  applyStatus,
+  resStatus,
+  resNewStatus,
+  testPhone,
+  userInfo,
+  jzgList,
+  resApplyStatus,
+  resTypeList,
+  prApplyStatus
+};
 
 export const nation_data = [
   { id: 1, name: "汉族" },
@@ -143,7 +159,7 @@ export const bmBasement = [
 
 export const repairStatus = [
   { val: 0, name: "草稿" },
-  { val: 1, name: "待处理" },
+  { val: 1, name: "待维修" },
   { val: 2, name: "维修完工", icon: "completed" },
   { val: 3, name: "不维修", icon: "noRepair" },
   { val: 4, name: "维修结束", icon: "finish" }
@@ -165,3 +181,8 @@ export const result = [
   { val: "4-2", name: "未修复", icon: "cry.png", cIcon: "colorcry.png" }
 ];
 
+export const optionsMeal = [
+  { value: "1", label: "早餐" },
+  { value: "2", label: "中餐" },
+  { value: "3", label: "晚餐" }
+];

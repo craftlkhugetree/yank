@@ -77,7 +77,7 @@ export const bmBasement = [
 
 export const repairStatus = [
   { val: 0, name: '草稿' },
-  { val: 1, name: '待处理' },
+  { val: 1, name: '待维修' },
   { val: 2, name: '维修完工', icon: 'completed' },
   { val: 3, name: '不维修', icon: 'noRepair' },
   { val: 4, name: '维修结束', icon: 'finish' },

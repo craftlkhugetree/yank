@@ -82,11 +82,21 @@
       <el-table-column prop="typename" label="灌溉类型" align="center"></el-table-column>
       <el-table-column prop="rescodes" label="资源编号" align="center"></el-table-column>
       <el-table-column prop="applyername" label="申请人" align="center"></el-table-column>
+      <el-table-column prop="applytime" label="申请时间" align="center" width="200">
+        <template slot-scope="scope">
+              {{common.formatTime(scope.row.applytime, 'yyyy-MM-dd hh:mm:ss')}}
+        </template>
+      </el-table-column>
       <el-table-column prop="applystatus" label="状态" align="center">
         <template slot-scope="scope">
           <span
             :class="common.statusColor('','',scope.row.applystatus)"
           >{{common.statusFormatter("","",scope.row.applystatus)}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="approver" label="审批人" align="center">
+        <template slot-scope="scope">
+          {{ charger(scope.row) }}
         </template>
       </el-table-column>
       <el-table-column label="操作" fixed="right" width="100" align="center">
@@ -137,6 +147,19 @@ export default {
     //资源类型列表
     typeList() {
       return this.$store.state.irrtypeList;
+    },
+    charger() {
+      return function(row) {
+        let obj =
+          this.$store.state.leaderList.find(l => l.id === row.approver) || {};
+        let name
+        if (row && row.events && row.events.length && row.events[0].eventtype != 1  && row.events[0].eventtype != 2) {
+          name = row.events[0].eventername || name;
+        } else if (row.events[0].eventtype == 5) {
+          name = row.events[1] && row.events[1].eventername;
+        }
+        return name || "--";
+      };
     }
   },
   methods: {

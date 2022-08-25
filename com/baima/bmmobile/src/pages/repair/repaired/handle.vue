@@ -229,7 +229,7 @@ export default {
   created() {
     this.rInfo = JSON.parse(this.$route.query.data);
     this.diagBody =
-      this.curRole === roleId.bm ? '是否转移至后勤管理员？' : '是否转移至白马管理员？';
+      this.curRole === roleId.bm ? '是否转移至后勤管理员？' : '是否转移至基地管理员？';
   },
 };
 </script>

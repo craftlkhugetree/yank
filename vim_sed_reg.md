@@ -139,11 +139,11 @@ var str = '2022-04-21'
 var reg = /(\d{4})-(?:\d{2})-(\d{2})/
 var result = reg.exec(str)  // 得到的数组就不包括04了
 
-$1只匹配小括号内的内容
-保留两位小数的价格输入框，没有四舍五入:
+# $1只匹配小括号内的内容，\1也是。
+只保留 点和两位小数，没有四舍五入:
 const changePiece = (e) =>{
-    // ?:将不要的匹配子项忽略
-    e.target.value = e.target.value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1');
+    // ?:将不要的匹配子项忽略，所以只匹配到第二个小括号内容
+    e.target.value = e.target.value.replace(/^\D*(?:\d*(\.\d{0,2})?).*$/g, '$1');
   }
   return (
     <div>
@@ -152,9 +152,20 @@ const changePiece = (e) =>{
   );
 
 
-当我们想匹配一个正确的 HTML 标签时，使用 "<[\w]+>.*<\/[\w]+>"。
+当我们想匹配一个正确的 HTML 标签时，使用 "<([\w]+)>.*<\/[\w]+>"。
 可以看到虽然可以匹配 HTML 开始和结束标签，但是却不能校验前后的一致性。如 “</span>” 并不是 “<div>” 的结束标签。
-我们可以把后面的部分改成 “<\/\1>” 其中 “\1” 就是引用第一个分组。这样一来我们就可以匹配正确的 HTML 标签了。
+我们可以把后面的部分改成 “<\/\1>” 其中 “\1” 就是引用 *** 第一个匹配的小括号内容 ***。这样一来我们就可以匹配成对的 HTML 标签了。
+
+// 手机号码的校验
+const phoneReg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/
+// 身份证的校验
+const idCardReg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+// URL的校验
+const urlReg = /^((https?|ftp|file):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
+// 邮箱的校验
+const emailReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+// 日期 YYYY-MM-DD 校验
+const dateReg = /^\d{4}(\-)\d{1,2}\1\d{1,2}$/
 
 断言 (Assertion)
 断言有些地方也叫环视(Lookaround)，它只进行子表达式的匹配，不占有字符，匹配到的内容不保存到最终的匹配结果。
@@ -172,12 +183,30 @@ const changePiece = (e) =>{
 如上就排除了“喜欢”前面有“我”的字符串。
 
 
+var re = /-/g;
+var str = '2022-01-02';
+var result = re[Symbol.split](str);  // *** 类似call/apply/bind ***
+console.log(result);  // ["2022", "01", "02"]
 
+对象的Symbol.isConcatSpreadable属性等于一个布尔值，表示该对象用于Array.prototype.concat()时，是否可以展开。
+let arr1 = ['c', 'd'];
+['a', 'b'].concat(arr1, 'e') // ['a', 'b', 'c', 'd', 'e']
+arr1[Symbol.isConcatSpreadable] // undefined
 
+let arr2 = ['c', 'd'];
+arr2[Symbol.isConcatSpreadable] = false;
+['a', 'b'].concat(arr2, 'e') // ['a', 'b', ['c','d'], 'e']
 
+let arr3 = ['c', 'd'];
+arr2[Symbol.isConcatSpreadable] = true;
+['a', 'b'].concat(arr2, 'e') // ['a', 'b', ['c','d'], 'e']
 # whistle
 # 操作统计-民国库后台管理
 /^http://172.20.1.251:8080/bemweb/view/resourceClassfiyManager/(.*).js/		file://D:\kxiangmu\mgsjk\03code\bemweb\src\main\webapp\view\classificationStats\\$1.js
 
 # 民国库书页搜索弹窗
 /^http://172.20.1.251:8080/book/h5/readPage/(.*)/		file://D:\kxiangmu\mgsjk\03code\book\src\main\webapp\h5\readPage\\$1
+
+
+
+

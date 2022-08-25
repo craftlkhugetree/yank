@@ -129,8 +129,9 @@
           </div>
         </div>
         <div class="form-btns">
-          <van-button type="default" @click="doSubmit(0)">保存草稿</van-button>
-          <van-button type="primary" @click="doSubmit(1)">提交</van-button>
+          <van-button style="width: 33%" type="default" @click="doSubmit(0)">保存草稿</van-button>
+          <van-button style="width: 33%" type="primary" @click="doSubmit(1)">提交</van-button>
+          <van-button style="width: 33%" type="default" @click="reset4Form()">重置表单</van-button>
         </div>
       </van-form>
     </div>
@@ -186,6 +187,14 @@ export default {
     },
   },
   methods: {
+    // 重置表单
+    reset4Form() {
+      this.editForm.campus = '';
+      this.editForm.area = '';
+      this.editForm.content = '';
+      this.editForm.mobile = '';
+      this.files = [];
+    },
     // 返回
     goBack() {
       this.$router.go(-1);
@@ -226,7 +235,7 @@ export default {
             suf = bmBasement.find(b => b.val == this.editForm.area).name;
           }
           let title = suf ? pre + '/' + suf : pre;
-          const params = { title };
+          const params = { };
           let photos = '';
           this.files.forEach(f => {
             photos += f.ID + ',';
@@ -237,6 +246,7 @@ export default {
           for (let name in this.editForm) {
             params[name] = this.editForm[name];
           }
+          params.title = title
           params.photos = photos.substring(0, photos.length - 1);
           params.status = type;
           this.$toast.loading({

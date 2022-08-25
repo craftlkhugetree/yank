@@ -9,9 +9,7 @@
     <!-- <el-divider></el-divider> -->
     <div v-if="isUploadShow">
       <el-row>
-        <el-button @click="toUpload" size="medium" icon="el-icon-upload2"
-          >上传文件</el-button
-        >
+        <el-button @click="toUpload" size="medium" icon="el-icon-upload2">上传文件</el-button>
         <span class="hint">&nbsp;&nbsp;{{ onlyExcel }}</span>
       </el-row>
       <el-row>
@@ -41,9 +39,9 @@
 </template>
 
 <script>
-import * as XLSX from "xlsx";
+import * as XLSX from 'xlsx';
 export default {
-  name: "importDialog",
+  name: 'importDialog',
   props: {
     id: String,
   },
@@ -52,19 +50,19 @@ export default {
   },
   data() {
     return {
-      filename: "",
+      filename: '',
       seat: [],
-      onlyExcel: "仅支持xlsx、xls格式文件",
+      onlyExcel: '仅支持xlsx、xls格式文件',
       dialogVisible: false,
       isUploadShow: true,
       seatT: {
-        座位: "1",
-        过道: "2",
-        书架: "3",
-        墙: "4",
-        门: "5",
-        窗: "6",
-        疫情座位: "7",
+        座位: '1',
+        过道: '2',
+        书架: '3',
+        墙: '4',
+        门: '5',
+        窗: '6',
+        疫情座位: '7',
       },
       ifNull: 0,
       loading: false,
@@ -74,25 +72,25 @@ export default {
     cancel() {
       this.ifNull = 0;
       this.dialogVisible = false;
-      this.filename = "";
+      this.filename = '';
       this.seat = [];
       this.isUploadShow = true;
     },
     submitExcel() {
       if (this.seat.length) {
         this.$message({
-          type: "success",
-          message: "文件导入成功",
+          type: 'success',
+          message: '文件导入成功',
         });
-        this.$emit("importExcel", _.cloneDeep(this.seat));
+        this.$emit('importExcel', _.cloneDeep(this.seat));
       }
       this.cancel();
     },
     judgeIfExcel(file) {
       if (file && file.name) {
-        const nArr = file.name.split(".");
+        const nArr = file.name.split('.');
         if (nArr && nArr.length > 0) {
-          return ["xlsx", "xls"].includes(nArr[nArr.length - 1].toLowerCase());
+          return ['xlsx', 'xls'].includes(nArr[nArr.length - 1].toLowerCase());
         } else {
           return false;
         }
@@ -103,20 +101,17 @@ export default {
     // check excel's data
     checkExcelData(info = {}) {
       const { row, r, col, c, isWall, obj } = info;
-      let ifSeat = ["1", "7"].includes(obj.type);
+      let ifSeat = ['1', '7'].includes(obj.type);
       const msg = [];
       const reg = /^[0-9]+$/;
-      const seatType = Object.keys(this.seatT).filter((s) => s !== "座位");
+      const seatType = Object.keys(this.seatT).filter(s => s !== '座位');
       if (!col) {
-        this.ifNull
-          ? null
-          : (msg.push(`【】：` + "数据组成矩形且不能有空格。"),
-            (this.ifNull = 1));
+        this.ifNull ? null : (msg.push(`【】：` + '数据组成矩形且不能有空格。'), (this.ifNull = 1));
       } else {
         if (isWall && ifSeat) {
-          msg.push(`【${col}】：` + "座位或疫情座位不能出现在边框。");
+          msg.push(`【${col}】：` + '座位或疫情座位不能出现在边框。');
         }
-        if (!(seatType.includes(col) || (obj.type == "1" && reg.test(col)))) {
+        if (!(seatType.includes(col) || (obj.type == '1' && reg.test(col)))) {
           msg.push(
             `【${col}】：` +
               "导入文件中只能包含'过道, 书架, 墙, 门, 窗, 疫情座位', 而座位只能用数字表示。"
@@ -129,11 +124,11 @@ export default {
     getFile(event) {
       let _this = this;
       let f = event.target.files[0];
-      this.$refs.uploadDom.value = "";
+      this.$refs.uploadDom.value = '';
       if (!this.judgeIfExcel(f)) {
         this.$message({
           showClose: true,
-          type: "warning",
+          type: 'warning',
           message: this.onlyExcel,
         });
         return;
@@ -141,8 +136,8 @@ export default {
       if (f.size > 10 * 1000 * 1000) {
         this.$message({
           showClose: true,
-          type: "warning",
-          message: "文件大小不能超过10M",
+          type: 'warning',
+          message: '文件大小不能超过10M',
         });
         return;
       }
@@ -151,7 +146,7 @@ export default {
       let reader = new FileReader();
       //if (!FileReader.prototype.readAsBinaryString) {
       FileReader.prototype.readAsBinaryString = function (f) {
-        let binary = "";
+        let binary = '';
         let rABS = false; //是否将文件读取为二进制字符串
         let wb; //读取完成的数据
         let outdata;
@@ -165,20 +160,14 @@ export default {
           function fixdata(data) {
             //文件流转BinaryString(不需要此功能可以删掉)
 
-            var o = "",
+            var o = '',
               l = 0,
               w = 10240;
 
             for (; l < data.byteLength / w; ++l)
-              o += String.fromCharCode.apply(
-                null,
-                new Uint8Array(data.slice(l * w, l * w + w))
-              );
+              o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
 
-            o += String.fromCharCode.apply(
-              null,
-              new Uint8Array(data.slice(l * w))
-            );
+            o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
 
             return o;
           }
@@ -186,37 +175,89 @@ export default {
           if (rABS) {
             wb = XLSX.read(btoa(fixdata(binary)), {
               // 手动转化
-              type: "base64",
+              type: 'base64',
             });
           } else {
             wb = XLSX.read(binary, {
-              type: "binary",
+              type: 'binary',
             });
           }
           //   outdata = XLSX.utils.sheet_to_html(wb.Sheets[wb.SheetNames[0]]); //outdata就是你想要的东西
           outdata = XLSX.utils.sheet_to_txt(wb.Sheets[wb.SheetNames[0]]); //outdata就是你想要的东西
           //   let a = outdata.split("</tr><tr>");
-          const arr1 = outdata.split("\n");
-          const arr2 =
-            arr1 && arr1.length > 0 ? arr1.map((a) => a.split("\t")) : [];
+          const hasWall = outdata && outdata.indexOf('墙') > -1;
+          const arr1 = outdata.split('\n');
+          const arr2 = arr1 && arr1.length > 0 ? arr1.map(a => a.split('\t')) : [];
           // cut the empty rows&cols
-          const t = arr2.filter((row) => row.length > 0 && row.some((r) => r));
-          let tLen = t.length;
-          const index = {};
-          t.forEach((item) => {
-            item.forEach((ie, id) => {
-              if (!ie) {
-                index[id] = index[id] ? ++index[id] : 1;
-              }
-            });
-          });
-          for (let j = 0; j < tLen; j++) {
-            if (index[j] === tLen) {
-              t.forEach((item) => {
-                item.splice(j, 1);
-              });
+          // const t = arr2.filter((row) => row.length > 0 && row.some((r) => r));
+          let t = arr2.filter(row => row.length);
+          while (t[0]) {
+            if (!t[0].some(r => r)) {
+              t.shift();
+            } else {
+              break;
             }
           }
+          while (t[t.length - 1]) {
+            if (!t[t.length - 1].some(r => r)) {
+              t.pop();
+            } else {
+              break;
+            }
+          }
+          const index = {};
+          const seatType = Object.keys(_this.seatT) || [];
+          t.forEach(item => {
+            item.forEach((ie, id) => {
+              if (!ie || !ie.trim()) {
+                index[id] = index[id] ? ++index[id] : 1;
+                item[id] = '过道';
+              } else {
+                if (!seatType.includes(ie) && !/\w+/.test(ie)) {
+                  item[id] = '过道';
+                }
+              }
+            });
+            // 补竖墙
+            if (!hasWall) {
+              item.unshift('墙');
+              item.push('墙');
+            }
+          });
+          let tLen = t.length;
+          let count = 0;
+          // 削掉空列
+          for (let i = 0; i < t[0].length - 1; i++) {
+            if (index[i] === tLen) {
+              count++;
+            } else {
+              break;
+            }
+          }
+
+          let rLen = 0;
+          for (let j = t[0].length - 1; j >= 0; j--) {
+            if (index[j] === tLen) {
+              rLen++;
+            } else {
+              break;
+            }
+          }
+          t.forEach(item => {
+            for (let i = 1; i <= rLen; i++) {
+              item.pop();
+            }
+          });
+          t.forEach(item => {
+            item.splice(0, count);
+          });
+
+          // 补横墙
+          if (!hasWall) {
+            t.unshift(new Array(t[0].length).fill('墙'));
+            t.push(new Array(t[0].length).fill('墙'));
+          }
+
           _this.seat = _this.initSeat(t, f);
           // console.log(outdata, arr1, arr2);
         };
@@ -236,23 +277,17 @@ export default {
       arr.forEach((row, r) => {
         if (row instanceof Array) {
           row.forEach((col, c) => {
-            let isWall =
-              r == 0 || c == 0 || r == arr.length - 1 || c == row.length - 1;
+            let isWall = r == 0 || c == 0 || r == arr.length - 1 || c == row.length - 1;
             let obj = {
               colno: c + 1,
               rowno: r + 1,
-              id: "",
+              id: '',
               seatId: ++seatId,
-              isopen: "",
+              isopen: '',
               isWall,
-              name:
-                isWall && seatType[col] == "4"
-                  ? "0"
-                  : seatType[col]
-                  ? " "
-                  : col,
-              sectionid: this.id === "create" ? "" : this.id,
-              type: seatType[col] ? seatType[col] : "1",
+              name: isWall && seatType[col] == '4' ? '0' : seatType[col] ? ' ' : col,
+              sectionid: this.id === 'create' ? '' : this.id,
+              type: seatType[col] ? seatType[col] : '1',
               isDbClick: false,
             };
             let tstr = this.checkExcelData({ row, r, col, c, isWall, obj });
@@ -262,14 +297,14 @@ export default {
         }
       });
       if (warnMsg.length > 0) {
-        let str = "";
-        warnMsg.forEach((m) => {
-          str += m + "<br/>";
+        let str = '';
+        warnMsg.forEach(m => {
+          str += m + '<br/>';
         });
         this.$message({
           dangerouslyUseHTMLString: true,
           showClose: true,
-          type: "error",
+          type: 'error',
           message: str,
         });
         return;
@@ -283,32 +318,32 @@ export default {
     download() {
       this.loading = true;
       const data = [
-        ["墙", "门", "门", "墙", "墙", "墙", "墙"],
-        ["墙", "过道", "过道", "过道", "过道", "过道", "窗"],
-        ["墙", "过道", "1", "2", "3", "过道", "窗"],
-        ["墙", "过道", "4", "5", "6", "过道", "墙"],
-        ["墙", "过道", "书架", "书架", "书架", "过道", "墙"],
-        ["墙", "过道", "7", "8", "9", "过道", "墙"],
-        ["墙", "过道", "10", "11", "12", "过道", "墙"],
-        ["墙", "过道", "书架", "书架", "书架", "过道", "墙"],
-        ["墙", "过道", "13", "14", "15", "过道", "墙"],
-        ["墙", "过道", "16", "17", "18", "过道", "墙"],
-        ["墙", "过道", "书架", "书架", "书架", "过道", "墙"],
-        ["墙", "过道", "19", "20", "21", "过道", "墙"],
-        ["墙", "过道", "22", "23", "24", "过道", "墙"],
-        ["墙", "过道", "过道", "过道", "过道", "过道", "墙"],
-        ["墙", "门", "门", "墙", "墙", "墙", "墙"],
+        ['墙', '门', '门', '墙', '墙', '墙', '墙'],
+        ['墙', '过道', '过道', '过道', '过道', '过道', '窗'],
+        ['墙', '过道', '1', '2', '3', '过道', '窗'],
+        ['墙', '过道', '4', '5', '6', '过道', '墙'],
+        ['墙', '过道', '书架', '书架', '书架', '过道', '墙'],
+        ['墙', '过道', '7', '8', '9', '过道', '墙'],
+        ['墙', '过道', '10', '11', '12', '过道', '墙'],
+        ['墙', '过道', '书架', '书架', '书架', '过道', '墙'],
+        ['墙', '过道', '13', '14', '15', '过道', '墙'],
+        ['墙', '过道', '16', '17', '18', '过道', '墙'],
+        ['墙', '过道', '书架', '书架', '书架', '过道', '墙'],
+        ['墙', '过道', '19', '20', '21', '过道', '墙'],
+        ['墙', '过道', '22', '23', '24', '过道', '墙'],
+        ['墙', '过道', '过道', '过道', '过道', '过道', '墙'],
+        ['墙', '门', '门', '墙', '墙', '墙', '墙'],
       ];
       try {
         let ws = XLSX.utils.aoa_to_sheet(data);
         let wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws);
-        XLSX.writeFile(wb, "座位预约模板.xlsx");
+        XLSX.writeFile(wb, '座位预约模板.xlsx');
         setTimeout(() => {
           this.loading = false;
         }, 3000);
       } catch (e) {
-        this.loading= false;
+        this.loading = false;
       }
     },
   },
@@ -365,7 +400,7 @@ export default {
 .close:after {
   position: absolute;
   left: 15px;
-  content: " ";
+  content: ' ';
   height: 12px;
   width: 2px;
   background-color: #333;

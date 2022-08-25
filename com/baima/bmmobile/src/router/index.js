@@ -26,11 +26,13 @@ import EduResResInfoManage from '../pages/eduResource/resInfoMange';
 import EduResAddResInfo from '../pages/eduResource/resInfoMange/addRes';
 import EduResResDetail from '../pages/eduResource/resInfoMange/resDetail';
 import EduResStaffResDetail from '../pages/eduResource/resApply/resDetail';
+import EduResAll from '../pages/eduResource/resApply/resAll';
 import EduResResUseRecord from '../pages/eduResource/resInfoMange/useRecord';
 import EduResApplyDetail from '../pages/eduResource/resApplyDetail';
 import EduResApply from '../pages/eduResource/resApply/resApply';
 import EduResCallReapir from '../pages/eduResource/resApply/callRepair';
 import EduResFileView from '../pages/eduResource/fileView';
+import ResModify from '../pages/eduResource/resApply/resModify';
 import ChooseRole from '../pages/chooseRole';
 
 let router = new Router({
@@ -363,11 +365,29 @@ let router = new Router({
       }),
     },
     {
-      path: '/edures-staff/res-list/:restypeid/detail-res/:id',
+      path: '/edures-staff/res-list/:restypeid/detail-res/:id/:prevPage',
       name: '科教资源-教职工-资源详情',
       component: EduResStaffResDetail,
       props: route => ({
         restypeid: route.params.restypeid,
+        id: route.params.id,
+        prevPage: route.params.prevPage,
+      }),
+    },
+    {
+      path: `/edures/res-list/modify/:type`,
+      name: '资源信息新增、修改',
+      component: ResModify,
+      props: route => ({
+        type: route.params.type,
+        data: JSON.parse(route.query.data),
+      }),
+    },
+    {
+      path: '/edures/res-list/detail-res/:id',
+      name: '所有入驻信息',
+      component: EduResAll,
+      props: route => ({
         id: route.params.id,
       }),
     },
@@ -400,11 +420,13 @@ let router = new Router({
       }),
     },
     {
-      path: '/edures/res-apply/detail/:id',
+      path: '/edures/res-apply/detail/:id/:operDev/:activeTableTab',
       name: '科教资源-资源申请-详情',
       component: EduResApplyDetail,
       props: route => ({
         id: route.params.id,
+        operDev: route.params.operDev,
+        activeTableTab: route.params.activeTableTab,
       }),
     },
     {
@@ -424,7 +446,6 @@ let router = new Router({
         usetype: route.params.usetype, // 1申请  2续租
         restypeid: route.params.restypeid,
         resid: route.params.resid,
-        rescode: route.query.rescode,
       }),
     },
     {

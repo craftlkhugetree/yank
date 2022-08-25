@@ -19,7 +19,8 @@ export default new Vuex.Store({
     // 所有角色信息
     roles: [],
     // 本角色
-    userRoles: []
+    userRoles: [],
+    gLoading: false,
   },
 
   mutations: {
@@ -55,6 +56,10 @@ export default new Vuex.Store({
     // 当前角色
     setUserRoles(state, data) {
       state.userRoles = data;
+    },
+    // 改变loading
+    setGLoading(state, data) {
+      state.gLoading = data
     }
   },
   actions: {

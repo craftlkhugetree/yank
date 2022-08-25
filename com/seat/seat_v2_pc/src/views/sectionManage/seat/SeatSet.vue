@@ -1,9 +1,5 @@
 <template>
-  <section
-    class="form-section"
-    onselectstart="return false"
-    style="-moz-user-select: none"
-  >
+  <section class="form-section" onselectstart="return false" style="-moz-user-select: none">
     <!---------------------------- 行列设置 ---------------------------->
     <el-form
       ref="editForm"
@@ -64,9 +60,7 @@
             ></el-input-number>
           </p>
           <div style="text-align: right; margin: 0">
-            <el-button type="primary" size="mini" @click="handleSort"
-              >确定</el-button
-            >
+            <el-button type="primary" size="mini" @click="handleSort">确定</el-button>
           </div>
           <button slot="reference" class="sort-btn">编号正排</button>
         </el-popover>
@@ -82,9 +76,7 @@
             ></el-input-number>
           </p>
           <div style="text-align: right; margin: 0">
-            <el-button type="primary" size="mini" @click="handleDownSort"
-              >确定</el-button
-            >
+            <el-button type="primary" size="mini" @click="handleDownSort">确定</el-button>
           </div>
           <button slot="reference" class="sort-btn">编号倒排</button>
         </el-popover>
@@ -93,18 +85,11 @@
       <div class="main" ref="elmain" @mousedown.left="onmousedownClick">
         <!---------------------------- 右侧座位表格 ---------------------------->
         <table class="seattable">
-          <tr
-            v-for="(itmes, index) in seatList"
-            :key="'row' + index"
-            class="tr"
-          >
+          <tr v-for="(itmes, index) in seatList" :key="'row' + index" class="tr">
             <td
               v-for="(seat, sindex) in itmes"
               :key="'col' + sindex"
-              :class="[
-                options[seat.type],
-                { seatselected: selectIds.includes(seat.seatId) },
-              ]"
+              :class="[options[seat.type], { seatselected: selectIds.includes(seat.seatId) }]"
               @click.stop="clickSeat(seat)"
               @dblclick.stop="dbClickSeat(seat)"
               onselect="return false"
@@ -114,12 +99,9 @@
               name="seat-td"
               :id="seat.seatId"
             >
-              <span
-                :class="
-                  seat.type == 1 && !seat.isDbClick ? 'seat-num' : 'no-num'
-                "
-                >{{ seat.name }}</span
-              >
+              <span :class="seat.type == 1 && !seat.isDbClick ? 'seat-num' : 'no-num'">
+                {{ seat.name }}
+              </span>
               <input
                 v-if="seat.isDbClick"
                 :class="{ 'blue-input': seat.isDbClick }"
@@ -147,23 +129,14 @@ export default {
   data() {
     let rowAndCol = (rule, value, callback) => {
       if (!this.editForm.col || !this.editForm.row) {
-        return callback(new Error("请设置座位排、列！"));
+        return callback(new Error('请设置座位排、列！'));
       } else {
         callback();
       }
     };
     return {
       seatList: [], //1座位 2过道 3书架 4墙 5门 6窗 7 疫情座位
-      options: [
-        "",
-        "seat",
-        "pass",
-        "pillar",
-        "wall",
-        "door",
-        "window",
-        "interval-seat",
-      ],
+      options: ['', 'seat', 'pass', 'pillar', 'wall', 'door', 'window', 'interval-seat'],
       editForm: {
         col: null,
         row: null,
@@ -174,11 +147,11 @@ export default {
           {
             required: true,
             validator: rowAndCol,
-            trigger: "change",
+            trigger: 'change',
           },
         ],
       },
-      newName: "0",
+      newName: '0',
       isShift: false,
       mouseDown: false,
       selectIds: [], //座位框选的seatID, 递增数字
@@ -194,7 +167,7 @@ export default {
     },
     seatNum() {
       let list = this.seatList.flat();
-      let newList = list.filter((item) => item.type == 1);
+      let newList = list.filter(item => item.type == 1);
       let num = newList.length;
       return num;
     },
@@ -210,24 +183,20 @@ export default {
       let newseats = [];
       //一维数组 转换成对应的二维数组
       let seatId = 1;
-      seatData.forEach((m) => {
-        if (m.isopen == "0") {
-          m.type = "7";
+      seatData.forEach(m => {
+        if (m.isopen == '0') {
+          m.type = '7';
         }
-        if (typeof newseats[m.rowno - 1] == "undefined") {
+        if (typeof newseats[m.rowno - 1] == 'undefined') {
           newseats[m.rowno - 1] = [];
         }
         newseats[m.rowno - 1][m.colno - 1] = m;
-        let isWall =
-          m.rowno == 1 ||
-          m.colno == 1 ||
-          m.rowno == 2 + ROW ||
-          m.colno == 2 + COL;
+        let isWall = m.rowno == 1 || m.colno == 1 || m.rowno == 2 + ROW || m.colno == 2 + COL;
         m.isWall = isWall ? true : false;
       });
       //递增 添加seatID
-      newseats.forEach((items) => {
-        items.forEach((s) => {
+      newseats.forEach(items => {
+        items.forEach(s => {
           s.seatId = seatId++;
         });
       });
@@ -238,13 +207,13 @@ export default {
 
   mounted() {
     // 获取键盘按住 判断是否按住shift键，是就把isShift赋值为true
-    window.addEventListener("keydown", (code) => {
+    window.addEventListener('keydown', code => {
       if (code.keyCode === 16 && code.shiftKey) {
         this.isShift = true;
       }
     });
     // 松开事件 找出shift按下时，最后选中两个的之间行列，全部设置为选中
-    window.addEventListener("keyup", (code) => {
+    window.addEventListener('keyup', code => {
       if (code.keyCode === 16) {
         this.isShift = false;
         if (this.selectIds.length) {
@@ -253,10 +222,10 @@ export default {
           let maxId = Math.max(...lastArr);
           let minId = Math.min(...lastArr);
           let list = this.seatList.flat();
-          let minSeat = list.filter((item) => item.seatId == minId)[0];
-          let maxSeat = list.filter((item) => item.seatId == maxId)[0];
-          this.seatList.forEach((items) => {
-            items.forEach((s) => {
+          let minSeat = list.filter(item => item.seatId == minId)[0];
+          let maxSeat = list.filter(item => item.seatId == maxId)[0];
+          this.seatList.forEach(items => {
+            items.forEach(s => {
               if (
                 s.seatId > minId &&
                 s.seatId < maxId &&
@@ -275,11 +244,22 @@ export default {
   },
   // 移除监听事件
   beforeDestroy() {
-    window.removeEventListener("mousemove", this.onMouseMove);
-    window.removeEventListener("mouseup", this.onMouseUp);
+    window.removeEventListener('mousemove', this.onMouseMove);
+    window.removeEventListener('mouseup', this.onMouseUp);
   },
 
   methods: {
+    // 重新生成编号
+    renameId() {
+      let count = 1;
+      this.seatList.forEach(items => {
+        items.forEach(item => {
+          if (item.type == 1) {
+            this.$set(item, 'name', count++)
+          }
+        })
+      })
+    },
     // 初始生成座位，全部都是座位，边框为墙
     initSeat(val) {
       if (!val) {
@@ -292,21 +272,20 @@ export default {
         seatno = 1,
         seatId = 1,
         colArr = [];
-      row.forEach((r) => {
+      row.forEach(r => {
         newseats[r] = [];
-        col.forEach((c) => {
-          let isWall =
-            r == 0 || c == 0 || r == row.length - 1 || c == col.length - 1;
+        col.forEach(c => {
+          let isWall = r == 0 || c == 0 || r == row.length - 1 || c == col.length - 1;
           obj = {
             colno: c + 1,
             rowno: r + 1,
-            id: "",
+            id: '',
             seatId: seatId++,
-            isopen: "",
+            isopen: '',
             isWall: isWall ? true : false,
-            name: isWall ? "0" : seatno++,
-            sectionid: "",
-            type: isWall ? "4" : "1",
+            name: isWall ? '0' : seatno++,
+            sectionid: '',
+            type: isWall ? '4' : '1',
             isDbClick: false,
           };
           newseats[r][c] = obj;
@@ -319,8 +298,8 @@ export default {
     handleDownSort() {
       for (let index = this.seatList.length - 1; index >= 0; index--) {
         let item = this.seatList[index];
-        item.forEach((seat) => {
-          if (seat.type == "1" && this.selectIds.includes(seat.seatId)) {
+        item.forEach(seat => {
+          if (seat.type == '1' && this.selectIds.includes(seat.seatId)) {
             seat.name = this.sortNum++;
           }
         });
@@ -332,9 +311,9 @@ export default {
 
     //编号排序（编号递增）
     handleSort() {
-      this.seatList.forEach((item) => {
-        item.forEach((seat) => {
-          if (seat.type == "1" && this.selectIds.includes(seat.seatId)) {
+      this.seatList.forEach(item => {
+        item.forEach(seat => {
+          if (seat.type == '1' && this.selectIds.includes(seat.seatId)) {
             seat.name = this.sortNum++;
           }
         });
@@ -345,18 +324,18 @@ export default {
     },
 
     editName(item) {
-      this.$set(item, "isDbClick", false);
-      this.$set(item, "name", this.newName || "0");
+      this.$set(item, 'isDbClick', false);
+      this.$set(item, 'name', this.newName || '0');
       this.$forceUpdate();
     },
 
     //双击
     dbClickSeat(item) {
-      if (item.type !== "1") {
+      if (item.type !== '1') {
         return false;
       }
       this.newName = item.name;
-      this.$set(item, "isDbClick", !item.isDbClick);
+      this.$set(item, 'isDbClick', !item.isDbClick);
       this.selectIds = [];
       this.$forceUpdate();
       //自动获取焦点
@@ -370,7 +349,7 @@ export default {
       if (item.isDbClick) {
         return false;
       }
-      let findIndex = this.selectIds.findIndex((v) => v == item.seatId);
+      let findIndex = this.selectIds.findIndex(v => v == item.seatId);
       if (findIndex > -1) {
         this.selectIds.splice(findIndex, 1);
       } else {
@@ -382,18 +361,19 @@ export default {
       if (!this.selectIds.length) {
         return;
       }
-      const seatType = ["interval-seat", "seat"];
-      this.seatList.forEach((items) => {
-        items.forEach((item) => {
+      const seatType = ['interval-seat', 'seat'];
+      this.seatList.forEach(items => {
+        items.forEach(item => {
           if (
             !(seatType.includes(material.type) && item.isWall) &&
             this.selectIds.includes(item.seatId)
           ) {
-            this.$set(item, "type", material.value);
-            this.$set(item, "name", " ");
+            this.$set(item, 'type', material.value);
+            this.$set(item, 'name', ' ');
           }
         });
       });
+      // this.renameId();
       this.$forceUpdate();
       this.selectIds = [];
     },
@@ -403,68 +383,64 @@ export default {
       let that = this;
       let end_x = event.clientX;
       let end_y = event.clientY;
-      let divElement = document.getElementById("rectangular");
-      divElement.style.display = "block";
-      divElement.className = "rectangular";
+      let divElement = document.getElementById('rectangular');
+      divElement.style.display = 'block';
+      divElement.className = 'rectangular';
       //从左往右
       // 画矩形
       if (that.start_x < end_x) {
-        divElement.style.width = end_x - that.start_x + "px";
+        divElement.style.width = end_x - that.start_x + 'px';
         divElement.style.height =
-          (that.start_y > end_y > 0
-            ? that.start_y - end_y
-            : end_y - that.start_y) + "px";
-        divElement.style.left = that.start_x + "px";
-        divElement.style.right = end_x + "px";
+          (that.start_y > end_y > 0 ? that.start_y - end_y : end_y - that.start_y) + 'px';
+        divElement.style.left = that.start_x + 'px';
+        divElement.style.right = end_x + 'px';
         //从下往上
         if (that.start_y > end_y) {
-          divElement.style.top = end_y + "px";
-          divElement.style.bottom = that.start_y + "px";
+          divElement.style.top = end_y + 'px';
+          divElement.style.bottom = that.start_y + 'px';
         } else {
-          divElement.style.top = that.start_y + "px";
-          divElement.style.bottom = end_y + "px";
+          divElement.style.top = that.start_y + 'px';
+          divElement.style.bottom = end_y + 'px';
         }
       } else {
-        divElement.style.width = that.start_x - end_x + "px";
+        divElement.style.width = that.start_x - end_x + 'px';
         divElement.style.height =
-          (that.start_y > end_y > 0
-            ? that.start_y - end_y
-            : end_y - that.start_y) + "px";
-        divElement.style.left = end_x + "px";
-        divElement.style.right = that.start_x + "px";
+          (that.start_y > end_y > 0 ? that.start_y - end_y : end_y - that.start_y) + 'px';
+        divElement.style.left = end_x + 'px';
+        divElement.style.right = that.start_x + 'px';
         //从下往上
         if (that.start_y > end_y) {
-          divElement.style.top = end_y + "px";
-          divElement.style.bottom = that.start_y + "px";
+          divElement.style.top = end_y + 'px';
+          divElement.style.bottom = that.start_y + 'px';
         } else {
-          divElement.style.top = that.start_y + "px";
-          divElement.style.bottom = end_y + "px";
+          divElement.style.top = that.start_y + 'px';
+          divElement.style.bottom = end_y + 'px';
         }
       }
     },
 
     //鼠标左键按下方法
     onmousedownClick(event) {
-      let className = ["main", "tr"];
+      let className = ['main', 'tr'];
       // 阻止捕获到item
       if (!className.includes(event.target.className)) return;
       this.mouseDown = true;
       this.start_x = event.clientX;
       this.start_y = event.clientY;
       // 开始监听鼠标 移动，抬起 事件
-      window.addEventListener("mousemove", this.onMouseMove);
-      window.addEventListener("mouseup", this.onMouseUp);
+      window.addEventListener('mousemove', this.onMouseMove);
+      window.addEventListener('mouseup', this.onMouseUp);
     },
 
     onMouseUp(event) {
       // 清除事件
-      window.removeEventListener("mousemove", this.onMouseMove);
-      window.removeEventListener("mouseup", this.onMouseUp);
+      window.removeEventListener('mousemove', this.onMouseMove);
+      window.removeEventListener('mouseup', this.onMouseUp);
       // 重置状态
       this.mouseDown = false;
       // 移动矩形的样式清空
-      let divElement = document.getElementById("rectangular");
-      divElement.style.display = "none";
+      let divElement = document.getElementById('rectangular');
+      divElement.style.display = 'none';
       this.handMouseUp(event);
     },
     //鼠标左键抬起方法
@@ -478,7 +454,7 @@ export default {
 
       //核心内容，根据你的鼠标移动矩形区域来判断div是否在里面
       this.mouseDown = false;
-      let seats = document.getElementsByName("seat-td");
+      let seats = document.getElementsByName('seat-td');
       for (let i = 0; i < seats.length; i++) {
         const seat = seats[i];
         let id = parseInt(seat.id);

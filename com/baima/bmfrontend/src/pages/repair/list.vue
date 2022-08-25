@@ -373,4 +373,46 @@ export default {
   float: right;
   padding-bottom: 20px;
 }
+.imgs {
+  width: 100%;
+  margin: 0px auto 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  background-color: #f8f8f8;
+  .img-box {
+    flex-basis: 23%;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    img {
+      margin: 0 auto;
+      width: 32px;
+      height: 32px;
+    }
+    div {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 32px;
+      height: 18px;
+      background: #ffffff;
+      border-radius: 16px;
+      text-align: center;
+      line-height: 18px;
+    }
+    span {
+      // 确保文字处于img下方
+      flex-basis: 100%;
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #666666;
+      line-height: 18px;
+    }
+  }
+}
 </style>

@@ -56,7 +56,7 @@
       <el-table-column prop="classname" label="班级名称" align="center"></el-table-column>
       <el-table-column prop="leadername" label="负责教师" align="center"></el-table-column>
       <el-table-column prop="prpersonnum" label="实习人数" align="center"></el-table-column>
-      <el-table-column prop="prstarttime" label="实习日期" align="center" min-width="150">
+      <el-table-column prop="prstarttime" label="实习日期" align="center" min-width="150" sortable>
         <template slot-scope="scope">
           {{scope.row.prstarttime ? util.formatTime(scope.row.prstarttime, "yyyy.MM.dd") : "--"}}
           ~
@@ -65,7 +65,7 @@
       </el-table-column>
       <el-table-column prop="applystatus" label="审批状态" align="center">
         <template slot-scope="scope">
-          <span :class="common.statusColor('','',scope.row.applystatus)">{{common.processFormatter("","",scope.row.applystatus)}}</span>
+          <span :class="common.statusColorPractice('','',scope.row.applystatus)">{{common.processFormatterPractice("","",scope.row.applystatus)}}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" fixed="right" width="150" align="center">

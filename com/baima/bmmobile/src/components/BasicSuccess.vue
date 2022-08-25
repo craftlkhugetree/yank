@@ -44,11 +44,11 @@ export default {
         display: block;
         font-size: 14px;
         color: #888888;
-        margin-bottom: 60px;
+        // margin-bottom: 60px;
     }
-    .van-button {
+    /deep/ .van-button {
         width: 160px;
-        margin-bottom: 60px;
+        margin-top: 60px;
     }
 }
 </style>

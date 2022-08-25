@@ -548,7 +548,9 @@ export default {
     }
   },
   created() {
-    this.getResCodeList();
+    setTimeout(() => {
+      this.getResCodeList();
+    }, 1000)
     let obj = this.timeOption.find(t => this.form.daytype == t.value) || this.timeOption[0];
     this.selectTime = obj.text;
     this.selectTimeId = obj.value;

@@ -27,6 +27,13 @@ body {
   font-size: 18px !important;
 }
 
+.van-nav-bar__text {
+  color: #00b09b !important;
+  font-size: 16px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+}
+
 .van-nav-bar__arrow {
   font-size: 18px !important;
 }
@@ -584,18 +591,21 @@ body {
       color: #383a48;
       font-size: 14px;
       position: relative;
-      background: #fff;
+      // background: #fff;
+      background:rgba(231, 233, 239, 0.3);
       box-shadow: 0 2px 5px 0 rgba(182, 189, 198, 0.22);
       border-radius: 5px;
       padding: 15px;
 
       .res-use-icon,
-      .res-use-icon-no {
+      .res-use-icon-no,
+      .res-use-icon-grey {
         position: absolute;
-        top: 0;
+        // top: 0;
         right: 0;
         background: #1788fb;
-        border-radius: 12px 5px 0 12px;
+        border-radius: 12px 0 0 12px;
+        // border-radius: 12px 5px 0 12px;
         color: #fff;
         font-size: 14px;
         padding: 4px 12px 4px 6px;
@@ -606,7 +616,14 @@ body {
         }
       }
 
+      .res-use-icon-grey {
+  background:#E2E2E2;
+  color: #999999;
+  border-color: #E2E2E2;
+      }
+
       .res-use-icon-no {
+        top: 0;
         background: #faac16;
       }
 

@@ -37,7 +37,7 @@
       </tr>
       <tr>
         <td>灌溉日期</td>
-        <td>{{applyInfoForm.irdate}}</td>
+        <td>{{applyInfoForm.irdate + ' '}} {{timeRange}}</td>
         <td>备注</td>
         <td colspan="5">
           <el-tooltip class="item" effect="dark" :content="applyInfoForm.note && applyInfoForm.note.length > 0 ? applyInfoForm.note : '--'" placement="right">
@@ -54,6 +54,17 @@
         name: "irrApplyTable",
       props:{
         applyInfoForm:Object
+      },
+      computed: {
+        timeRange() {
+          const timeOption = [
+              { text: "全天", value: 1 },
+              { text: "上午", value: 2 },
+              { text: "下午", value: 3 },
+          ];
+          let obj = timeOption.find(t => t.value == this.applyInfoForm.daytype) || {}
+          return obj.text || ''
+        }
       }
     }
 </script>

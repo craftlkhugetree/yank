@@ -133,7 +133,6 @@
       >
         <template slot-scope="scope">
           <div
-            v-if="scope.row.applystatus == 3"
             class="table-btn green"
             @click="downloadForm(1, scope.row)"
             style="border: none"
@@ -161,11 +160,19 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="applystatus" label="审批状态" align="center">
+      <el-table-column
+        prop="applystatus"
+        label="审批状态"
+        align="center"
+        width="150"
+      >
         <template slot-scope="scope">
-          <span :class="common.statusColor('', '', scope.row.applystatus)">{{
-            common.processFormatter("", "", scope.row.applystatus)
-          }}</span>
+          <span
+            :class="common.statusColorPractice('', '', scope.row.applystatus)"
+            >{{
+            common.processFormatterPractice("", "", scope.row.applystatus)
+            }}</span
+          >
         </template>
       </el-table-column>
 
@@ -181,7 +188,7 @@
         <template slot-scope="scope">
           <div class="table-btn green" @click="goDetail(scope.row)">详情</div>
           <div
-            v-if="scope.row.applystatus != '3'"
+            v-if="scope.row.applystatus != '6'"
             class="table-btn orange"
             @click="editAudit(scope.row)"
           >
@@ -190,7 +197,9 @@
           <div
             class="table-btn blue"
             @click="auditOperate(scope.row)"
-            v-if="scope.row.applystatus === '2'"
+            v-if="
+              scope.row.applystatus === '2' || scope.row.applystatus === '3'
+            "
           >
             审批
           </div>
@@ -248,7 +257,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(tr, i) in studentList" :key="tr.idcard + i">
+          <tr v-for="(tr, i) in studentList" :key="tr.idcard + i" class="trClassFlag">
             <td>{{ tr.classname }}</td>
             <td>{{ tr.username }}</td>
             <td>{{ tr.userid }}</td>
@@ -259,6 +268,12 @@
         </tbody>
       </table>
     </div>
+    <student-apply
+      v-show="stdApply"
+      :form="resDetail"
+      style="margin-left: -2000px"
+    >
+    </student-apply>
   </div>
 </template>
 
@@ -269,7 +284,8 @@ import { roleId } from "@/assets/js/options";
 export default {
   components: {
     applyForm,
-    breadCrumb
+    breadCrumb,
+    studentApply: () => import("@/components/stdApplyInfo")
   },
   props: {
     breadList: Array
@@ -290,6 +306,8 @@ export default {
   },
   data() {
     return {
+      resDetail: {},
+      stdApply: false,
       tableTitle: ["班级", "姓名", "学号", "身份证号", "性别", "民族"],
       studentList: [],
       totalPage: 1,
@@ -329,7 +347,10 @@ export default {
       this.studentList = stdList;
       this.isDomShow = true;
       let that = this;
-      this.$nextTick(() => that.common.transToPdf('学生信息表', 'tmpTable', that))
+      // this.$nextTick(() =>
+      //   that.common.transToPdf("学生信息表", "tmpTable", that)
+      // );
+      this.common.outPutPdfFn(that, 'tmpTable', 'trClassFlag', "学生信息表", true)
     },
     //搜索学院名称
     remoteMethod(query) {
@@ -354,14 +375,48 @@ export default {
 
     //申请单操作
     downloadForm(type, row) {
-      console.log(row.id);
       // type 1下载2预览
       // return false;
-      this.util
-        .getUrlByCode(this.global.code, "/prapply/applyForm")
-        .then(res => {
-          window.open(res + "?id=" + row.id + "&type=" + type);
-        });
+      // this.util
+      //   .getUrlByCode(this.global.code, "/prapply/applyForm")
+      //   .then(res => {
+      //     window.open(res + "?id=" + row.id + "&type=" + type);
+      //   });
+      this.resDetail = row;
+      //开始：早中晚餐转换
+      let eatstarttype = this.resDetail.eatstarttype;
+      if (eatstarttype) {
+        switch (eatstarttype) {
+          case "1":
+            this.resDetail.eatstarttype = "含早、中、晚餐";
+            break;
+          case "2":
+            this.resDetail.eatstarttype = "含中、晚餐";
+            break;
+          case "3":
+            this.resDetail.eatstarttype = "含晚餐";
+        }
+      }
+      //结束：早中晚餐转换
+      let eatendtype = this.resDetail.eatendtype;
+      if (eatendtype) {
+        switch (eatendtype) {
+          case "1":
+            this.resDetail.eatendtype = "含早餐";
+            break;
+          case "2":
+            this.resDetail.eatendtype = "含早、中餐";
+            break;
+          case "3":
+            this.resDetail.eatendtype = "含早、中、晚餐";
+        }
+      }
+      this.stdApply = true;
+      let that = this;
+      this.common.outPutPdfFn(that, 'stdApply', 'normal-table', row.classname + "申请表")
+      // this.$nextTick(() =>
+      //   that.common.transToPdf(row.classname + "申请表", "stdApply", that)
+      // );
     },
 
     //排序
@@ -406,7 +461,7 @@ export default {
         query: {
           activeName: this.activeName,
           currentPage: this.currentPage,
-          data: JSON.stringify(row),
+          // data: JSON.stringify(row),
           isRearService: this.isRearService
         }
       });
@@ -631,11 +686,23 @@ export default {
                 form.sleependtime = form.sleependtime
                   ? this.util.formatTime(form.sleependtime, "yyyyMMdd000000")
                   : "";
+                // form.eatstarttime = form.eatstarttime
+                //   ? this.util.formatTime(form.eatstarttime, "yyyyMMdd000000")
+                //   : "";
+                // form.eatendtime = form.eatendtime
+                //   ? this.util.formatTime(form.eatendtime, "yyyyMMdd000000")
+                //   : "";
                 form.eatstarttime = form.eatstarttime
-                  ? this.util.formatTime(form.eatstarttime, "yyyyMMdd000000")
+                  ? this.util.formatTime(
+                      this.util.formatMYD(form.eatstarttime),
+                      "yyyyMMdd000000"
+                    )
                   : "";
                 form.eatendtime = form.eatendtime
-                  ? this.util.formatTime(form.eatendtime, "yyyyMMdd000000")
+                  ? this.util.formatTime(
+                      this.util.formatMYD(form.eatendtime),
+                      "yyyyMMdd000000"
+                    )
                   : "";
 
                 // console.log("form2",form);
@@ -762,8 +829,9 @@ export default {
   height: 14px;
 }
 #tmpTable {
-  margin-top: 3000px;
-  width: 100%;
+  padding: 100px 10px;
+  margin-top: 2000px;
+  width: 900px;
   h2 {
     margin: 20px;
     text-align: center;

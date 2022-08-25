@@ -66,19 +66,18 @@
                 for(let i=0;i<this.fileList.length;i++){
                     formData.append('file',this.fileList[i]);
 
-                    formData.append('restypeid',this.activeResType);
+                    this.isNew ? null : formData.append('restypeid',this.activeResType);
                 }
                 let axiosSettings = {
                     url : this.url,
                     method : 'POST',
                     headers : {
-                      "IDSTGC" : this.getCookie('IDSTGC') || "4989d043e3944f57b02566fa33d4807b",
+                      "IDSTGC" : this.getCookie('IDSTGC') || "179392f4f5b1443e978a950e04a3c1d5",
                         // "IDSTGC" : this.getCookie('IDSTGC'),
                     },
                     data : formData,
                 }
                 axios(axiosSettings).then(data => {
-                  // debugger
                     let res = data.data;
                     if (res!==null && !res.success){
                         if (res.hasOwnProperty("login") && !res.login){
@@ -166,7 +165,6 @@
               data : formData,
             }
             axios(axiosSettings).then(data => {
-              // debugger
               let res = data.data;
               if (res!==null && !res.success){
                 if (res.hasOwnProperty("login") && !res.login){
@@ -236,7 +234,7 @@
             beforeupload:Function,
             done:Function,
             autoupload:Boolean !== false,
-
+            isNew: Boolean,
             activeResType:String
             // carmera:Boolean !== false
         },

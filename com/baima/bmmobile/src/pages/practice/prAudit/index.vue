@@ -61,6 +61,7 @@
         label="实习日期"
         align="center"
         :formatter="common.dateFormatter"
+        width="150"
         show-overflow-tooltip
       ></el-table-column>
 
@@ -69,13 +70,16 @@
         align="center"
         show-overflow-tooltip
         v-if="activeTableTab == '3'"
+        width="150"
       >
-        <template slot-scope="scope" v-if="scope.row.applystatus === '3' && operDev === 'bm'">
+        <!-- <template slot-scope="scope" v-if="scope.row.applystatus === '3' && operDev === 'bm'"> -->
+        <template slot-scope="scope">
           <img :src="require('st@tic/imgs/attachment-icon.png')" style="width:14px; height:14px;" />
           <span
             style="color:#00b09b;padding:0 5px;font-weight:bold"
-            @click.stop="common.downloadApplyForm(scope.row.id)"
+            @click.stop="downloadForm(scope.row)"
           >
+            <!-- @click.stop="common.downloadApplyForm(scope.row.id)" -->
             申请表
           </span>
         </template>
@@ -88,15 +92,7 @@
         width="150"
         show-overflow-tooltip
       >
-        <template
-          slot-scope="scope"
-          v-if="
-            scope.row.applystatus === '3' &&
-              operDev === 'bm' &&
-              scope.row.students &&
-              scope.row.students.length
-          "
-        >
+        <template slot-scope="scope" v-if="scope.row.students && scope.row.students.length">
           <img :src="require('st@tic/imgs/attachment-icon.png')" style="width:14px; height:14px;" />
           <span
             style="color:#00b09b;padding:0 5px;font-weight:bold"
@@ -111,7 +107,8 @@
         prop="applystatus"
         label="审批进度"
         align="center"
-        :formatter="common.processFormatter"
+        :formatter="common.processFormatterPractice"
+        width="150"
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column label="操作" fixed="right" width="150" align="center">
@@ -129,6 +126,7 @@
           <span
             v-if="
               (scope.row.applystatus === '1' && operDev === 'leader') ||
+                (scope.row.applystatus == '3' && isRearService) ||
                 (scope.row.applystatus === '2' && operDev === 'bm')
             "
             style="color:#1788fb;padding:0 5px;font-weight:bold"
@@ -152,14 +150,14 @@
     </el-table>
     <div id="tmpTable" v-show="isDomShow">
       <h2>本科生实习申请</h2>
-      <table border="1" cellspacing="0">
+      <table border="1" class="normal-table">
         <thead>
           <tr>
             <th v-for="(h, i) in tableTitle" :key="i">{{ h }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(tr, i) in studentList" :key="tr.idcard + i">
+          <tr v-for="(tr, i) in studentList" :key="tr.idcard + i" class="trClassFlag">
             <td>{{ tr.classname }}</td>
             <td>{{ tr.username }}</td>
             <td>{{ tr.userid }}</td>
@@ -170,6 +168,12 @@
         </tbody>
       </table>
     </div>
+
+    <student-apply
+      style="margin-left: -2000px"
+      v-show="stdApply"
+      :form="resDDetail"
+    ></student-apply>
   </div>
 </template>
 
@@ -181,6 +185,7 @@ export default {
   components: {
     BasicSelectCalendar,
     BasicSelect,
+    studentApply: () => import('@/components/stdApplyInfo'),
   },
   computed: {
     curRole() {
@@ -192,6 +197,7 @@ export default {
   },
   data() {
     return {
+      stdApply: false,
       isDomShow: false,
       tableTitle: ['班级', '姓名', '学号', '身份证号', '性别', '民族'],
       studentList: [],
@@ -220,10 +226,11 @@ export default {
       tableHeight: 0,
       loading: false,
       finishTable: false,
+      resDDetail: {},
     };
   },
   props: {
-    operDev: String, // 审批单位：单位领导leader、白马办bm
+    operDev: String, // 审批单位：单位领导leader、基地bm
   },
   // computed: {
   //   orgList() {
@@ -246,6 +253,46 @@ export default {
     },
   },
   methods: {
+    downloadForm(row) {
+      this.resDDetail = row;
+      //开始：早中晚餐转换
+      let eatstarttype = this.resDDetail.eatstarttype;
+      if (eatstarttype) {
+        switch (eatstarttype) {
+          case '1':
+            this.resDDetail.eatstarttype = '含早、中、晚餐';
+            break;
+          case '2':
+            this.resDDetail.eatstarttype = '含中、晚餐';
+            break;
+          case '3':
+            this.resDDetail.eatstarttype = '含晚餐';
+        }
+      }
+      //结束：早中晚餐转换
+      let eatendtype = this.resDDetail.eatendtype;
+      if (eatendtype) {
+        switch (eatendtype) {
+          case '1':
+            this.resDDetail.eatendtype = '含早餐';
+            break;
+          case '2':
+            this.resDDetail.eatendtype = '含早、中餐';
+            break;
+          case '3':
+            this.resDDetail.eatendtype = '含早、中、晚餐';
+        }
+      }
+      this.stdApply = true;
+      let that = this;
+      this.$toast.loading({
+        message: '下载中...',
+        forbidClick: true,
+        duration: 0,
+      });
+      // this.common.outPutPdfFn(that, 'stdApply', 'normal-table', row.classname + '申请表');
+      this.$nextTick(() => that.common.transToPdf(row.classname + '申请表', 'stdApply', that));
+    },
     changeTab(item) {
       this.activeTableTab = item.value;
       this.tableData = [];
@@ -257,8 +304,15 @@ export default {
         s.sex = s.sex == '1' ? '男' : '女';
       });
       this.studentList = stdList;
+      // this.studentList = stdList.concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList).concat(stdList)
       this.isDomShow = true;
-      this.$nextTick(() => this.common.transToPdf('学生信息表', 'tmpTable', this));
+      this.$toast.loading({
+        message: '下载中...',
+        forbidClick: true,
+        duration: 0,
+      });
+      // this.$nextTick(() => this.common.transToPdf('学生信息表', 'tmpTable', this));
+      this.common.outPutPdfFn(this, 'tmpTable', 'trClassFlag', '学生信息表', true);
     },
     // 搜索
     onSearch() {
@@ -408,21 +462,26 @@ export default {
 
 <style lang="scss" scoped>
 #tmpTable {
-  margin-top: 3000px;
-  width: 100%;
+  padding: 60px 20px;
+  width: 800px;
   h2 {
+    font-weight: bolder;
+    font-size: 100%;
     margin: 20px;
     text-align: center;
   }
   table {
-    width: 70%;
+    width: 100%;
     margin: 0 auto;
   }
   th,
   td {
     text-align: center;
-    line-height: 30px;
+    vertical-align: middle;
+    white-space: nowrap;
     border: 1px solid black;
+    padding: 8px;
+    font-size: 60%;
   }
 }
 </style>

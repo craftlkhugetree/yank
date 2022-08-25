@@ -4,7 +4,15 @@
       <el-col :span="isCol ? 24 : 16" v-if="!isRepairMove">
         <div class="inner-item">
           <div class="part" v-if="auditDev === 'leader'">单位领导审批意见:</div>
-          <div class="part" v-if="auditDev === 'bm'">白马办审批意见:</div>
+          <div class="part" v-if="auditDev === 'bm' && !isHq">
+            基地审批意见:
+          </div>
+          <div
+            class="part"
+            v-if="auditDev !== 'bm' && auditDev !== 'leader' && isHq"
+          >
+            后勤审批意见:
+          </div>
           <el-input
             v-model.trim="eventnote"
             type="textarea"
@@ -107,7 +115,7 @@
 export default {
   props: {
     auditDev: {
-      // 审批部门，默认白马办
+      // 审批部门，默认基地
       type: String,
       default: "bm"
     },
@@ -123,7 +131,8 @@ export default {
       tipTitle: "",
       addnote: "",
       dialogVisible: false,
-      checked: -1
+      checked: -1,
+      isHq: this.common.url4status().hq === 1
     };
   },
   methods: {
