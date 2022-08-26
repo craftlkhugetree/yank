@@ -587,6 +587,13 @@ return ''
 font-weight: bolder !important;
 }
 
+import elImageViewer from "element-ui/packages/image/src/image-viewer";
+<el-image-viewer
+            v-if="showViewer"
+            :on-close="closeViewer"
+            :url-list="srcList"
+          ></el-image-viewer>
+
 $nextTick转化pdf：
   transToPdf(title, domID, _this) {
     const loading = _this.$loading({

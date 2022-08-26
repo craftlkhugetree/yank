@@ -1,9 +1,0 @@
-[{
-        "FROMSOURCE": "首页","NAME":"张学","BOOKCLASSIFY":"书类/期刊","NUMBER":"21",
-        "DETAIL":[{"BOOKIMG": "../img/history.png","BOOKNAME":"中国历史的侧面","AUTHORNOTHERNAME":"老子","CREATEYEAR":"北宋","BOOKCATEGORY":"编年体史书",
-                     "AUTHOR":"司马光主编","ID":"7","BOOKDETAIL":"马勇教授将穿越历史时空，为我们讲述中国近代史上那些不一样的人和事。假如九年立宪按部就班，假如宋教仁能够多活十年，中国的历史又该怎样发展……对比如今火热的宫斗剧，真实的后宫又是怎样的一面"},
-                  {"BOOKIMG": "../img/people.png","BOOKNAME":"曽国潘的正面和侧面","AUTHORNOTHERNAME":"通鉴","CREATEYEAR":"现代","BOOKCATEGORY":"情感",
-                     "AUTHOR":"路遥主编","ID":"7","BOOKDETAIL":"曾国藩是春秋战国时代曾子的七十世孙。他是中国近代政治家、战略家、理学家、文学家，湘军的创立者和统帅；他因为在学问和事功方面的成就而备受后世推崇。读懂曾国藩的人生“六戒”，就学到了他的做人做事之道"},
-                  {"BOOKIMG": "../img/history.png","BOOKNAME":"中国历史的侧面","AUTHORNOTHERNAME":"老子","CREATEYEAR":"北宋","BOOKCATEGORY":"编年体史书",
-                     "AUTHOR":"司马光主编","ID":"7","BOOKDETAIL":"会议强调，根据党中央部署，福建省推进国家生态文明试验区建设一年来"}]
-    }]
