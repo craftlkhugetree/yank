@@ -29,6 +29,8 @@ ssh-keygen -t rsa -C "345823102@qq.com"
 ssh -T git@github.com // 测试
 
 # npm
+npm uninstall element-ui
+npm install element-ui@2.15.8 -s
 
 npm list -g --depth 0 查看 node 安装位置和版本
 
@@ -593,6 +595,9 @@ import elImageViewer from "element-ui/packages/image/src/image-viewer";
             :on-close="closeViewer"
             :url-list="srcList"
           ></el-image-viewer>
+或者main.js里
+import ElImageViewer from "element-ui/packages/image/src/image-viewer";
+Vue.component('el-image-viewer', ElImageViewer)
 
 $nextTick转化pdf：
   transToPdf(title, domID, _this) {
@@ -739,30 +744,6 @@ console.log(oldVal, newVal);
 deep: true // 引用类型数据，需要进行深度监听模式，不然无法进行触发回调
 }
 },
-
-# Token
-
-Token 其实就是访问资源的凭证。
-一般是用户通过用户名和密码登录成功之后，服务器将登陆凭证做数字签名，加密之后得到的字符作为 token。
-
-它在用户登录成功之后会返回给客户端，客户端主要有这么几种存储方式：
-
-1．存储在 localStorage 中，每次调用接口的时候都把它当成一个字段传给后台
-
-2．存储在 cookie 中，让它自动发送，不过缺点就是不能跨域
-
-3．拿到之后存储在 localStorage 中，每次调用接口的时候放在 HTTP 请求头的 Authorization 字段里
-
-所以 token 在客户端一般存放于 localStorage、cookie 或 sessionStorage 中。
-
-将 token 存放在 webstroage 中，可以通过同域的 js 来访问。这样会导致很容易受到 XSS 攻击，特别是项目中引入很多 第三方 js 类库的情况下。如果 js 脚本被盗用，攻击者就 可以轻易访问你的网站，webStroage 作为一种储存机制，在传输过程中不会执行任何安全标准。
-
-XSS 攻击：cross-site Scripting (跨站脚本攻击） 是一种注入代码攻击。恶意攻击者在目标网站生注入 script 代码，当访问者浏览网站的时候通过执行注入的 script 代码达到窃取用户信息，盗用用户身份等。
-网站中包含大量的动态内容以提高用户体验，比过去要复杂得多。所谓动态内容，就是根据用户环境和需要，Web 应用程序能够输出相应的内容。动态站点会受到一种名为“跨站脚本攻击”（Cross Site Scripting, 安全专家们通常将其缩写成 XSS,原本应当是 css，但为了和层叠样式表（Cascading Style Sheet,CSS ）有所区分，故称 XSS）的威胁，而静态站点则完全不受其影响。
-
-将 token 存放在 cookie 中可以指定 httponly，来防止被 javascript 读取，也可以指定 secure ，来保证 token 只在 HTTPS 下传输。缺点是不符合 Restful 最佳实践，容易受到 CSRF 攻击。
-CSRF 跨站点请求伪造(Cross-Site Request Forgery)，跟 XSS 攻击一样，存在巨大的危害性。简单来说就是恶意攻击者盗用已经认证过的用户信息，以用户信息名义进行一些操作（如发邮件、转账、购买商品等等）。由于身份已经认证过，所以目标网站会认为操作都是真正的用户操作的。CSRF 并不能拿到用户信息，它只是盗用的用户凭证去进行操作。
-————————————————
 
 # 算法
 

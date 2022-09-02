@@ -1,62 +1,3 @@
-# net interface
- const loading = this.$loading({
-          lock: true,
-          text: "提交审批中",
-          spinner: "el-icon-loading",
-          background: "rgba(0, 0, 0, 0.7)"
-        });
-
-        this.util
-          .postAjax({
-            code: this.global.code,
-            url,
-            isRep: true,
-            data: EduApplyEvent
-          })
-          .then(res => {
-            loading.close();
-            if (res && res.success === true) {
-              this.$message({
-                type: "success",
-                message,
-              });
-            } else {
-              this.$message({
-                type: "error",
-                message: res.data.message || '内部错误'
-              });
-            }
-          })
-          .catch(e => loading.close());
- // 移动端
-    confirmCheckOut() {
-      this.$toast.loading({
-        message: "提交中...",
-        forbidClick: true,
-        duration: 0
-      });
-      this.util
-        .postAjax({
-          code: this.global.bmCode,
-          url: "/spres/saveCheckOut",
-          data: {
-            resId: this.checkOutRow.id
-          }
-        })
-        .then(res => {
-          this.$toast.clear();
-          if (res && res.success === true) {
-            this.$toast.success("已提交退出申请，请等待白马办审核");
-          } else {
-            this.$toast.fail(res.message || '内部错误');
-          }
-        })
-        .catch(err => {
-          this.$toast.clear();
-          this.$toast.fail(err || '内部错误');
-        });
-    },
-
 # Project
 https://z.angke.com.cn/    账户  liken   密码  Liken123
 jenkins: liken 123456 http://160.255.0.64:10086/
@@ -90,6 +31,9 @@ http://seat.dev.angke.cn/mseat/#/index
 seat 123
 https://tsgzwyy.xijing.edu.cn/seatweb/index.html    
 用户名 seat   密码  Seat@52333181
+
+南农
+http://myportal.njau.edu.cn/new/index.html    1993032/HBli123456
 
 # 2022/5/6 读者教育
 【feat】mixins:confirmDialog 4 exam and timing; result, examResult, examing; replace $message by Notify.
@@ -403,10 +347,17 @@ fix：协议合计金额溢出；实习申请单；灌溉对话框的查询资�
 fix：座位预约occupyList,showList
 feat：座位预约renameId(), 补墙去空
   
+2022/08/29
+fix：moveNode, pending, 
+feat：vue.component('name', comp); res.items[0]; 4 help pngs
+
 去掉  path: "/spresRepair",
 修改  科教资源欠费统计表——菜单名称变更为 “科教资源收费统计”
 新增  本院科研项目统计 path: "/projectHistory/leadership",
 新增  本院基地学生实习统计 path: "/prapply/leadership",
+
+2022/08/30
+feat：seatMobile在config.js  里面添加  isAppointTime   : true  ,可自由选择预约时间；false 默认选择所有时间 并且不可更改，去选择 按钮隐藏，选择时间段改为时间段。
 
 
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)
@@ -423,7 +374,6 @@ feat：座位预约renameId(), 补墙去空
             }
             sessionStorage.setItem('url4bizNode', JSON.stringify(obj))
           }
-空闲资源-申请流程下载；header-帮助手册下载；
 baseUpload；sideBar；utils
 
 
@@ -434,3 +384,74 @@ Amazon deepracer
 
 form有初始值才能输入，才能双向绑定？
 doLayout才能保证移动端el-table某列可以用v-if，否则这一行不对齐。
+
+new 从上往下拖；全量编辑
+# net interface
+ const loading = this.$loading({
+          lock: true,
+          text: "提交审批中",
+          spinner: "el-icon-loading",
+          background: "rgba(0, 0, 0, 0.7)"
+        });
+
+        this.util
+          .postAjax({
+            code: this.global.code,
+            url,
+            isRep: true,
+            data: EduApplyEvent
+          })
+          .then(res => {
+            loading.close();
+            if (res && res.success === true) {
+              this.$message({
+                type: "success",
+                message,
+              });
+            } else {
+              this.$message({
+                type: "error",
+                message: res.data.message || '内部错误'
+              });
+            }
+          })
+          .catch(e => loading.close());
+
+  // 封装loading，由接口处决定是否提供loadingText
+ if (options.loadingText || options.loadingText === '') {
+        thisVue.$toast.loading({
+          message: options.loadingText,
+          forbidClick: true,
+          overlay: true,
+          duration: 0,
+        });
+      };
+ // 移动端导入vant的 Toast
+    confirmCheckOut() {
+      this.$toast.loading({
+        message: "提交中...",
+        forbidClick: true,
+        overlay: true,
+        duration: 0
+      });
+      this.util
+        .postAjax({
+          code: this.global.bmCode,
+          url: "/spres/saveCheckOut",
+          data: {
+            resId: this.checkOutRow.id
+          }
+        })
+        .then(res => {
+          this.$toast.clear();
+          if (res && res.success === true) {
+            this.$toast.success("已提交退出申请，请等待白马办审核");
+          } else {
+            this.$toast.fail(res.message || '内部错误');
+          }
+        })
+        .catch(err => {
+          this.$toast.clear();
+          this.$toast.fail(err || '内部错误');
+        });
+    },
