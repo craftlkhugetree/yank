@@ -31,4 +31,7 @@ Deque 双向队列
 facade  [fəˈsɑːd] 表面
 safari [səˈfɑːri] 
 
-
+retract 收回  extend slider
+is perceived to   被认为
+malformed 格式错误的
+deceptive 欺骗性的

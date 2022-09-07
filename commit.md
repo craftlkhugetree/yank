@@ -358,7 +358,14 @@ feat：vue.component('name', comp); res.items[0]; 4 help pngs
 
 2022/08/30
 feat：seatMobile在config.js  里面添加  isAppointTime   : true  ,可自由选择预约时间；false 默认选择所有时间 并且不可更改，去选择 按钮隐藏，选择时间段改为时间段。
+seatMobile tag: scale4tags
+# 门禁管理 2022/09/06
+NAME: '门禁管理',  DISPLAYURL: '/entrance-guard-manage',
 
+* sideBar.vue; screen 3页面的url
+
+# 网上报修 2022/09/07
+1、“我要报修”页面和“录单”页面，（PC端和手机端） 报修类型只保留后勤，默认选中； 报修区域：选学生公寓或校园楼宇，输入选择楼宇名称； 3、维修工维修完工页面，（PC端和手机端） 上传图片改成非必填； 4、系统首页报修电话替换
 
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
@@ -374,8 +381,6 @@ feat：seatMobile在config.js  里面添加  isAppointTime   : true  ,可自由�
             }
             sessionStorage.setItem('url4bizNode', JSON.stringify(obj))
           }
-baseUpload；sideBar；utils
-
 
 require，import动态 静态
 webpack cjs/esm 导入导出 通用
@@ -385,7 +390,7 @@ Amazon deepracer
 form有初始值才能输入，才能双向绑定？
 doLayout才能保证移动端el-table某列可以用v-if，否则这一行不对齐。
 
-new 从上往下拖；全量编辑
+项目new 从上往下拖；全量编辑
 # net interface
  const loading = this.$loading({
           lock: true,
@@ -455,3 +460,4 @@ new 从上往下拖；全量编辑
           this.$toast.fail(err || '内部错误');
         });
     },
+

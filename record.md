@@ -38,6 +38,10 @@ npm config get cache // 查看本地缓存
 npm config list
 npm config ls -l 查看所有
 
+npm ls 查看安装哪些包   npm ls package 或者 npm info package
+npm root 当前项目安装位置
+npm outdated package 查看是否过时
+
 npm 的缓存机制到底是怎么样的呢？现在我们就来总结下：
 在安装资源的时候，npm 会根据 package-lock.json 中的 integrity、version、name 信息生成一个唯一的 key。
 然后用这个 key 经过 SHA256 算法生成一个 hash，根据这个 hash 前四位 在 index-v5 目录中找到对应的缓存文件，该缓存文件中记录着该包的信息。
@@ -431,6 +435,8 @@ vue info
 vue create 项目名
 vue -V 全局 vue-cli 的版本
 npm list vue 当前项目与 vue 相关的依赖
+
+vue2 基于Object.defineProperty  ，但是他有很多缺陷，比如 无法监听数组基于下标的修改，不支持 Map、Set、WeakMap 和 WeakSet等缺陷 ，
 
 beforeCreate 在这个生命周期函数中无法通过 vm 访问到 data 中的数据、methods 中配置的方法，所以这里的 this 不是 vm。
 created：在这个生命周期函数中可以通过 vm 访问到 data 中的数据、methods 中配置的方法（在内存中），所以这里的 this 是 vm。

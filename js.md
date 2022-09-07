@@ -461,3 +461,44 @@ ajax是一个异步请求，jsonp是一个同步请求
 ajax存在同源检查，jsonp不存在同源检查，后端无需做解决跨域的响应头。
 ajax支持各种请求的方式，而jsonp只支持get请求
 ajax的使用更加简便，而jsonp的使用较为麻烦。
+
+
+# 用return直接退出方法会带来一个问题，如果在循环之后还有一些将被执行的代码呢？如果提前退出了整个方法，这些代码就得不到被执行的机会：
+var func = function(){
+    for ( var i = 0; i < 10; i++ ){
+        for ( var j = 0; j < 10; j++ ){
+            if ( i * j > 30 ){
+                return;
+            }
+        }
+    }
+    console.log( i ); // 这句代码没有机会被执行
+};
+
+为了解决这个问题，可以把循环后面的代码放到return后面，如果代码比较多，就应该把它们提炼成一个单独的函数：
+
+var print = function( i ){
+    console.log( i );
+};
+var func = function(){
+    for ( var i = 0; i < 10; i++ ){
+        for ( var j = 0; j < 10; j++ ){
+            if ( i * j > 30 ){
+                return print( i );
+            }
+        }
+    }
+};
+func();
+
+
+# 在 JavaScript 中，如果想要将对象转换成基本类型时，再从基本类型转换为对应的 String 或者 Number，实质就是调用 valueOf 和 toString 方法，也就是所谓的拆箱转换。
+const x = {
+  val: 0,
+  // valueOf
+  toString: () => {
+    x.val++
+    return x.val
+  },
+}
+给对象 x设置一个属性 val并赋值为 0，并修改其 valueOf、toString 方法，在 “x == 1 && x == 2 && x == 3”判断执行时，每次等式比较都会触发 valueOf、toString 方法，都会执行 val++ ，同时把最新的 val 值用于等式比较，三次等式判断时 val 值分别为 1、2、3 与等式右侧的 1、2、3 相同，从而使等式成立。

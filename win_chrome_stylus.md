@@ -13,7 +13,7 @@ switchy Omega：https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist
 
 
 # stylus
-^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.1.251)).*$
+^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.)).*$
 ^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost)).*$
 ^(?!._(seat.dev.angke.cn|z.angke.com.cn))._$
 ^(?!._(localhost|z.angke.com.cn))._$
