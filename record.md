@@ -53,11 +53,12 @@ A: 首先，我们应该尽量避免冲突，在我们需要更新 package.json 
 在遇到 lock 文件冲突的时候，那么应该先手动解决 package.json 的冲突，然后执行 npm install --package-lock-only，让 npm 自动帮你解冲突。
 
 # vscode
+要打开正则按钮才能使用：      ('|")9100002(.*?)('|")   `${this.util.webUserID}$2`
 
 没有配置前 如果代码过长，vetur 会把尖括号整理到第二行换行， "prettier.htmlWhitespaceSensitivity": "ignore", //包裹文字时候结束标签的结尾尖括号掉到了下一行
 感叹号后回车，快捷生成 html
 
-ctrl + shift + o 查找函数类名
+ctrl + shift + o 查找函数、css类名、变量等
 ctrl + p 打开文件
 
 # js node webpack
@@ -208,96 +209,6 @@ l.style.width = "50%"
 }
 }
 
-**_ 复制到剪切板的两种方法 _**
-if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
-navigator.clipboard.writeText(text).then(
-function () {
-console.log('Async: Copying to clipboard was successful!');
-},
-function (err) {
-console.error('Async: Could not copy text: ', err);
-}
-);
-} else {
-const input = document.createElement('input');
-document.body.appendChild(input);
-input.setAttribute('value', text);
-input.select();
-if (document.execCommand('copy')) {
-document.execCommand('copy');
-console.log('复制成功');
-}
-document.body.removeChild(input);
-}
-
-/\*_ Function: 导出二进制流文件 _/
-const exportFile = function (url, isGet, params, fileName, fileType) {
-Axios({
-url: window.g.ApiUrl2 + url,
-method: isGet ? "GET" : "POST",
-responseType: "blob",
-headers: {
-IDSTGC: getCookie("IDSTGC") || "7449714c09c049b693c2c03b6ffb2086"
-},
-data: params
-}).then(res => {
-let url = window.URL.createObjectURL(res.data);
-let link = document.createElement("a");
-link.href = url;
-link.style.display = "none";
-link.setAttribute("download", fileName + "." + fileType);
-document.body.appendChild(link);
-link.click();
-document.body.removeChild(link);
-window.URL.revokeObjectURL(url);
-});
-}
-// 原生 js 下载二进制流
-function d(type) {
-let xmlResquest = new XMLHttpRequest();
-// let url = location.protocol + '//' + location.host + urls + `dataAnalysis/${type}DataExcel`;
-let url = location.protocol + '//' + location.host + urls + `dataAnalysis/${type}DataExcel?data=`;
-let param = JSON.stringify({ page: 1, start: 0 });
-url += encodeURIComponent(param);
-let fileName = type + '统计';
-xmlResquest.open('get', url, true);
-xmlResquest.responseType = 'blob';
-xmlResquest.timeout = 0; // 设置超时时间
-xmlResquest.onload = function (oEvent) {
-const content = xmlResquest.response;
-// 因为可能后端可能会传递 json 格式的报错信息，所以在接收信息的时候需要判断一下是否是 json 文件。如果是 json 文件，则为报错信息。不是 json 文件就是正常文本信息
-let fileReader = new FileReader();
-fileReader.onload = function () {
-try {
-let jsonData = JSON.parse(this.result); // 说明是普通对象数据，后台转换失败
-if (jsonData.code) {
-}
-} catch (error) {
-// 解析出错，可以下载，说明不是 json 对象
-// const elink = document.createElement('a');
-// elink.download = fileName;
-// elink.style.display = 'none';
-// const blob = new Blob([content]);
-// elink.href = URL.createObjectURL(blob);
-// document.body.appendChild(elink);
-// elink.click();
-// document.body.removeChild(elink);
-let url = window.URL.createObjectURL(content);
-let link = document.createElement('a');
-link.href = url;
-link.style.display = 'none';
-link.setAttribute('download', fileName + '.xlsx');
-document.body.appendChild(link);
-link.click();
-document.body.removeChild(link);
-window.URL.revokeObjectURL(url);
-}
-};
-fileReader.readAsText(content);
-};
-xmlResquest.send();
-}
-
 // 回到顶部
 document.getElementsByTagName('html')[0].scrollTop = 0
 1.document.body.scrollTop=document.documentElement.scrollTop=0 //页面滚动到顶部
@@ -307,30 +218,6 @@ document.getElementsByTagName('html')[0].scrollTop = 0
 // 每次切换标题栏都从第一个开始展示
 document.querySelector('.infinite-scroll-component').scrollTo(0,0)
 //选中当前想要回到 dom 元素，使用 scrollTo(0,0),实现能够在切换中始终保持第一栏在顶部显示。
-
-// 下载
-this.util.exportFile('learn/download', true, this.id, name, ext) // false 就是 params 对象。
-let exportFile = function (url, isGet, params, fileName, fileType) {
-Axios({
-url: window.g.url + url,
-method: isGet ? "GET" : "POST",
-responseType: "blob",
-headers: {
-IDSTGC: getCookie("IDSTGC") || "4c94867cb4854ede8ce3121f4a2a037e",
-},
-data: params,
-}).then((res) => {
-let url = window.URL.createObjectURL(res.data);
-let link = document.createElement("a");
-link.href = url;
-link.style.display = "none";
-link.setAttribute("download", fileName + "." + fileType);
-document.body.appendChild(link);
-link.click();
-document.body.removeChild(link);
-window.URL.revokeObjectURL(url);
-});
-}
 
 # jquery
 

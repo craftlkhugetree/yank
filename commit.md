@@ -367,6 +367,11 @@ NAME: '门禁管理',  DISPLAYURL: '/entrance-guard-manage',
 # 网上报修 2022/09/07
 1、“我要报修”页面和“录单”页面，（PC端和手机端） 报修类型只保留后勤，默认选中； 报修区域：选学生公寓或校园楼宇，输入选择楼宇名称； 3、维修工维修完工页面，（PC端和手机端） 上传图片改成非必填； 4、系统首页报修电话替换
 
+2022/09/08
+fix：2、接报修人员“维修办理”页面，（PC端） “已办理”分页，增加筛选条件：维修责任人，可下载（单个和批量）打印报修单， 点击批量下载，多个报修单以列表形式在同一个文件中 报修单下载内容：报修区域、报修内容、报修时间、报修人、联系电话、维修单位、维修责任人；无数据不findById
+
+fix：all List have getTotal(total); repairdeptid null or ''; dispatch 10000
+
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
           if (repair.children && repair.children[0]) {
@@ -391,73 +396,5 @@ form有初始值才能输入，才能双向绑定？
 doLayout才能保证移动端el-table某列可以用v-if，否则这一行不对齐。
 
 项目new 从上往下拖；全量编辑
-# net interface
- const loading = this.$loading({
-          lock: true,
-          text: "提交审批中",
-          spinner: "el-icon-loading",
-          background: "rgba(0, 0, 0, 0.7)"
-        });
 
-        this.util
-          .postAjax({
-            code: this.global.code,
-            url,
-            isRep: true,
-            data: EduApplyEvent
-          })
-          .then(res => {
-            loading.close();
-            if (res && res.success === true) {
-              this.$message({
-                type: "success",
-                message,
-              });
-            } else {
-              this.$message({
-                type: "error",
-                message: res.data.message || '内部错误'
-              });
-            }
-          })
-          .catch(e => loading.close());
-
-  // 封装loading，由接口处决定是否提供loadingText
- if (options.loadingText || options.loadingText === '') {
-        thisVue.$toast.loading({
-          message: options.loadingText,
-          forbidClick: true,
-          overlay: true,
-          duration: 0,
-        });
-      };
- // 移动端导入vant的 Toast
-    confirmCheckOut() {
-      this.$toast.loading({
-        message: "提交中...",
-        forbidClick: true,
-        overlay: true,
-        duration: 0
-      });
-      this.util
-        .postAjax({
-          code: this.global.bmCode,
-          url: "/spres/saveCheckOut",
-          data: {
-            resId: this.checkOutRow.id
-          }
-        })
-        .then(res => {
-          this.$toast.clear();
-          if (res && res.success === true) {
-            this.$toast.success("已提交退出申请，请等待白马办审核");
-          } else {
-            this.$toast.fail(res.message || '内部错误');
-          }
-        })
-        .catch(err => {
-          this.$toast.clear();
-          this.$toast.fail(err || '内部错误');
-        });
-    },
-
+netRepair: findId重复4次
