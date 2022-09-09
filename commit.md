@@ -17,7 +17,7 @@ svn://160.255.0.56/01module/lres/03code/lresweb/src/main/webapp/mobile_nh
 
 https://720yun.com/t/c9fjr7syOu5
 
-南农正式：
+南农bm正式：
 https://authserver.njau.edu.cn/authserver/login?service=http%3A%2F%2Fbmjd.njau.edu.cn%2Fidsweb%2Frest%2FCas2Login%2Flogin%3FreqKey%3D4251609
 T2019037  020613xiu
 读者教育：
@@ -359,9 +359,8 @@ feat：vue.component('name', comp); res.items[0]; 4 help pngs
 2022/08/30
 feat：seatMobile在config.js  里面添加  isAppointTime   : true  ,可自由选择预约时间；false 默认选择所有时间 并且不可更改，去选择 按钮隐藏，选择时间段改为时间段。
 seatMobile tag: scale4tags
-# 门禁管理 2022/09/06
+# appointment-门禁管理 2022/09/06
 NAME: '门禁管理',  DISPLAYURL: '/entrance-guard-manage',
-
 * sideBar.vue; screen 3页面的url
 
 # 网上报修 2022/09/07
@@ -371,6 +370,9 @@ NAME: '门禁管理',  DISPLAYURL: '/entrance-guard-manage',
 fix：2、接报修人员“维修办理”页面，（PC端） “已办理”分页，增加筛选条件：维修责任人，可下载（单个和批量）打印报修单， 点击批量下载，多个报修单以列表形式在同一个文件中 报修单下载内容：报修区域、报修内容、报修时间、报修人、联系电话、维修单位、维修责任人；无数据不findById
 
 fix：all List have getTotal(total); repairdeptid null or ''; dispatch 10000
+
+2022/09/09
+南京工程学院 校徽 后勤保障处
 
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
