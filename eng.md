@@ -35,3 +35,4 @@ retract 收回  extend slider
 is perceived to   被认为
 malformed 格式错误的
 deceptive 欺骗性的
+cloak 斗篷

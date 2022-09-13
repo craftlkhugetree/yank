@@ -374,6 +374,9 @@ fix：all List have getTotal(total); repairdeptid null or ''; dispatch 10000
 2022/09/09
 南京工程学院 校徽 后勤保障处
 
+2022/09/13
+fix: 科教资源查询orgId, resname
+
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
           if (repair.children && repair.children[0]) {

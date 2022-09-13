@@ -199,6 +199,7 @@ while( res = reg.exec(str))
 
 const xmlarray = str.split(/(<pagenumber pagenum=[^>]*\/>){1}/);会把正则字段在数组中保存一份
 #    const xmlarray = str.split(/(<title>[\d\D]*?<\/title>){1}/);  针对大量的括号对，要用非贪心匹配。点号不表示\n，所有字符应该用[\d\D]或者[\s\S]
+split的正则中加了括号,会把括号内匹配到的值也放在最后返回的数组里。
 或者加上  s  可以匹配换行符   console.log( /b.r/s.test('b\nr') )
 /foo/igs.flags;   // "gis"
 
