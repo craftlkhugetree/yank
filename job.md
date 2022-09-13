@@ -5,3 +5,5 @@ this绑定规则，https://xiaohuochai.site/JS/ECMA/this/binding.html
 大屏：字体、尺寸、背景图片缩放，没有webpack打包，IOS夏令时兼容
 
 民国库：高亮搜索，繁体字多种，正则(非贪婪?， ?:非捕获分组， 反向引用\1$1，?=正向预查)
+
+netRepair-njit:  webpack plugin过滤‘ac5d ’

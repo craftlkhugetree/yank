@@ -376,6 +376,8 @@ fix：all List have getTotal(total); repairdeptid null or ''; dispatch 10000
 
 2022/09/13
 fix: 科教资源查询orgId, resname
+feat: netRepair-njit  ac5d
+fix: new 读者教育 密码复杂度
 
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};

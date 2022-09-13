@@ -185,6 +185,12 @@ grep -Pzo "000(\n|.)*222(\n|.)*?111" test.log
 ^(?!._(localhost|z.angke.com.cn))._$
 ^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost)).*$
 
+ var pwdRegex = new RegExp('(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{8,30}');
+ if (!pwdRegex.test('A3b@C2dEF')) {
+ 　　alert("您的密码复杂度太低（密码中必须包含大小写字母、数字、特殊字符），请及时修改密码！");
+ }
+
+
 ?<=pattern
 匹配这个位置之前为pattern的内容
 var str = '111$222'
