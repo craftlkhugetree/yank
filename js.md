@@ -1,3 +1,29 @@
+# 深度拷贝
+1、用new obj.constructor()构造函数新建一个空的对象，而不是使用{}或者[],这样可以保持原形链的继承；
+2、用obj.hasOwnProperty(key)来判断属性是否来自原型链上，因为for..in..也会遍历其原型链上的可枚举属性。
+*** 可枚举属性是指那些内部 “可枚举enumerable” 标志设置为 true 的属性，对于通过直接的赋值和属性初始化的属性，该标识值默认为即为 true，对于通过 Object.defineProperty 等定义的属性，该标识值默认为 false。 ***
+  Object.keys()    JSON.stringify    Object.assign()  三者只是对象自身的所有可枚举的属性
+  Object.getOwnPropertyNames()则是遍历自身所有属性（不论是否是可枚举的）,也是不包括原型链上面的。
+3、用到递归算法，在函数名字不会变的情况下，这样定义没有问题。但问题是与函数名紧紧耦合在了一起。为了消除这种紧密耦合的现象，需要使用 arguments.callee。
+————————————————
+版权声明：本文为CSDN博主「毅江」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/u013362969/article/details/86489246
+var deepClone = function (obj) { 
+    if(obj === null) return null 
+    if(typeof obj !== 'object') return obj;
+    if(obj.constructor===Date) return new Date(obj); 
+    if(obj.constructor === RegExp) return new RegExp(obj);
+    var newObj = new obj.constructor();  //保持继承链
+    for (var key in obj) {
+        //如果obj有不可枚举的属性则复制不到，bug
+        if (Object.hasOwnProperty.call(obj, key)) {   //不遍历其原型链上的属性
+            var val = obj[key];
+            //arguments.callee 弃用的话就用函数名
+            newObj[key] = typeof val === 'object' ? arguments.callee(val) : val; // 使用arguments.callee解除与函数名的耦合
+        }
+    }  
+    return newObj;  
+};
 # 兼容IOS的日期
   transIOS(str) {
     var arr = str.split(/[-:./]|\s+/)
@@ -502,3 +528,42 @@ const x = {
   },
 }
 给对象 x设置一个属性 val并赋值为 0，并修改其 valueOf、toString 方法，在 “x == 1 && x == 2 && x == 3”判断执行时，每次等式比较都会触发 valueOf、toString 方法，都会执行 val++ ，同时把最新的 val 值用于等式比较，三次等式判断时 val 值分别为 1、2、3 与等式右侧的 1、2、3 相同，从而使等式成立。
+
+删除cookie：
+      var expires = new Date();
+      expires.setTime(expires.getTime() - 10000);
+      document.cookie =
+        "IDSTGC=" + escape("echo") + ";expires=" + new Date(0).toUTCString() + `;Path=/`;
+
+顺序：
+async function async1() {
+    console.log('async1 start');
+    await async2();
+    console.log('async1 end');
+}
+async function async2() {
+    console.log('async2');
+}
+console.log('script start');
+setTimeout(function () {
+    console.log('setTimeout');
+}, 0)
+async1();
+new Promise(function (resolve) {
+    console.log('promise1');
+    resolve();
+    console.log('promise2')
+}).then(function () {
+    console.log('promise3');
+});
+console.log('script end');
+        //  script start
+shunxu.js:2 async1 start
+shunxu.js:7 async2
+shunxu.js:15 promise1
+shunxu.js:17 promise2
+shunxu.js:21 script end
+shunxu.js:4 async1 end
+shunxu.js:19 promise3
+shunxu.js:11 setTimeout
+await的语义不是代码就停在这里啥也不干了，而是 下面的代码接到上面的回调上。

@@ -379,6 +379,15 @@ fix: 科教资源查询orgId, resname
 feat: netRepair-njit  ac5d
 fix: new 读者教育 密码复杂度
 
+2022/09/15
+idsweb/rest/login2/authUser  form-data    user:{"loginname":'',"pwd":'',"yzm":'',"openid":''}
+参数base64加密
+idsweb/rest/login2/getCode 获取微信openid
+
+2022/09/16
+feat: login.vue(modify app.vue, api.js, idsweb, isGet, ); myRepair(common.js 2,4); router.js
+维修负责人和维修工：9100002njit2-3   9100002njit2-4
+
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
           if (repair.children && repair.children[0]) {
