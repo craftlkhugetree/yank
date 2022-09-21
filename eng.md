@@ -37,7 +37,9 @@ malformed 格式错误的
 deceptive 欺骗性的
 cloak 斗篷
 
-
+6. fire hose 消防水带
+water valve 水阀
+nozzle 管口、喷嘴
 
 减肥=减脂≠减重
 健身先健脑,减肥先增智

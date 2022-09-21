@@ -389,16 +389,15 @@ if (options.loadingText || options.loadingText === '') {
     duration: 0,
   });
 }
-!res.errInf &&
-  tVue.$toast.fail(res.message || res.msg || orgindata.msg || orgindata.message || '内部错误');
+let errMsg = res.message || res.msg || orgindata.msg || orgindata.message;
+errMsg && tVue.$toast.fail(errMsg);
 tVue.$toast.clear();
 
 // pc端
-!res.errInf &&
-  tVue.$message({
+errMsg && tVue.$message({
     showClose: true,
     type: 'error',
-    message: res.message || res.msg || orgindata.msg || orgindata.message || '内部错误',
+    message: errMsg,
   });
 
 // 复制到剪切板的两种方法

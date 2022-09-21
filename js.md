@@ -567,3 +567,18 @@ shunxu.js:4 async1 end
 shunxu.js:19 promise3
 shunxu.js:11 setTimeout
 await的语义不是代码就停在这里啥也不干了，而是 下面的代码接到上面的回调上。
+
+
+function GetRequest() {  
+   var url = location.search;
+   //获取url中"?"符后的字串  
+   var theRequest = new Object(); 
+   if (url.indexOf("?") != -1) { 
+      var str = url.substr(1); 
+      strs = str.split("&");  
+      for(var i = 0; i < strs.length; i ++) {
+         theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+      }
+   }
+   return theRequest;  
+}

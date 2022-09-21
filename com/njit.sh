@@ -1,8 +1,8 @@
 # !/bin/sh
 #不能有空格
-read -p  "nannong请填写IDSTGC:" msg
-filename1='/d/kxiangmu/njauLogistics/netRepair-mobile/src/assets/js/util.js'
-filename2='/d/kxiangmu/njauLogistics/netRepair/src/assets/js/util.js'
+read -p  "njit请填写IDSTGC:" msg
+filename1='/d/kxiangmu/njauLogistics/netRepair-mobile_njit/src/assets/js/util.js'
+filename2='/d/kxiangmu/njauLogistics/netRepair_njit/src/assets/js/util.js'
 #file1='/D/kxiangmu/appointment/appointmentFrontEnd_v2/src/components/BaseUpload.vue'
 #file2='/D/kxiangmu/appointment/appointmentFrontEnd_v2_mobile/src/components/BaseUpload.vue'
 #headers="headers: { IDSTGC: getCookie('IDSTGC') || '$msg'}"

@@ -40,6 +40,7 @@ npm config ls -l 查看所有
 
 npm ls 查看安装哪些包   npm ls package 或者 npm info package
 npm root 当前项目安装位置
+npm root -g
 npm outdated package 查看是否过时
 
 npm 的缓存机制到底是怎么样的呢？现在我们就来总结下：
@@ -493,59 +494,10 @@ import elImageViewer from "element-ui/packages/image/src/image-viewer";
 或者main.js里
 import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 Vue.component('el-image-viewer', ElImageViewer)
-
-$nextTick转化pdf：
-  transToPdf(title, domID, _this) {
-    const loading = _this.$loading({
-lock: true,
-text: '下载中',
-spinner: 'el-icon-loading',
-background: 'rgba(0, 0, 0, 0.7)'
-});
-
-    let element = document.getElementById(domID); // 这个dom元素是要导出pdf的div容器
-    html2Canvas(element).then(function(canvas) {
-      var contentWidth = canvas.width;
-      var contentHeight = canvas.height;
-
-      //一页pdf显示html页面生成的canvas高度;
-      var pageHeight = contentWidth / 592.28 * 841.89;
-      //未生成pdf的html页面高度
-      var leftHeight = contentHeight;
-      //页面偏移
-      let position = 0;
-      //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
-      var imgWidth = 555.28;
-      var imgHeight = 592.28 / contentWidth * contentHeight;
-
-      var pageData = canvas.toDataURL('image/jpeg', 1.0);
-
-      // 分页
-      var pdf = new JsPDF('', 'pt', 'a4');
-      // var pdf = new JsPDF('', 'pt', [contentWidth, contentHeight]); //不分页
-      // pdf.addImage(pageData, 'JPEG', 0, 0, contentWidth, contentHeight);
-
-      //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-      //当内容未超过pdf一页显示的范围，无需分页
-      if (leftHeight < pageHeight) {
-        pdf.addImage(pageData, 'JPEG', 20, 0, imgWidth, imgHeight);
-      } else {
-        while (leftHeight > 0) {
-          pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-          leftHeight -= pageHeight;
-          position -= 841.89;
-          //避免添加空白页
-          if (leftHeight > 0) {
-            pdf.addPage();
-          }
-        }
-      }
-      pdf.save(title + '.pdf');
-      loading.close();
-      _this.isDomShow = false;
-    });
-
-}
+移动端使用el及其样式：
+import {Form, Button, Input, FormItem} from 'element-ui'
+import "element-ui/lib/theme-chalk/index.css";
+Vue.use(Form).use(Button).use(Input).use(FormItem)
 
 路由传递数组参数：
 this.$router.push({
@@ -694,3 +646,39 @@ function isArray (val){
     return isTrue?true:false;
 }
 或者用new obj.constructor()构造函数新建一个空的对象，而不是使用{}或者[],这样可以保持原形链的继承。
+
+# 小程序
+openid不能用ajax获取，得是url的方式，后面加上登录页：
+const redirectUri = encodeURIComponent(window.location.href);
+let url = `https://open.weixin.qq.com/connect/oauth2/authorize?response_type=code&scope=snsapi_userinfo&state=123&redirect_uri=${redirectUri}`
+window.location.href = url;
+
+function getUrlCode(name) {
+      return (
+        (new RegExp("[?|&]" + name + "=" + "([^&;]+?)(&|#|;|$)").exec(    // exec得到的数组零元素为匹配串，同时括号里的内容也会被exec保存下来
+          location.href
+        ) || [, ""])[1].replace(/\+/g, "%20") || null             
+        // 调用decodeURIComponent函数之前要先把+替换为%20，在对 URL 进行编码时，若 URL 中存在空格，则空格会被转换成了＋，导致对方识别不成空格。
+      );
+    }
++-------------------+---------------------+
+|        Part       |       Data          |
++-------------------+---------------------+
+|  Scheme           | https               |
+|  User             | bob                 |
+|  Password         | bobby               |
+|  Host             | www.lunatech.com    |
+|  Port             | 8080                |
+|  Path             | /file;p=1           |
+|  Path parameter   | p=1                 |
+|  Query            | q=2                 |
+|  Fragment         | third               |
++-------------------+---------------------+
+
+https://bob:bobby@www.lunatech.com:8080/file;p=1?q=2#third
+\___/   \_/ \___/ \______________/ \__/\_______/ \_/ \___/
+  |      |    |          |          |      | \_/  |    |
+Scheme User Password    Host       Port  Path |   | Fragment
+        \_____________________________/       | Query
+                       |               Path parameter
+                   Authority
