@@ -325,6 +325,9 @@ vue -V 全局 vue-cli 的版本
 npm list vue 当前项目与 vue 相关的依赖
 
 vue2 基于Object.defineProperty  ，但是他有很多缺陷，比如 无法监听数组基于下标的修改，不支持 Map、Set、WeakMap 和 WeakSet等缺陷 ，
+区分响应式和双向绑定
+响应式一般指：数据改变驱动视图改变，是单向的
+双向绑定：是双向的，视图反过来也可以改变数据。也就是说响应式是双向绑定的一环
 
 beforeCreate 在这个生命周期函数中无法通过 vm 访问到 data 中的数据、methods 中配置的方法，所以这里的 this 不是 vm。
 created：在这个生命周期函数中可以通过 vm 访问到 data 中的数据、methods 中配置的方法（在内存中），所以这里的 this 是 vm。

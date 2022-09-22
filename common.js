@@ -180,23 +180,23 @@ export default {
   /********************************************2.日期********************************************/
   // Function : 时间函数封装
   formatTime(time, format, empty = '--') {
-    let timeLength = time ? '' + time : '';
+    let timeStr = time ? '' + time : '';
     let tf = function (d) {
       return d >= 10 ? d : '0' + d;
     };
     let dateObj;
-    switch (timeLength.length) {
+    switch (timeStr.length) {
       case 17:
       case 16:
       case 15:
       case 14:
         dateObj = new Date(
-          parseInt(timeLength.substring(0, 4)),
-          parseInt(timeLength.substring(4, 6)) - 1,
-          parseInt(timeLength.substring(6, 8)),
-          parseInt(timeLength.substring(8, 10)),
-          parseInt(timeLength.substring(10, 12)),
-          parseInt(timeLength.substring(12, 14))
+          parseInt(timeStr.substring(0, 4)),
+          parseInt(timeStr.substring(4, 6)) - 1,
+          parseInt(timeStr.substring(6, 8)),
+          parseInt(timeStr.substring(8, 10)),
+          parseInt(timeStr.substring(10, 12)),
+          parseInt(timeStr.substring(12, 14))
         );
         break;
       case 13:
@@ -204,9 +204,9 @@ export default {
         break;
       case 8:
         dateObj = new Date(
-          parseInt(timeLength.substring(0, 4)),
-          parseInt(timeLength.substring(4, 6)) - 1,
-          parseInt(timeLength.substring(6, 8))
+          parseInt(timeStr.substring(0, 4)),
+          parseInt(timeStr.substring(4, 6)) - 1,
+          parseInt(timeStr.substring(6, 8))
         );
         break;
       default:
@@ -421,3 +421,10 @@ if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
   }
   document.body.removeChild(input);
 }
+
+// video结束标记
+var md = document.getElementsByTagName('video')[0];
+md.loop = false;
+md.addEventListener('ended', () => {
+  console.log('结束');
+});

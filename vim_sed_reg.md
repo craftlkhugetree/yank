@@ -13,7 +13,7 @@
 请参阅 :h text-objects 来获取更多关于文本对象的帮助。
 
 ^/== 到行首第一个字符，不像0和$
-`或' 跳转到m标记的位置。
+`或' 跳转到m标记的位置。大写的标记可以文件间跳转。
 # 向上查找当前所在单词
 * 向下查找当前所在单词
 f/F+字母  当前行搜索
@@ -310,8 +310,80 @@ let arr3 = ['c', 'd'];
 arr2[Symbol.isConcatSpreadable] = true;
 ['a', 'b'].concat(arr2, 'e') // ['a', 'b', ['c','d'], 'e']
 
+# 正则表达式中常用的模式修正符有i、g、m、s、U、x、a、D、e 等。
+它们之间可以组合搭配使用。
+
+i 不区分(ignore)大小写；
+例如: /abc/i 可以匹配 abc、aBC、Abc 
+g 全局(global)匹配 
+如果不带g，正则过程中字符串从左到右匹配，找到第一个符合条件的即匹配成功，返回
+如果带g，则字符串从左到右，找到每个符合条件的都记录下来，知道字符串结尾位置
+例如: 
+var str = 'aaaaaaaa'
+var reg1 = /a/;  str.match(reg1)  // 结果为：["a", index: 0, input: "aaaaaaaa"]
+var reg2 = /a/g; str.match(reg2)  // 结果为：["a", "a", "a", "a", "a", "a", "a", "a"]
+
+m 多(more)行匹配
+若存在换行\n并且有开始^或结束$符的情况下，和g一起使用实现全局匹配,
+因为存在换行时默认会把换行符作为一个字符任务匹配字符串是个单行，
+g只匹配第一行，添加m之后实现多行，每个换行符之后就是开始
+var str = "abcggab\nabcoab";
+var preg1 = /^abc/gm;  str.match(preg1)  // 结果为：["abc", "abc"]
+var preg2 = /ab$/gm;   str.match(preg2)  // 结果为：["ab", "ab"]
 
 
+s 特殊字符圆点 . 中包含换行符
+默认的圆点 . 是 匹配除换行符 \n 之外的任何单字符，加上s之后, . 中包含换行符
+$str = "abggab\nacbs";
+$preg = "/b./s";
+preg_match_all($preg, $str,$matchs);
+print_r($matchs);//Array ( [0] => Array ( [0] => bg [1] => b [2] => bs ) ) 
+
+U 只匹配最近的一个字符串;不重复匹配; 非贪婪
+$mode="/a(.*?)c/";
+$preg="/a.*c/U";//这两个正则返回相同的值
+$str="abcabbbcabbbbbc" ;
+preg_match($mode,$str,$content);   echo $content[0];//abc
+preg_match($preg,$str,$content);   echo $content[0];//abc
+//修正符:x 将模式中的空白忽略; 
+//修正符:A 强制从目标字符串开头匹配;
+//修正符:D 如果使用$限制结尾字符,则不允许结尾有换行; 
+//修正符:e 配合函数preg_replace()使用, 可以把匹配来的字符串当作正则表达式执行;  
+
+# “\b”匹配单词边界，不匹配任何字符。
+原文链接：https://blog.csdn.net/lxcnn/article/details/4355364
+
+“\b”匹配的只是一个位置，这个位置的一侧是构成单词的字符，另一侧为非单词字符、字符串的开始或结束位置。“\b”是零宽度的。
+
+基本上所有的资料里都会说“\b”是单词边界，但是关于“单词”的范围却是少有提及。通常情况下，正则表达式中所谓的“单词”，就是由“\w”所定义的字符所组成的子串。
+
+“\b”表示所在位置的一侧为单词字符，另一侧为非单词字符、字符串的开始或结束位置，也就相当于
+
+(?<!\w)(?=\w)|(?<=\w)(?!\w)
+
+思考：以下写法为什么不等价于“\b”
+(?<=\W)(?=\w)|(?<=\w)(?=\W)
+
+在支持ASCII码的语言中，如JavaScript，“\w”等价于[a-zA-Z0-9_] ；
+
+在支持Unicode的语言中，如.NET，默认情况下，“\w”除可以匹配[a-zA-Z0-9_]外，还可以匹配一些Unicode字符集，如汉字，全角数字等等。
+
+几乎所有常见的语言都遵循这样一个规律，只有Java是个例外。在Java中，“\w”的表现是比较奇怪的，Java是支持Unicode的，但Java的正则中的“\w”却是等价于[a-zA-Z0-9_]的。
+
+“\b”用在正则中，通常情况下都是表示单词边界的，只有在字符组中，它表示的是退格键，即
+[a-z\b]
+此处的“\b”表示的是退格键，而不是单词边界。
+非单词与符号的边界是\B，可以匹配单个字符。
+————————————————
+var str = "abc_123中文_d3=efg汉字%";
+var reg = /.\b./g;
+var arr = str.match(reg);
+/*-------- JavaScript中输出--------
+3中
+文_
+3=
+g汉
+*/
 # whistle
 # 操作统计-民国库后台管理
 /^http://172.20.1.251:8080/bemweb/view/resourceClassfiyManager/(.*).js/		file://D:\kxiangmu\mgsjk\03code\bemweb\src\main\webapp\view\classificationStats\\$1.js
@@ -331,3 +403,8 @@ arr2[Symbol.isConcatSpreadable] = true;
 单引号(' ')：在单引号中所有的字符包括特殊字符($,'',`和\)都将解释成字符本身而成为普通字符。
 
 反引号(` `)：在反引号中的字符串将解释成shell命令来执行。
+
+新建~/.bashrc：
+sh 会导致脚本里的cd命令执行成功后，又退回到执行目录，所以用source。
+alias baima='source /d/yank/com/baima.sh'
+alias 查看增加的命令

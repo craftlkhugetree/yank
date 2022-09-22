@@ -147,3 +147,15 @@ new <T>(executor: (resolve: (value?: T | PromiseLike<T>) => void, reject: (reaso
 new Promise<classType>(resolve, reject);
 new Promise(resolve(classType)=>void, reject);
 两种写法根据结构来讲实现都一样，不会对reject进行变动
+
+
+映射类型：type能用in关键字生成映射类型，interface不行。
+type Keys = "name" | "sex"
+type DuKey = {
+  [Key in Keys]: string //类似 for ... in
+}
+let stu: Dukey = {
+  name: 'wang'，
+  sex: 'man'
+}
+链接：https://www.jianshu.com/p/fdd867125af5
