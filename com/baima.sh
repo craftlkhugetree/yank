@@ -26,3 +26,5 @@ done
 #sed  -i "{:begin;  /\}/! { $! { N; b begin }; }; s/^headers:[\d\D]*?{[\d\D]*?}$/${msg}/g; };" $filename
 
 #sed  -i 's/^(headers:\s*{)[\s\S]*?}$/${msg}/g' $filename
+
+cd '/D/kxiangmu/baima/bmfrontend/'

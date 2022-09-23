@@ -1,6 +1,6 @@
 # !/bin/sh
 #不能有空格
-read -p  "请填写IDSTGC:" msg
+read -p  "门禁预约系统请填写IDSTGC:" msg
 filename1='/D/kxiangmu/appointment/03code/appointmentFrontEnd_v2/src/assets/js/util.js'
 filename2='/D/kxiangmu/appointment/03code/appointmentFrontEnd_v2_mobile/src/assets/js/util.js'
 filename3='/D/kxiangmu/appointment/03code/appointScreen/js/sign.js'
@@ -21,3 +21,4 @@ do
 done
 
 #sed正则内的括号必须转义
+cd '/D/kxiangmu/appointment/appointmentFrontEnd_v2/' 

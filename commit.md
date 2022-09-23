@@ -19,7 +19,7 @@ https://720yun.com/t/c9fjr7syOu5
 
 南农bm正式：
 https://authserver.njau.edu.cn/authserver/login?service=http%3A%2F%2Fbmjd.njau.edu.cn%2Fidsweb%2Frest%2FCas2Login%2Flogin%3FreqKey%3D4251609
-T2019037  020613xiu
+T2019037  020613xiu;  你好，我的账号2014069，密码pswd0923
 读者教育：
 http://172.20.1.236/lres/control  reader/123
 http://172.20.1.236/lres/web/index.html     208080337/888
@@ -415,3 +415,6 @@ doLayout才能保证移动端el-table某列可以用v-if，否则这一行不对
 
 netRepair: findId重复4次
 njit mobile postcssr对login.vue没用
+
+
+nginx ../detail.html ./才行，href应该域名拼接！
