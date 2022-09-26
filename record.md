@@ -38,11 +38,18 @@ npm config get cache // 查看本地缓存
 npm config list
 npm config ls -l 查看所有
 
-npm ls 查看安装哪些包   npm ls package 或者 npm info package
+npm ls; npm list 查看安装哪些包   npm ls package 或者 npm info package
+
 npm root 当前项目安装位置
 npm root -g
 npm outdated package 查看是否过时
 
+npm view react versions  查看版本信息
+如果改了package.json，且package.json和lock文件不同，那么执行npm i时npm会根据package中的版本号以及语义含义去下载最新的包，并更新至lock。如果两者是同一状态，那么执行npm i 都会根据lock下载，不会理会package实际包的版本是否有新。
+
+npm uninstall element-ui -S   
+npm install element-ui@2.15.8 -S   // 2.15.9的el-date-pick有placement问题
+————————————————
 npm 的缓存机制到底是怎么样的呢？现在我们就来总结下：
 在安装资源的时候，npm 会根据 package-lock.json 中的 integrity、version、name 信息生成一个唯一的 key。
 然后用这个 key 经过 SHA256 算法生成一个 hash，根据这个 hash 前四位 在 index-v5 目录中找到对应的缓存文件，该缓存文件中记录着该包的信息。
@@ -395,3 +402,8 @@ Scheme User Password    Host       Port  Path |   | Fragment
         \_____________________________/       | Query
                        |               Path parameter
                    Authority
+
+# 路径
+HTML代码中的相对路径就是以本HTML文件所在目录开始计算。
+* JS文件内的相对路径是以引用该js文件的页面为基准，也是从HTML文件所在位置开始计算的。
+CSS文件内如果写相对路径，是基于CSS文件本身的，跟谁引入了这个CSS无关。
