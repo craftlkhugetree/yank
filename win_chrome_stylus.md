@@ -11,6 +11,10 @@ win + r ncpa.cpl
 代理设置  socks=127.0.0.1   10808
 switchy Omega：https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
+pdf reader插件设置：
+.active, .textLayer { 
+  background-color: green; /* 设置成你想要的背景色 */
+}
 
 # stylus
 ^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.)).*$

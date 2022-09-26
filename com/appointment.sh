@@ -1,8 +1,8 @@
 # !/bin/sh
 #不能有空格
 read -p  "门禁预约系统请填写IDSTGC:" msg
-filename1='/D/kxiangmu/appointment/03code/appointmentFrontEnd_v2/src/assets/js/util.js'
-filename2='/D/kxiangmu/appointment/03code/appointmentFrontEnd_v2_mobile/src/assets/js/util.js'
+filename1='/D/kxiangmu/appointment/appointmentFrontEnd_v2/src/assets/js/util.js'
+filename2='/D/kxiangmu/appointment/appointmentFrontEnd_v2_mobile/src/assets/js/util.js'
 filename3='/D/kxiangmu/appointment/03code/appointScreen/js/sign.js'
 filename4='/D/kxiangmu/appointment/03code/appointScreen/js/detail.js'
 filename5='/D/kxiangmu/appointment/03code/appointScreen/js/appointScreen.js'
