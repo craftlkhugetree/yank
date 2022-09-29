@@ -568,6 +568,23 @@ shunxu.js:19 promise3
 shunxu.js:11 setTimeout
 await的语义不是代码就停在这里啥也不干了，而是 下面的代码接到上面的回调上。
 
+// 查询某天是否为工作日
+const isWeekday = (date) => date.getDay() % 6 !== 0;
+
+// 获取选定的文本
+const getSelectedText = () => window.getSelection().toString();
+
+// activeElement 属性返回文档中当前获得焦点的元素。
+const elementIsInFocus = (el) => (el === document.activeElement);
+
+// 检查当前选项卡是否在后台
+const isTabActive = () => !document.hidden; 
+
+const randomHexColor = () => `#${Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0")}`
+
+const isEmpty = obj => Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
+
+const getParameters = URL => JSON.parse(`{"${decodeURI(URL.split("?")[1]).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"')}"}`)
 
 function GetRequest() {  
    var url = location.search;
@@ -582,3 +599,17 @@ function GetRequest() {
    }
    return theRequest;  
 }
+
+# 当前页面禁用后退：
+  methods: {
+    myBack() {
+      history.pushState(null, null, document.URL);
+    }
+  },
+  mounted() {
+    history.pushState(null, null, document.URL); 
+    window.addEventListener("popstate", this.myBack, false);
+  },
+  destroyed() {
+    window.removeEventListener("popstate", this.myBack, false); 
+  },

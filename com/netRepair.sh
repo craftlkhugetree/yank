@@ -18,3 +18,4 @@ do
 done
 
 #sed正则内的括号必须转义
+cd '/d/kxiangmu/njauLogistics/netRepair/'

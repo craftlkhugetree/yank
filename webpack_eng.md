@@ -206,9 +206,10 @@ class ValidatorClass {
 Object.prototype.toString.call(new ValidatorClass()); // "[object Validator]"
 
 
-15. 过滤ac5d
+15. 编写webpack插件过滤ac5d
 const DistFilter = require("./distFilter");
     // filter string in dist ————  webpack.prod.conf.js
+  plugins: [
     new DistFilter([
       {
         jsReg: /^app\..*\.js$/,
@@ -219,6 +220,7 @@ const DistFilter = require("./distFilter");
         assetsPath: "../dist/static/css"
       }
     ])
+  ]
 
 const fs = require("fs");
 const path = require("path");

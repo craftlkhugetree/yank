@@ -1,3 +1,16 @@
+# vant
+
+预览图片：
+import { ImagePreview } from 'vant';
+ImagePreview({images: [url], showIndex: false});
+
+<van-overlay :show="true">
+    <div class="loading" @click.stop>
+      <van-loading size="36px" vertical>加载中...</van-loading>
+    </div>
+</van-overlay>
+
+
 # Vue
 
 vue info
@@ -278,16 +291,30 @@ deep: true // 引用类型数据，需要进行深度监听模式，不然无法
 }
 },
 
+按下 ENTER 时，进入下一个表单
+@keyup.enter="$event.target.nextElementSibling.focus()"
 
-# vant
+# vue3
+ref本质也是reactive，ref(obj)等价于reactive({value: obj})
 
-预览图片：
-import { ImagePreview } from 'vant';
-ImagePreview({images: [url], showIndex: false});
+在模板中使用ref的值，不用通过.value获取
+在js中使用ref的值，必须通过.value获取
 
-<van-overlay :show="true">
-    <div class="loading" @click.stop>
-      <van-loading size="36px" vertical>加载中...</van-loading>
-    </div>
-</van-overlay>
+ref和reactive都属于递归监听，也就是数据的每一层都是响应式的，如果数据量比较大，非常消耗性能，非递归监听只会监听数据的第一层。
+shallowRef定义的数据，只有第一层是响应式的，即只有在更改.value的时候才能实现响应式
+注意：shallowReactive没有类似triggerRef()的方法
+
+toRaw的出现是解决什么问题呢？
+有些时候我们不希望数据进行响应式实时更新，可以通过toRaw获取ref或reactive引用的原始数据，通过修改原始数据，不会造成界面的更新，只有通过修改ref和reactive包装后的数据时才会发生界面响应式变化。
+let state = reactive(obj1);
+//通过toRaw方法获取到原始数据，其实是获取到obj1的内存地址，obj2和obj1是完全相等的
+let obj2 = toRaw(state)
+console.log(obj1 === obj2); // true
+有些同学会问，那直接使用obj1来修改数据不就行了吗？可关键是我们在使用reactive定义数据时一般不会先定义一个obj1，再将他传给reactive，都是直接在reactive中写数据的。
+
+当ref数据作为props传递给子组件的时候，在子组件里需要使用toRef或者toRefs建立引用，否则数据不是响应式的，在子组件里修改这个ref，会同时修改作为props传入的ref。
+toRef只能处理对象中一个属性，而toRefs是把这个对象的所有属性创建成多个ref对象。
+
+# mpvue转小程序
+wxd66828a5b7f2383b
 
