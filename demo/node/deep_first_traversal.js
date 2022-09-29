@@ -74,4 +74,4 @@ deepTraversal(tree, function (node) {
   console.log(node.name);
 });
 
-console.log(tree);
+console.log(tree, require('os').cpus().length);
