@@ -1,6 +1,7 @@
 meta就是元
 meta data就是元数据，用来描述数据的数据；如一个数据1.70，我们并不知道它代表什么，但是身高：1.70我们就知道1.70表示身高，而身高就是元数据，用来描述数据1.70
 
+# vue3
 只有以 VUE_APP_ 开头的变量会被 webpack.DefinePlugin 静态嵌入到客户端侧的包中。你可以在应用的代码中这样访问它们：
 console.log(process.env.VUE_APP_SECRET)
 在构建过程中，process.env.VUE_APP_SECRET 将会被相应的值所取代。在 VUE_APP_SECRET=secret 的情况下，它会被替换为 "secret"。
@@ -26,6 +27,35 @@ https://cli.vuejs.org/zh/guide/html-and-static-assets.html
 
 import(/* webpackPrefetch: true */ './someAsyncComponent.vue')
 Prefetch 链接将会消耗带宽。如果你的应用很大且有很多 async chunk，而用户主要使用的是对带宽较敏感的移动端，那么你可能需要关掉 prefetch 链接并手动选择要提前获取的代码区块。
+
+// fetch.js 封装组合式异步函数，组合式函数约定用驼峰命名法命名，并以“use”作为开头。
+import { ref, isRef, unref, watchEffect } from 'vue'
+export function useFetch(url) {
+  const data = ref(null)
+  const error = ref(null)
+
+  function doFetch() {
+    // 在请求之前重设状态...
+    data.value = null
+    error.value = null
+    // unref() 解包可能为 ref 的值
+    fetch(unref(url))
+      .then((res) => res.json())
+      .then((json) => (data.value = json))
+      .catch((err) => (error.value = err))
+  }
+
+  if (isRef(url)) {
+    // 若输入的 URL 是一个 ref，那么启动一个响应式的请求
+    watchEffect(doFetch)
+  } else {
+    // 否则只请求一次
+    // 避免监听器的额外开销
+    doFetch()
+  }
+  return { data, error }
+}
+
 # vant
 
 预览图片：

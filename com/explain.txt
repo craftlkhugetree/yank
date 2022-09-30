@@ -45,3 +45,6 @@ ext.js
 
 # netRepair
 collapse.js
+
+# wxbluetooth
+小程序： 蓝牙、扫码
