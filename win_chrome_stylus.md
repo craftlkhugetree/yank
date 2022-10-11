@@ -16,11 +16,15 @@ pdf reader插件设置：
   background-color: green; /* 设置成你想要的背景色 */
 }
 
+模拟微信浏览器：network conditions界面去掉user agernt的勾选，选择custom，并在输入框中输入设备模拟参数
+iPhone手机模拟参数：
+Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12A365 MicroMessenger/5.4.1 NetType/WIFI
+
+安卓手机模拟参数：
+Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36 MicroMessenger/6.0.0.54_r849063.501 NetType/WIFI
 # stylus
+^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.1.251|172.20|testseat.xuanhaozuo.com|tsgyy.sjzc.edu.cn/)).*$
 ^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.)).*$
-^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost)).*$
-^(?!._(seat.dev.angke.cn|z.angke.com.cn))._$
-^(?!._(localhost|z.angke.com.cn))._$
 html,
 body {
 /*     font-family: "SF UI Text", "BlinkMacSystemFont", "Helvetica Neue", "Source Han Sans SC", "Segoe UI", "Roboto", "Microsoft Yahei", sans-serif; */

@@ -352,6 +352,13 @@ deep: true // 引用类型数据，需要进行深度监听模式，不然无法
 按下 ENTER 时，进入下一个表单
 @keyup.enter="$event.target.nextElementSibling.focus()"
 
+# assets与static文件夹的区别
+assets：在项目编译的过程中会被webpack处理解析为模块依赖，只支持相对路径的形式，如< img src=”./logo.png”>和background:url(./logo.png),”./logo.png”是相对资源路径，将有webpack解析为模块依赖 
+
+static：在这个目录下文件不会被被webpack解析。他会直接被复制到最终的打包目录(默认是dist/static)下。必须使用绝对路径引用这些文件，这是通过config.js文件中的build.assetsPublic和build.assertsSubDirectory链接来确定的。任何放在static/中文件需要以绝对路径的形式引用：/static[filename] 
+根据webpack的特性，总的来说就是static放不会变动的文件，asserts放可能会变动的文件
+
+:src=变量  对于弹窗内的图片，必须在js代码里先require('相对路径');  或者在config.js里设置绝对路径作为前缀。  页面上的图片可以在html里写require()。
 # vue3
 ref本质也是reactive，ref(obj)等价于reactive({value: obj})
 

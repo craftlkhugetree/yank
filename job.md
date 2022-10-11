@@ -1,5 +1,5 @@
-xss前端防御，脚本，原生api改写，img.src自定义上报，DOM事件流，capture。  capture.html, compatible.html, httphijack。 
-富文本 xss.js白名单。
+xss前端防御，脚本，原生api改写，img.src自定义上报，DOM事件流，useCapture。  capture.html, compatible.html, httphijack。 
+v-html富文本 xss.js白名单。
 前端异常及降级处理，https://www.jianshu.com/p/53ae5aee0859
 this绑定规则，https://xiaohuochai.site/JS/ECMA/this/binding.html
 
@@ -18,3 +18,20 @@ plugin是一个扩展器，它丰富了webpack本身，针对是loader结束后�
 会在特定的时间点广播出特定的事件，插件在监听到感兴趣的事件后会执行特定的逻辑。
 
 element-ui 修改lib，然后编译打包，上传npm。
+
+ios11不只是ES6 的扩展运算符， ios12支持。  用xcode模拟ios11版本，Babel处理代码。但是第三方库还是有扩展运算符，第三方的包默认是没有被Babel处理过的，所以给vue.config.js的配置文件中transpileDependencies配置选项中添加上出问题的包的名称就可以了。
+https://baijiahao.baidu.com/s?id=1674088474520357497&wfr=spider&for=pc
+
+签到机时间不准，它从服务器读取前端文件并定时生成二维码。微信扫二维码签到。所以要服务器接口或ngnix接口提供时间。
+
+微信浏览器 缓存机制，  ngnix不生效 add_header Cache-Control “no-store,max-age=0”;
+过的js文件上加上hash过的后缀，所以js一般在上线后都会更新。但是index.html不会，由于index.html被缓存而引用了老的js文件，如果这些老的文件在微信端被缓存那用用户登上去看的时候就不会发现有更新。其他浏览器没有这个问题。
+或者  location ~ .*\.(?:htm|html)$ {
+    # 由于服务器部署多套项目环境，所以配置具体的项目目录。
+    root    jimei-admin
+    # 缓存设置 -1为永不缓存
+    expires      -1;
+    # 添加返回头字段，设置HTTP请求头
+    add_header Cache-Control "private, no-store, no-cache, must-revalidate, proxy-revalidate";
+}
+

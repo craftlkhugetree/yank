@@ -388,6 +388,9 @@ idsweb/rest/login2/getCode 获取微信openid
 feat: login.vue(modify app.vue, api.js, idsweb, isGet, ); myRepair(common.js 2,4); router.js
 维修负责人和维修工：9100002njit2-3   9100002njit2-4
 
+2022/10/08
+fix: seatMobile lack of type7
+
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
           if (repair.children && repair.children[0]) {

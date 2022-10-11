@@ -613,3 +613,17 @@ function GetRequest() {
   destroyed() {
     window.removeEventListener("popstate", this.myBack, false); 
   },
+
+
+# Object.is(p1, p2)
+    var isEqual = Object.is || function(v1, v2) {
+        if (v1 === 0 && v2 === 0) {
+          // 针对Object.is的 +0 不等于 -0的情况。 === 反而相等
+          return 1 / v1 === 1 / v2;
+        } else if (v1 !== v1) {
+          // 针对NaN的情况，因为 Object.is(NaN, NaN) = true
+          return v2 !== v2;
+        } else {
+            return v1 === v2;
+        }
+    }
