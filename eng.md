@@ -42,6 +42,15 @@ water valve 水阀
 nozzle 管口、喷嘴
 
 7. intuitive 直观的 NuxtJS
+omit  遗漏  
+    /**
+     * Performs the specified action for each element in an array.
+     * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
+     * @param thisArg  An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+     */
+    Array.prototype.forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;
+
+8. Palette 调色板
 
 减肥=减脂≠减重
 健身先健脑,减肥先增智

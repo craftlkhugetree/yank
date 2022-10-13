@@ -349,6 +349,14 @@ deep: true // 引用类型数据，需要进行深度监听模式，不然无法
 }
 },
 
+同一组件在路由变化时不刷新：
+watch: {
+  '$route.path'(o, n) {
+    // console.log(o, n);
+    this.getList(1)
+  }
+},
+
 按下 ENTER 时，进入下一个表单
 @keyup.enter="$event.target.nextElementSibling.focus()"
 
