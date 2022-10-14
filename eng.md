@@ -52,6 +52,9 @@ omit  遗漏
 
 8. Palette 调色板
 
+9. You can customise the behavior of the Asynchronous Server and hence re-brand(重塑) it by defining your own command set for invoking services(调用服务).
+通过定义自己调用服务的命令集，您可以定制自定义异步服务器的行为，通过为调用服务定义自己的命令集从而对它重新标记
+
 减肥=减脂≠减重
 健身先健脑,减肥先增智
 

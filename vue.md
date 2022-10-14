@@ -57,7 +57,6 @@ export function useFetch(url) {
 }
 
 # vant
-
 预览图片：
 import { ImagePreview } from 'vant';
 ImagePreview({images: [url], showIndex: false});
@@ -68,6 +67,19 @@ ImagePreview({images: [url], showIndex: false});
     </div>
 </van-overlay>
 
+调取摄像头：
+<van-uploader 
+	v-model="fileListBack" 
+	:after-read="onReadIdCardBack" 
+	:max-size="5012 * 1024" 
+	:before-delete='beforeDeleteBack' 
+	upload-text="身份证国徽面" 
+	multiple 
+	:max-count="1" 
+	@oversize="onOversize" 
+	capture="camera"  
+	accept="image/*"
+/>
 
 # Vue
 

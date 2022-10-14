@@ -11,7 +11,7 @@
  * 4. 同步代码 all: Promise { <pending> } [ Promise { <pending> }, Promise { <pending> } ] Promise { <pending> } [ Promise { <pending> }, Promise { <pending> } ]
  * 5. 微任务 p: Promise { <pending> }
  * 6. 微任务 r.then()是等Promise.race()执行完了一个e并打印  e: Promise { <pending> } 0   此刻r是fulfilled，值为splice返回的数组。
- *    e是闭包，所以跟着r.then()一起变，而在其闭包更新前，executing已经splice掉了还是pending的它，也就是竞速中完成的e。
+ *    e是闭包，所以跟着r.then()一起变为数组，而在其闭包更新前，executing已经splice掉了还是pending的它，也就是竞速中完成的e。
  */
 function asyncPool(poolLimit, array, iteratorFn) {
   let i = 0;
