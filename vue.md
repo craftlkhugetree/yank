@@ -379,6 +379,112 @@ static：在这个目录下文件不会被被webpack解析。他会直接被复�
 根据webpack的特性，总的来说就是static放不会变动的文件，asserts放可能会变动的文件
 
 :src=变量  对于弹窗内的图片，必须在js代码里先require('相对路径');  或者在config.js里设置绝对路径作为前缀。  页面上的图片可以在html里写require()。
+
+# vue2 源码
+        class Observer {
+            defineReactive(data) {
+                if (!data || typeof data != 'object') return
+                // 生成一个dep闭包
+                let dep = new Dep()
+                Object.keys(data).forEach(key => {
+                    let value = data[key]
+                    this.defineReactive(value)  //如果value还是对象，则对该对象递归继续使用defineReactive方法，实现深度绑定
+                    Object.defineProperty(data, key, { //使用该方法监听对象属性的变化
+                        enumerable: true,
+                        configurable: true,
+                        get: function () {
+                            console.log(value, 'get method')
+                            dep.depend()
+                            return value
+                        },
+                        set: function (newValue) {
+                            console.log(value, 'set method')
+                            if (value === newValue) return
+                            value = newValue
+                            dep.notify()
+                        }
+                    })
+                })
+            }
+        }
+
+        class Dep { //dep实例的作用是收集依赖
+            constructor() {
+                this.subs = []
+            }
+            addSub(sub) {
+                this.subs.push(sub)
+            }
+            depend() {
+                if (Dep.target) {
+                    // push一个watcher
+                    this.addSub(Dep.target)
+                    console.log(this.subs)
+                }
+            }
+            notify() {
+                const subs = this.subs.slice()
+                // data中没有被使用的属性，是不被depend()的，自然也不在subs里，所以也不会被notify。
+                for (let i = 0; i < subs.length; i++) {
+                    subs[i].update()
+                }
+            }
+        }
+
+        class Watcher { //
+            constructor(vm, exp, cb) {
+                this.vm = vm
+                this.exp = exp
+                this.cb = cb
+                this.value = this.get() //在watcher被实例化的时候调用下文的get方法
+            }
+            get() {
+                Dep.target = this //缓存当前的this，this是一个watcher对象
+// 这段是精髓，通过获取对应属性的值，调用了被监听数据的get方法，由此调用了dep.depend()方法。
+// 由于Dep.target是存在的，于是往Dep实例中的subs数组添加了一个依赖，也就是watcher对象。
+                const value = this.vm.data[this.exp] 
+                Dep.target = null
+                return value
+            }
+            update() { //在data发生改变的时候，监听数据的set方法被调用，dep实例调用notify方法，通知subs数组中的每一个watcher调用update方法，update方法会调用回调函数，更新元素的内容。
+                const value = this.vm.data[this.exp]
+                this.cb.call(this.vm,value)
+            }
+        }
+
+        class Vue {
+            constructor(options = {}) {
+                this.el = options.el
+                this.exp = options.exp
+                this.data = options.data
+                el.innerHTML = this.data[this.exp] //初始化页面内容
+                let observer = new Observer()
+                observer.defineReactive(this.data) //监听数据
+                new Watcher(this, this.exp, function(val) { //创建watcher实例，调用构造函数。
+                    el.innerHTML = val
+                })
+                return this
+            }
+        }
+* 事实上，window.target或者Dep.target其实就是一个watcher对象，我们在dep实例中收集watcher对象的目的就是在数据发生更新时，能够调用已经收集到的watcher对象的update方法来更新视图。
+1）初始化过程：
+实例化Vue——调用defineReactive方法监听对象中的数据——Watcher构造函数被调用——触发被监听数据的get方法——Dep收集到依赖。
+2）数据被修改后的过程：
+数据被修改——触发被监听数据的set方法——调用dep.notify方法——触发已经收集到subs数组中的每一个依赖的update方法（定义在watcher中）—— 视图更新。
+
+# 当对data上的对象进行修改值的时候会触发它的setter，那么取值的时候自然就会触发getter事件，所以我们只要在最开始进行一次render，那么所有被渲染所依赖的data中的数据就会被getter收集到Dep的subs中去。在对data中的数据进行修改的时候setter只会触发Dep的subs的函数。
+# 首先通过一次渲染操作触发Data的getter（这里保证只有视图中需要被用到的data才会触发getter）进行依赖收集，这时候其实Watcher与data可以看成一种被绑定的状态（实际上是data的闭包中有一个Deps订阅者，在修改的时候会通知所有的Watcher观察者），在data发生变化的时候会触发它的setter，setter通知Watcher，Watcher进行回调通知组件重新渲染的函数，之后根据diff算法来决定是否发生视图的更新。
+
+Vue在初始化组件数据时，在生命周期的beforeCreate与created钩子函数之间实现了对data、props、computed、methods、events以及watch的处理。
+
+JS 的 event loop 执行时会区分 task 和 microtask，引擎在每个 task 执行完毕，从队列中取下一个 task 来执行之前，会先执行完所有 microtask 队列中的 microtask。
+setTimeout 回调会被分配到一个新的 task 中执行，而 Promise 的 resolver、MutationObserver 的回调都会被安排到一个新的 microtask 中执行，会比 setTimeout 产生的 task 先执行。
+要创建一个新的 microtask，优先使用 Promise，如果浏览器不支持，再尝试 MutationObserver。
+实在不行，只能用 setTimeout 创建 task 了。
+为啥要用 microtask？
+根据 HTML Standard，在每个 task 运行完以后，UI 都会重渲染，那么在 microtask 中就完成数据更新，当前 task 结束就可以得到最新的 UI 了。
+反之如果新建一个 task 来做数据更新，那么渲染就会进行两次。
+
 # vue3
 ref本质也是reactive，ref(obj)等价于reactive({value: obj})
 
