@@ -6,8 +6,8 @@
   Object.getOwnPropertyNames()则是遍历自身所有属性（不论是否是可枚举的）,也是不包括原型链上面的。
 3、用到递归算法，在函数名字不会变的情况下，这样定义没有问题。但问题是与函数名紧紧耦合在了一起。为了消除这种紧密耦合的现象，需要使用 arguments.callee。
 ————————————————
-版权声明：本文为CSDN博主「毅江」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/u013362969/article/details/86489246
+``` javascript
 var deepClone = function (obj) { 
     if(obj === null) return null 
     if(typeof obj !== 'object') return obj;
@@ -24,6 +24,7 @@ var deepClone = function (obj) {
     }  
     return newObj;  
 };
+```
 # 兼容IOS的日期
   transIOS(str) {
     var arr = str.split(/[-:./]|\s+/)
@@ -33,7 +34,7 @@ var deepClone = function (obj) {
 let arr4 = [1, 3, 2, 5, 3, 1, 2, 7, 8];
 let newArr = arr4.reduce((pre,cur)=>{
     if (!pre.includes(cur)) {
-        return pre.concat(cur)
+        return pre.concat(cur) // concat生成一个新数组，push返回的是数组length。
     } else {
         return pre
     }
