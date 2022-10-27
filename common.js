@@ -394,6 +394,13 @@ errMsg && tVue.$toast.fail(errMsg);
 tVue.$toast.clear();
 
 // pc端
+        loading = tVue.$loading({
+          lock: true,
+          text: options.loadingText,
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)',
+        });
+        loading.close();
 errMsg && tVue.$message({
     showClose: true,
     type: 'error',

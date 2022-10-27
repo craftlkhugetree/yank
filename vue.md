@@ -372,6 +372,49 @@ watch: {
 按下 ENTER 时，进入下一个表单
 @keyup.enter="$event.target.nextElementSibling.focus()"
 
+
+<el-select
+        v-model="form.projectname"
+        filterable
+        remote
+        placeholder="请输入或选择"
+        :remote-method="remoteMethodProject"
+        @change="dataFilterProject"
+        :loading="selectLoading"
+        style="width: 100%"
+      >
+        <el-option
+          v-for="item in projectList"
+          :label="item.xmmc"
+          :value="JSON.stringify(item)"
+          :key="item.id"
+        ></el-option>
+      </el-select>
+    //搜索项目名称
+    remoteMethodProject(query) {
+      this.selectLoading = true;
+      this.projectList = [];
+      if (query !== "") {
+        this.common
+          .getProjectList(query, 1, 10)
+          .then(res => {
+            console.log(res);
+            this.selectLoading = false;
+            if (res.total == 0) {
+              this.projectList.push({ xmmc: query + "-(新增)" });
+            } else {
+              this.projectList = res.items;
+            }
+          })
+          .catch(err => {
+            this.selectLoading = false;
+            this.projectList = [];
+          });
+      } else {
+        this.selectLoading = false;
+        this.projectList = [];
+      }
+    },
 # assets与static文件夹的区别
 assets：在项目编译的过程中会被webpack处理解析为模块依赖，只支持相对路径的形式，如< img src=”./logo.png”>和background:url(./logo.png),”./logo.png”是相对资源路径，将有webpack解析为模块依赖 
 
