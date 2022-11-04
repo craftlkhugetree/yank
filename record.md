@@ -25,6 +25,11 @@ git 修改以前提交的注释：
 
 git log --since=2022-04-27 --until=2022-06-21 --author="liken" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END {printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }'
 
+git stash save ''
+git stash list
+git stash apply stash@{0} 不像pop一样删除
+git stash show stash@{0} 加上-p可以看详细差异
+
 ssh-keygen -t rsa -C "345823102@qq.com"
 ssh -T git@github.com // 测试
 

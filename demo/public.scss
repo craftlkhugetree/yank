@@ -83,6 +83,7 @@ module.exports= {
         return file.indexOf('vant') !==-1 ? 37.5: 75;
       },
       propList: ['*'],
+            // selectorBlackList: ['van'],
     },
   },
 }
@@ -896,3 +897,13 @@ el-input 与 el-textarea 提示语样式不同
 }
 
 npx sass   scss文件  css文件
+
+ Ignored attempt to cancel a touchmove event with cancelable=false, for example because scrolling is in progress and cannot be interrupted
+利用cancelable 事件返回一个布尔值。如果用 preventDefault() 方法可以取消与事件关联的默认动作，则为 true，否则为 fasle。
+if (moveY > this.startY && scrollTop <=0 && e.cancelable) {
+  e.preventDefault();
+}
+http://t.zoukankan.com/liguanlong-p-12558734.html
+
+
+pointer-events: none; 实现点击穿透, 比如图片上的水印层

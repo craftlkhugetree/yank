@@ -1,3 +1,26 @@
+第一种
+ 英语中，发生音浊化现象必须同时具备如下四个条件：
+
+在同一个重读音节或次重读音节内。
+
+一个清辅音前的音是/s/。
+
+该清辅音对应的浊辅音。
+
+该清辅音后还有元音。
+
+　 此时，我们在拼读时，应该将该清辅音读成其对应的浊辅音，这种现象在英语中就叫做音的浊化。 例如：
+
+sport，这是个单音节单词，所以是在同一个重读音节内，清辅音/p/前面有/s/这个音，/p/对应的浊辅音是/b/, /p/后还有原音/ɔː/, 所以发生浊化。
+
+best也是个单音节词，但是缺少了第四个条件，所以没有浊化现象，即只能是读/best/，而不是/besd/。
+
+passport 四个双音节词，音节划分是pass/port，重音在第一个音节，所以不符合第一个条件，也没有浊化现象。
+
+第二种
+1.“元+清+元” 浊化： 当清辅音/p/,/t/,/k/位于两元音之间时，实际发音浊化为其对应的浊辅音/b/,/d/,/g/ 如water与getting
+注意：这两种浊化现象不仅针对符合以上情况的单个词汇，更可应用到句子中连读后的单词群。 
+————————————————
 1. *The visual viewport* is the part of the page that’s currently shown on-screen.
 
 *The layout viewport* can be considerably wider than the visual viewport, and contains elements that appear and do not appear on the screen.
@@ -59,6 +82,9 @@ omit  遗漏
 glide 滑行 doGlide公共区域
 
 11. stagflation 滞胀
+defer 推迟
+scavenge 拾荒，垃圾中觅食
+intact 完整的
 
 减肥=减脂≠减重
 健身先健脑,减肥先增智

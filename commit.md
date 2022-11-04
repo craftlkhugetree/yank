@@ -391,6 +391,14 @@ feat: login.vue(modify app.vue, api.js, idsweb, isGet, ); myRepair(common.js 2,4
 2022/10/08
 fix: seatMobile lack of type7
 
+2022/10/27
+统计分析 iconCls: "icontongjichaxun"
+    资源统计  DISPLAYURL: '/analyze/resource',
+    系统统计  path: '/analyze/system',
+# 恢复sidebar  menu
+2022/10/31
+feat: echarts; vue-count-to; xlsx。api: resgroupItemsFillRes; statistics.js。  public.scss  .count。 analyze component。
+
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};
           if (repair.children && repair.children[0]) {
@@ -417,3 +425,5 @@ doLayout才能保证移动端el-table某列可以用v-if，否则这一行不对
 项目new 从上往下拖；全量编辑
 
 netRepair: findId重复4次
+
+card项目printbox 打印预览窗口  vue父子组件传值 在ie不行。得用原生js来修改img的src，才能展示图片。

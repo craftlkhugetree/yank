@@ -46,5 +46,29 @@ ext.js
 # netRepair
 collapse.js
 
+# netRepair_njit
+BMap
+
 # wxbluetooth
 小程序： 蓝牙、扫码
+
+# appointment 有约
+echarts； 
+
+# card
+打印预览this.WebBrowser.ExecWB(7, 1);   汉王，<object> @media screen/print 
+
+# moyou 
+  mongodb.md
+  mongoose = {
+    url: 'mongodb://127.0.0.1:27017/moyu',
+    options: {
+      user: 'moyu',
+      pass: '123456',
+      useUnifiedTopology: true,
+    },
+    plugins: [],
+  };
+
+# VueNode
+  mysql.md
