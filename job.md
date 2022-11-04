@@ -37,3 +37,46 @@ https://baijiahao.baidu.com/s?id=1674088474520357497&wfr=spider&for=pc
     add_header Cache-Control "private, no-store, no-cache, must-revalidate, proxy-revalidate";
 }
 
+149. 对于小于8k的图片，会将图片转成base64 直接插入图片，不会再在dist目录生成新图片。对于大于8k的图片，会打包进dist目录，之后将新图片地址返回给src。
+vue的图片一定会被编译，而动态添加的src编译过后的地址，与图片文件编译过后的地址不一致，导致无法正确的引入资源，所以叫‘动态添加的src会被当做静态资源’。
+静态资源：一般客户端发送请求到web服务器，web服务器从内存在取到相应的文件，返回给客户端，客户端解析并渲染显示出来。
+动态资源：一般客户端请求的动态资源，先将请求交于web容器，web容器连接数据库，数据库处理数据之后，将内容交给web服务器，web服务器返回给客户端解析渲染处理。
+
+静态资源就是直接存放在项目中的资源，这些资源不需要我们发送专门的请求进行获取。比如assets目录下面的图片，视频，音频，字体文件，css样式表等。
+动态资源就是需要发送请求获取到的资源。比如我们刷淘宝的时候，不同的商品信息是发送的专门的请求获取到的，就可以称之为动态资源。
+
+module.exports = {
+    // 使用configureWebpack对象，下面可以直接按照webpack中的写法进行编写
+    // 编写的内容，最终会被webpack-merge插件合并到webpack.config.js主配置文件中
+  configureWebpack: { 
+    module: {
+      rules: [
+        {
+          test: /\.(png|jpe?g|gif|webp|avif)(\?.*)?$/,
+          type: 'asset',
+          parser: {
+            dataUrlCondition: {
+             // 这里我将默认的大小限制改成6k。
+              // 当图片小于6k时候，使用base64引入图片；大于6k时，打包到dist目录下再进行引入
+              maxSize: 1024 * 6
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+当我们使用require方法引入一张图片的时候，webpack会将这张图片当成一个模块，并根据配置文件中的规则进行打包。我们可以将require当成一个桥梁，使用了require方法引入的资源，该资源就会当成模块并根据配置文件进行打包，并返回最终的打包结果。
+那么调用require方法引入一张图片之后发生了什么：
+1.如果这张图片小于项目中设置的资源限制大小，则会返回图片的base64插入到require方法的调用处
+2.如果这张图片大于项目中设置的资源限制大小，则会将这个图片编译成一个新的图片资源。require方法返回新的图片资源路径及文件名
+
+当你在 JavaScript、CSS 或 *.vue 文件中使用相对路径 (必须以 . 开头) 引用一个静态资源时，该资源将会被包含进入 webpack 的依赖图中。在其编译过程中，所有诸如 <img src="...">、background: url(...) 和 CSS @import 的资源 URL 都会被解析为一个模块依赖。
+例如，url(./image.png) 会被翻译为 require('./image.png')，而：
+<img src="./image.png">
+将会被编译到：
+h('img', { attrs: { src: require('./image.png') }})
+
+那么动态添加src的时候也会使用require引入，为什么src编译过后的地址，与图片资源编译过后的资源地址不一致？
+答：因为动态引入一张图片的时候，src后面的属性值，实际上是一个变量。webpack会根据v-bind指令去解析src后面的属性值。并不会通过reuqire引入资源路径。这也是为什么需要手动的添加require。
+任何放置在 public 文件夹的静态资源都会被简单的复制，而不经过 webpack。需要通过绝对路径来引用它们。所以使用require引入资源的前提的该资源是webpack解析的模块，而public下的文件压根就不会走编译，也就不会使用到require。
