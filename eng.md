@@ -64,7 +64,7 @@ cloak 斗篷
 water valve 水阀
 nozzle 管口、喷嘴
 
-7. intuitive 直观的 NuxtJS
+7. intuitive 直观易懂的 NuxtJS
 omit  遗漏  
     /**
      * Performs the specified action for each element in an array.

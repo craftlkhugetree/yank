@@ -1,3 +1,4 @@
+用户名：YDY_15650709373_i5 邮箱地址：15650709373@139.com 手机号码：15650709373
 在Node中引入模块，需要经历如下3个步骤。
 (1) 路径分析
 (2) 文件定位
@@ -270,3 +271,36 @@ console.log('Server running at http://127.0.0.1:1337/');
 curl -v http://127.0.0.1:1337    看到TCP的3次握手，只看response的话用-i
 
 # Node的http模块包含对HTTP处理的封装。在Node中，HTTP服务继承自TCP服务器（net模块），它能够与多个客户端保持连接，由于其采用事件驱动的形式，并不为每一个连接创建额外的线程或进程，保持很低的内存占用，所以能实现高并发。HTTP服务与TCP服务模型有区别的地方在于，在开启keepalive后，一个TCP会话可以用于多次请求和响应。TCP服务以connection为单位进行服务，HTTP服务以request为单位进行服务。http模块即是将connection到request的过程进行了封装。
+
+
+为不需要Cookie的组件换个域名可以实现减少无效Cookie的传输。所以很多网站的静态文件会有特别的域名，使得业务相关的Cookie不再影响静态资源。当然换用额外的域
+名带来的好处不只这点，还可以突破浏览器下载线程数量的限制，因为域名不同，可以将下载线程数翻倍。但是换用额外域名还是有一定的缺点的，那就是将域名转换为IP需要进行DNS查询，多一个域名就多一次DNS查询。
+
+
+# require如何找到模块，以及入口文件的定义。
+NodeJS定义了一个特殊的node_modules目录用于存放模块。例如某个模块的绝对路径是/home/user/hello.js，在该模块中使用require('foo/bar')方式加载模块时，则NodeJS依次尝试使用以下路径：
+ /home/user/node_modules/foo/bar
+ /home/node_modules/foo/bar
+ /node_modules/foo/bar
+
+与PATH环境变量类似，NodeJS允许通过NODE_PATH环境变量来指定额外的模块搜索路径。NODE_PATH环境变量中包含一到多个目录路径，路径之间在Linux下使用:分隔，在Windows下使用;分隔。例如定义了以下NODE_PATH环境变量：
+ NODE_PATH=/home/user/lib:/home/lib
+当使用require('foo/bar')的方式加载模块时，则NodeJS依次尝试以下路径：
+ /home/user/lib/foo/bar
+ /home/lib/foo/bar
+
+当模块的文件名是index.js，加载模块时可以使用模块所在目录的路径代替模块文件路径，因此接着上例，以下两条语句等价。
+var cat = require('/home/user/lib/cat');
+var cat = require('/home/user/lib/cat/index');
+这样处理后，就只需要把包目录路径传递给require函数，感觉上整个目录被当作单个模块使用，更有整体感。
+
+package.json内容如下：
+{
+    "name": "cat",
+    "main": "./lib/main.js"
+}
+如此一来，就同样可以使用require('/home/user/lib/cat')的方式加载模块。NodeJS会根据包目录下的package.json找到入口main.js所在位置。
+
+
+# process是一个全局变量，可通过process.argv获得命令行参数。由于argv[0]固定等于NodeJS的绝对路径，argv[1]固定等于主模块的绝对路径，因此第一个命令行参数从argv[2]这个位置开始。process.argv.slice(2)
+
