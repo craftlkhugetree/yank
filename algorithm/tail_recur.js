@@ -1,10 +1,13 @@
+// node tail_recur.js --harmony --harmony_tailcalls --use-strict
 // recursion.js
 function fact(n) {
   if (n == 0) {
     console.log('fact: ');
     console.dir(process.memoryUsage());
+    return 1
   }
-  return n == 0 ? 1 : n * fact(n - 1);
+  // 这不是递归的尾部调用，因为当前堆栈在计算递归调用时仍需要记住n，这样它才能知道要相乘的数字。
+  return n * fact(n - 1);
 }
 // tail_recursion.js
 function tailFact(n, p) {
@@ -14,8 +17,17 @@ function tailFact(n, p) {
     console.dir(process.memoryUsage());
     return p;
   } else {
+    // propagate next result through tail-recursive calls
     return tailFact(n - 1, p * n);
   }
+}
+// 特定代码中，可以通过使用while循环进行重写来完全避免递归
+function fac(n) {
+  var total = 1;
+  while (n > 1) {
+    total *= n--;
+  }
+  return total;
 }
 
 var start = Date.now();

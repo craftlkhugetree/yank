@@ -307,17 +307,17 @@ b 模块继续执行。把 setTimeout 里的代码放到任务队列，等所有
 
 // 1. 加载 a，缓存 a 
 // a.js
-let b = require('./b') // 2. 加载 b，缓存 b
-// 6. b 变量拿到 b 模块 exports 值 { b: 'bbb' }，并且指向 b 模块 module.exports 同一引用地址
+let b = require('./b')      // 2. 加载 b，缓存 b
+                            // 6. b 变量拿到 b 模块 exports 值 { b: 'bbb' }，并且指向 b 模块 module.exports 同一引用地址
 console.log(`a1.js-${b.b}`) // 7. 输出 a1.js-bbb
-exports.a = 'aaa' // 8. 给 a 模块的导出对象添加一个 a 属性，值为 'aaa'，此时 a 模块 module.exports 内容为 { a: 'aaa' }
+exports.a = 'aaa'           // 8. 给 a 模块的导出对象添加一个 a 属性，值为 'aaa'，此时 a 模块 module.exports 内容为 { a: 'aaa' }
 setTimeout(() => {
   console.log(`a2.js-${b.b}`) // 10. 读取 b 模块 module.exports 引用地址，输出 a2.js-bbb
 })
 // b.js
-let a = require('./a') // 3. 读取缓存 a 的 exports，a = {}，指向 a 模块 module.exports 同一引用地址
+let a = require('./a')      // 3. 读取缓存 a 的 exports，a = {}，指向 a 模块 module.exports 同一引用地址
 console.log(`b1.js-${a.a}`) // 4. 输出 b1.js-undefined
-exports.b = 'bbb' // 5. 给 b 模块的导出对象添加一个 b 属性，值为 'bbb'
+exports.b = 'bbb'           // 5. 给 b 模块的导出对象添加一个 b 属性，值为 'bbb'
 setTimeout(() => {
   console.log(`b2.js-${a.a}`) // 9. 此时读取 a 模块 module.exports 引用地址，已经有了a属性，输出 b2.js-aaa
 })
