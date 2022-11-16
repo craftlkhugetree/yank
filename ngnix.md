@@ -25,7 +25,6 @@ location / {
 
 
 #!/usr/bin/env bash
-
 # publish
 tar -czvf tour.tar.gz .
 # mkdir -p 递归创建目录，即便其中目录不存在
@@ -42,3 +41,9 @@ pm2 list
 pm2 show app_name|app_id
 pm2 restart js|name|id
 pm2 stop all
+
+
+# 当上面的路由都不匹配时：
+app.use("*",(req,res)=>{  //不是以'/api'开头的路由全部返回"hello world"
+  res.send("hello world");
+})

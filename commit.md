@@ -12,7 +12,7 @@ http://seat.dev.angke.cn/mseat/#/index 手机端  admin/123
 svn://160.255.0.56/01module/lres/03code/lresweb/src/main/webapp/mobile_nh
 
 民国库 前端 http://172.20.1.251:8085/book/h5/index/index.html
-后台 http://172.20.1.251:8085/appportalweb/   admin/123
+后台 http://172.20.1.251:8085/appportalweb/   admin/123   Admin/Mgjsk@2019_&
 民国库向日葵：172 988 279      3ZW3oN
 
 https://720yun.com/t/c9fjr7syOu5

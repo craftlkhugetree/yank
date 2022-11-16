@@ -410,9 +410,11 @@ var arr = str.match(reg);
 g汉
 */
 # whistle
+https需要勾选 capture tunnel connects 并且下载安装crt证书
 # 操作统计-民国库后台管理
 /^http://172.20.1.251:8080/bemweb/view/resourceClassfiyManager/(.*).js/		file://D:\kxiangmu\mgsjk\03code\bemweb\src\main\webapp\view\classificationStats\\$1.js
 
+/^https://wendian.nju.edu.cn/bemweb/view/classificationStats/(.*).js/		file://D:\kxiangmu\mgsjk\03code\bemweb\src\main\webapp\view\classificationStats\\$1.js
 # 民国库书页搜索弹窗
 /^http://172.20.1.251:8080/book/h5/readPage/(.*)/		file://D:\kxiangmu\mgsjk\03code\book\src\main\webapp\h5\readPage\\$1
 
