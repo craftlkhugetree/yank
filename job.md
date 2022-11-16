@@ -11,6 +11,9 @@ netRepair-njit:  webpack plugin过滤‘ac5d ’
 
 生产环境，上千条数据要删除，没有批量按钮，直接数据库删除？ 前端模拟点击，如何确保完成并对异步并发的错误结果进行处理？浏览器都会限制单个域下边的并发连接数，当然对于总的并发连接数也有限制。
 
+nginx -s reload  createFile error    gitbash cmd taskkill awk
+nginx -s stop
+
 148. webpack 中 loader 和 plugin 的区别是什么？（平安）
 loader，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。
 plugin是一个扩展器，它丰富了webpack本身，针对是loader结束后，webpack打包的整个过程，它

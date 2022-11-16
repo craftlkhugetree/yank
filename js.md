@@ -735,3 +735,36 @@ function GetRequest() {
             return v1 === v2;
         }
     }
+# 检测是否函数
+function isFunction(v) {
+  return [
+    '[object Function]',
+    '[object GeneratorFunction]',
+    '[object AsyncFunction]',
+    '[object Promise]',
+  ].includes(Object.prototype.toString.call(v));
+}
+# 是否空对象
+function isEmpty(obj){
+    return  Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
+}
+# 平滑过渡
+function scrollTo(element) {
+    element.scrollIntoView({ behavior: "smooth", block: "start" }) // 顶部
+    element.scrollIntoView({ behavior: "smooth", block: "end" }) // 底部
+    element.scrollIntoView({ behavior: "smooth"}) // 可视区域
+}
+
+# 使用for in循环时，请对对象使用，不要对数组使用，示例代码如下：
+var foo = [];
+foo[100] = 100;
+for (var i in foo) {
+  console.log(i);
+}
+for (var i = 0; i < foo.length; i++) {
+  console.log(i);
+}
+在上述代码中，第一个循环只打印一次，而第二个循环则打印0~100，这并不满足预期值。
+
+var util = require('util'); //导入模块
+util.inherits(Sub, Base); //使Sub函数继承Base函数对象

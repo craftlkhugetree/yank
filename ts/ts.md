@@ -1,3 +1,16 @@
+function identity<T>(arg: T): T {
+  return arg;
+}
+let otherIdentity: <T> (arg: T) => T = identity;
+//               ____________________
+//               |    这是类型      |
+let otherIdentity: (<T>(arg: T) => T) = identity;
+
+let mySum: (x: number, y: number) => number = function (x: number, y: number): number {   
+    return x + y;
+};
+
+
 泛型：类型像传递给函数的参数一样传递
 T 代表 Type，在定义泛型时通常用作第一个类型变量名称。但实际上 T 可以用任何有效名称代替。除了 T 之外，以下是常见泛型变量代表的意思：
 K（Key）：表示对象中的键类型；

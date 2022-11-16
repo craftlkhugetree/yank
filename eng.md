@@ -65,7 +65,7 @@ water valve 水阀
 nozzle 管口、喷嘴
 
 7. intuitive 直观易懂的 NuxtJS
-omit  遗漏  
+omit  遗漏，省略
     /**
      * Performs the specified action for each element in an array.
      * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.

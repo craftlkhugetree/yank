@@ -435,3 +435,14 @@ md.loop = false;
 md.addEventListener('ended', () => {
   console.log('结束');
 });
+
+
+// 检测是否函数
+function isFunction(v) {
+  return [
+    '[object Function]',
+    '[object GeneratorFunction]',
+    '[object AsyncFunction]',
+    '[object Promise]',
+  ].includes(Object.prototype.toString.call(v));
+}

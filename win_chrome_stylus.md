@@ -5,6 +5,8 @@ win + s 搜索‘代理’
 win + r ncpa.cpl
 *** snippingtool截图；control控制面板，calc计算器，eventvwr事件查看器，gpedit.msc组策略，mstsc远程桌面，dxdiag诊断；**
 
+taskkill /PID 19768 /F
+
 # chrome
 To activate search completion, type o to activate vomnibar and then type the search completion keyword as defined in settings (such as 'g') and press space.
 map ` visitPreviousTab

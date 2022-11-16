@@ -547,4 +547,43 @@ export function useFetch(url) {
   return { data, error }
 }
 
+Tips：如果只有setup方法的话，可以直接在defineComponent中传入setup函数： setup() {} 或 () => {}
 
+# reactive使用interface
+import { defineComponent, reactive } from 'vue'
+
+interface Student {
+  name: string
+  class?: string
+  age: number
+}
+
+export default defineComponent({
+  name: 'HelloWorld',
+  setup() {
+    const student = reactive<Student>({ name: '阿勇', age: 16 })
+    // or
+    const student: Student = reactive({ name: '阿勇', age: 16 })
+    // or
+    const student = reactive({ name: '阿勇', age: 16, class: 'cs' }) as Student
+  }
+})
+
+# vue3 this
+import {getCurrentInstance} from vue-router;
+setup(){
+​	const {proxy} from getCurrentInstance;
+ proxy.$router.push()
+}
+
+import { getCurrentInstance, ComponentInternalInstance } from "vue";
+const { appContext } = getCurrentInstance() as ComponentInternalInstance;
+const proxy = appContext.config.globalProperties;
+
+const app = createApp(App)
+app.provide('name','xianyu')
+
+import {inject} from 'vue'
+setup(){
+	const name = inject('name')
+}

@@ -1,3 +1,10 @@
+不配置任何选项的html-webpack-plugin插件，他会默认将webpack中的entry配置所有入口thunk和extract-text-webpack-plugin抽取的css样式都插入到文件指定的位置。
+inject向template或者templateContent中注入所有静态资源，不同的配置值注入的位置不经相同
+1、true或者body：所有JavaScript资源插入到body元素的底部
+2、head: 所有JavaScript资源插入到head元素中
+3、false： 所有静态资源css和JavaScript都不会注入到模板文件中
+https://www.cnblogs.com/tinaluo/p/15690857.html
+
 0. npx webpack --config webpack.config.js
 可以去掉后面的默认参数
 
