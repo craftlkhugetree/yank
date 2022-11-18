@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>导出图片和数据到Excel</title>
+  </head>
+  <body></body>
+  <script src="export2Excel.js"></script>
+  <script>
+    // tHeader和tbody的数据需要一一对应
+    let tHeader = ['鲜花', '颜色', '照片'];
+    let tbody = [
+      {
+        name: '玫瑰花',
+        color: '红色',
+        pic: 'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/b911ede672854e718fcb9203586e3687_mergeImage.png',
+      },
+      {
+        name: '梅西',
+        color: '阿根廷',
+        pic: 'https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=100059772,95063167&fm=111&gp=0.jpg',
+      },
+      {
+        name: '内马尔',
+        color: '巴西',
+        pic: 'https://dss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2186912775,1920732168&fm=58',
+      },
+      {
+        name: '伊布',
+        color: '瑞典',
+        pic: 'https://dss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3518710826,1372793792&fm=58',
+      },
+    ];
+    export2Excel(tHeader, tbody, '我爱花朵');
+  </script>
+</html>

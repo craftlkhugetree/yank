@@ -233,6 +233,17 @@ document.querySelector('.infinite-scroll-component').scrollTo(0,0)
 //选中当前想要回到 dom 元素，使用 scrollTo(0,0),实现能够在切换中始终保持第一栏在顶部显示。
 
 # jquery
+1、原生js获取的dom，通过id获取到的就是当前对应的节点，而 通过class获取返回的是 HTMLCollection 对象。HTMLCollection 对象类似包含所有 HTML 元素的一个数组。通过索引获取到自己想要的节点。
+2、jQuery哪种方式获取dom返回的都是一个数组。可以通过length检查是否存在当前节点。可以直接 jqdom.click();而原生需要循环每一个来点击。
+3、原生js获取的dom与jQuery获取的dom转换。
+        var jqdom = $('.demo');// jquery获取的dom
+        var dom1 = jqdom.eq(0)[0]; // 转换成原生节点
+        var dom2 = jqdom.get(0);// 转换成原生节点
+
+
+        var jsdom = document.getElementsByClassName('demo'); //原生获取的节点
+        var jsdom1 = $(jsdom[0]);//转换成jquery的dom对象
+————————————————
 
 $('selector1, selector2... , selectorN')    // 每一个选择器匹配到的元素合并后一起返回 (返回集合元素)
 // 层次选择器

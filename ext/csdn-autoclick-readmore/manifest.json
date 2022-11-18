@@ -1,0 +1,14 @@
+ {
+    "manifest_version":2, 
+    "name":"csdn-auto-click-read-more-btn", 
+    "version":"1.0.0", 
+    "description":"csdn auto click read more button.", 
+    "content_scripts":
+    [ {
+            "matches":["*://blog.csdn.net/*/article/details/*"],
+            "js":["jquery-3.2.1.min.js", "index.js"], 
+            "css":[], 
+            "run_at":"document_idle"
+        }
+    ]
+}

@@ -907,3 +907,57 @@ http://t.zoukankan.com/liguanlong-p-12558734.html
 
 
 pointer-events: none; 实现点击穿透, 比如图片上的水印层
+/** 
+:active只有在鼠标按下时才会起作用，通常在点击一个按钮时，都是轻轻地点击，而不是长按，如果在:active上添加动画，
+那么在鼠标抬起的时候，动画一般都没有结束，所以会导致在鼠标抬起的时候，动画马上就停止了，如果是transition，还会有一个“回退”的过渡效果。
+
+*/
+// CSS 实现“节流”其实就是控制一个动画的精准控制，假设有一个动画控制按钮从禁用->可点击的变化，每次点击时让这个动画重新执行一遍，在执行的过程中，一直处于禁用状态，这样就达到了“节流”的效果
+button{
+  // pointer-events在0~2秒内的值都是none，一旦到达2秒，就立刻变成了all，由于是forwards，会一直保持all的状态
+  animation: throttle 2s step-end forwards;
+}
+// 在点击的时候重置动画，这样在抬起的时候会重新运行动画
+button:active{
+  animation: none;
+}
+@keyframes throttle {
+  from {
+    color: red;
+    pointer-events: none;
+  }
+  to {
+    color: green;
+    pointer-events: all;
+  }
+}
+
+// 还可以通过 transition 的回调函数动态设置按钮禁用态。定义一个无关紧要的过渡属性，比如opacity：
+button{
+  opacity: .99;
+  transition: opacity 2s;
+}
+button:not(:disabled):active{
+  opacity: 1;
+  transition: 0s;
+}
+// 过渡开始，这部分禁用的逻辑是完全和业务逻辑是解耦的
+document.addEventListener('transitionstart', function(ev){
+  ev.target.disabled = true
+})
+// 过渡结束
+document.addEventListener('transitionend', function(ev){
+  ev.target.disabled = false
+})
+关于 CSS 点击动画的几个套路和一些案例，其实就是默认执行动画，点击时重置一下就行了。整体来说代码很简单，只是理解起来可能不是特别顺畅，下面总结一下实现要点：
+
+简单动画用transition，其他用 animation
+transition 可以通过设置时长为 0 来重置
+animation 可以通过设置 none 来重置
+在 :active 时重置动画，点击后会再次运行动画
+复杂的动画可以借助现有的动画库，例如 anmate.css
+设置动画时长为 0 可以避免首次渲染出现动画
+
+相比 js 实现，CSS 实现代码更少，加载更快，无需等待 js 加载完成，体验更优（比如天然支持敲空格键触发），同时也更容易维护和使用，直接复制一个类名就行了。
+
+

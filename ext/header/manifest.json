@@ -1,0 +1,26 @@
+ {
+   "name":"Injection", 
+    "version":"1.0", 
+    "description":"RequestHeader钩子", 
+    "manifest_version":2, 
+    "content_scripts":[ {
+            // 当matches返回true时才会注入, 比如 ["http://foo.com/bar/*", "https://foobar.com/bar/*"],表示在foobar.com下的bar路径下会发生注入,一个特殊的值： "<all_urls>" 表示匹配所有地址
+            "matches":[
+                "<all_urls>"
+            ], 
+            // 多个JS会按照配置的顺序引入到页面
+            "js":[
+                "index.js"
+            ], 
+            "all_frames":true, 
+            "permissions":[
+                "tabs"
+            ], 
+            // 在什么时机引入到页面，三个可选择的值： "document_start"、"document_end"、"document_idle"
+			// 默认document_idle。
+			// 这个很重要，比如如果引入的JS中使用到了onload就要选择document_start，否则会错过事件
+			// 但是如果没有类似的事件的话最好保持默认值document_idle，这样不对原页面的加载速度产生影响
+            "run_at":"document_start"
+        }
+    ]
+}

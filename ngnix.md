@@ -1,3 +1,6 @@
+nginx -s stop
+nginx -s reload
+
 跳转有两种情况：一种页面刷新，一种页面不刷新。
 1、push不会刷新页面，只会更改浏览器上的url路由变更，不管是react-router还是vue-router都是运用html的api实现，叫做history.pushState()。
 2、会刷新页面，它相当于a标签。
@@ -35,10 +38,10 @@ cd /work/api/tour && tar -xvf tour.tar.gz &&
          npm --registry=https://registry.npm.taobao.org install && pm2 stop pm2.json && pm2 start pm2.json
 
 
-pm2 logs
+pm2 logs   pm2 log id
 pm2 monit
 pm2 list
-pm2 show app_name|app_id
+pm2 show name|id
 pm2 restart js|name|id
 pm2 stop all
 
@@ -47,3 +50,7 @@ pm2 stop all
 app.use("*",(req,res)=>{  //不是以'/api'开头的路由全部返回"hello world"
   res.send("hello world");
 })
+
+
+
+tail -n 20 -f access.log

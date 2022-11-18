@@ -1,4 +1,7 @@
 gitbash alias里新增命令amongod启动服务；mongosh启动客户端。
+mongod --config "d:\Program Files\MongoDB\Server\6.0\bin\mongodb.conf"
+
+node连接数据库：
 mongoose = {
     url: 'mongodb://127.0.0.1:27017/moyu',
     options: {
@@ -12,8 +15,11 @@ mongoose = {
 {"t":{"$date":"2022-11-04T15:01:25.453+08:00"},"s":"I",  "c":"CONTROL",  "id":23138,   "ctx":"initandlisten","msg":"Shutting down","attr":{"exitCode":100}}这个报错码100，原因是没创建dbpath的文件夹，在dbpath的位置把文件夹创建出来就可以了
 mongod --port=27017 --logpath=./log/mongodb.log --dbpath=./db --fork
 
-mongod --config "d:\Program Files\MongoDB\Server\6.0\bin\mongodb.conf"
 mongod --config "d:\Program Files\MongoDB\Server\6.0\bin\mongod.cfg"
+
+mongod --version
+mongod --shutdown --dbpath D:\Program Files\MongoDB\Server\6.0\data\db  仅linux可用选项--shutdown
+db.shutdownServer()
 
 #1、进入mongo语法环境
 mongo
@@ -29,6 +35,14 @@ db.createUser({
     pwd："admin",
     roles：["root"]  // 角色root是超级管理员 
 }) 
+
+db.createUser({user:"moyu",pwd:"123456",roles:["root"]}
+ERROR:Could not find role: root@test   错误如下：除了admin，其他的roles不能用 root，根据需要选择所想要的role。
+将其 role: 'root',置换为 role: 'readWrite', 同时增加数据库名。
+ db.createUser({user:"moyu",pwd:"123456",roles:[{
+    role: 'readWrite',  
+    db: 'projects'     
+  }]})
 
 # 查看当前数据库中的用户
 show users
@@ -52,6 +66,7 @@ db.updateUser( "admin", {
 # 删除用户
 db.dropUser("admin")  // admin 是要删除的用户名
 
+show users
 show dbs; use 库名
 show tables
 db.表名.find()

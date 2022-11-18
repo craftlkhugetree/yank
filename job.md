@@ -14,6 +14,8 @@ netRepair-njit:  webpack plugin过滤‘ac5d ’
 nginx -s reload  createFile error    gitbash cmd taskkill awk
 nginx -s stop
 
+chrome插件api， popup inject manifest.json
+
 148. webpack 中 loader 和 plugin 的区别是什么？（平安）
 loader，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。
 plugin是一个扩展器，它丰富了webpack本身，针对是loader结束后，webpack打包的整个过程，它
