@@ -289,7 +289,7 @@ $ openssl req -new -key server.key -out server.csr
 $ openssl x509 -req -CA ca.crt -CAkey ca.key -CAcreateserial -in server.csr -out server.crt
 客户端在发起安全连接前会去获取服务器端的证书，并通过CA的证书验证服务器端证书的真伪。除了验证真伪外，通常还含有对服务器名称、IP地址等进行验证的过程。
 
-在RESTful类Web服务中请求方法十分重要，因为它会决定资源的操作行为。PUT代表新建一个资源，POST表示要更新一个资源，GET表示查看一个资源，而DELETE表示删除一个资源。
+在RESTful类Web服务中请求方法十分重要，因为它会决定资源的操作行为。POST代表新建一个资源，PUT表示要更新一个资源，GET表示查看一个资源，而DELETE表示删除一个资源。
 在MVC流行之前，主流的处理方式都是通过文件路径进行处理的，甚至以为是常态。直到有一天开发者发现用户请求的URL路径原来可以跟具体脚本所在的路径没有任何关系。
 MVC模型的主要思想是将业务逻辑按职责分离，主要分为以下几种。
  控制器（Controller），一组行为的集合。
@@ -1039,3 +1039,6 @@ reportProgress 流是简单的通过（pass-through）流，但是它也向标�
 nextTickQueue 中存储着被 process.nextTick() 触发的回调。microTaskQueue 保留着被 Promise 触发的回调。它们都不是事件循环的一部分（不是在 libUV 中开发的），而是在 node.js 中。在 C/C++ 和 Javascript 有交叉的时候，它们都是尽可能快地被调用。因此它们应该在当前操作运行后（不一定是当前 js 回调执行完）。它们当然在从当前阶段到下一个阶段之前尽可能快的运行。不像其他阶段，它们两个没有系统依赖的最大限制，node 运行它们直到两个队列是空的。
 
 setImmediate 和 process.nextTick() 都命名错了。所以功能上，setImmediate 在下一个 tick 执行，nextTick 是马上执行的。
+
+
+npm list -g之后，设置NODE_PATH和NODE_HOME的环境变量，才能require全局安装的npm包。

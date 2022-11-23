@@ -72,3 +72,19 @@ show tables
 db.表名.find()
 
 taskkill /F /PID pid
+
+
+如果你想操纵Mongoose查询的结果，通常最好在查询后调用lean() ，这样你就可以直接获得一个可以自由修改的普通JavaScript对象。 否则它是一个不容易操作的Mongoose模型实例：  
+UserTabs.findOne({ 'username' :  userID }).lean().exec(function(err, data) {
+    // data is a JavaScript object, modify it as needed.  Use the standard
+    // JavaScript array manipulation functions to modify data.preferences.
+    ...
+}
+
+
+问题：mongo文档末尾出现字段"__v：0"
+解决方法：在model末尾加上 {versionKey: false}
+
+mongoose.model默认会给collection默认添加s.
+实际上是pluralize(name.toLowerCase())方法在起作用，该方法主要将model的name转换成collection的name。但是，对于model名称的转换分为两部分：不需要转换的模型名称和需要进行处理的模型名称。其中，不需要进行转换的名称为列表uncountables，需要转换的名称的转换规则如下：exports.pluralization = []，
+如果不想使用model方法默认的model的name转换为collection的name，则只需要传递三个参数即可，其中最后一个参数是真正的collection的name.

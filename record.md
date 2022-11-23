@@ -328,35 +328,6 @@ $("select:selected").length;//不管任何时候，这个选择器都取不到�
 $("input :checked").length;//不正确的用法。不管任何时候，这个选择器都取不到元素，这个length必然是0 
 $("input:checked");//这样才是正确的
 
-# POST/GET
-
-1.前端向后端传输数据时，有 get 和 post 两种：
-如果是 get 传输，直接传在 url 后；如果是 post 传输，则在请求体 body 中传输。HTTP 请求中的 get 请求和 post 请求参数的存放位置是不一样的。
-
-2.在 body 中的数据格式（post 请求）：
-一种是 json 数据格式，另一种是 字符串。具体要用哪种格式取决于后端入参的格式
-
-如果后端接收 json 数据类型，post 的 headers 需要设置 { ‘content-type’: ’application/json’ }，传给后端的数据就形如 { ‘name’:’edward’, ‘age’:’25’ }
-如果后端接收的是（表单）字符串类型，post 的 headers 需设置 { ‘content-type’: ’application/x-www-form-urlencoded’ }，传输给后端的数据就形如 ‘name=edward&age=25’
-multipart/form-data(一般用来上传文件)
-为什么一般是给 post 请求设置 content-type,get 请求不需要设置吗？
-get 请求一般没有消息体 body，而 content-type 是用来指定消息体的格式的
-
-3.接口数据传输方式 form data、payload 和 Query String Parameters
-POST 提交数据有两种数据传输方式，这两种方式浏览器是通过 Content-Type 来进行区分：
-如果是 application/json 或 multipart/form-data 的话，则为 request payload；json 格式
-如果是 application/x-www-form-urlencoded 的话，则为 formdata 方式；字符串
-如果是 GET 请求，则为 Query String Parameters
-
-qs.stringfy()是将对象序列化成 URL 的形式，以&进行拼接。安装 axios 即可使用 qs。
-axios 默认数据格式为 json,所以： 1.当后端需要接收 json 格式的数据时,post 请求头不需要设置请求头，数据格式也不需要我们去转换(若数据已经是 json)； 2.当后端需要接收字符串格式的数据时，我们需要给 post 请求头设置{ ‘content-type’: ’application/x-www-form-urlencoded’ }，
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-这个时候如果我们传的入参是一个 js 对象，这时候我们就需要用 qs 转换数据格式
-
-let data = { name: 'edward', age: '25' }
-前者：JSON.stringfy(data) // ”{ 'name' : 'edward' , 'age' : '25' }”
-后者：qs.stringfy(data) // 'name=edward&age=25'
-
 # 原型链 constructor
 var obj = {};
 obj.constructor    //ƒ Object() { [native code] }
@@ -430,3 +401,5 @@ http缓存可以减少宽带流量，加快响应速度。
 关于协商缓存,etag并不是last-modified的完全替代方案，而是补充方案，具体用哪一个，取决于业务场景。
 有些缓存是从磁盘读取，有些缓存是从内存读取，有什么区别？答：从内存读取的缓存更快。
 所有带304的资源都是协商缓存，所有标注（从内存中读取/从磁盘中读取）的资源都是强缓存。
+
+

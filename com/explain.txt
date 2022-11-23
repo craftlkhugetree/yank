@@ -9,7 +9,7 @@ BaseUpload.vue         formData.append('file',this.fileList[i]);  isGet;   isRep
 
 
 # 座位预约：
-table棋盘
+table棋盘, 鼠标框选，是否按下shift键。
 移动端非微信扫码 qrcodeReader.vue
 
 # 白马：
@@ -51,7 +51,7 @@ collapse.js
 BMap
 
 # wxbluetooth
-小程序： 蓝牙、扫码
+小程序： 蓝牙、扫码; 小程序壳内链接跳转H5
 
 # appointment 有约
 echarts； 

@@ -14,6 +14,8 @@ netRepair-njit:  webpack plugin过滤‘ac5d ’
 nginx -s reload  createFile error    gitbash cmd taskkill awk
 nginx -s stop
 
+中文传递到后台是乱码，要在tomcat的配置文件的Connector标签,在末尾添URIEncoding=“UTF-8”，前端post时可指明，get则只能反向回去查iso再解码。
+
 chrome插件api， popup inject manifest.json
 
 148. webpack 中 loader 和 plugin 的区别是什么？（平安）
@@ -85,3 +87,32 @@ h('img', { attrs: { src: require('./image.png') }})
 那么动态添加src的时候也会使用require引入，为什么src编译过后的地址，与图片资源编译过后的资源地址不一致？
 答：因为动态引入一张图片的时候，src后面的属性值，实际上是一个变量。webpack会根据v-bind指令去解析src后面的属性值。并不会通过reuqire引入资源路径。这也是为什么需要手动的添加require。
 任何放置在 public 文件夹的静态资源都会被简单的复制，而不经过 webpack。需要通过绝对路径来引用它们。所以使用require引入资源的前提的该资源是webpack解析的模块，而public下的文件压根就不会走编译，也就不会使用到require。
+
+
+
+# vue2中的Object.defineProperty() 实际是通过 定义 或 修改 对象属性 的描述符来实现 数据劫持，其对应的缺点也是没法被忽略的：
+只能拦截对象属性的 get 和 set 操作，比如无法拦截 delete、in、方法调用 等操作
+
+动态添加新属性（响应式丢失）
+
+保证后续使用的属性要在初始化声明 data 时进行定义
+使用 this.$set() 设置新属性
+通过 delete 删除属性（响应式丢失）
+
+使用 this.$delete() 删除属性
+使用数组索引 替换/新增 元素（响应式丢失）
+
+使用 this.$set() 设置新元素
+使用数组 push、pop、shift、unshift、splice、sort、reverse 等 原生方法 改变原数组时（响应式丢失）
+
+使用 重写/增强 后的 push、pop、shift、unshift、splice、sort、reverse 方法
+一次只能对一个属性实现 数据劫持，需要遍历对所有属性进行劫持
+
+数据结构复杂时（属性值为 引用类型数据），需要通过 递归 进行处理。
+
+# Object.defineProperty 可用于实现对象属性的 get 和 set 拦截，而数组其实也是对象，那自然是可以实现对应的拦截操作，那Vue2 为什么不使用 Object.defineProperty 拦截 Array？性能问题到底指的是什么呢？下面是总结：
+1. 数组 和 普通对象 在使用场景下有区别，在项目中使用数组的目的大多是为了 遍历，即比较少会使用 array[index] = xxx 的形式，更多的是使用数组的 Api 的方式;
+2. 数组长度是多变的，不可能像普通对象一样先在 data 选项中提前声明好所有元素，比如通过 array[index] = xxx 方式赋值时，一旦 index 的值超过了现有的最大索引值，那么当前的添加的新元素也不会具有响应式;
+3. 数组存储的元素比较多，不可能为每个数组元素都设置 getter/setter;
+4. 无法拦截数组原生方法如 push、pop、shift、unshift 等的调用，最终仍需 重写/增强 原生方法。
+

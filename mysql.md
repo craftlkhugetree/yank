@@ -6,11 +6,11 @@
 msyql 绿色版，必须是管理员 shell：
 mysqld install
 mysqld --initialize 先删除 data 目录
-net start mysql
+net start mysql 管理员shell： 输入cmd后 ctrl+shift+enter
 net stop mysql
 
 mysql -uroot -p
-但是此处的密码需要我们自己去 data 目录下的.err 文件中查找
+此处的原始密码需要我们自己去 data 目录下的.err 文件中查找，已改为root@root
 
 5.x 版：
 set password for root@localhost = password('root');
