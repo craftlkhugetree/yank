@@ -402,4 +402,18 @@ http缓存可以减少宽带流量，加快响应速度。
 有些缓存是从磁盘读取，有些缓存是从内存读取，有什么区别？答：从内存读取的缓存更快。
 所有带304的资源都是协商缓存，所有标注（从内存中读取/从磁盘中读取）的资源都是强缓存。
 
+# figma
+Ctrl+Shift+?
 
+Ctrl+/  quick action
+I pick color
+
+双击menu前#，定位到设计图
+/   menu parent
+Enter menu children
+Tab menu next sibling
+Shift+Tab menu previos sibling
+Ctrl+a+/ 收起所有menu
+
+n/Shift+n  Home/End     
+Shift+1/2  Ctrl+0/+/-   zoom

@@ -752,3 +752,4 @@ child组件：
       },
   }
 
+# el-tabs组件内的每一个<el-tab-pane><div v-if></div></el-tab-pane>都会重新渲染，所以要在其内部添加v-if
