@@ -413,7 +413,7 @@ I pick color
 Enter menu children
 Tab menu next sibling
 Shift+Tab menu previos sibling
-Ctrl+a+/ 收起所有menu
+Alt+L 收起所有menu
 
 n/Shift+n  Home/End     
 Shift+1/2  Ctrl+0/+/-   zoom
