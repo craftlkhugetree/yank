@@ -872,7 +872,7 @@ el-select增加搜索框后缀
 }
 
 el-input 与 el-textarea 提示语样式不同
-/deep/ .el-textarea {
+.el-textarea {
   /* 设置textarea框提示内容的样式 */
   textarea::-webkit-input-placeholder {
     text-align: left;
@@ -961,3 +961,40 @@ animation 可以通过设置 none 来重置
 相比 js 实现，CSS 实现代码更少，加载更快，无需等待 js 加载完成，体验更优（比如天然支持敲空格键触发），同时也更容易维护和使用，直接复制一个类名就行了。
 
 
+/*单行省略*/
+// div的display: inline-block;是没有省略号的，必须是block
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/*多行省略*/
+.more-ellipsis {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+}
+
+// 暂无图片的文字样式
+.img_alt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  background: #f5f7fa;
+  color: #c0c4cc;
+  vertical-align: middle;
+  width: 120px;
+  height: 160px;
+}
+
+// 居中
+.abs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

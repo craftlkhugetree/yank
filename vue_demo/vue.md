@@ -755,5 +755,37 @@ child组件：
 # el-tabs组件内的每一个<el-tab-pane><div v-if></div></el-tab-pane>都会重新渲染，所以要在其内部添加v-if
 若子组件需要父组件接口返回的数据，那么子组件上也要v-if这个数据，确保有了该数据才会渲染子组件。
 
-官方解释：当 ref 和 v-for 一起使用的时候，你得到的 ref 将会是一个包含了对应数据源的这些子组件的数组。
+官方解释：当 ref 和 v-for 一起使用的时候，你得到的 ref 将会是一个包含了对应数据源的这些子组件的***数组***要用this.$refs.acadeDetail[0]。
+由于用v-if所以ref数组只有一个元素，每次tab切换要重新获取ref时，必须下一跳   this.$nextTick(() => this.genRef());
 
+el-form 动态rules会立刻校验，变红，所以：
+    :validate-on-rule-change="false"
+  
+# 给el-select增加slot日期图标作为前缀
+   <el-select
+              v-model="editForm.publishMonth"
+              placeholder="月（可省）"
+              class="elsel"
+              size="small"
+            >
+              <div slot="prefix">
+                <i class="el-input__icon el-icon-date"></i>
+              </div>
+              <el-option
+                v-for="item in genNum(12)"
+                :key="item"
+                :label="item + '月'"
+                :value="item"
+              ></el-option>
+            </el-select>
+
+vue.config.js里设置scss全局变量和函数：
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `
+          @import "./src/assets/css/global.scss";
+          `,
+      },
+    },
+  },

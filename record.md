@@ -415,5 +415,5 @@ Tab menu next sibling
 Shift+Tab menu previos sibling
 Alt+L 收起所有menu
 
-n/Shift+n  Home/End     
+n/Shift+n  Home/End   next
 Shift+1/2  Ctrl+0/+/-   zoom

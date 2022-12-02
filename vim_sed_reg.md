@@ -258,6 +258,43 @@ split的正则中加了括号,会把括号内匹配到的值也放在最后返�
 或者加上  s  可以匹配换行符   console.log( /b.r/s.test('b\nr') )
 /foo/igs.flags;   // "gis"
 
+exts.replace(/(mp3\|)/g, '$1\n\r')
+// https://zhuanlan.zhihu.com/p/400170962
+// 正则表达式括号内容是从左到右，从外到内来计算$1,$2,$3,$4的
+  (function () {
+    let str = '222aaaa333Bbb666ccc9ZZ'
+    let reg = /((\d([a-z]+))(\d+[A-Z]))/g
+    let arr = str.match(reg)
+
+     console.log(str.replace(reg, '$1...')) 
+    console.log(arr) // ['2aaaa333B', '6ccc9Z']
+	    let str2 = str.replace(reg, function (match, p1, p2, p3, p4, p5, p6, p7) {
+      console.log('match', match) // 2aaaa333B  // 6ccc9Z
+      console.log('p1', p1) // 2aaaa333Bbb  // 6ccc9Z
+      console.log('p2', p2) // 2aaaa  // 6ccc
+      console.log('p3', p3) // aaaa // ccc
+      console.log('p4', p4) // 333B // 9Z
+      console.log('p5', p5) // 2  // 15
+      console.log('p6', p6) // 222aaaa333Bbb666ccc9ZZ // 222aaaa333Bbb666ccc9ZZ
+      console.log('p7', p7) // undefined  // undefined
+      return '***' // 把匹配到的字符串替换为对应的字符串
+    })
+    console.log('str2', str2) // 22***bb66***Z
+    /***
+     * 结果解析：
+     * 要点1：正则表达式括号内容是从左到右，从外到内来计算$1,$2,$3,$4的
+     * 要点2：因为是全局匹配（-g），故此正则匹配到此字符串的结果有两个：2aaaa333B、6ccc9Z；故replace要替换这两个字符串
+     * 要点3：replace传function时，各个参数的意义要明确:
+     *      match(整个匹配成功的字符串)
+     *      p1~p5（匹配成功字符串中的各个括号中匹配成功的字符串）
+     *      p6（正则各个括号中匹配成功的参数占用完之后的第一个参数）（代表从字符串的第几个位置开始匹配成功的）
+     *      p7（正则各个括号中匹配成功的参数占用完之后的第二个参数）（原字符串）
+     *      p8...（原字符串之后的所有字符串都是undefined）
+     *
+     * **/
+  })();
+
+
 
 str.replace(/<[^>]*>/g, '');去掉所有尖括号对,非“>”的字符可以有一个或多个，也可以没有。
 

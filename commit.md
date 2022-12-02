@@ -399,10 +399,17 @@ fix: seatMobile lack of type7
 feat: echarts; vue-count-to; xlsx。api: resgroupItemsFillRes; statistics.js。  public.scss  .count。 analyze component。
 
 # 南理工特藏 2022/11/25   g-table Vue.component
-系统配置 .icon-menu-xtgl
+系统配置 icon-menu-xtgl
    用户管理         path: '/sys-manage/user',
    角色权限        path: '/sys-manage/roles',
    用户中心        path: '/sys-manage/user-center',
+特藏管理 icon-menu-shgl
+   院士管理            path: '/tc/academician',    
+   名师管理            path: '/tc/teacher',    
+   校友捐赠管理 path: '/tc/alumnaSponser',
+   专家捐赠管理 path: '/tc/specialSponser',
+   著作管理 path: '/tc/famous',
+   古籍管理 path: '/tc/old',
 # 恢复sidebar  menu
 
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)

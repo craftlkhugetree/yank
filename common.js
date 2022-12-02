@@ -13,6 +13,117 @@ export default {
     XLSX.utils.book_append_sheet(wb, ws);
     XLSX.writeFile(wb, fileName);
   },
+  // 导入方法sheet_to_json, title为excel第一行表头，key对应的属性字段，callback为保存接口。
+  checkExcelData(data, obj) {
+    const { _this, key, title, regCheck, callback, commonParams } = obj;
+    if (!Array.isArray(data)) {
+      throw '需要数组';
+    }
+    if (!data.length) {
+      _this.$message({
+        showClose: true,
+        type: 'warning',
+        message: '导入文件没有数据',
+      });
+      throw '没有数据';
+    }
+    const head = Object.keys(data[0]) || [];
+    const arr = head.filter((t, index, A) => A.indexOf(t) === index) || [];
+    let flag = 0;
+    if (!arr.length) {
+      ++flag;
+    }
+    arr.forEach(item => {
+      if (!title.includes(item)) {
+        ++flag;
+      }
+    });
+    if (flag) {
+      _this.$message({
+        showClose: true,
+        type: 'warning',
+        message: '表头有误，请按模板导入。',
+      });
+      throw '表头有误';
+    }
+    let arrT = [];
+    data.forEach(obj => {
+      let msg = regCheck({ obj });
+      if (msg) {
+        flag++;
+        _this.$message({
+          duration: 3000,
+          showClose: true,
+          type: 'warning',
+          message: msg,
+        });
+        throw msg;
+      }
+      let arrEle = { ...commonParams };
+      title.forEach((item, index) => {
+        arrEle[key[index]] = obj[item];
+      });
+      arrT.push(arrEle);
+    });
+    if (!flag) {
+      callback(arrT);
+    }
+  },
+  checkExcelData_txt(arr) {
+    let flag = 0;
+    if (arr && arr.length && arr.length > 1) {
+      // XLSX.utils.sheet_to_txt()
+      arr.forEach((item, index) => {
+        if (index === 0) {
+          item.forEach((i, id) => {
+            // 导入文件的表头与模板表头不同
+            if (i !== this.title[0][id] && item.length !== this.title.length) {
+              flag++;
+              this.$message({
+                showClose: true,
+                type: 'warning',
+                message: '表头有误，请按模板导入。',
+              });
+              throw '表头有误';
+            }
+          });
+        } else {
+          item.forEach((i, n) => {
+            // 校验每格数据
+            let msg = this.regCheck({ index: n, name: i });
+            if (msg) {
+              flag++;
+              throw msg;
+            }
+          });
+        }
+      });
+      if (!flag) {
+        let rest = arr.slice(1);
+        let arrT = [];
+        rest.forEach(r => {
+          let arrEle = { relationship: this.rs };
+          r.forEach((item, index) => {
+            arrEle[this.name[index]] = item;
+          });
+          arrT.push(arrEle);
+        });
+        // 主键相同的行如何操作
+        // this.getSamePrimaryKey(arrT);
+        // 调用接口保存导入的数据
+        personSaveBatch(arrT).then(res => {
+          if (res && res.code === '000000') {
+            this.$message({
+              showClose: true,
+              type: 'success',
+              message: '导入成功！',
+            });
+            this.refGet();
+          }
+        });
+      }
+    }
+  },
   // 导入Excel
   getFile(event) {
     let _this = this;
@@ -34,57 +145,67 @@ export default {
       });
       return;
     }
-    let rABS = false; //是否将文件读取为二进制字符串
-
-    let reader = new FileReader();
-    FileReader.prototype.readAsBinaryString = function (f) {
-      let binary = '';
-      let rABS = false; //是否将文件读取为二进制字符串
-      let wb; //读取完成的数据
-      let outdata;
-      let reader = new FileReader();
-      reader.onload = function (e) {
-        let bytes = new Uint8Array(reader.result);
-        let length = bytes.byteLength;
-        for (let i = 0; i < length; i++) {
-          binary += String.fromCharCode(bytes[i]);
-        }
-        function fixdata(data) {
-          //文件流转BinaryString(不需要此功能可以删掉)
-
-          var o = '',
-            l = 0,
-            w = 10240;
-
-          for (; l < data.byteLength / w; ++l)
-            o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
-
-          o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
-
-          return o;
-        }
-
-        if (rABS) {
-          wb = XLSX.read(btoa(fixdata(binary)), {
-            // 手动转化
-            type: 'base64',
-          });
-        } else {
-          wb = XLSX.read(binary, {
-            type: 'binary',
-          });
-        }
-        //   outdata = XLSX.utils.sheet_to_html(wb.Sheets[wb.SheetNames[0]]); //outdata就是你想要的东西
-        outdata = XLSX.utils.sheet_to_txt(wb.Sheets[wb.SheetNames[0]]); //outdata就是你想要的东西
-        _this.checkExcelData(outdata);
-      };
-      reader.readAsArrayBuffer(f);
+    const fileReader = new FileReader();
+    fileReader.onload = ev => {
+      const workbook = XLSX.read(ev.target.result, {
+        type: 'binary',
+      });
+      const wsname = workbook.SheetNames[0];
+      const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]);
+      console.log('ws:', ws); // 转换成json的数据
     };
-    if (rABS) {
-      reader.readAsArrayBuffer(f);
-    } else {
-      reader.readAsBinaryString(f);
-    }
+    fileReader.readAsBinaryString(f);
+    // let rABS = false; //是否将文件读取为二进制字符串
+
+    // let reader = new FileReader();
+    // FileReader.prototype.readAsBinaryString = function (f) {
+    //   let binary = '';
+    //   let rABS = false; //是否将文件读取为二进制字符串
+    //   let wb; //读取完成的数据
+    //   let outdata;
+    //   let reader = new FileReader();
+    //   reader.onload = function (e) {
+    //     let bytes = new Uint8Array(reader.result);
+    //     let length = bytes.byteLength;
+    //     for (let i = 0; i < length; i++) {
+    //       binary += String.fromCharCode(bytes[i]);
+    //     }
+    //     function fixdata(data) {
+    //       //文件流转BinaryString(不需要此功能可以删掉)
+
+    //       var o = '',
+    //         l = 0,
+    //         w = 10240;
+
+    //       for (; l < data.byteLength / w; ++l)
+    //         o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
+
+    //       o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
+
+    //       return o;
+    //     }
+
+    //     if (rABS) {
+    //       wb = XLSX.read(btoa(fixdata(binary)), {
+    //         // 手动转化
+    //         type: 'base64',
+    //       });
+    //     } else {
+    //       wb = XLSX.read(binary, {
+    //         type: 'binary',
+    //       });
+    //     }
+    //     //   outdata = XLSX.utils.sheet_to_html(wb.Sheets[wb.SheetNames[0]]); //outdata就是你想要的东西
+    //     outdata = XLSX.utils.sheet_to_txt(wb.Sheets[wb.SheetNames[0]]); //outdata就是你想要的东西
+    //     _this.checkExcelData(outdata);
+    //   };
+    //   reader.readAsArrayBuffer(f);
+    // };
+    // if (rABS) {
+    //   reader.readAsArrayBuffer(f);
+    // } else {
+    //   reader.readAsBinaryString(f);
+    // }
   },
   // Function: 导出文件
   exportFile(url, isGet, params, fileName, fileType) {
@@ -251,7 +372,7 @@ export default {
     if (minutes >= 0 && minutes <= 9) {
       minutes = '0' + minutes;
     }
-    return myDate.getFullYear() + month + strDate;
+    return '' + myDate.getFullYear() + month + strDate;
   },
 
   /********************************************3.导出pdf文件********************************************/
@@ -394,14 +515,15 @@ errMsg && tVue.$toast.fail(errMsg);
 tVue.$toast.clear();
 
 // pc端
-        loading = tVue.$loading({
-          lock: true,
-          text: options.loadingText,
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)',
-        });
-        loading.close();
-errMsg && tVue.$message({
+loading = tVue.$loading({
+  lock: true,
+  text: options.loadingText,
+  spinner: 'el-icon-loading',
+  background: 'rgba(0, 0, 0, 0.7)',
+});
+loading.close();
+errMsg &&
+  tVue.$message({
     showClose: true,
     type: 'error',
     message: errMsg,
@@ -436,7 +558,6 @@ md.addEventListener('ended', () => {
   console.log('结束');
 });
 
-
 // 检测是否函数
 function isFunction(v) {
   return [
@@ -445,4 +566,62 @@ function isFunction(v) {
     '[object AsyncFunction]',
     '[object Promise]',
   ].includes(Object.prototype.toString.call(v));
+}
+
+function getVideoCanvas(videoList) {
+  var videoCanList = []; // 因为后端返回的视频数组，这里先定义一个空数组
+  videoList.forEach(item => {
+    if (!this.isVideo(item.fileType)) {
+      item.cover = item.viewUrl;
+    } else if (item.fileType === 'mp3') {
+      item.cover = require('@/assets/img/error.png');
+    } else {
+      // for循环获取到的视频数组
+      // 因为是循环处理，这里定义一个promise函数
+      var promise = new Promise(reslove => {
+        // 在缓存中创建video标签
+        var video = document.createElement('VIDEO');
+        // 通过setAttribute给video dom元素添加自动播放的属性，因为视频播放才能获取封面图;
+        video.setAttribute('autoplay', 'autoplay');
+        // 再添加一个静音的属性，否则自动播放会有声音
+        video.setAttribute('muted', 'muted');
+        video.currentTime = 1;
+        video.setAttribute('src', item.viewUrl);
+        video.setAttribute('crossOrigin', 'anonymous'); //设置跨域 否则toDataURL导出图片失败
+        // 上面我们只是创建了video标签，视频播放需要内部的source的标签，scr为播放源;
+        // video.innerHTML = '<source src=' + item.viewUrl + ' crossorigin="anonymous">';
+        // 再创建canvas画布标签
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        // video注册canplay自动播放事件
+        video.addEventListener(
+          'canplay',
+          function () {
+            // 创建画布的宽高属性节点，就是图片的大小，单位PX
+            var anw = document.createAttribute('width');
+            anw.nodeValue = 160;
+            var anh = document.createAttribute('height');
+            anh.nodeValue = 90;
+            canvas.setAttributeNode(anw);
+            canvas.setAttributeNode(anh);
+            // 画布渲染
+            ctx.drawImage(video, 0, 0, 160, 90);
+            // 生成图片
+            var base64 = canvas.toDataURL('image/png'); // 这就是封面图片的base64编码
+            // 视频结束播放的事件
+            video.pause();
+            item.cover = base64;
+            reslove(base64); // promise函数成功的回调
+          },
+          false
+        );
+      });
+      videoCanList.push(promise); // 这里将每一次promise函数成功回调的结果push进一开始定义的空数组
+    }
+  });
+  // 通过Promise.all方法等待上面的循环结束这里再执行业务逻辑
+  Promise.all(videoCanList).then(res => {
+    this.fileList = [...this.fileList];
+    console.log(res, videoCanList); // 这里就是每一张视频的封面图
+  });
 }
