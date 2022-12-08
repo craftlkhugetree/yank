@@ -5,6 +5,7 @@ read -p  "请填写commit提交的信息:" msg
 if [ ! -n "$msg" ]; then
   echo -e "\033[31m 终止提交，因为提交说明为空。\033[0m" 
 else
+  # build失败会继续提交，只是没有dist
   npm run build && echo $msg
   echo -e "\033[32m \n 开始执行add-commit操作...... \033[0m"
   # commit可以换成cz工具

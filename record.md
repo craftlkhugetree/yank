@@ -417,3 +417,6 @@ Alt+L 收起所有menu
 
 n/Shift+n  Home/End   next
 Shift+1/2  Ctrl+0/+/-   zoom
+
+# moment
+moment.utc(毫秒).format('HH:mm:ss')

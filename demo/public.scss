@@ -969,7 +969,8 @@ animation 可以通过设置 none 来重置
   overflow: hidden;
 }
 
-/*多行省略*/
+// white-space: pre-wrap; 将文本中的空格和换行保留，并且超出宽度自动换行。而pre是不换行的。
+/*多行省略，数字和英文必须用word-break: break-all;  或者  word-wrap:break-word;才能换行*/  
 .more-ellipsis {
   display: -webkit-box;
   -webkit-box-orient: vertical;
