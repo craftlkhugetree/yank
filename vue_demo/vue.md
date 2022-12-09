@@ -789,3 +789,55 @@ vue.config.js里设置scss全局变量和函数：
       },
     },
   },
+
+
+# 默认情况下，任何被传递给组件的额外参数都会自动应用于根元素（以及所有有 $attrs 绑定的元素）。
+为了关闭这个功能，并控制哪些元素可接受这个额外的属性，我们可以使用一个名为 inheritAttrs 的标志，并将其设置为false。
+
+# HTML 中的特性名是大小写不敏感的，所以浏览器会把所有大写字符解释为小写字符。这意味着当使用 DOM 中的模板时，camelCase (驼峰命名法) 的 prop 名需要使用其等价的 kebab-case (短横线分隔命名) 命名。  如果使用字符串模板，那么这个限制就不存在了。
+
+注意$attrs不传递value时，例如<component disabled/> 此刻$attrs.disabled拿到的值是""，这符合html attribute特性。
+
+# 一些内容属性（例如 required, readonly, disabled）是布尔值属性。如果一个布尔值属性存在，则其值是 true，如果不存在，其值是  false。
+HTML5 定义了布尔值属性允许的取值：如果属性存在，其值必须是一个空字符串（即该属性的值未分配），或者是一个大小写无关的 ASCII 字符串，该字符串与属性名严格相同，前后都没有空格。下述例子是为一个布尔值属性取值的几个有效方式。
+
+<div itemscope> This is valid HTML but invalid XML. </div>
+<div itemscope=itemscope> This is also valid HTML but invalid XML. </div>
+<div itemscope=""> This is valid HTML and also valid XML. </div>
+<div itemscope="itemscope"> This is also valid HTML and XML, but perhaps a bit verbose. </div>
+再明确一点，布尔值属性不能取值为 "true" 和 "false"。如果需要表示 false 值，布尔值属性需要整个忽略不写。这个限制澄清了一些常见误会：比如在元素中设置 checked="false" ，元素的 checked 属性会被解读为 true，因为这个属性出现了。
+
+// 源码赏析   src/core/util/props.js
+export function validateProp (key,propOptions,propsData,vm) {
+  const prop = propOptions[key]
+  const absent = !hasOwn(propsData, key)
+  let value = propsData[key]
+  // boolean casting
+  const booleanIndex = getTypeIndex(Boolean, prop.type)
+  if (booleanIndex > -1) {
+    if (absent && !hasOwn(prop, 'default')) {
+      value = false
+    } else if (value === '' || value === hyphenate(key)) {
+      // only cast empty string / same name to boolean if
+      // boolean has higher priority
+      const stringIndex = getTypeIndex(String, prop.type)
+      if (stringIndex < 0 || booleanIndex < stringIndex) {
+        value = true
+      }
+    }
+  }
+  // check default value
+  if (value === undefined) {
+    value = getPropDefaultValue(vm, prop, key)
+    // since the default value is a fresh copy,
+    // make sure to observe it.
+    const prevShouldObserve = shouldObserve
+    toggleObserving(true)
+    observe(value)
+    toggleObserving(prevShouldObserve)
+  }
+  if (process.env.NODE_ENV !== 'production') {
+    assertProp(prop, key, value, vm, absent)
+  }
+  return value
+}

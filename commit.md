@@ -442,3 +442,6 @@ netRepair: findId重复4次
 card项目printbox 打印预览窗口  vue父子组件传值 在ie不行。得用原生js来修改img的src，才能展示图片。
 
 Vue.component全局挂载的组件，破坏了 export default new Vue({})
+
+# @media 1920, home浮动遮挡el-footer,  插件BaseUpload, videoCover,  组件s-form.
+数据和图形的分离， 图形小片的组合
