@@ -210,30 +210,6 @@ img图片保持尺寸，同时有背景色。 img {
   background-color: #f8f8f8;
 }
 
-
-.imgs {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-evenly;
-
-  .img-box {
-    display: flex;
-    flex-wrap: wrap;
-    text-align: center;
-    overflow: hidden;
-
-    img {
-      margin: 0 auto;
-    }
-
-    span {
-      // 确保文字处于img下方, 宽度4等分可以设置为25%
-      flex-basis: 100%;
-      // 左右固定，中间自适应可以让中间，flex-grow: 1
-    }
-  }
-}
-
 // 点击使img变色，必须配合外围的overflow
 .click {
   transform: translateY(-60px);
@@ -246,7 +222,12 @@ img图片保持尺寸，同时有背景色。 img {
 水平粘性居中 position: sticky;
 left: 0;
 
-// 换行平均分配
+// 换行平均分配，flex一行不满时justify-content: space-evenly;会分开而不紧凑，这时最好不用它，改用
+// width: 31%; 
+// margin-right: 3%;
+// &:not(:last-child) {
+//   margin-right: 0;
+// }
 .even {
   display: flex;
   justify-content: space-evenly;
@@ -999,3 +980,52 @@ animation 可以通过设置 none 来重置
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+
+@function vw($px) {
+    
+    /*这里是以移动端PSD设计稿 宽为750px，高为1334px为例，所以这里 除以750，以便在使用时，不用去计算倍数， PSD设计稿中的尺寸是多少，我们样式就是多少！！！*/
+ 
+  @return ($px / 750) * 100vw;
+}
+
+// 替换el组件内文字内容
+.el-image .el-image__error {
+  font-size: 0;
+  &::after {
+    font-size: 14px;
+    content: '暂无封面';
+  }
+}
+
+// lib-flexible的rem方案是把一行分为十份，每份为十分之一，所以rootValue应当为设计宽高的十分之一
+// 'postcss-pxtorem': {
+//       rootValue({ file }) {
+//         return file.indexOf('vant') !== -1 ? 37.5 : 75;
+//       },
+//  }
+
+vue的@  alias用法：
+background: url('~@/assets/img/1-body.png') no-repeat
+
+
+图片如果想在底部撑开父元素：
+1. 做子元素背景，这必须得知道after的padding-bottom
+.bg {
+  width: 100%;
+  background: url('~@/assets/img/2-card.svg') no-repeat center;
+  // 铺满必须cover，而且只有一个center
+  background-size: cover;
+  &::after {
+    content: '';
+    display: block;
+    padding-bottom: 36%;
+  }
+}
+2. 图片做img元素绝对定位bottom:0，同时提升1中子元素的 z-index，让该子元素浮在图片上。
+3. 图片做父元素背景，但是必须沉底对齐center bottom，同时不要cover。
+.bg {
+  background: url('~@/assets/img/2-card.svg') no-repeat center bottom !important;
+  width: 100%;
+}
+

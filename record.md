@@ -42,6 +42,7 @@ npm list -g --depth 0 查看 node 安装位置和版本
 npm config get cache // 查看本地缓存
 npm config list
 npm config ls -l 查看所有
+npm config set registry https://registry.npm.taobao.org
 
 npm ls; npm list 查看安装哪些包   npm ls package 或者 npm info package
 

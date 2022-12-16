@@ -568,14 +568,11 @@ function isFunction(v) {
   ].includes(Object.prototype.toString.call(v));
 }
 
-function getVideoCanvas(videoList) {
+// 视频截图封面图
+function getVideoCanvas(videoList, fun, that) {
   var videoCanList = []; // 因为后端返回的视频数组，这里先定义一个空数组
   videoList.forEach(item => {
-    if (!this.isVideo(item.fileType)) {
-      item.cover = item.viewUrl;
-    } else if (item.fileType === 'mp3') {
-      item.cover = require('@/assets/img/error.png');
-    } else {
+    if (isVideo(item.fileType)) {
       // for循环获取到的视频数组
       // 因为是循环处理，这里定义一个promise函数
       var promise = new Promise(reslove => {
@@ -599,29 +596,91 @@ function getVideoCanvas(videoList) {
           function () {
             // 创建画布的宽高属性节点，就是图片的大小，单位PX
             var anw = document.createAttribute('width');
-            anw.nodeValue = 160;
+            let w = video.videoWidth;
+            let h = video.videoHeight;
+            // anw.nodeValue = 160;
+            anw.nodeValue = w;
             var anh = document.createAttribute('height');
-            anh.nodeValue = 90;
+            // anh.nodeValue = 90;
+            anh.nodeValue = h;
+            // console.log(video.videoWidth, video.videoHeight);
             canvas.setAttributeNode(anw);
             canvas.setAttributeNode(anh);
             // 画布渲染
-            ctx.drawImage(video, 0, 0, 160, 90);
+            ctx.drawImage(video, 0, 0, anw.nodeValue, anh.nodeValue);
             // 生成图片
             var base64 = canvas.toDataURL('image/png'); // 这就是封面图片的base64编码
             // 视频结束播放的事件
             video.pause();
-            item.cover = base64;
+            let reg = /^[0-9.]+$/;
+            let duration = reg.test(video.duration)
+              ? moment.utc(video.duration * 1000).format('HH:mm:ss')
+              : '';
+            that &&
+              that.$nextTick(() => {
+                that.$set(item, 'cover', base64);
+                that.$set(item, 'duration', duration);
+              });
+            item.w = w;
+            item.h = h;
             reslove(base64); // promise函数成功的回调
           },
           false
         );
       });
       videoCanList.push(promise); // 这里将每一次promise函数成功回调的结果push进一开始定义的空数组
+    } else if (isAudit(item.fileType)) {
+      item.noCover = true;
+      item.cover = require('@/assets/img/noCover.png');
+    } else {
+      item.cover = item.viewUrl;
     }
   });
   // 通过Promise.all方法等待上面的循环结束这里再执行业务逻辑
-  Promise.all(videoCanList).then(res => {
-    this.fileList = [...this.fileList];
-    console.log(res, videoCanList); // 这里就是每一张视频的封面图
+  Promise.all(videoCanList).then(() => {
+    videoList = [...videoList];
+    fun && fun();
+    // console.log(res); // 这里就是每一张视频的封面图
   });
+}
+function forbidTouch() {
+  // body样式，隐藏滚动条和禁止上滑刷新
+  //   &::-webkit-scrollbar {
+  //   width: 0;
+  // }
+
+  // overscroll-behavior-y: contain;
+
+  // 禁用右键，移动端长按
+  window.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  });
+  // 禁用双指放大
+  document.documentElement.addEventListener(
+    'touchstart',
+    function (event) {
+      if (event.touches.length > 1) {
+        event.preventDefault();
+      }
+    },
+    {
+      passive: false,
+    }
+  );
+
+  // 禁用双击放大
+  var lastTouchEnd = 0;
+  document.documentElement.addEventListener(
+    'touchend',
+    function (event) {
+      var now = Date.now();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    },
+    {
+      passive: false,
+    }
+  );
 }

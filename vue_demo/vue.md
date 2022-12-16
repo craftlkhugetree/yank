@@ -841,3 +841,51 @@ export function validateProp (key,propOptions,propsData,vm) {
   }
   return value
 }
+
+
+# 插件开发：
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lib": "vue-cli-service build --target lib --name base-upload --dest lib packages/index.js"
+    },
+执行npm run lib后，去lib目录执行npm init -y，然后修改生成的package.json，注意每次都得改version。最后npm publish。
+不管有无scoped，style标签里的样式会被打包成一个css文件，插件安装后需要在main.js里单独引入。
+插件就是要提供一个install方法，来给Vue.use(plugin)
+use的源码如下：
+
+Vue.use = function (plugin) {
+  var installedPlugins = (this._installedPlugins || (this._installedPlugins = []));
+  // 防止重复注册插件
+  if (installedPlugins.indexOf(plugin) > -1) {
+    return this
+  }
+  var args = toArray(arguments, 1);
+  // 这里的this是Vue构造函数，把它放在参数的第一个位置，这就是install第一个参数是Vue的原因
+  args.unshift(this);
+  //如果插件中有install方法就执行插件的install方法
+  if (typeof plugin.install === 'function') {
+    plugin.install.apply(plugin, args);
+  // 如果插件是一个方法，就直接执行这个方法
+  } else if (typeof plugin === 'function') {
+    plugin.apply(null, args);
+  }
+  installedPlugins.push(plugin);
+  return this
+};
+
+
+启动服务器的时候，一般会 listen 一个 IP 和端口，等待客户端的连接。如果此时 listen 的是本机的 0.0.0.0 , 那么它表示本机上的所有IPV4地址。
+"serve": "vue-cli-service serve --host 0.0.0.0",
+
+// 替换el组件内文字内容
+.el-image .el-image__error {
+  font-size: 0;
+  &::after{
+    font-size: 14px;
+    content: '暂无封面';
+  }
+}
+
+alias用法
+background: url('~@/assets/img/1-body.png') no-repeat
