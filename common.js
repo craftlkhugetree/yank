@@ -684,3 +684,12 @@ function forbidTouch() {
     }
   );
 }
+
+// 中文字符排序
+this.tableData = tmp.sort((a, b) => {
+  return (
+    typeof a.name === 'string' &&
+    typeof b.name === 'string' &&
+    a.name.localeCompare(b.name, 'zh-Hans-CN')
+  );
+});

@@ -1,3 +1,6 @@
+flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。
+<!-- flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。 -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,20 +11,60 @@
     <style>
       .container {
         display: flex;
+        border: 1px solid black;
+        width: 500px;
+        float: right;
         /* 左右顶格 */
-        justify-content: space-between;
+        /* justify-content: space-between; */
       }
       .items {
-        width: 200px;
+        width: 100px;
         height: 200px;
         background-color: red;
+      }
+      .mid {
+        flex: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .end {
+        flex-direction: row-reverse;
+      }
+      .overspread-height {
+        height: 100vh;
+        width: 500px;
+        border: 1px solid #000;
+        display: flex;
+        flex-direction: column;
+      }
+      .l {
+        height: 300px;
+        border: 1px solid red;
+      }
+      .suit {
+        flex: 1;
       }
     </style>
   </head>
   <body>
+    <div class="overspread-height">
+      <div class="l"></div>
+      <div class="l suit"></div>
+    </div>
     <div class="container">
-      <div class="items"></div>
-      <div class="items"></div>
+      <div class="items">
+        left
+      </div>
+      <div class="mid">
+        ;skdfljksal;dfjks;aldjfasadfsadfasdfsdfasdjf;aaldjfasadfsadfasdfsdfasdjfaldjfasadfsadfasdfsdfasdjfaldjfasadfsadfasdfsdfasdjfaldjfasadfsadfasdfsdfasdjfsdk
+      </div>
+      <div class="items end">
+        right
+        right
+        right
+        right
+      </div>
     </div>
   </body>
 </html>
