@@ -152,3 +152,25 @@ N^3（三次函数）
 极限是c != 0： 这意味着f(N) = θ(g(N))。
 极限是∞ ：这意味着g(N) = o(f(N))。
 极限摆动：二者无关。
+
+
+
+以数组的形式返回字符串参数的所有排列组合：第一位和每一位进行换位轮流依次当老大，然后在把第一位去掉，又循环的把第一位和每一位进行换位轮流依次当老大，直到只剩一个元素的时候我们终止递归!
+function getPlzh(string) {
+    if(string.length == 1) {
+        return [string]
+    } else {
+        let result = []
+        for(let i = 0; i<string.length; i++) {
+            let str = string[i];
+            let params = string.slice(0,i) + string.slice(i+1);
+            let res  = getPlzh(params);
+            res.map(item => {
+               result.push(str + item);
+            })
+        }
+        return result;
+    }
+}
+let array = getPlzh('abcd');
+console.log(array)

@@ -114,3 +114,4 @@ h('img', { attrs: { src: require('./image.png') }})
 3. 数组存储的元素比较多，不可能为每个数组元素都设置 getter/setter;
 4. 无法拦截数组原生方法如 push、pop、shift、unshift 等的调用，最终仍需 重写/增强 原生方法。
 
+typescript 类型推导及其内部api

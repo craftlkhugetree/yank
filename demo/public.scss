@@ -1029,3 +1029,47 @@ background: url('~@/assets/img/1-body.png') no-repeat
   width: 100%;
 }
 4. flex-direction: column; 子元素flex: 1;全部填满
+
+
+map和area标签
+        map用于定义一个客户端图像映射。图像映射（image-map）指带有可点击区域的一幅图像。area定义map的可点击区域。map和area同时出现。img标签可以指定usermap属性，关联map。
+
+        area有几种类型，分别是矩形、圆形和多边形。在我们这个例子中，可以通过多边形定义热区。多边形边界的坐标可以通过绘图软件获取
+
+        话不多说，直接上简易demo，重点还是在coords坐标的获取,coords的值是4个，分别是由，号隔开。前两个表示起始点的坐标，我们在浏览器页面中坐标系的0点是在我们的左上角，后面两个是结束点的坐标，也就是起始点对角的坐标点。
+
+
+<div class="box">
+    <img src="./demo.png" usermap="#demo-map"/>
+    <map name="demo-map">
+      <area shape="polygon" coords="54,122,236,75,252,102,262,131,268,162,54,122" href="test()"/>
+    </map>
+</div>
+<script>
+    function test() {
+        console.log('test')
+    }
+</script>
+————————————————
+原文链接：https://blog.csdn.net/STRIVE_LC/article/details/120792265
+
+如何判断图片即将进入可视区域
+方案1：clientHeight+scroolTop>offsetTop
+document.addEventListener('scroll', () => {
+            const clientH = document.documentElement.clientHeight//获取屏幕可视区域的高度
+            const scrollT = document.documentElement.scrollTop//获取浏览器窗口顶部与文档顶部之间的距离，也就是滚动条滚动的距离
+            const offsetTop = document.getElementById('yellow').offsetTop//获取元素相对于文档顶部的高度
+            if (clientH + scrollT > offsetTop) {
+                console.log('进入可视区域啦！！')
+            }
+        })
+方案2：下滑过程中bound.top会越来越小
+<script>
+        document.addEventListener('scroll', () => {
+            var bound = document.getElementById('yellow').getBoundingClientRect(); ////获取元素的大小及位置
+            var clientHeight = window.innerHeight;
+            if (bound.top <= clientHeight) {
+                console.log('进入可视区域啦')
+            }
+        })
+    </script>

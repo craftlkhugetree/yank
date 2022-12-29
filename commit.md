@@ -1,3 +1,4 @@
+打印机 160.255.1.19
 # Project
 https://z.angke.com.cn/    账户  liken   密码  Liken123
 jenkins: liken 123456 http://160.255.0.64:10086/

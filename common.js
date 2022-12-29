@@ -9,8 +9,128 @@ export default {
   // 二维数组导出Excel
   exportExcel(arr, fileName) {
     let ws = XLSX.utils.aoa_to_sheet(arr);
+    var sheet = XLSX.utils.json_to_sheet(arr, {
+      skipHeader: true,
+    });
+
+    //第一次使用的朋友可以添加一句输出看看sheet的数据结构
+    //console.log(sheet)
+
+    //遍历每个格子
+    for (const key in sheet) {
+      if (key === '!ref') continue;
+      //给每个格子修改样式
+      sheet[key].s = {
+        border: {
+          //添加边框
+          bottom: {
+            style: 'thin',
+            color: '000000',
+          },
+          left: {
+            style: 'thin',
+            color: '000000',
+          },
+          right: {
+            style: 'thin',
+            color: '000000',
+          },
+          top: {
+            style: 'thin',
+            color: '000000',
+          },
+        },
+        //字体水平居中、垂直居中、自动换行、缩进
+        alignment: {
+          horizontal: 'center', //水平居中
+          vertical: 'center',
+          wrapText: 1,
+          indent: 0,
+        },
+        //字体类型、大小、是否加粗
+        font: {
+          //字体
+          name: '等线',
+          sz: 9,
+          bold: false,
+        },
+      };
+      //给特定格子（带'1'的，即首行 标题）添加样式，下面同理
+      if (key.replace(/[^0-9]/gi, '') === '1') {
+        sheet[key].s = {
+          ...sheet[key].s,
+          fill: {
+            //背景色
+            fgColor: { rgb: '9e9e9e' },
+            // fgColor: { rgb: 'EBF1DE' },
+          },
+          font: {
+            //覆盖字体
+            name: '等线',
+            sz: 11,
+            bold: true,
+          },
+        };
+      }
+      // if (key === 'A1') {
+      //   sheet[key].s = {
+      //     ...sheet[key].s,
+      //     fill: {
+      //       //背景色
+      //       fgColor: { rgb: 'E4DFEC' },
+      //     },
+      //   };
+      // }
+      // if (
+      //   key === 'C1' ||
+      //   key === 'D1' ||
+      //   key === 'E1' ||
+      //   key === 'F1' ||
+      //   key === 'G1' ||
+      //   key === 'H1'
+      // ) {
+      //   sheet[key].s = {
+      //     ...sheet[key].s,
+      //     fill: {
+      //       //背景色
+      //       fgColor: { rgb: 'FDE9D9' },
+      //     },
+      //   };
+      // }
+    }
+    //列宽
+    let colsP = [
+      {
+        wch: 18.11, //A
+      },
+      {
+        wch: 12.67, //B
+      },
+      {
+        wch: 8.11, //C
+      },
+      {
+        wch: 8.11, //D
+      },
+      {
+        wch: 8.11, //E
+      },
+      {
+        wch: 6.78, //F
+      },
+      {
+        wch: 8.11, //G
+      },
+      {
+        wch: 8.11, //H
+      },
+    ];
+    sheet['!cols'] = colsP;
+
+    console.log(sheet, ws);
     let wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws);
+    // XLSX.utils.book_append_sheet(wb, ws);
+    XLSX.utils.book_append_sheet(wb, sheet);
     XLSX.writeFile(wb, fileName);
   },
   // 导入方法sheet_to_json, title为excel第一行表头，key对应的属性字段，callback为保存接口。
@@ -693,3 +813,30 @@ this.tableData = tmp.sort((a, b) => {
     a.name.localeCompare(b.name, 'zh-Hans-CN')
   );
 });
+
+// js控制全屏，必须是主动触发，比如按按钮
+  function requestFullScreen() {
+    let element = window.document.documentElement;
+    let requestMethod =
+      element.requestFullScreen || //W3C
+      element.webkitRequestFullScreen || //Chrome
+      element.mozRequestFullScreen || //FireFox
+      element.msRequestFullScreen; //IE11
+    if (requestMethod) {
+      // console.log(element, element.webkitRequestFullScreen);
+      requestMethod.call(element, { navigationUI: 'hide' });
+      // element.requestMethod({ navigationUI: 'hide' });
+    } else if (typeof window.ActiveXObject !== 'undefined') {
+      //for Internet Explorer
+      let wscript = new ActiveXObject('WScript.Shell');
+      if (wscript !== null) {
+        wscript.SendKeys('{F11}');
+      }
+    }
+};
+    window.onresize = () => {
+      // console.log(this.isFull, document.fullscreenElement, document.fullscreen);
+      if (!document.fullscreen) {
+        this.isFull = true;
+      }
+    };

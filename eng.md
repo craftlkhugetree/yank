@@ -88,6 +88,8 @@ intact 完整的
 
 12. propagate 传播  propagation
 
+13. ROI: return on investment
+
 减肥=减脂≠减重
 健身先健脑,减肥先增智
 

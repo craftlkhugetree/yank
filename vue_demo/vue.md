@@ -877,6 +877,7 @@ Vue.use = function (plugin) {
 
 启动服务器的时候，一般会 listen 一个 IP 和端口，等待客户端的连接。如果此时 listen 的是本机的 0.0.0.0 , 那么它表示本机上的所有IPV4地址。
 "serve": "vue-cli-service serve --host 0.0.0.0",
+或者在config.js里改为  dev: {host: '0.0.0.0'}; 这样localhost和ip都能访问
 
 // 替换el组件内文字内容
 .el-image .el-image__error {

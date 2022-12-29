@@ -60,7 +60,8 @@ BMap
 打印预览this.WebBrowser.ExecWB(7, 1);   汉王，<object> @media screen/print 
 
 # 特藏  nangongcheng
-视频封面截图, 截图叠加播放按钮; g-form; g-table; 暂无封面样式；文件上传进度条。 全局删除popup
+rem，scss；视频封面截图, 截图叠加播放按钮; g-form; g-table; 暂无封面样式；文件上传进度条。 全局删除popup
+https://mp.weixin.qq.com/s/huzCTjMv8VcsTQ8_UjCv1g
 
 # moyou 
 g-table g-form

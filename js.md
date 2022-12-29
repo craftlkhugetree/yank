@@ -1,3 +1,7 @@
+# 划线改驼峰
+function turnName(str){
+    return str.replace(/-[a-zA-Z]/g,match=>match.replace('-','').toUpperCase())
+}
 # 深度拷贝
 1、用new obj.constructor()构造函数新建一个空的对象，而不是使用{}或者[],这样可以保持原形链的继承；
 2、用obj.hasOwnProperty(key)来判断属性是否来自原型链上，因为for..in..也会遍历其原型链上的可枚举属性。
