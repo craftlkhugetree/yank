@@ -1,4 +1,8 @@
 打印机 160.255.1.19
+服务接口认证信息
+APPID：1b63f344
+APISecret：ODMyMTFlNDhlMWRjMzg2NjQxMzQ4ZjRi
+APIKey：1fe443319e96410ffb4f9989ed7cafdc
 # Project
 https://z.angke.com.cn/    账户  liken   密码  Liken123
 jenkins: liken 123456 http://160.255.0.64:10086/

@@ -172,3 +172,33 @@ let stu: Dukey = {
   sex: 'man'
 }
 链接：https://www.jianshu.com/p/fdd867125af5
+
+
+# ts类型变量的方式有三种，分别为 type、interface、enum，他们都相当于 JS 中的 const，一旦定义就不可改变，三者的区别是：
+enum：仅用来定义枚举类型；
+interface：可以用来定义函数、对象、类；
+type：使用绝大多数类型，例如普通的值、对象、函数、数组、元组等。
+
+# TS 的基础类型包括了：
+布尔：boolean
+数字：number
+字符串：string
+数组：number[] / Array<number>
+元组：[number, string]
+枚举：enum Color{ RED, GREEN, BLUE }
+any
+void
+null、undefined
+never
+object
+
+类型是有父子关系的，子类型的值可以赋值给父类型，但是父类型的值是不能够赋值给子类型的。例如：
+type ParentType = 1 | 2 | string
+type SubType = 1
+
+let parentData: ParentType = 2;
+let subData: SubType = 1;
+
+subData = parentData; // ❌ 父类型不能赋值给子类型的值
+parentData = subData; // 🆗
+

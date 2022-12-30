@@ -890,3 +890,37 @@ Vue.use = function (plugin) {
 
 alias用法
 background: url('~@/assets/img/1-body.png') no-repeat
+
+// 问题：在 vue 项目中，使用了 keep-alive 后，可以缓存组件。但在实际使用中，会经常出现一个场景，那就是 列表-详情 的页面，从列表跳转到详情页后，再返回列表页时，我们就会期望列表页是缓存了的；但是如果是切换到其他列表页后再返回该列表页，我们就期望它重新获取数据；
+
+// 方法：要解决这个问题，我们需要用一个标识符来判断当前页面到底是从详情页返回的还是重新进入的；这里我使用的是在路由里面的 meta 增加一个属性来控制：
+const routes = [
+	{
+		name: 'xxx',
+		path: 'xxxx',
+		component: component,
+		meta: {
+			keepAlive: true,
+			isPush: true       // 用于标识是否为push进入该页面
+		}
+	}
+]
+// 我们在这里定义了 isPush 属性来控制，这里我们的思路是默认都是push进来的，去详情页时就将其设置为false，然后在activated里面判断如果该值为 true 就重新刷新一下，为false就将该值重新变为true。代码如下：
+
+// 去详情页面的方法
+goDetail(){
+	this.$route.meta.isPush = false;
+	this.$router.push('detail');
+},
+
+// 再次激活的钩子，没有被<keep-alive>包裹的话，activated是不起作用的
+acitvated(){
+	// 如果isPush为true，证明不是详情页返回的，否则就是从详情页返回的
+	if(this.$route.meta.isPush){
+		// 重置这个页面的信息
+		this.resetTable()
+	}else{
+		// 重置isPush的状态
+		this.$route.meta.isPush = true;
+	}
+}

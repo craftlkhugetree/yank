@@ -11,6 +11,9 @@ BaseUpload.vue         formData.append('file',this.fileList[i]);  isGet;   isRep
 # 座位预约：
 table棋盘, 鼠标框选，是否按下shift键。
 移动端非微信扫码 qrcodeReader.vue
+    "voice-input-button2": "^1.1.9",
+	 "js-audio-recorder": "^1.0.7",
+https://blog.csdn.net/Zyw00_/article/details/125523606
 
 # 白马：
 public.scss公共样式。	移动端style.css  icomoon修改底色。 transform原图到overflow:hidden，再改变图片底色。
