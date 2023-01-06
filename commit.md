@@ -415,7 +415,11 @@ feat: echarts; vue-count-to; xlsx。api: resgroupItemsFillRes; statistics.js。 
    专家捐赠管理 path: '/tc/specialSponser',
    著作管理 path: '/tc/famous',
    古籍管理 path: '/tc/old',
-# 恢复sidebar  menu
+
+# 智慧工厂
+卸车单录单 el-icon-edit
+  "path": "/recordUnload",
+# 恢复sidebar // this.$router.push(this.urls[0]);
 
    // pc端判断是学生、白马办还是后勤(另一处在实习审批)
           const repair = this.menuData.find(m => '在线报修' === m.NAME) || {};

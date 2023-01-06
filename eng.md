@@ -90,6 +90,9 @@ intact 完整的
 
 13. ROI: return on investment
 
+14. inference 推论 infer
+implicitly 含蓄、暗中地
+
 减肥=减脂≠减重
 健身先健脑,减肥先增智
 

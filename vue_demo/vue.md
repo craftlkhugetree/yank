@@ -1,6 +1,8 @@
-meta就是元
-meta data就是元数据，用来描述数据的数据；如一个数据1.70，我们并不知道它代表什么，但是身高：1.70我们就知道1.70表示身高，而身高就是元数据，用来描述数据1.70
+meta 就是元
+meta data 就是元数据，用来描述数据的数据；如一个数据 1.70，我们并不知道它代表什么，但是身高：1.70 我们就知道 1.70 表示身高，而身高就是元数据，用来描述数据 1.70
+
 # vant
+
 预览图片：
 import { ImagePreview } from 'vant';
 ImagePreview({images: [url], showIndex: false});
@@ -12,17 +14,17 @@ ImagePreview({images: [url], showIndex: false});
 </van-overlay>
 
 调取摄像头：
-<van-uploader 
-	v-model="fileListBack" 
-	:after-read="onReadIdCardBack" 
-	:max-size="5012 * 1024" 
-	:before-delete='beforeDeleteBack' 
-	upload-text="身份证国徽面" 
-	multiple 
-	:max-count="1" 
-	@oversize="onOversize" 
-	capture="camera"  
-	accept="image/*"
+<van-uploader
+v-model="fileListBack"
+:after-read="onReadIdCardBack"
+:max-size="5012 _ 1024"
+:before-delete='beforeDeleteBack'
+upload-text="身份证国徽面"
+multiple
+:max-count="1"
+@oversize="onOversize"
+capture="camera"  
+ accept="image/_"
 />
 
 # Vue
@@ -32,7 +34,7 @@ vue create 项目名
 vue -V 全局 vue-cli 的版本
 npm list vue 当前项目与 vue 相关的依赖
 
-vue2 基于Object.defineProperty  ，但是他有很多缺陷，比如 无法监听数组基于下标的修改，不支持 Map、Set、WeakMap 和 WeakSet等缺陷 ，
+vue2 基于 Object.defineProperty ，但是他有很多缺陷，比如 无法监听数组基于下标的修改，不支持 Map、Set、WeakMap 和 WeakSet 等缺陷 ，
 区分响应式和双向绑定
 响应式一般指：数据改变驱动视图改变，是单向的
 双向绑定：是双向的，视图反过来也可以改变数据。也就是说响应式是双向绑定的一环
@@ -51,7 +53,7 @@ destroyed -> onUnmounted
 errorCaptured -> onErrorCaptured
 ————————————————
 通过 .native 修饰符来处理组件标签上的原生事件
-如果需要在子组件的dom上绑定原生的事件，而不是一个自定义事件，这时，可以通过 Vue 提供的修饰符 .native 来告知绑定的是原生事件。
+如果需要在子组件的 dom 上绑定原生的事件，而不是一个自定义事件，这时，可以通过 Vue 提供的修饰符 .native 来告知绑定的是原生事件。
 
 el-input 内@keyup.enter.native="doLogin" 按回车登录。
 
@@ -74,7 +76,7 @@ emits: ['update:count']
 props:['text','num','numModifiers'],
 emits:['update:text','update:num'],
 this.$emit('update:num',val)
-.sync 可以绑定多个父组件的变量, v-model只能一个
+.sync 可以绑定多个父组件的变量, v-model 只能一个
 
 '@': resolve('src'),
 img: "@/../static/images/quanbu",
@@ -137,6 +139,7 @@ cb();
 复杂属性的设置 <el-form-item  :prop="`attrList[${index}].attrv`">
 单个属性的校验 this.$refs['form'].validateField('baseList', valid => {})
 表单中的输入框无法输入，则要 @input=$forceUpdate() ！关键是 form 里没有预先定义这个属性！
+this.$refs.editForm.resetFields();
 
 el-input 嵌套层级太多导致无法输入时（比如在 el-form-item 中），可以使用 @input=$forceUpdate //强制刷新
 
@@ -204,10 +207,10 @@ import elImageViewer from "element-ui/packages/image/src/image-viewer";
             :on-close="closeViewer"
             :url-list="srcList"
           ></el-image-viewer>
-或者main.js里
+或者 main.js 里
 import ElImageViewer from "element-ui/packages/image/src/image-viewer";
 Vue.component('el-image-viewer', ElImageViewer)
-移动端使用el及其样式：
+移动端使用 el 及其样式：
 import {Form, Button, Input, FormItem} from 'element-ui'
 import "element-ui/lib/theme-chalk/index.css";
 Vue.use(Form).use(Button).use(Input).use(FormItem)
@@ -307,67 +310,68 @@ deep: true // 引用类型数据，需要进行深度监听模式，不然无法
 
 同一组件在路由变化时不刷新：
 watch: {
-  '$route.path'(o, n) {
-    // console.log(o, n);
-    this.getList(1)
-  }
+'$route.path'(o, n) {
+// console.log(o, n);
+this.getList(1)
+}
 },
 
 按下 ENTER 时，进入下一个表单
 @keyup.enter="$event.target.nextElementSibling.focus()"
 
-
 <el-select
-        v-model="form.projectname"
-        filterable
-        remote
-        placeholder="请输入或选择"
-        :remote-method="remoteMethodProject"
-        @change="dataFilterProject"
-        :loading="selectLoading"
-        style="width: 100%"
-      >
-        <el-option
+v-model="form.projectname"
+filterable
+remote
+placeholder="请输入或选择"
+:remote-method="remoteMethodProject"
+@change="dataFilterProject"
+:loading="selectLoading"
+style="width: 100%" >
+<el-option
           v-for="item in projectList"
           :label="item.xmmc"
           :value="JSON.stringify(item)"
           :key="item.id"
         ></el-option>
-      </el-select>
-    //搜索项目名称
-    remoteMethodProject(query) {
-      this.selectLoading = true;
-      this.projectList = [];
-      if (query !== "") {
-        this.common
-          .getProjectList(query, 1, 10)
-          .then(res => {
-            console.log(res);
-            this.selectLoading = false;
-            if (res.total == 0) {
-              this.projectList.push({ xmmc: query + "-(新增)" });
-            } else {
-              this.projectList = res.items;
-            }
-          })
-          .catch(err => {
-            this.selectLoading = false;
-            this.projectList = [];
-          });
-      } else {
-        this.selectLoading = false;
-        this.projectList = [];
-      }
-    },
-# assets与static文件夹的区别
-assets：在项目编译的过程中会被webpack处理解析为模块依赖，只支持相对路径的形式，如< img src=”./logo.png”>和background:url(./logo.png),”./logo.png”是相对资源路径，将有webpack解析为模块依赖 
+</el-select>
+//搜索项目名称
+remoteMethodProject(query) {
+this.selectLoading = true;
+this.projectList = [];
+if (query !== "") {
+this.common
+.getProjectList(query, 1, 10)
+.then(res => {
+console.log(res);
+this.selectLoading = false;
+if (res.total == 0) {
+this.projectList.push({ xmmc: query + "-(新增)" });
+} else {
+this.projectList = res.items;
+}
+})
+.catch(err => {
+this.selectLoading = false;
+this.projectList = [];
+});
+} else {
+this.selectLoading = false;
+this.projectList = [];
+}
+},
 
-static：在这个目录下文件不会被被webpack解析。他会直接被复制到最终的打包目录(默认是dist/static)下。必须使用绝对路径引用这些文件，这是通过config.js文件中的build.assetsPublic和build.assertsSubDirectory链接来确定的。任何放在static/中文件需要以绝对路径的形式引用：/static[filename] 
-根据webpack的特性，总的来说就是static放不会变动的文件，asserts放可能会变动的文件
+# assets 与 static 文件夹的区别
 
-:src=变量  对于弹窗内的图片，必须在js代码里先require('相对路径');  或者在config.js里设置绝对路径作为前缀。  页面上的图片可以在html里写require()。
+assets：在项目编译的过程中会被 webpack 处理解析为模块依赖，只支持相对路径的形式，如< img src=”./logo.png”>和 background:url(./logo.png),”./logo.png”是相对资源路径，将有 webpack 解析为模块依赖
+
+static：在这个目录下文件不会被被 webpack 解析。他会直接被复制到最终的打包目录(默认是 dist/static)下。必须使用绝对路径引用这些文件，这是通过 config.js 文件中的 build.assetsPublic 和 build.assertsSubDirectory 链接来确定的。任何放在 static/中文件需要以绝对路径的形式引用：/static[filename]
+根据 webpack 的特性，总的来说就是 static 放不会变动的文件，asserts 放可能会变动的文件
+
+:src=变量 对于弹窗内的图片，必须在 js 代码里先 require('相对路径'); 或者在 config.js 里设置绝对路径作为前缀。 页面上的图片可以在 html 里写 require()。
 
 # vue2 源码
+
         class Observer {
             defineReactive(data) {
                 if (!data || typeof data != 'object') return
@@ -427,17 +431,18 @@ static：在这个目录下文件不会被被webpack解析。他会直接被复�
             }
             get() {
                 Dep.target = this //缓存当前的this，this是一个watcher对象
-// 这段是精髓，通过获取对应属性的值，调用了被监听数据的get方法，由此调用了dep.depend()方法。
-// 由于Dep.target是存在的，于是往Dep实例中的subs数组添加了一个依赖，也就是watcher对象。
-                const value = this.vm.data[this.exp] 
-                Dep.target = null
-                return value
-            }
-            update() { //在data发生改变的时候，监听数据的set方法被调用，dep实例调用notify方法，通知subs数组中的每一个watcher调用update方法，update方法会调用回调函数，更新元素的内容。
-                const value = this.vm.data[this.exp]
-                this.cb.call(this.vm,value)
-            }
-        }
+
+// 这段是精髓，通过获取对应属性的值，调用了被监听数据的 get 方法，由此调用了 dep.depend()方法。
+// 由于 Dep.target 是存在的，于是往 Dep 实例中的 subs 数组添加了一个依赖，也就是 watcher 对象。
+const value = this.vm.data[this.exp]
+Dep.target = null
+return value
+}
+update() { //在 data 发生改变的时候，监听数据的 set 方法被调用，dep 实例调用 notify 方法，通知 subs 数组中的每一个 watcher 调用 update 方法，update 方法会调用回调函数，更新元素的内容。
+const value = this.vm.data[this.exp]
+this.cb.call(this.vm,value)
+}
+}
 
         class Vue {
             constructor(options = {}) {
@@ -453,16 +458,18 @@ static：在这个目录下文件不会被被webpack解析。他会直接被复�
                 return this
             }
         }
-* 事实上，window.target或者Dep.target其实就是一个watcher对象，我们在dep实例中收集watcher对象的目的就是在数据发生更新时，能够调用已经收集到的watcher对象的update方法来更新视图。
-1）初始化过程：
-实例化Vue——调用defineReactive方法监听对象中的数据——Watcher构造函数被调用——触发被监听数据的get方法——Dep收集到依赖。
-2）数据被修改后的过程：
-数据被修改——触发被监听数据的set方法——调用dep.notify方法——触发已经收集到subs数组中的每一个依赖的update方法（定义在watcher中）—— 视图更新。
 
-# 当对data上的对象进行修改值的时候会触发它的setter，那么取值的时候自然就会触发getter事件，所以我们只要在最开始进行一次render，那么所有被渲染所依赖的data中的数据就会被getter收集到Dep的subs中去。在对data中的数据进行修改的时候setter只会触发Dep的subs的函数。
-# 首先通过一次渲染操作触发Data的getter（这里保证只有视图中需要被用到的data才会触发getter）进行依赖收集，这时候其实Watcher与data可以看成一种被绑定的状态（实际上是data的闭包中有一个Deps订阅者，在修改的时候会通知所有的Watcher观察者），在data发生变化的时候会触发它的setter，setter通知Watcher，Watcher进行回调通知组件重新渲染的函数，之后根据diff算法来决定是否发生视图的更新。
+- 事实上，window.target 或者 Dep.target 其实就是一个 watcher 对象，我们在 dep 实例中收集 watcher 对象的目的就是在数据发生更新时，能够调用已经收集到的 watcher 对象的 update 方法来更新视图。
+  1）初始化过程：
+  实例化 Vue——调用 defineReactive 方法监听对象中的数据——Watcher 构造函数被调用——触发被监听数据的 get 方法——Dep 收集到依赖。
+  2）数据被修改后的过程：
+  数据被修改——触发被监听数据的 set 方法——调用 dep.notify 方法——触发已经收集到 subs 数组中的每一个依赖的 update 方法（定义在 watcher 中）—— 视图更新。
 
-Vue在初始化组件数据时，在生命周期的beforeCreate与created钩子函数之间实现了对data、props、computed、methods、events以及watch的处理。
+# 当对 data 上的对象进行修改值的时候会触发它的 setter，那么取值的时候自然就会触发 getter 事件，所以我们只要在最开始进行一次 render，那么所有被渲染所依赖的 data 中的数据就会被 getter 收集到 Dep 的 subs 中去。在对 data 中的数据进行修改的时候 setter 只会触发 Dep 的 subs 的函数。
+
+# 首先通过一次渲染操作触发 Data 的 getter（这里保证只有视图中需要被用到的 data 才会触发 getter）进行依赖收集，这时候其实 Watcher 与 data 可以看成一种被绑定的状态（实际上是 data 的闭包中有一个 Deps 订阅者，在修改的时候会通知所有的 Watcher 观察者），在 data 发生变化的时候会触发它的 setter，setter 通知 Watcher，Watcher 进行回调通知组件重新渲染的函数，之后根据 diff 算法来决定是否发生视图的更新。
+
+Vue 在初始化组件数据时，在生命周期的 beforeCreate 与 created 钩子函数之间实现了对 data、props、computed、methods、events 以及 watch 的处理。
 
 JS 的 event loop 执行时会区分 task 和 microtask，引擎在每个 task 执行完毕，从队列中取下一个 task 来执行之前，会先执行完所有 microtask 队列中的 microtask。
 setTimeout 回调会被分配到一个新的 task 中执行，而 Promise 的 resolver、MutationObserver 的回调都会被安排到一个新的 microtask 中执行，会比 setTimeout 产生的 task 先执行。
@@ -473,31 +480,34 @@ setTimeout 回调会被分配到一个新的 task 中执行，而 Promise 的 re
 反之如果新建一个 task 来做数据更新，那么渲染就会进行两次。
 
 # vue3
-Proxy不能代理原始值类型，@vue/reactivity 提供了一个Ref对象，通过代理内部的.value属性来实现。在使用Ref对象时，需要显示指明.value属性。ref本质也是reactive，ref(obj)等价于reactive({value: obj})
 
-在模板中使用ref的值，不用通过.value获取
-在js中使用ref的值，必须通过.value获取
+vue3 computed.value 才是函数： isAudit.value(item.fileType)
 
-ref和reactive都属于递归监听，也就是数据的每一层都是响应式的，如果数据量比较大，非常消耗性能，非递归监听只会监听数据的第一层。
-shallowRef定义的数据，只有第一层是响应式的，即只有在更改.value的时候才能实现响应式
-注意：shallowReactive没有类似triggerRef()的方法
+Proxy 不能代理原始值类型，@vue/reactivity 提供了一个 Ref 对象，通过代理内部的.value 属性来实现。在使用 Ref 对象时，需要显示指明.value 属性。ref 本质也是 reactive，ref(obj)等价于 reactive({value: obj})
 
-toRaw的出现是解决什么问题呢？
-有些时候我们不希望数据进行响应式实时更新，可以通过toRaw获取ref或reactive引用的原始数据，通过修改原始数据，不会造成界面的更新，只有通过修改ref和reactive包装后的数据时才会发生界面响应式变化。
+在模板中使用 ref 的值，不用通过.value 获取
+在 js 中使用 ref 的值，必须通过.value 获取
+
+ref 和 reactive 都属于递归监听，也就是数据的每一层都是响应式的，如果数据量比较大，非常消耗性能，非递归监听只会监听数据的第一层。
+shallowRef 定义的数据，只有第一层是响应式的，即只有在更改.value 的时候才能实现响应式
+注意：shallowReactive 没有类似 triggerRef()的方法
+
+toRaw 的出现是解决什么问题呢？
+有些时候我们不希望数据进行响应式实时更新，可以通过 toRaw 获取 ref 或 reactive 引用的原始数据，通过修改原始数据，不会造成界面的更新，只有通过修改 ref 和 reactive 包装后的数据时才会发生界面响应式变化。
 let state = reactive(obj1);
-//通过toRaw方法获取到原始数据，其实是获取到obj1的内存地址，obj2和obj1是完全相等的
+//通过 toRaw 方法获取到原始数据，其实是获取到 obj1 的内存地址，obj2 和 obj1 是完全相等的
 let obj2 = toRaw(state)
 console.log(obj1 === obj2); // true
-那直接使用obj1来修改数据不就行了吗？可关键是我们在使用reactive定义数据时一般不会先定义一个obj1，再将他传给reactive，都是直接在reactive中写数据的。
+那直接使用 obj1 来修改数据不就行了吗？可关键是我们在使用 reactive 定义数据时一般不会先定义一个 obj1，再将他传给 reactive，都是直接在 reactive 中写数据的。
 
-当ref数据作为props传递给子组件的时候，在子组件里需要使用toRef或者toRefs建立引用，否则数据不是响应式的，在子组件里修改这个ref，会同时修改作为props传入的ref。
-toRef只能处理对象中一个属性，而toRefs是把这个对象的所有属性创建成多个ref对象。
+当 ref 数据作为 props 传递给子组件的时候，在子组件里需要使用 toRef 或者 toRefs 建立引用，否则数据不是响应式的，在子组件里修改这个 ref，会同时修改作为 props 传入的 ref。
+toRef 只能处理对象中一个属性，而 toRefs 是把这个对象的所有属性创建成多个 ref 对象。
 
-只有以 VUE_APP_ 开头的变量会被 webpack.DefinePlugin 静态嵌入到客户端侧的包中。你可以在应用的代码中这样访问它们：
+只有以 VUE*APP* 开头的变量会被 webpack.DefinePlugin 静态嵌入到客户端侧的包中。你可以在应用的代码中这样访问它们：
 console.log(process.env.VUE_APP_SECRET)
 在构建过程中，process.env.VUE_APP_SECRET 将会被相应的值所取代。在 VUE_APP_SECRET=secret 的情况下，它会被替换为 "secret"。
 
-除了 VUE_APP_* 变量之外，在你的应用代码中始终可用的还有两个特殊的变量：
+除了 VUE*APP*\* 变量之外，在你的应用代码中始终可用的还有两个特殊的变量：
 
 NODE_ENV - 会是 "development"、"production" 或 "test" 中的一个。具体的值取决于应用运行的模式。
 BASE_URL - 会和 vue.config.js 中的 publicPath 选项相符，即你的应用会部署到的基础路径。
@@ -511,69 +521,72 @@ public/index.html 文件是一个会被 html-webpack-plugin 处理的模板。�
 <%- VALUE %> 用来做 HTML 转义插值；
 <% expression %> 用来描述 JavaScript 流程控制。
 除了被 html-webpack-plugin 暴露的默认值之外，所有客户端环境变量也可以直接使用。例如，BASE_URL 的用法：
+
 <link rel="icon" href="<%= BASE_URL %>favicon.ico">
 
 https://cli.vuejs.org/zh/guide/html-and-static-assets.html
 当 prefetch 插件被禁用时，你可以通过 webpack 的内联注释手动选定要提前获取的代码区块：
 
-import(/* webpackPrefetch: true */ './someAsyncComponent.vue')
+import(/_ webpackPrefetch: true _/ './someAsyncComponent.vue')
 Prefetch 链接将会消耗带宽。如果你的应用很大且有很多 async chunk，而用户主要使用的是对带宽较敏感的移动端，那么你可能需要关掉 prefetch 链接并手动选择要提前获取的代码区块。
 
 // fetch.js 封装组合式异步函数，组合式函数约定用驼峰命名法命名，并以“use”作为开头。
 import { ref, isRef, unref, watchEffect } from 'vue'
 export function useFetch(url) {
-  const data = ref(null)
-  const error = ref(null)
+const data = ref(null)
+const error = ref(null)
 
-  function doFetch() {
-    // 在请求之前重设状态...
-    data.value = null
-    error.value = null
-    // unref() 解包可能为 ref 的值
-    fetch(unref(url))
-      .then((res) => res.json())
-      .then((json) => (data.value = json))
-      .catch((err) => (error.value = err))
-  }
-
-  if (isRef(url)) {
-    // 若输入的 URL 是一个 ref，那么启动一个响应式的请求
-    watchEffect(doFetch)
-  } else {
-    // 否则只请求一次
-    // 避免监听器的额外开销
-    doFetch()
-  }
-  return { data, error }
+function doFetch() {
+// 在请求之前重设状态...
+data.value = null
+error.value = null
+// unref() 解包可能为 ref 的值
+fetch(unref(url))
+.then((res) => res.json())
+.then((json) => (data.value = json))
+.catch((err) => (error.value = err))
 }
 
-Tips：如果只有setup方法的话，可以直接在defineComponent中传入setup函数： setup() {} 或 () => {}
+if (isRef(url)) {
+// 若输入的 URL 是一个 ref，那么启动一个响应式的请求
+watchEffect(doFetch)
+} else {
+// 否则只请求一次
+// 避免监听器的额外开销
+doFetch()
+}
+return { data, error }
+}
 
-# reactive使用interface
+Tips：如果只有 setup 方法的话，可以直接在 defineComponent 中传入 setup 函数： setup() {} 或 () => {}
+
+# reactive 使用 interface
+
 import { defineComponent, reactive } from 'vue'
 
 interface Student {
-  name: string
-  class?: string
-  age: number
+name: string
+class?: string
+age: number
 }
 
 export default defineComponent({
-  name: 'HelloWorld',
-  setup() {
-    const student = reactive<Student>({ name: '阿勇', age: 16 })
-    // or
-    const student: Student = reactive({ name: '阿勇', age: 16 })
-    // or
-    const student = reactive({ name: '阿勇', age: 16, class: 'cs' }) as Student
-  }
+name: 'HelloWorld',
+setup() {
+const student = reactive<Student>({ name: '阿勇', age: 16 })
+// or
+const student: Student = reactive({ name: '阿勇', age: 16 })
+// or
+const student = reactive({ name: '阿勇', age: 16, class: 'cs' }) as Student
+}
 })
 
 # vue3 this
+
 import {getCurrentInstance} from vue-router;
 setup(){
-​	const {proxy} from getCurrentInstance;
- proxy.$router.push()
+​ const {proxy} from getCurrentInstance;
+proxy.$router.push()
 }
 
 import { getCurrentInstance, ComponentInternalInstance } from "vue";
@@ -585,21 +598,26 @@ app.provide('name','xianyu')
 
 import {inject} from 'vue'
 setup(){
-	const name = inject('name')
+const name = inject('name')
 }
 
-#  v-bind="$attrs" v-on="$listeners"
+# v-bind="$attrs" v-on="$listeners"
+
 <!-- $attrs property 包含了传递给一个组件的 attribute 名和 attribute 值， -->
-用在 父-子-孙 三重组件中被子调用的孙， 使得孙组件可以获得子组件props中没有继承的父属性，可以触发父组件方法。
-# 『单向数据流』总结起来其实也就8个字：『数据向下，事件向上』。
 
-# 组件上使用v-model
-v-model其实是可以在组件上使用的，而且适用范围还是挺广的，尤其是在我们写组件的时候，在父组件展示一个子组件的行为，但是子组件里面有关闭整个组件的功能，我们所做的就是在子组件当中通过$emit触发父组件对应的方法，改变父组件上v-if对应的变量控制显示隐藏。
+用在 父-子-孙 三重组件中被子调用的孙， 使得孙组件可以获得子组件 props 中没有继承的父属性，可以触发父组件方法。
 
-但是有了v-model，这一切都变得很简单，最主要的是父组件减少了关闭的方法，如果你关闭之后需要回调，那么通过监听你的是否显示的flag即可，所以大可放心使用。
+# 『单向数据流』总结起来其实也就 8 个字：『数据向下，事件向上』。
+
+# 组件上使用 v-model
+
+v-model 其实是可以在组件上使用的，而且适用范围还是挺广的，尤其是在我们写组件的时候，在父组件展示一个子组件的行为，但是子组件里面有关闭整个组件的功能，我们所做的就是在子组件当中通过$emit 触发父组件对应的方法，改变父组件上 v-if 对应的变量控制显示隐藏。
+
+但是有了 v-model，这一切都变得很简单，最主要的是父组件减少了关闭的方法，如果你关闭之后需要回调，那么通过监听你的是否显示的 flag 即可，所以大可放心使用。
 
 父组件:
 <template>
+
   <div id="app">
     <HelloWorld v-model="showFlag" v-if="showFlag"></HelloWorld>
     <button @click="showFlag=true">打开组件</button>
@@ -621,9 +639,11 @@ export default {
   }
 }
 </script>
-这里我们引入了子组件HelloWorld，通过showFlag来控制组件的显示隐藏，当然，组件上还用v-model绑定了showFlag。
-这里的 showFlag 的值将会传入这个名为 checked 的 prop。同时当子组件触发一个 change 事件并附带一个新的值的时候，这个showFlag的property将会被更新。
+
+这里我们引入了子组件 HelloWorld，通过 showFlag 来控制组件的显示隐藏，当然，组件上还用 v-model 绑定了 showFlag。
+这里的 showFlag 的值将会传入这个名为 checked 的 prop。同时当子组件触发一个 change 事件并附带一个新的值的时候，这个 showFlag 的 property 将会被更新。
 <template>
+
   <div class="hello">
     <h1>这是组件里面的内容</h1>
     <button @click="close">关闭组件</button>
@@ -760,7 +780,12 @@ child组件：
 
 el-form 动态rules会立刻校验，变红，所以：
     :validate-on-rule-change="false"
-  
+rules里的required还没有this，所以要用&&
+    canUnload() {
+      return (this.editForm && this.editForm.canUnload == '1') || false;
+    },  
+然后在watch里修改 this.rules.unloadGoodsId[0].required = true;
+
 # 给el-select增加slot日期图标作为前缀
    <el-select
               v-model="editForm.publishMonth"
@@ -924,3 +949,32 @@ acitvated(){
 		this.$route.meta.isPush = true;
 	}
 }
+
+
+# 兼容IE
+package-lock.json的改变，导致安装的node_modules发生变化，导致npm run build得到的dist不兼容IE。
+
+       说明：node_modules里的依赖默认是不会编译的,会导致es6语法在ie中的语法报错,所以需要在vue.config.js中使用transpileDependencies属性配置node_modules中指定哪些文件夹或文件需要编译.
+
+IE:  SCRIPT1003: 缺少 ':'
+app.js (304501,83045)
+因为IE不支持函数简写
+data(){
+    return {}
+}
+只能识别这种形式
+ data: function () {
+    return {}
+}
+
+babel.config.js
+module.exports = {
+  presets: [
+    [
+      '@vue/app',
+      {
+        useBuiltIns: 'entry'
+      }
+    ]
+  ],
+};
