@@ -772,3 +772,11 @@ for (var i = 0; i < foo.length; i++) {
 
 var util = require('util'); //导入模块
 util.inherits(Sub, Base); //使Sub函数继承Base函数对象
+
+
+FruitEnum = {
+    tomato: 1,
+    banana:  2,
+    apple:3
+}
+const FruitList = Object.entries(FruitEnum) // 二维数组， [[key, value]]

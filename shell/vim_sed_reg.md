@@ -24,6 +24,12 @@ f/F+字母  当前行搜索
 zz 当前到中间
 zb 当前到底
 zt 当前到顶
+词： w （下一个词）， b （词初）， e （词尾）
+行： 0 （行初）， ^ （第一个非空格字符）， $ （行尾）
+屏幕： H （屏幕首行）， M （屏幕中间）， L （屏幕底部）
+查找： f{字符}， t{字符}， F{字符}， T{字符}
+    查找/到 向前/向后 在本行的{字符}
+    , / ; 用于前后导航匹配
 
 gv 刚才v的区域。
 vat 在html中选择标签对用t，o 在标签对跳转。
@@ -40,6 +46,10 @@ C/D 当前光标删到行尾。
 s substitute，也进寄存器，但是无法接其他操作。
 S 删除整行
 
+
+ci( 改变当前括号内的内容
+ci[ 改变当前方括号内的内容
+da' 删除一个单引号字符串， 包括周围的单引号
 
 vat,dat,yat 在html中选择标签对用t，o 在标签对跳转。
 # cs符号对替换；ysiw/viwS针对单词； v选中内容S增加符号对。 w针对text，W针对objects。
@@ -447,6 +457,11 @@ var arr = str.match(reg);
 3=
 g汉
 */
+
+sed -E 's/.*Disconnected from (invalid |authenticating )?user .* [^ ]+ port [0-9]+( \[preauth\])?$//'
+[^ ]+ 会匹配任意非空且不包含空格的序列
+https://regex101.com/r/qqbZqh/2
+
 # whistle
 https需要勾选 capture tunnel connects 并且下载安装crt证书
 # 操作统计-民国库后台管理

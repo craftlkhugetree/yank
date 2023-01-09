@@ -9,7 +9,7 @@ mysqld --initialize 先删除 data 目录
 net start mysql 管理员shell： 输入cmd后 ctrl+shift+enter
 net stop mysql
 
-mysql -uroot -p
+mysql -uroot -p     root@root
 此处的原始密码需要我们自己去 data 目录下的.err 文件中查找，已改为root@root
 
 5.x 版：
@@ -29,3 +29,6 @@ source D:/kmoyu/VueNode/server/tour.sql
 
 describe tour_user;
 insert into tour_user values(23, 'admin', 'admin', )
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+flush privileges;

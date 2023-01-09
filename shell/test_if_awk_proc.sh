@@ -3,6 +3,11 @@
 # read -p  "请填写commit提交的信息:" msg
 msg='l = 0'
 echo $msg
+pid=$(ps -au | grep testif.sh | awk 'NR==1{print $2}')
+# pid=$(ps -au | grep testif.sh | awk 'NR==1(print $2)')
+# pid=$(ps -au | grep testif.sh | grep -v grep | awk  '{print $2}')
+echo $pid
+ls /proc/$pid/fd -l
 # 空值判断
 # if [ -z $msg ]; then
 # if [ ! -n "$msg" ]; then
@@ -13,3 +18,4 @@ if [ ! $msg ]; then
 else
   echo -e "\033[32m \n false \033[0m"
 fi
+

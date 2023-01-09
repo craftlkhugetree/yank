@@ -454,3 +454,5 @@ Vue.component全局挂载的组件，破坏了 export default new Vue({})
 
 # @media 1920, home浮动遮挡el-footer,  插件BaseUpload, videoCover,  组件s-form.
 数据和图形的分离， 图形小片的组合
+
+# debian ngnix, ts-challenge, moyu vue3, vue源码重写

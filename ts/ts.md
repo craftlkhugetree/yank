@@ -82,3 +82,14 @@ tsconfig.json
 declare interface Window {
   g: any;
 }
+
+
+
+字面量的赋值:
+let type:'primary'|'danger'|'warning'|'error' =  'primary'
+
+let test = 'error'
+type = test  // Type 'string' is not assignable to type '"primary" | "danger" | "warning" | "error"'.
+
+let test = 'error' as const 
+type =  test //正确

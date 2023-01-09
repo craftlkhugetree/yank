@@ -1,0 +1,8 @@
+./testStderr.sh: line 7: whatthis: command not found
+./testStderr.sh: line 7: whatthis: command not found
+./testStderr.sh: line 7: whatthis: command not found
+./testStderr.sh: line 7: whatthis: command not found
+./testStderr.sh: line 7: whatthis: command not found
+./testStderr.sh: line 7: whatthis: command not found
+./testStderr.sh: line 7: whatthis: command not found
+./testStderr.sh: line 7: whatthis: command not found
