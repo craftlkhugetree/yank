@@ -2,6 +2,7 @@
 # POST/GET
 axios的params形式传递数据不管是get还是post请求，参数最后都是以拼接url?a=aa的形式出现，为query参数， {params: 555}被转为 ?0=555   
   {params: {test:555}}被转为 ?test=555;       get还有path传参， /get/{id}。
+  post的情况可用qs来处理对象变为 form data，等价于上面的query string param.
 axios用data属性来表示body参数。get请求没有body的传参方式。
 
 # 使用post请求且body为application/x-www-form-urlencoded时，通常需要借助qs进行数据转换，转换后的数据发送给后端，后端才能正确的处理。

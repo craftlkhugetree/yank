@@ -65,7 +65,7 @@ vat,dat,yat 在html中选择标签对用t，o 在标签对跳转。
 //////////////////////   移除标签对用t，cst"   必须是简单标签对，不能是组件。 *** 修改标签对用 cst<  然后在输入框输入剩下的标签对 ***
 
 hello world!
-# 光标移动到 hello上，按ysiw]                 yciw会先开始插入模式, s会进入substitute
+# 光标移动到 hello上，按ysiw]                 yciw会先开始插入模式, s会进入substitute, iw is a text object
 [hello] world!
 
 将整行外加括号同时括号内再加一个空格 yss(
@@ -82,6 +82,10 @@ hello world!
 <p class="important">
 <em>hello</em> world!
 </p>
+
+{ Hello } world!
+# Now wrap the entire line in parentheses with yssb or yss).
+({ Hello } world!)
 
 首先，按下 q，然后按下你想要保存的寄存器，任何小写字母都可以。比如我们来把它保存到 q 这个寄存器中。按下 qq，你会发现命令行里已经显示了 "recording @q"。
 如果你已经录制完成，那么只需要再按一次 q 就可以结束录制。
@@ -458,10 +462,61 @@ var arr = str.match(reg);
 g汉
 */
 
-sed -E 's/.*Disconnected from (invalid |authenticating )?user .* [^ ]+ port [0-9]+( \[preauth\])?$//'
-[^ ]+ 会匹配任意非空且不包含空格的序列
+
+# [^ ]+ 会匹配任意非空且不包含空格的序列，sed -E用正则
+ sed -E 's/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/'
 https://regex101.com/r/qqbZqh/2
 
+ssh myserver journalctl
+ | grep sshd
+ | grep "Disconnected from"
+ | sed -E 's/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/'
+ | sort | uniq -c
+ | sort -nk1,1 | tail -n10
+ | awk '{print $2}' | paste -sd,
+
+uniq -c 会把连续出现的行折叠为一行并使用出现次数作为前缀。
+sort -n 会按照数字顺序对输入进行排序（默认情况下是按照字典序排序 -k1,1 则表示“仅基于以空格分割的第一列进行排序”。,n 部分表示“仅排序到第n个部分”，默认情况是到行尾。就本例来说，针对整个行进行排序也没有任何问题，如果我们希望得到登录次数最少的用户，我们可以使用 head 来代替tail。或者使用sort -r来进行倒序排序。
+利用 paste命令来合并行(-s)，并指定一个分隔符进行分割 (-d)。
+
+让我们统计一下所有以c 开头，以 e 结尾，并且仅尝试过一次登录的用户。
+ awk '$1 == 1 && $2 ~ /^c[^ ]*e$/ { print $2 }' | wc -l
+然后我们使用 wc -l 统计输出结果的行数。
+
+不过，既然 awk 是一种编程语言，那么则可以这样：
+BEGIN { rows = 0 }
+  $1 == 1 && $2 ~ /^c[^ ]*e$/ { rows += $1 }
+END { print rows }
+BEGIN 也是一种模式，它会匹配输入的开头（ END 则匹配结尾）。然后，对每一行第一个部分进行累加，最后将结果输出。
+
+# 需求：密码必须是包含大写字母、小写字母、数字、特殊符号（不是字母，数字，下划线，汉字的字符）的8位以上组合
+
+二、方案：利用正则表达式来校验
+
+三、思路：排除法
+
+　　1、排除大写字母、小写字母、数字、特殊符号中1种组合、2种组合、3种组合，那么就只剩下4种都包含的组合了
+
+　　2、表达式为：^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,}$
+        /^(?![A-Z0-9]+$)\w+$/ 表示：不能完全为大写字母和数字组成的，不含空值的串。第一个$就表示串的结尾，与^配套。
+
+　　3、拆分解释：其中（2）-（6）运用了零宽断言、环视等正则功能
+
+　　　　（1）^匹配开头
+
+　　　　（2）(?![A-Za-z0-9]+$)匹配后面不全是（大写字母或小写字母或数字）的位置，排除了（大写字母、小写字母、数字）的1种2种3种组合
+
+　　　　（3）(?![a-z0-9\\W]+$)同理，排除了（小写字母、数字、特殊符号）的1种2种3种组合
+
+　　　　（4）(?![A-Za-z\\W]+$)同理，排除了（大写字母、小写字母、特殊符号）的1种2种3种组合
+
+　　　　（5）(?![A-Z0-9\\W]+$)同理，排除了（大写字母、数组、特殊符号）的1种2种3种组合
+
+　　　　（6）[a-zA-Z0-9\\W]匹配（小写字母或大写字母或数字或特殊符号）因为排除了上面的组合，所以就只剩下了4种都包含的组合了
+
+　　　　（7）{8,}8位以上
+
+　　　　（8）$匹配字符串结尾
 # whistle
 https需要勾选 capture tunnel connects 并且下载安装crt证书
 # 操作统计-民国库后台管理

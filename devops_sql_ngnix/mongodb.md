@@ -1,3 +1,4 @@
+cmd里bash启动git bash
 gitbash alias里新增命令amongod启动服务；mongosh启动客户端。
 mongod --config "d:\Program Files\MongoDB\Server\6.0\bin\mongodb.conf"
 

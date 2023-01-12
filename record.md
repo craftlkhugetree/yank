@@ -74,6 +74,7 @@ A: 首先，我们应该尽量避免冲突，在我们需要更新 package.json 
 
 ctrl + shift + o 查找函数、css类名、变量等
 ctrl + p 打开文件
+ctrl + i 触发关联文字
 
 # js node webpack
 

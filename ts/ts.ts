@@ -454,3 +454,65 @@ type DeepReadonly<T> = {
     : T[P];
 };
 
+// in ts, a type is introduced with type, interface, class, enum
+// 在 type、interface 中可以使用逗号、分号，class 中不能用逗号。不过三者都支持行结尾不要符号。An enum member name must be followed by a ',' '=' or '}'
+
+type T = {
+  fld1: 1; // 1 类型（够奇特吧）
+  // fld2 = 2; // 不能这样用
+};
+interface I {
+  fld1: 1; // 1 类型（够奇特吧）
+  // fld2 = 2; // 不能这样用
+}
+
+/**
+ * 1. 属性或参数中使用 ？：表示该属性或参数为可选项
+
+2. 属性或参数中使用 ！：表示强制解析（告诉typescript编译器，这里一定有值），常用于vue-decorator中的@Prop
+
+3. 变量后使用 ！：表示类型推断排除null、undefined
+ */
+class C {
+  fld1!: 1; // 1 类型（够奇特吧），无初始值，即为 undefined。
+  fld2 = 2; // number 类型（虽然未指定，但会自动推断），初始值是 2。
+}
+
+let c = new C();
+alert(c.fld1); // undefined
+alert(c.fld2); // 2
+c.fld1 = 1;
+// c.fld1 = 2; // 不能这么干，因为其类型为 1
+c.fld2 = 3;
+alert(c.fld1); // 1
+alert(c.fld2); // 3
+
+//默认从0开始
+enum Direction {
+  Up,
+  Down,
+  Left,
+  Right,
+}
+console.log(Direction.Up); //0
+console.log(Direction[0]); //up
+//赋值后往后以此类推
+enum Direction2 {
+  Up = 1,
+  Down,
+  Left,
+  Right,
+}
+console.log(Direction2.Down); //2
+console.log(Direction2[2]); //Down
+//赋值字符串
+enum Direction3 {
+  Up = 'UP',
+  Down = 'DOWN',
+  Left = 'LEFT',
+  Right = 'RIGHT',
+}
+const value = 'UP';
+if (value == Direction3.Up) {
+  console.log('go up');
+}

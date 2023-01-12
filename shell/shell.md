@@ -108,6 +108,16 @@ mkdir foo bar
 # 下面命令会创建foo/a, foo/b, ... foo/h, bar/a, bar/b, ... bar/h这些文件
 touch {foo,bar}/{a..h}
 
+ls /etc/[mnrp]*.conf     # 所有.conf结尾，且以m,n,r或p开头的文件或目录：
+[!characters]	匹配任意一个不是字符集中的字符
+
+[[:class:]]	匹配任意一个属于指定字符类中的字符
+普遍使用的字符类：
+[:alnum:]	匹配任意一个字母或数字
+[:alpha:]	匹配任意一个字母
+[:digit:]	匹配任意一个数字
+[:lower:]	匹配任意一个小写字母
+[:upper:]	匹配任意一个大写字母
 
 # 查找所有名称为src的文件夹，不区分大小写，可以使用-iname选项
 find . -name src -type d
@@ -131,87 +141,67 @@ find . -type f -name "*.html" | xargs -d '\n'  tar -cvzf html.zip
 # 递归的查找文件夹中最近使用的文件, print0变成一行, ls -t按修改时间对文件进行排序
 $ find . -type f -mmin -60 -print0 | xargs -0 ls -lt | head -10
 
+sleep 10     // 秒数，  sleep 1h 2m 0.5s
+ctrl + Z    // [1]+  Stopped                 sleep 10
+jobs
+bg          // [1]+ sleep 10 &     // fg 没有&，所以没有转入后台
+jobs        // [1]+  Running                 sleep 10 &
+pgrep sleep; ps -ef
+pkill -f sleep
 
-一、为什么要用xargs：
 
-linux的命令中很多的命令的设计是先从命令行参数中获取参数，然后从标准输入中读取，xargs命令可以通过管道接受字符串，并将接收到的字符串通过空格分割成许多参数(默认情况下是通过空格分割) 然后将参数传递给其后面的命令，作为后面命令的命令行参数；
+❯ sleep 10 &
+[3] 62850
+# wait 只能够等待当前 shell 的子进程
+❯ wait 62850; ls
+[3]  + 62850 done       sleep 10
 
-二、xargs的一些有用的选项：
 
-1. -d 选项
+# 但是，如果我们在不同的 bash 会话中进行操作，则上述方法就不起作用了。因为 `wait` 只能对子进程起作用。之前我们没有提过的一个特性是，`kill` 命令成功退出时其状态码为 `0` ，其他状态则是非 `0`。`kill -0` 则不会发送信号，但是会在进程不存在时返回一个不为 `0` 的状态码。请编写一个 `bash` 函数 `pidwait` ，它接受一个 `pid` 作为输入参数，然后一直等待直到该进程结束。您需要使用 `sleep` 来避免浪费 `CPU` 性能。
 
-默认情况下xargs将其标准输入中的内容以空白(包括空格、Tab、回车换行等)分割成多个之后当作命令行参数传递给其后面的命令，并运行之，我们可以使用 -d 命令指定分隔符，例如：
-echo '11@22@33' | xargs echo
-输出：
-11@22@33
-默认情况下以空白分割，那么11@22@33这个字符串中没有空白，所以实际上等价于 echo 11@22@33 其中字符串 '11@22@33' 被当作echo命令的一个命令行参数
+`wait` 程序实现：
+```bash
+myWait() {
+    pid=$1
+    while true; do
+        kill -0 $pid
+        if [[ $? -eq 0 ]]; then
+            echo "process exists, wait for 1 seconds..."
+            sleep 1
+        else
+            break
+        fi
+    done
+    echo "process finished!"
+    ls
+}
+```
+将程序保存为 `wait.sh` ，程序执行与结果：
+```bash
+❯ source wait.sh
+❯ sleep 10
+^Z
+[1]  + 63612 suspended  sleep 10
+❯ bg
+[1]  + 63612 continued  sleep 10
+❯ myWait 63612
+process exists, wait for 1 seconds...
+process exists, wait for 1 seconds...
+process exists, wait for 1 seconds...
+process exists, wait for 1 seconds...
+process exists, wait for 1 seconds...
+[1]  + 63612 done       sleep 10
+myWait:kill:3: kill 63612 failed: no such process
+process finished!
+wait.sh
+```
+# 最常用十个命令，uniq -c 在每行开头添加重复次数
+history | awk '{$1="";print substr($0,2)}' | sort | uniq -c | sort -n | tail -n 10
+// awk{}内部=是赋值，外部==才是条件，substr字符截取，$0是所有列
+history | awk '{$1="";print substr($0,2)}' 
+history | awk '$1=="200"{print substr($0,2)}' 
 
-echo '11@22@33' | xargs -d '@' echo
-输出：
-11 22 33
-指定以@符号分割参数，所以等价于 echo 11 22 33 相当于给echo传递了3个参数，分别是11、22、33
 
-2. -p 选项
-使用该选项之后xargs并不会马上执行其后面的命令，而是输出即将要执行的完整的命令(包括命令以及传递给命令的命令行参数)，询问是否执行，输入 y 才继续执行，否则不执行。这种方式可以清楚的看到执行的命令是什么样子，也就是xargs传递给命令的参数是什么，例如：
-echo '11@22@33' | xargs -p -d '@'  echo
-输出：
-echo 11 22 33
- ?...y      ==>这里询问是否执行命令 echo 11 22 33 输入y并回车，则显示执行结果，否则不执行
- 11 22 33   ==>执行结果
 
-3. -n 选项
-该选项表示将xargs生成的命令行参数，每次传递几个参数给其后面的命令执行，例如如果xargs从标准输入中读入内容，然后以分隔符分割之后生成的命令行参数有10个，使用 -n 3 之后表示一次传递给xargs后面的命令是3个参数，因为一共有10个参数，所以要执行4次，才能将参数用完。例如：
-
-echo '11@22@33@44@55@66@77@88@99@00' | xargs -d '@' -n 3 echo
-输出结果：
-11 22 33
-44 55 66
-77 88 99
-00
-等价于：
-echo 11 22 33
-echo 44 55 66
-echo 77 88 99
-echo 00
-实际上运行了4次，每次传递3个参数，最后还剩一个，就直接传递一个参数。
-
-4. -E 选项，有的系统的xargs版本可能是-e  eof-str
-该选项指定一个字符串，当xargs解析出多个命令行参数的时候，如果搜索到-e指定的命令行参数，则只会将-e指定的命令行参数之前的参数(不包括-e指定的这个参数)传递给xargs后面的命令
-echo '11 22 33' | xargs -E '33' echo
-输出：
-11 22
-
-可以看到正常情况下有3个命令行参数 11、22、33 由于使用了-E '33' 表示在将命令行参数 33 之前的参数传递给执行的命令，33本身不传递。等价于 echo 11 22 这里-E实际上有搜索的作用，表示只取xargs读到的命令行参数前面的某些部分给命令执行。
-
-注意：-E只有在xargs不指定-d的时候有效，如果指定了-d则不起作用，而不管-d指定的是什么字符，空格也不行。
-
-echo '11 22 33' | xargs -d ' ' -E '33' echo  => 输出 11 22 33
-echo '11@22@33@44@55@66@77@88@99@00 aa 33 bb' | xargs -E '33' -d '@' -p  echo  => 输出 11 22 33 44 55 66 77 88 99 00 aa 33 bb
-
-## -0 选项表示以 '\0' 为分隔符，一般与find结合使用
-
-find . -name "*.txt"
-输出：
-./2.txt
-./3.txt
-./1.txt     => 默认情况下find的输出结果是每条记录后面加上换行，也就是每条记录是一个新行
-
-find . -name "*.txt" -print0
-输出：
-./2.txt./3.txt./1.txt     => 加上 -print0 参数表示find输出的每条结果后面加上 '\0' 而不是换行
-
-find . -name "*.txt" -print0 | xargs -0 echo
-输出：
-./2.txt ./3.txt ./1.txt
-
-find . -name "*.txt" -print0 | xargs -d '\0' echo
-输出：
-./2.txt ./3.txt ./1.txt
-
-xargs的 -0 和 -d '\0' 表示其从标准输入中读取的内容使用 '\0' 来分割，由于 find 的结果是使用 '\0' 分隔的，所以xargs使用 '\0' 将 find的结果分隔之后得到3个参数： ./2.txt ./3.txt ./1.txt  注意中间是有空格的。上面的结果就等价于 echo ./2.txt ./3.txt ./1.txt
-
-实际上使用xargs默认的空白分隔符也是可以的  find . -name "*.txt"  | xargs  echo   因为换行符也是xargs的默认空白符的一种。find命令如果不加-print0其搜索结果的每一条字符串后面实际上是加了换行
-
-5.-I选项（或者-i）: 用于将参数用{}替代：
-
-例如：echo 'test.txt' | xargs -i  cp  {} /root/
+# source script.sh 和 ./script.sh 有什么区别?
+这两种情况 script.sh 都会在bash会话中被读取和执行，不同点在于哪个会话执行这个命令。 对于 source 命令来说，命令是在当前的bash会话中执行的，因此当 source 执行完毕，对当前环境的任何更改（例如更改目录或是定义函数）都会留存在当前会话中。 单独运行 ./script.sh 时，当前的bash会话将启动新的bash会话（实例），并在新实例中运行命令 script.sh。 因此，如果 script.sh 更改目录，新的bash会话（实例）会更改目录，但是一旦退出并将控制权返回给父bash会话，父会话仍然留在先前的位置（不会有目录的更改）。 同样，如果 script.sh 定义了要在终端中访问的函数，需要用 source 命令在当前bash会话中定义这个函数。否则，如果你运行 ./script.sh，只有新的bash会话（进程）才能执行定义的函数，而当前的shell不能。
