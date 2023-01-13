@@ -206,3 +206,84 @@ declare module 'vant' {
 所以，如果要对一个模块进行扩展，一定要记得在最前面加上import或者export。
 ————————————————
 原文链接：https://blog.csdn.net/HermitSun/article/details/104105195
+
+# In TypeScript, just as in ECMAScript 2015, any file containing a top-level import or export is considered a module. Conversely, a file without any top-level import or export declarations is treated as a script whose contents are available in the global scope (and therefore to modules as well).
+# in ts, a type is introduced with type, interface, class, enum
+
+Values:
+As with types, you probably already understand what a value is. Values are runtime names that we can reference in expressions. For example let x = 5; creates a value called x.
+
+# Again, being explicit, the following things create values:
+let, const, and var declarations
+A namespace or module declaration which contains a value
+An enum declaration
+A class declaration
+An import declaration which refers to a value
+A function declaration
+
+Namespaces
+Types can exist in namespaces. For example, if we have the declaration let x: A.B.C, we say that the type C comes from the A.B namespace.
+This distinction is subtle and important — here, A.B is not necessarily a type or a value.
+
+
+interface Foo {
+  x: number;
+}
+// ... elsewhere ...
+interface Foo {
+  y: number;
+}
+let a: Foo = ...;
+console.log(a.x + a.y); // OK
+
+// This also works with classes:
+class Foo {
+  x: number;
+}
+// ... elsewhere ...
+interface Foo {
+  y: number;
+}
+let a: Foo = ...;
+console.log(a.x + a.y); // OK
+
+A namespace declaration can be used to add new types, values, and namespaces in any way which does not create a conflict.
+For example, we can add a static member to a class:
+
+class C {}
+// ... elsewhere ...
+namespace C {
+  export let x: number;
+}
+let y = C.x; // OK
+
+
+
+# Finally, we could perform many different merges using namespace declarations. This isn’t a particularly realistic example, but shows all sorts of interesting behavior:
+namespace X {
+  export interface Y {}
+  export class Z {}
+}
+// ... elsewhere ...
+namespace X {
+  export var Y: number;
+  export namespace Z {
+    export class C {}
+  }
+}
+type X = string;
+In this example, the first block creates the following name meanings:
+
+A value X (because the namespace declaration contains a value, Z)
+A namespace X (because the namespace declaration contains a type, Y)
+A type Y in the X namespace
+A type Z in the X namespace (the instance shape of the class)
+A value Z that is a property of the X value (the constructor function of the class)
+The second block creates the following name meanings:
+
+A value Y (of type number) that is a property of the X value
+A namespace Z
+A value Z that is a property of the X value
+A type C in the X.Z namespace
+A value C that is a property of the X.Z value
+A type X

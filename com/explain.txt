@@ -84,4 +84,7 @@ g-table g-form
   };
 
 # VueNode
-  mysql.md
+  mysql.md  ngnix alias
+  
+# vue-pure-admin
+husky; pnpm; npm;

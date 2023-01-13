@@ -95,6 +95,9 @@ implicitly 含蓄、暗中地
 explicit
 
 15. Ambient module 环境模块
+distinctive 独特的
+This distinction is subtle and important.  这种区别是微妙而重要的
+
 
 减肥=减脂≠减重
 健身先健脑,减肥先增智
