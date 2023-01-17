@@ -65,7 +65,7 @@ BMap
 # 特藏  nangongcheng
 rem，scss；视频封面截图, 截图叠加播放按钮; g-form; g-table; 暂无封面样式；文件上传进度条。 全局删除popup
 https://mp.weixin.qq.com/s/huzCTjMv8VcsTQ8_UjCv1g
-pc端引入ts并测试vue3特性
+pc端引入ts并测试vue3特性，测试axios interceptor
 
 # smartfactory
 package-lock.json的改变，导致安装的node_modules发生变化，导致npm run build得到的dist不兼容IE。
@@ -87,4 +87,4 @@ g-table g-form
   mysql.md  ngnix alias
   
 # vue-pure-admin
-husky; pnpm; npm;
+husky; pnpm; npm;  验证码 const ctx = dom.getContext("2d"); ctx使用的大量函数

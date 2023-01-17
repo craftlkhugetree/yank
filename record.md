@@ -76,6 +76,8 @@ ctrl + shift + o 查找函数、css类名、变量等
 ctrl + p 打开文件
 ctrl + i 触发关联文字
 
+div.类名 + 回车
+
 # js node webpack
 
 module 和 exports 是 Node.js 给每个 js 文件内置的两个对象。module.exports 是一个空对象，exports 是对这个对象的引用。
