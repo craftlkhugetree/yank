@@ -834,11 +834,15 @@ this.tableData = tmp.sort((a, b) => {
       }
     }
 };
+// 一旦窗口变化就检查是否全屏
     window.onresize = () => {
       // console.log(this.isFull, document.fullscreenElement, document.fullscreen);
-      if (!document.fullscreen) {
-        this.isFull = true;
-      }
+        if (!document.fullscreen) {
+          isFull = true;
+          document.getElementsByClassName('full')[0].hidden = false;
+        } else {
+          document.getElementsByClassName('full')[0].hidden = true;
+        }
     };
 
 

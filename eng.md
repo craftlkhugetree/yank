@@ -100,6 +100,7 @@ This distinction is subtle and important.  这种区别是微妙而重要的
 purge 清除、排除
 tailwind 顺风
 
+16 a bit verbose 有点麻烦或啰嗦
 
 减肥=减脂≠减重
 健身先健脑,减肥先增智

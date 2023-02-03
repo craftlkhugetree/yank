@@ -16,7 +16,9 @@ nginx -s stop
 
 中文传递到后台是乱码，要在tomcat的配置文件的Connector标签,在末尾添URIEncoding=“UTF-8”，前端post时可指明，get则只能反向回去查iso再解码。
 
-chrome插件api， popup inject manifest.json
+BMap：地图掩膜，步行路线等。
+
+chrome插件api， popup inject manifest.json  csdn的全部展开
 
 148. webpack 中 loader 和 plugin 的区别是什么？（平安）
 loader，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。
@@ -116,3 +118,8 @@ h('img', { attrs: { src: require('./image.png') }})
 
 typescript 类型推导及其内部api
 百度语音识别node sdk服务器，前端录音，后端识别。
+
+
+npm publish   vue install 库包 base-upload
+
+仿写vue MVVM，类似v-model元素属性编译。

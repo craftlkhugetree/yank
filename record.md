@@ -1,5 +1,4 @@
 # Git
-
 git svn clone -r HEAD --username=liken svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
 
 git show（查看上一次修改）
@@ -23,7 +22,7 @@ git 修改以前提交的注释：
 （5）git commit --amend 【同上有提示，第一行进行你真正需要的修改, 修改完后，保存退出】
 （6）git rebase --continue 【退出后，输入最后一步】
 
-git log --since=2022-04-27 --until=2022-06-21 --author="liken" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END {printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }'
+git log --since=2022-04-27 --until=2023-02-01 --author="liken" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END {printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }'
 
 git stash save ''
 git stash list

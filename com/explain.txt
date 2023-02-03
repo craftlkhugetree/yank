@@ -51,19 +51,20 @@ ext.js
 collapse.js
 
 # netRepair_njit
-BMap
+BMap,"vue-baidu-map": "^0.21.22",
+yank的fetch.html BMap,BMapGL,BMapGLLib等，地图掩膜，步行路线等。
 
 # wxbluetooth
 小程序： 蓝牙、扫码; 小程序壳内链接跳转H5
 
 # appointment 有约
-统计echarts； 
+统计echarts；  有约大屏：时间跳动，全屏。
 
 # card
 打印预览this.WebBrowser.ExecWB(7, 1);   汉王，<object> @media screen/print 
 
 # 特藏  nangongcheng
-rem，scss；视频封面截图, 截图叠加播放按钮; g-form; g-table; 暂无封面样式；文件上传进度条。 全局删除popup
+rem，scss；视频封面截图, 截图叠加播放按钮; s-form; g-table; 暂无封面样式；文件上传进度条。 全局删除popup
 https://mp.weixin.qq.com/s/huzCTjMv8VcsTQ8_UjCv1g
 pc端引入ts并测试vue3特性，测试axios interceptor
 
@@ -88,3 +89,6 @@ g-table g-form
   
 # vue-pure-admin
 husky; pnpm; npm;  验证码 const ctx = dom.getContext("2d"); ctx使用的大量函数
+
+# 1.MVVM框架设计及实现
+大量注释解释了模板引擎，get，set

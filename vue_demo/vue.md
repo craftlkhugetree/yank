@@ -370,6 +370,9 @@ static：在这个目录下文件不会被被 webpack 解析。他会直接被�
 
 :src=变量 对于弹窗内的图片，必须在 js 代码里先 require('相对路径'); 或者在 config.js 里设置绝对路径作为前缀。 页面上的图片可以在 html 里写 require()。
 
+* 因为动态添加的src，编译过后的文件地址和被编译过后的资源文件地址不一致，从而无法正确引入资源。而使用require，返回的就是资源文件被编译后的文件地址，从而可以正确的引入资源，当你在 JavaScript、CSS 或 *.vue 文件中使用相对路径 (必须以 . 开头) 引用一个静态资源时，该资源将会被包含进入 webpack 的依赖图中。在其编译过程中，所有诸如 <img src="...">、background: url(...) 和 CSS @import 的资源 URL 都会被解析为一个模块依赖。
+
+例如，url(./image.png) 会被翻译为 require('./image.png')
 # vue2 源码
 
         class Observer {
@@ -823,7 +826,7 @@ vue.config.js里设置scss全局变量和函数：
 
 注意$attrs不传递value时，例如<component disabled/> 此刻$attrs.disabled拿到的值是""，这符合html attribute特性。
 
-# 一些内容属性（例如 required, readonly, disabled）是布尔值属性。如果一个布尔值属性存在，则其值是 true，如果不存在，其值是  false。
+# html的一些内容属性（例如 required, readonly, disabled）是布尔值属性。如果一个布尔值属性存在，则其值是 true，如果不存在，其值是  false。
 HTML5 定义了布尔值属性允许的取值：如果属性存在，其值必须是一个空字符串（即该属性的值未分配），或者是一个大小写无关的 ASCII 字符串，该字符串与属性名严格相同，前后都没有空格。下述例子是为一个布尔值属性取值的几个有效方式。
 
 <div itemscope> This is valid HTML but invalid XML. </div>
@@ -904,7 +907,7 @@ Vue.use = function (plugin) {
 "serve": "vue-cli-service serve --host 0.0.0.0",
 或者在config.js里改为  dev: {host: '0.0.0.0'}; 这样localhost和ip都能访问
 
-// 替换el组件内文字内容
+// 替换el-image组件内默认文字内容
 .el-image .el-image__error {
   font-size: 0;
   &::after{
@@ -988,3 +991,26 @@ module.exports = {
 
 只是将父组件的值传递给和子组件，但是并未实现子组件
 和父组件之间的双向数据绑定，当然引用类型除外，子组件改变了引用类型的数据的话，父组件的数据也会跟着改变。
+
+watch:{
+    "total":{ // total要监听的变量
+     immediate:true, // 首次加载的时候执行函数
+     deep:true, // 深入观察,监听数组值,对象属性值的变化
+     handler:function(){
+     }
+}
+mounted () {
+  window.addEventListener('online', this.handleOnline)
+  // 使用 this.$on/$once('hook:生命周期', callback) 就可以监听到生命周期的变化了。
+  this.$once('hook:beforeDestroy', function () {
+    window.removeEventListener('online', this.handleOnline)
+  })
+},
+
+给组件内的原生控件添加事件,不生效的原因是没有添加native修饰符。
+<el-input placeholder="请输入特定消费金额 " @mouseover.native="test()"></el-input>
+<router-link :to="item.menuUrl" @click.native="toggleName=''">  
+
+Angular需要学习typescript和rxjs,还用到比较多的新东西,比如装饰器,后端的注入概念,ng有自己的一整套 MVVM 流程;
+而Vue和React核心只是view,可以搭配自己喜欢的。
+React的写法偏向函数式写法,还有 jsx,官方自己有 flow,当然也能搭配ts。

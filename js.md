@@ -780,3 +780,22 @@ FruitEnum = {
     apple:3
 }
 const FruitList = Object.entries(FruitEnum) // 二维数组， [[key, value]]
+
+
+// 因为add传递的参数不能为数组，为了方便，可以用apply方法来实现用数组的参数来传递，这是很多时候运用的一个小技巧罢了。
+// 而apply方法第一个参数，是要替代的对象。没有要替代的，用null或0,也是很自然的。
+function curry(fn) {
+    // 第二个参数开始才是数据，第一个参数是add函数
+    var args = Array.prototype.slice.call(arguments, 1);
+    return function() {
+        var innerArgs = Array.prototype.slice.call(arguments);
+        var finalArgs = args.concat(innerArgs);
+        return fn.apply(0, finalArgs);
+    }
+    ;
+}
+function add(num1, num2) {
+    return num1 + num2;
+}
+var curriedAdd = curry(add, 5, 12);
+alert(curriedAdd());
