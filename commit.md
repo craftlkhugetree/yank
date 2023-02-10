@@ -456,3 +456,17 @@ Vue.component全局挂载的组件，破坏了 export default new Vue({})
 数据和图形的分离， 图形小片的组合
 
 # debian ngnix, ts-challenge, moyu vue3, vue源码重写
+
+# 督导助手 2023/02/06
+mobile   // redirectToLogin();
+
+待复查：createId；   handleNode：DCJC,YWZX
+我的督察：createId；
+
+待处理：handleDeptId；    handleNode：YWZX
+已转移：/workOrder/movedList
+
+待确认：createId；   handleNode：DCGL
+
+sort: desc；asc
+orderBy：createTime；handleStartTime

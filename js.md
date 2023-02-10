@@ -799,3 +799,14 @@ function add(num1, num2) {
 }
 var curriedAdd = curry(add, 5, 12);
 alert(curriedAdd());
+
+
+修改v-html后，具有input功能的div的光标去了开头，下面可以回到结尾：
+          this.$nextTick(() => {
+            setTimeout(() => {
+              div.focus();
+              let innerDivText = div.childNodes[div.childNodes.length - 1];
+              this.lastSelection.collapse(innerDivText, 1);
+              console.log(div.childNodes, innerDivText.length);
+            }, 10);
+          });

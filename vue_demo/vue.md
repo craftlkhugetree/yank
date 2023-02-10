@@ -817,6 +817,10 @@ vue.config.js里设置scss全局变量和函数：
       },
     },
   },
+webpack里的全局scss变量：
+{
+  scss: generateLoaders('sass').concat( { loader: 'sass-resources-loader', options: { resources: path.resolve(__dirname, '../src/assets/css/global.scss')}}),
+}
 
 
 # 默认情况下，任何被传递给组件的额外参数都会自动应用于根元素（以及所有有 $attrs 绑定的元素）。

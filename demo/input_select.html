@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input list="options" onchange="render()" onfocus="select()" />
+    <datalist id="options"></datalist>
+
+    <script type="text/javascript">
+      let data = [
+        { url: 'www.baidu.com', name: 1 },
+        { url: 'sdff.com', name: 2 },
+      ];
+
+      window.onload = function () {
+        let html = [];
+        data.map(v => {
+          html.push(`<option value="${v.name}"></option>`);
+        });
+        document.querySelector('#options').innerHTML = html.join('');
+      };
+
+      function render() {
+        let text = event.target.value;
+        data.map(v => {
+          if (v.name == text) openbyurl(v.url);
+        });
+      }
+
+      function openbyurl(url) {
+        alert(url + ' 页面渲染成功了');
+      }
+    </script>
+  </body>
+</html>

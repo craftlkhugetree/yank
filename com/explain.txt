@@ -57,7 +57,7 @@ yank的fetch.html BMap,BMapGL,BMapGLLib等，地图掩膜，步行路线等。
 # wxbluetooth
 小程序： 蓝牙、扫码; 小程序壳内链接跳转H5
 
-# appointment 有约
+# appointment
 统计echarts；  有约大屏：时间跳动，全屏。
 
 # card
@@ -92,3 +92,8 @@ husky; pnpm; npm;  验证码 const ctx = dom.getContext("2d"); ctx使用的大�
 
 # 1.MVVM框架设计及实现
 大量注释解释了模板引擎，get，set
+
+# 督导助手
+preview，delImg css, voice, camera, BMap
+把div容器变成可编辑的，用 contenteditable="true"，实现标签#下拉框，nodeType=1是span，3是textNode，根据childNode设置光标位置，字数超出限制则设置innerText。正则判断节点内有几个#。
+
