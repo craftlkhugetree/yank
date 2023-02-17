@@ -198,6 +198,7 @@
       mp.addEventListener('click', function (e) {
         // 地图上一点，若是new BMap则用e.point
         var point = flag ? e.latlng : e.point;
+        console.log(point);
         if (0 == model) {
           //   showPoint(point);
           search(point);

@@ -6,6 +6,13 @@ meta data 就是元数据，用来描述数据的数据；如一个数据 1.70�
 预览图片：
 import { ImagePreview } from 'vant';
 ImagePreview({images: [url], showIndex: false});
+openImg(index) {
+ImagePreview({
+images: this.fileList.map(f => this.viewUrl + f.id),
+startPosition: index,
+closeable: true
+});
+},
 
 <van-overlay :show="true">
     <div class="loading" @click.stop>
@@ -222,6 +229,16 @@ this.$router.push({
         });
 this.checkedList = JSON.parse(this.$route.query.data);
 
+this.$router.push('/tc/specialSponser/' + row.id);
+{
+path: '/tc/specialSponser/:id',
+name: 'specialSponserId',
+component: () => import('@/views/admin/specialSponser/detail'),
+props: route => ({
+id: route.params.id,
+}),
+},
+
 // iframe 内部输入框校验（富文本）,如果跨了子域，要在父页面跟子页面都设置 document.domain,值都是域名，不要前面的 www 什么的
 mounted() {
 let \_this = this;
@@ -283,7 +300,7 @@ return this.methodGetByteLen(value, 20)
 }
 }
 
-computed 的值不能给 data 赋值，computed 时还没有 this 呢。因为 data 里的数据是在 mouted 中执行函数才获取到数据，是在 computed 之后，所以在第一次 computed 计算时，data 中数据还是空的，所以 computed 找不到 data 里的数据。
+data 在 computed 之前，所以不能用 computed 给 template 里的 data 赋值。
 computed 里的匿名函数是找不到 this 的，function 可以。
 
 watch 数组 list，可以 computed: {
@@ -308,7 +325,7 @@ deep: true // 引用类型数据，需要进行深度监听模式，不然无法
 }
 },
 
-同一组件在路由变化时不刷新：
+根组件在路由变化时监听：
 watch: {
 '$route.path'(o, n) {
 // console.log(o, n);
@@ -370,9 +387,10 @@ static：在这个目录下文件不会被被 webpack 解析。他会直接被�
 
 :src=变量 对于弹窗内的图片，必须在 js 代码里先 require('相对路径'); 或者在 config.js 里设置绝对路径作为前缀。 页面上的图片可以在 html 里写 require()。
 
-* 因为动态添加的src，编译过后的文件地址和被编译过后的资源文件地址不一致，从而无法正确引入资源。而使用require，返回的就是资源文件被编译后的文件地址，从而可以正确的引入资源，当你在 JavaScript、CSS 或 *.vue 文件中使用相对路径 (必须以 . 开头) 引用一个静态资源时，该资源将会被包含进入 webpack 的依赖图中。在其编译过程中，所有诸如 <img src="...">、background: url(...) 和 CSS @import 的资源 URL 都会被解析为一个模块依赖。
+- 因为动态添加的 src，编译过后的文件地址和被编译过后的资源文件地址不一致，从而无法正确引入资源。而使用 require，返回的就是资源文件被编译后的文件地址，从而可以正确的引入资源，当你在 JavaScript、CSS 或 \*.vue 文件中使用相对路径 (必须以 . 开头) 引用一个静态资源时，该资源将会被包含进入 webpack 的依赖图中。在其编译过程中，所有诸如 <img src="...">、background: url(...) 和 CSS @import 的资源 URL 都会被解析为一个模块依赖。
 
 例如，url(./image.png) 会被翻译为 require('./image.png')
+
 # vue2 源码
 
         class Observer {
@@ -472,7 +490,7 @@ this.cb.call(this.vm,value)
 
 # 首先通过一次渲染操作触发 Data 的 getter（这里保证只有视图中需要被用到的 data 才会触发 getter）进行依赖收集，这时候其实 Watcher 与 data 可以看成一种被绑定的状态（实际上是 data 的闭包中有一个 Deps 订阅者，在修改的时候会通知所有的 Watcher 观察者），在 data 发生变化的时候会触发它的 setter，setter 通知 Watcher，Watcher 进行回调通知组件重新渲染的函数，之后根据 diff 算法来决定是否发生视图的更新。
 
-Vue 在初始化组件数据时，在生命周期的 beforeCreate 与 created 钩子函数之间实现了对 data、props、computed、methods、events 以及 watch 的处理。
+# Vue 在初始化组件数据时，在生命周期的 beforeCreate 与 created 钩子函数之间实现了对 data、props、computed、methods、events 以及 watch 的处理。
 
 JS 的 event loop 执行时会区分 task 和 microtask，引擎在每个 task 执行完毕，从队列中取下一个 task 来执行之前，会先执行完所有 microtask 队列中的 microtask。
 setTimeout 回调会被分配到一个新的 task 中执行，而 Promise 的 resolver、MutationObserver 的回调都会被安排到一个新的 microtask 中执行，会比 setTimeout 产生的 task 先执行。

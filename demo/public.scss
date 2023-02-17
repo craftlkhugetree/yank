@@ -1,7 +1,5 @@
-每台电脑的尺寸大小不一样。当页面获取的数据跟电脑屏幕刚好一致时，他就会出现这个问题，伸展/收缩，
-伸展收缩，出现滚动条，隐藏滚动条，一直在不停的变换才导致页面一直闪。这个场景其实可以模拟出来，我们把一个页面先缩放/扩大到跟屏幕产不多大的时候，找到这个页面的样式。加个margin-bottom,
-把数值一直加，加到跟屏幕一样大小的时候，他就会闪动了。
-.el-container {
+每台电脑的尺寸大小不一样。当页面获取的数据跟电脑屏幕刚好一致时，他就会出现这个问题，伸展/收缩， 伸展收缩，出现滚动条，隐藏滚动条，一直在不停的变换才导致页面一直闪。这个场景其实可以模拟出来，我们把一个页面先缩放/扩大到跟屏幕产不多大的时候，找到这个页面的样式。加个margin-bottom,
+把数值一直加，加到跟屏幕一样大小的时候，他就会闪动了。 .el-container {
   // overflow:scroll;
   // ::-webkit-scrollbar {
   //   display: none
@@ -10,139 +8,92 @@
   overflow: auto;
   margin: 0; //加上这个把滚动条隐藏掉，否则就会出现两个滚动条
 }
-CSS 控制Html页面高度导致抖动，这类由高度导致页面抖动的问题，其实究其根本原因是滚动条是否显示导致的
+
+CSS 控制Html页面高度导致抖动，这类由高度导致页面抖动的问题，其实究其根本原因是滚动条是否显示导致的 带有client字眼的属性一般是衡量属性自身的尺寸(不包含不可见区域) 带有offset字眼的属性一般指的是元素相对于某个参照物的位置信息 带有page字眼的属性一般指的是元素相对于整个视图包括滚动未见的区域的位置信息 带有screen字眼的属性一般指的是元素相对于视图不包括不可见区域的位置信息 // css3
+如何使<pre>的内容自动换行呢？首先看一下<pre>的浏览器默认样式： 都有这个white-space: pre，看看white-space的值描述： normal：默认。空白会被浏览器忽略。 pre：空白会被浏览器保留。其行为方式类似 HTML 中的 <pre>标签。 nowrap：文本不会换行，文本会在在同一行上继续，直到遇到 <br>标签为止。 pre-wrap：保留空白符序列，但是正常地进行换行。 pre-line：合并空白符序列，但是保留换行符。 inherit：规定应该从父元素继承 white-space 属性的值。 ———————————————— 原文链接：https: //blog.csdn.net/a1056244734/article/details/113882278
 
 
-带有client字眼的属性一般是衡量属性自身的尺寸(不包含不可见区域)
-带有offset字眼的属性一般指的是元素相对于某个参照物的位置信息
-带有page字眼的属性一般指的是元素相对于整个视图包括滚动未见的区域的位置信息
-带有screen字眼的属性一般指的是元素相对于视图不包括不可见区域的位置信息
-
-
-// css3
-如何使<pre>的内容自动换行呢？首先看一下<pre>的浏览器默认样式：
-都有这个white-space: pre，看看white-space的值描述：
-
-normal：默认。空白会被浏览器忽略。
-pre：空白会被浏览器保留。其行为方式类似 HTML 中的 <pre>标签。
-nowrap：文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
-pre-wrap：保留空白符序列，但是正常地进行换行。
-pre-line：合并空白符序列，但是保留换行符。
-inherit：规定应该从父元素继承 white-space 属性的值。
-————————————————
-原文链接：https://blog.csdn.net/a1056244734/article/details/113882278
-
-
-伪类的效果可以通过添加实际的类来实现 
-p:first-child {
-    color: red;
+伪类的效果可以通过添加实际的类来实现 p:first-child {
+  color: red;
 }
-伪元素/伪对象的效果可以通过添加实际的元素来实现 
-p::first-letter {
-    color: red;
-}
-所以它们的本质区别就是是否抽象创造了新元素
 
-* {
+伪元素/伪对象的效果可以通过添加实际的元素来实现 p::first-letter {
+  color: red;
+}
+
+所以它们的本质区别就是是否抽象创造了新元素 * {
   margin: 0;
   padding: 0;
 }
+
 // 优先级高于html
 :root {
   --color-base: #242731;
   --button-default-bg: var(--color-base);
 }
+
 document.body.style.setProperty('--color-base', value); // js修改css3的var变量，动态改变scss中的样式
-  <select oninput="document.body.style.setProperty('--blend-mode', this.value)" size="12">
-        <option>normal</option>
-        <option>multiply</option>
-        <option>overlay</option>
-        <option>darken</option>
-    </select>
-https://wow.techbrood.com/fiddle/41577
-————————————————
+<select oninput="document.body.style.setProperty('--blend-mode', this.value)" size="12"><option>normal</option><option>multiply</option><option>overlay</option><option>darken</option></select>https: //wow.techbrood.com/fiddle/41577
+———————————————— *选择器是这几个里面权重最低的(0, 0, 0)，但为什么能生效于html的子元素呢， 这里涉及到了“css样式继承”， transparent、background、position这几个属性是不会被样式继承的，所以父元素html的background不会生效于子元素。 此外，"继承的权重是最低的" ，即便demo2继承了demo1的color:blue，依旧会是权重(0, 0, 0)的*会生效。 lib-flexible 的REM适配方案是把一行分为10份，所以rooValue应当为设计稿宽度的1/10， 我们的设计稿宽是750，所以应该设置为750/10=75， 但是Vant建议设置为37.5，因为它是基于375写的，所以用vant时要按设计稿尺寸除以二， rootValue支持两种： 数字：固定的数值 函数：可以动态处理返回 postcss-pxtorem 处理每个CSS⽂件的时候都会来调⽤这个函数 它会把被处理的CSS⽂件相关的信息通过参数传递给该函数 // postcss.config.js
 
-*选择器是这几个里面权重最低的(0,0,0)，但为什么能生效于html的子元素呢，
-这里涉及到了“css样式继承”， transparent、background、position这几个属性是不会被样式继承的，所以父元素html的background不会生效于子元素。
-此外，"继承的权重是最低的"，即便demo2继承了demo1的color:blue，依旧会是权重(0, 0, 0)的*会生效。
-
-lib-flexible 的REM适配方案是把一行分为10份，所以rooValue应当为设计稿宽度的1/10，
-我们的设计稿宽是750，所以应该设置为750/10 = 75，
-但是Vant建议设置为37.5，因为它是基于375写的，所以用vant时要按设计稿尺寸除以二，
-rootValue支持两种：
-数字：固定的数值
-函数：可以动态处理返回
-postcss-pxtorem 处理每个CSS⽂件的时候都会来调⽤这个函数
-它会把被处理的CSS⽂件相关的信息通过参数传递给该函数
-// postcss.config.js
 module.exports= {
   plugins: {
-    autoprefixer: {},
-    'postcss-pxtorem': {
-      rootValue( {file}) {
-        return file.indexOf('vant') !==-1 ? 37.5: 75;
-      },
-      propList: ['*'],
-            // selectorBlackList: ['van'],
-    },
-  },
-}
-链接：https://wenku.baidu.com/view/ae45c606ac45b307e87101f69e3143323968f504.html
---------------------------------------------------------
+    autoprefixer: {}
 
-// 将移动端宽度10等分，计算出rem的px数
+    ,
+    'postcss-pxtorem': {
+      rootValue({
+        file
+
+      }) {
+      return file.indexOf('vant') !==-1 ? 37.5: 75;
+    }
+
+    ,
+    propList: ['*'],
+    // selectorBlackList: ['van'],
+  }
+
+  ,
+}
+
+,
+}
+
+链接：https: //wenku.baidu.com/view/ae45c606ac45b307e87101f69e3143323968f504.html
+-------------------------------------------------------- // 将移动端宽度10等分，计算出rem的px数
+
 document.addEventListener('DOMContentLoaded', function(e) {
     document.getElementsByTagName('html')[0].style.fontSize=window.innerWidth / 10 + 'px';
-  }, false);
+  }
+
+  , false);
 
 
 // 父盒子塌陷问题解决办法：
-两个盒子呈嵌套关系，子盒子设置 margin-top时父盒子会随着子盒子同时下移，或者取两者中的最大值，
-产生margin塌陷,并且 margin-top看不到效果。
-由于margin值需要根据参照点来实现偏移的，当没有参照点时就出现了无法偏移的情况，所以需要手动给父元素设置一个点出来做子元素的偏移参照物。
-解决方法如下：
-1.给父盒子添加溢出隐藏：overflow：hidden；
-
-2.在父盒子中设置上边框：border-top;
+两个盒子呈嵌套关系，子盒子设置 margin-top时父盒子会随着子盒子同时下移，或者取两者中的最大值， 产生margin塌陷,
+并且 margin-top看不到效果。 由于margin值需要根据参照点来实现偏移的，当没有参照点时就出现了无法偏移的情况，所以需要手动给父元素设置一个点出来做子元素的偏移参照物。 解决方法如下： 1.给父盒子添加溢出隐藏：overflow：hidden； 2.在父盒子中设置上边框：border-top;
 border-top: 1px solid transparet;
-设置透明上边框,不影响外观.
+设置透明上边框,
+不影响外观. 3.在父盒子中设置上内边距：padding-top； padding-top:1px;
 
-3.在父盒子中设置上内边距：padding-top；
-padding-top:1px;
-
-4.给父盒子设置相对定位,子盒子设置绝对定位(子绝父相);
+4.给父盒子设置相对定位,
+子盒子设置绝对定位(子绝父相);
 position:relative;
 position:absolute;
 
-5.after伪类清除浮动。 外部盒子的after伪元素设置clear属性。
-用于解决浮动引起的盒子塌陷问题.
-#parent:after{
-clear: both;
-content: “”;
-width: 0;
-height: 0;
-display: block;
-visibility: hidden;
+5.after伪类清除浮动。 外部盒子的after伪元素设置clear属性。 用于解决浮动引起的盒子塌陷问题. #parent:after {
+  clear: both;
+  content: “”;
+  width: 0;
+  height: 0;
+  display: block;
+  visibility: hidden;
 }
-————————————————
 
-书写语法：box-shadow: inset   h-shadow   v-shadow   blur-radius   color;
-    inset 阴影类型为内阴影
-    outset 阴影类型为外阴影  （不添加时默认为外阴影，但是添加后反而会使得阴影无效，所以如果要想实现外阴影可以不加）
-    h-shadow----- 阴影的水平位移量 允许为负值
-    v-shadow----- 阴影垂直位移量 允许为负值
-    blur-radius-----阴影模糊半径 即阴影向外模糊的模糊范围  值越大越模糊 
-    color----- 阴影颜色，定义绘制阴影时所使用的颜色  
-————————————————
-书写语法：text-shadow: h-shadow v-shadow blur color; 
-h-shadow -----水平阴影的位置，允许负值 
-v-shadow -----垂直阴影的位置，允许负值 
-blur-----模糊的距离 （如果设置的是0，那么将和正常的文字清晰度一样）
-color------阴影的颜色
-————————————————
-
-
-// 红上黑下线性梯度
+———————————————— 书写语法：box-shadow: inset h-shadow v-shadow blur-radius color;
+inset 阴影类型为内阴影 outset 阴影类型为外阴影 （不添加时默认为外阴影，但是添加后反而会使得阴影无效，所以如果要想实现外阴影可以不加） h-shadow----- 阴影的水平位移量 允许为负值 v-shadow----- 阴影垂直位移量 允许为负值 blur-radius-----阴影模糊半径 即阴影向外模糊的模糊范围 值越大越模糊 color----- 阴影颜色，定义绘制阴影时所使用的颜色 ———————————————— 书写语法：text-shadow: h-shadow v-shadow blur color;
+h-shadow -----水平阴影的位置，允许负值 v-shadow -----垂直阴影的位置，允许负值 blur-----模糊的距离 （如果设置的是0，那么将和正常的文字清晰度一样） color------阴影的颜色 ———————————————— // 红上黑下线性梯度
 background: linear-gradient(to bottom, red, black);
 // 字间距
 letter-spacing: 1px;
@@ -151,6 +102,7 @@ letter-spacing: 1px;
 .bird {
   animation: pulse 5s linear infinite;
 }
+
 @keyframes pulse {
   from {
     filter: hue-rotate(0);
@@ -181,29 +133,13 @@ letter-spacing: 1px;
 
 module.exports= {
   "plugins": {
-     "postcss-px-to-viewport": {      viewportWidth: 750,      viewportHeight: 1334,      unitPrecision: 3,      viewportUnit: 'vw',      selectorBlackList: ['.usepixel'],      minPixelValue: 1,      mediaQuery: false    }
-   }
+    "postcss-px-to-viewport": {
+      viewportWidth: 750, viewportHeight: 1334, unitPrecision: 3, viewportUnit: 'vw', selectorBlackList: ['.usepixel'], minPixelValue: 1, mediaQuery: false
+    }
+  }
 }
-其中几个配置项的含义如下：
 
-viewportWidth：视口宽度，这里设置为跟设计稿宽度一致；
-
-viewportHeight：视口高度，随便设置一个就可以；
-
-unitPrecision：转换后值的精度，3表示保留3位小数；
-
-viewportUnit：转换成什么视口单位，这里当然是vw；
-
-selectorBlackList：是一个选择符数组，对应声明中的像素单位不会转换；
-
-minPixelValue：最小像素值，大于等于这个值才会转换；
-
-mediaQuery：是否转换媒体查询中的像素。
------------------------------------
-  
-
-
-img图片保持尺寸，同时有背景色。 img {
+其中几个配置项的含义如下： viewportWidth：视口宽度，这里设置为跟设计稿宽度一致； viewportHeight：视口高度，随便设置一个就可以； unitPrecision：转换后值的精度，3表示保留3位小数； viewportUnit：转换成什么视口单位，这里当然是vw； selectorBlackList：是一个选择符数组，对应声明中的像素单位不会转换； minPixelValue：最小像素值，大于等于这个值才会转换； mediaQuery：是否转换媒体查询中的像素。 ----------------------------------- img图片保持尺寸，同时有背景色。 img {
   width: 80px;
   height: 80px;
   object-fit: contain;
@@ -239,13 +175,11 @@ left: 0;
   }
 }
 
-p~ul选择器 p之后出现的所有ul，p不一定有ul子元素。两种元素必须拥有相同的父元素，但是 ul不必直接紧随 p。
-+(加号）：二者有相同的父元素，选择紧接在另一个元素后的元素。 
->(大于号)：是css3特有的选择器，A>B 表示选择A元素的所有子B元素，只选择一代。 
-空格：A B {}, 表示A标签的所有子代B标签。 
-.c1.c2 中间没有空格，表明必须同时有c1 和 c2类的元素才符合条件。
-, 逗号：A, B {}, 表示A, B两个标签同时拥有大括号中的CSS样式。
-若想获取某一元素后的所有子元素，可以使用如下语句：element1 > * {}
+p~ul选择器 p之后出现的所有ul，p不一定有ul子元素。两种元素必须拥有相同的父元素，但是 ul不必直接紧随 p。+(加号）：二者有相同的父元素，选择紧接在另一个元素后的元素。 >(大于号)：是css3特有的选择器，A>B 表示选择A元素的所有子B元素，只选择一代。 空格：A B {}
+
+  , 表示A标签的所有子代B标签。 .c1.c2 中间没有空格，表明必须同时有c1 和 c2类的元素才符合条件。, 逗号：A, B {}
+
+  , 表示A, B两个标签同时拥有大括号中的CSS样式。 若想获取某一元素后的所有子元素，可以使用如下语句：element1 > * {}
 
   CSS :checked伪类用于匹配被用户选中的单选按钮Radio或复选按钮checkbox。 input[type="checkbox"]:checked + label {
     /* 表示页面上的所有选中的checkbox按钮 */
@@ -259,7 +193,7 @@ p~ul选择器 p之后出现的所有ul，p不一定有ul子元素。两种元素
 
   // <!--<lable>标签的for属性，绑定到input标签上-->
   // css中加号表示选择相邻兄弟,叫做“相邻兄弟选择器”,该选择器能够匹配指定元素后面相邻的兄弟元素。
-  <input id="check1"type="checkbox"/> <label for="check1"></label>
+  <input id="check1" type="checkbox" /> <label for="check1" ></label>
 
   /*当input框为选中状态时，lable标签的样式，其中在css选择时，“：”表示当前input框的值，即checked；
       \2714代表对号*/
@@ -412,7 +346,7 @@ CSS 改变文本可以采用伪元素生成
       width: 100%;
       background: #ffffff;
       box-shadow: 0px 4px 8px 0px rgba(3, 27, 78, 0.12);
-        border-radius: 5px;
+      border-radius: 5px;
     }
 
     .step-box {
@@ -566,14 +500,19 @@ CSS 改变文本可以采用伪元素生成
       // & 用在嵌套的scss代码里，来引用父元素，&父选择器标识符并不仅仅用于链接伪类选择器，看如下scss代码实例： 
       #content aside {
         color: red;
+
         body.ie & {
           color: green
         }
       }
+
       // 编译为css代码如下： 
       #content aside {
         color: red
-      };
+      }
+
+      ;
+
       body.ie #content aside {
         color: green
       }
@@ -583,6 +522,7 @@ CSS 改变文本可以采用伪元素生成
         background: rgba(247, 248, 249, 1);
         table-layout: fixed;
         width: 100%;
+
         td {
           border: 1px solid rgba(232, 235, 239, 1);
           padding: 8px 13px;
@@ -590,221 +530,160 @@ CSS 改变文本可以采用伪元素生成
           word-break: break-all;
           line-height: 16px;
         }
+
         & tr td:nth-child(2n+1) {
           font-weight: bold;
         }
       }
 
-      55m<sup>2</sup>
+      55m<sup>2</sup> // 设置bc的图片，必须铺满，否则浏览器伸缩时会露出来
+      background: url("../../../static/images/bm-charge-bg.png") no-repeat;
+      background-size: cover;
 
-      // 设置bc的图片，必须铺满，否则浏览器伸缩时会露出来
-            background: url("../../../static/images/bm-charge-bg.png") no-repeat;
-            background-size: cover;
+      // 段落换行
+      pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
 
-            // 段落换行
-          pre {
-              white-space: pre-wrap;
-              word-wrap: break-word;
-            }
-// 隐藏滚动条
-.list::-webkit-scrollbar,
-.list::-webkit-scrollbar-thumb,
-.list::-webkit-scrollbar-track {
-  display: none;
-  margin-top: -1px;
-  width: 0;
-  height: 0;
-  background: transparent;
-}
+      // 隐藏滚动条
+      .list::-webkit-scrollbar,
+      .list::-webkit-scrollbar-thumb,
+      .list::-webkit-scrollbar-track {
+        display: none;
+        margin-top: -1px;
+        width: 0;
+        height: 0;
+        background: transparent;
+      }
 
-// 想给tbody设置高度的时候，发现不起作用。原因是table的默认是display:table,
-// 如果想设置高度需要改成display:block/inline-block。这样改出现的问题是table的布局已经乱了，但是table高度不会超出外层div了。
+      // 想给tbody设置高度的时候，发现不起作用。原因是table的默认是display:table,
+      // 如果想设置高度需要改成display:block/inline-block。这样改出现的问题是table的布局已经乱了，但是table高度不会超出外层div了。
 
-// 1.如果当前元素没有设置宽高属性的情况下，margin:0 auto是不起任何效果的；
-// 2.如果当前元素使用百分比设置宽高，margin:0 auto同样不起效果
-// 3.如果是行内元素，需要先转化为块级元素，行内块不行，必须是块级。
+      // 1.如果当前元素没有设置宽高属性的情况下，margin:0 auto是不起任何效果的；
+      // 2.如果当前元素使用百分比设置宽高，margin:0 auto同样不起效果
+      // 3.如果是行内元素，需要先转化为块级元素，行内块不行，必须是块级。
 
-// <img />标签没有独占一行，所以是行内元素，这没啥问题既然是行内元素为什么能够设置宽高呢？ 这个问题就要引申出下面部分了，<img />标签属于替换元素，具有内置的宽高属性，所以可以设置。
-// 可替换元素：
-// 浏览器根据元素的标签和属性，来决定元素的具体显示内容
-// 例如浏览器会根据 <img> 标签的src属性的值来读取图片信息并显示出来，而如果查看(X)HTML代码，则看不到图片的实际内容；又例如根据
-// <input>标签的type属性来决定是显示输入框，还是单选按钮等
-// (X)HTML中的 <img>、<input>、<textarea>、<select>、<object>都是替换元素。这些元素往往没有实际的内容，即是一个空元素
+      // <img />标签没有独占一行，所以是行内元素，这没啥问题既然是行内元素为什么能够设置宽高呢？ 这个问题就要引申出下面部分了，<img />标签属于替换元素，具有内置的宽高属性，所以可以设置。
+      // 可替换元素：
+      // 浏览器根据元素的标签和属性，来决定元素的具体显示内容
+      // 例如浏览器会根据 <img> 标签的src属性的值来读取图片信息并显示出来，而如果查看(X)HTML代码，则看不到图片的实际内容；又例如根据
+      // <input>标签的type属性来决定是显示输入框，还是单选按钮等
+      // (X)HTML中的 <img>、<input>、<textarea>、<select>、<object>都是替换元素。这些元素往往没有实际的内容，即是一个空元素
 
 
-// 每行三个，1-0.32*3=0.04，不能用justify-content，必须用margin模拟缝隙
-#noticeWrapper {
-  display: flex;
-  align-items: center;
-  margin: 50px 0 100px 0;
-  /* justify-content: space-between; */
-}
-#noticeWrapper .noticeBox {
-  width: 32%;
-  min-height: 72px;
-  cursor: pointer;
-}
-#noticeWrapper .noticeBox:not(:nth-child(3n)) {
-  margin-right: calc(4% / 2);
-}
-// 或者创建伪元素，并且flex:auto或者1；得加上justify-content
-// 或者计算出这一行差几个，然后hidden占位
-let tmpLen = tmp.length;
-        if (tmpLen < san) {
-          let diff = san - tmpLen;
-          for (let i = 1; i <= diff; i++) {
-            tmp.push({});
-          }
-          let timer = setInterval(() => {
-            if ($('#noticeWrapper').children().length) {
-              $(`#noticeWrapper > div`).slice(-diff).css({visibility: 'hidden'});
-              clearInterval(timer);
-            }
-          }, 100);
+      // 每行三个，1-0.32*3=0.04，不能用justify-content，必须用margin模拟缝隙
+      #noticeWrapper {
+        display: flex;
+        align-items: center;
+        margin: 50px 0 100px 0;
+        /* justify-content: space-between; */
+      }
+
+      #noticeWrapper .noticeBox {
+        width: 32%;
+        min-height: 72px;
+        cursor: pointer;
+      }
+
+      #noticeWrapper .noticeBox:not(:nth-child(3n)) {
+        margin-right: calc(4% / 2);
+      }
+
+      // 或者创建伪元素，并且flex:auto或者1；得加上justify-content
+      // 或者计算出这一行差几个，然后hidden占位
+      let tmpLen=tmp.length;
+
+      if (tmpLen < san) {
+        let diff=san - tmpLen;
+
+        for (let i=1; i <=diff; i++) {
+          tmp.push({});
+      }
+
+      let timer=setInterval(()=> {
+          if ($('#noticeWrapper').children().length) {
+            $(`#noticeWrapper > div`).slice(-diff).css({
+              visibility: 'hidden'
+            });
+          clearInterval(timer);
         }
+      }
 
-https: //juejin.cn/post/6844903917348732936
-进度条：
-<div class="progress" style="--percent: 14;"></div>
-<div class="progress" style="--percent: 41;"></div>
-<div class="progress" style="--percent: 94;"></div>
-
-.progress {
-  width: 400px;
-  height: 17px;
-  margin: 5px;
-  color: #fff;
-  background-color: #f1f1f1;
-  font-size: 12px;
-
-  &::before {
-    counter-reset: percent var(--percent);
-    content: counter(percent) "%"; // 文字显示
-
-    display: inline-block;
-    width: calc(100% * var(--percent) / 100); // 宽度计算
-    max-width: 100%; // 以防溢出
-    height: inherit;
-    text-align: right;
-    background-color: #2486ff;
-  }
-}
-鱼和熊掌不可兼得，如果只靠css，想在页面首次进入触发动画效果，那只有animation才能做到了😭
-.progress {
-  &::before {
-    // 移除width跟transition属性
-    animation: progress 1s ease forwards;
+      , 100);
   }
 
-  @keyframes progress {
-    from {
-      width: 0;
-    }
-    to {
-      width: calc(100% * var(--percent) / 100);
+  https: //juejin.cn/post/6844903917348732936
+
+  进度条： <div class="progress" style="--percent: 14;" ></div> <div class="progress" style="--percent: 41;" ></div> <div class="progress" style="--percent: 94;" ></div> .progress {
+    width: 400px;
+    height: 17px;
+    margin: 5px;
+    color: #fff;
+    background-color: #f1f1f1;
+    font-size: 12px;
+
+    &::before {
+      counter-reset: percent var(--percent);
+      content: counter(percent) "%"; // 文字显示
+
+      display: inline-block;
+      width: calc(100% * var(--percent) / 100); // 宽度计算
+      max-width: 100%; // 以防溢出
+      height: inherit;
+      text-align: right;
+      background-color: #2486ff;
     }
   }
-}
 
-counter函数的作用是插入计数器的值，配合content属性可以把计数器里的值显示出来🎲，介绍用法之前，得先熟悉两个属性counter-reset跟counter-increment😎
-显示变量的时候，如果变量是string类型则可以直接显示var(--name)，如果是int类型，则需要借用counter函数😒
+  鱼和熊掌不可兼得，如果只靠css，想在页面首次进入触发动画效果，那只有animation才能做到了😭 .progress {
+    &::before {
+      // 移除width跟transition属性
+      animation: progress 1s ease forwards;
+    }
 
-counter-reset的作用是定义一个计数器：
-counter-reset: count1 0; // 声明一个计数器count1，并从0开始计算
-counter-reset: count2 1; // 声明一个计数器count2，并从1开始计算
-counter-reset: count3 0 count4 0 count5 0; // 声明多个计数器
+    @keyframes progress {
+      from {
+        width: 0;
+      }
 
-counter-increment使计数器的值递增，可以理解成javascript中的+=：
-counter-reset: count 0;
-counter-increment: count 2; // 使count自增2，当前count的值为2
-counter-increment: count -2; // 使count自增-2，当前count的值为-2
-
-1. 当a标签内容为空时，显示其href属性里面的值：
-<a href="https://juejin.cn/user/2911162518997064"></a>
-a {
-  &:empty {
-    &::after {
-      content: "链接内容为："attr(href);
+      to {
+        width: calc(100% * var(--percent) / 100);
+      }
     }
   }
+
+  counter函数的作用是插入计数器的值，配合content属性可以把计数器里的值显示出来🎲，介绍用法之前，得先熟悉两个属性counter-reset跟counter-increment😎 显示变量的时候，如果变量是string类型则可以直接显示var(--name)，如果是int类型，则需要借用counter函数😒 counter-reset的作用是定义一个计数器： counter-reset: count1 0; // 声明一个计数器count1，并从0开始计算
+  counter-reset: count2 1; // 声明一个计数器count2，并从1开始计算
+  counter-reset: count3 0 count4 0 count5 0; // 声明多个计数器
+
+  counter-increment使计数器的值递增，可以理解成javascript中的+=： counter-reset: count 0;
+  counter-increment: count 2; // 使count自增2，当前count的值为2
+  counter-increment: count -2; // 使count自增-2，当前count的值为-2
+
+  1. 当a标签内容为空时，显示其href属性里面的值： <a href="https://juejin.cn/user/2911162518997064" ></a> a {
+    &:empty {
+      &::after {
+        content: "链接内容为：" attr(href);
+      }
+    }
+  }
+
+
+  BFC: 块级格式化上下文 BFC基本概念：BFC 是 CSS 布局的一个概念，是一块独立的渲染区域，是一个环境，里面的元素不会影响到外部的元素 。 父子元素和兄弟元素边距重叠，重叠原则取最大值。空元素的边距重叠是取 margin 与 padding 的最大值。 5.2 BFC原理（渲染规则|布局规则）： （1）内部的 Box 会在垂直方向，从顶部开始一个接着一个地放置； （2）Box 垂直方向的距离由 margin (外边距)决定，属于同一个 BFC 的两个相邻 Box 的 margin 会发生重叠； （3）每个元素的 margin Box 的左边， 与包含块 border Box 的左边相接触，（对于从左到右的格式化，否则相反）。即使存在浮动也是如此； （4）BFC 在页面上是一个隔离的独立容器，外面的元素不会影响里面的元素，反之亦然。文字环绕效果，设置 float； （5）BFC 的区域不会与 float Box 重叠（清浮动）;
+  （6）计算 BFC 的高度时，浮动元素也参与计算。 5.3 CSS在什么情况下会创建出BFC（即脱离文档流） 0、根元素，即 HTML 元素（最大的一个 BFC） ​ 1、浮动（ float 的值不为 none ） ​ 2、绝对定位元素（ position 的值为 absolute 或 fixed ） ​ 3、行内块（ display 为 inline-block ） ​ 4、表格单元（ display 为 table、table-cell、table-caption、inline-block 等 HTML 表格相关的属性) ​ 5、弹性盒（ display 为 flex 或 inline-flex ） ​ 6、默认值。内容不会被修剪，会呈现在元素框之外（overflow 不为 visible） 5.4 BFC作用（使用场景） 1、自适应两（三）栏布局（避免多列布局由于宽度计算四舍五入而自动换行） ​ 2、避免元素被浮动元素覆盖 ​ 3、可以让父元素的高度包含子浮动元素，清除内部浮动（原理：触发父 div 的 BFC 属性，使下面的子 div 都处在父 div的同一个 BFC 区域之内） ​ 4、去除边距重叠现象，分属于不同的 BFC 时，可以阻止 margin 重叠 IFC: 行内格式化上下文 IFC基本概念： 6.2 IFC原理（渲染规则|布局规则）： （1）内部的 Box 会在水平方向，从含块的顶部开始一个接着一个地放置； ​ （2）这些 Box 之间的水平方向的 margin，border 和padding 都有效； ​ （3）Box 垂直对齐方式：以它们的底部、顶部对齐，或以它们里面的文本的基线（baseline）对齐（默认， 文本与图片对其），例：line-heigth 与 vertical-align。 *** 无论什么浏览器，默认滚动条均来自<html>，而不是<body>。因为<body>元素默认有8px的margin。若滚动条来自<body>元素，则滚动条与页面则应该有8px的间距，实际上并没有间距，所以滚动条来自<html>元素 *** clientWidth 获取对象的宽度，不计算任何边距、边框、滚动条，但包括该对象的补白。 所以 父元素宽度 - 子元素clientWidth=子元素滚动条宽度 （除了IE7，因为它的html纵向滚动条是某认出现的） // 绝大多数的页面间布局都是水平居中布局，主体定个宽度，然后margin: 0 auto
+
+然而，这种布局有一个隐患。现代浏览器滚动条默认是overflow:auto类型的，也就是如果尺寸不足一屏，没有滚动条；超出，出现滚动条。 1)信息流页面，如新浪微博，是从上往下push渲染的。开始只有头部一些信息加载，此时页面高度有限，没有滚动条；然后，更多内容显示，滚动条出现，占据可用宽度，margin: 0 auto主体元素自然会做偏移——跳动产生。 2)JS交互，本来默认页面高度不足一屏，结果点击了个“加载更多”，内容超过一屏，滚动条出现，页面主体就会左侧跳动。 3)结构类似几个页面通过头部的水平导航刷新切换，结果有的页面有滚动条，有的没有。造成的结果就是，导航跳来跳去！ 解决办法：overflow-y: scroll，但在页面高度较小的时候，依然会保留一个丑陋的灰色的滚动栏，这其实又回到了IE当道的旧社会时代。现代浏览器做的那些默认视觉优化岂不是白费... .wrap-outer {
+  padding-left: calc(100vw - 100%); // 或者margin-left
 }
 
-
-BFC: 块级格式化上下文
-BFC基本概念：BFC 是 CSS 布局的一个概念，是一块独立的渲染区域，是一个环境，里面的元素不会影响到外部的元素 。
-父子元素和兄弟元素边距重叠，重叠原则取最大值。空元素的边距重叠是取 margin 与 padding 的最大值。
-
-5.2 BFC原理（渲染规则|布局规则）：
-
-（1）内部的 Box 会在垂直方向，从顶部开始一个接着一个地放置；
-（2）Box 垂直方向的距离由 margin (外边距)决定，属于同一个 BFC 的两个相邻 Box 的 margin 会发生重叠；
-（3）每个元素的 margin Box 的左边， 与包含块 border Box 的左边相接触，（对于从左到右的格式化，否则相反）。即使存在浮动也是如此；
-（4）BFC 在页面上是一个隔离的独立容器，外面的元素不会影响里面的元素，反之亦然。文字环绕效果，设置 float；
-（5）BFC 的区域不会与 float Box 重叠（清浮动）;
-（6）计算 BFC 的高度时，浮动元素也参与计算。
-
-5.3 CSS在什么情况下会创建出BFC（即脱离文档流）
-
-0、根元素，即 HTML 元素（最大的一个 BFC）
-​ 1、浮动（ float 的值不为 none ）
-​ 2、绝对定位元素（ position 的值为 absolute 或 fixed ）
-​ 3、行内块（ display 为 inline-block ）
-​ 4、表格单元（ display 为 table、table-cell、table-caption、inline-block 等 HTML 表格相关的属性 )
-​ 5、弹性盒（ display 为 flex 或 inline-flex ）
-​ 6、默认值。内容不会被修剪，会呈现在元素框之外（overflow 不为 visible）
-
-5.4 BFC作用（使用场景）
-
-1、自适应两（三）栏布局（避免多列布局由于宽度计算四舍五入而自动换行）
-​ 2、避免元素被浮动元素覆盖
-​ 3、可以让父元素的高度包含子浮动元素，清除内部浮动（原理：触发父 div 的 BFC 属性，使下面的子 div 都处在父 div的同一个 BFC 区域之内）
-​ 4、去除边距重叠现象，分属于不同的 BFC 时，可以阻止 margin 重叠
-
-IFC: 行内格式化上下文
-
-IFC基本概念：
-6.2 IFC原理（渲染规则|布局规则）：
-
-（1）内部的 Box 会在水平方向，从含块的顶部开始一个接着一个地放置；
-​ （2）这些 Box 之间的水平方向的 margin，border 和padding 都有效；
-​ （3）Box 垂直对齐方式：以它们的底部、顶部对齐，或以它们里面的文本的基线（baseline）对齐（默认， 文本与图片对其），例：line-heigth 与 vertical-align。
-
-
-
-*** 无论什么浏览器，默认滚动条均来自<html>，而不是<body>。因为<body>元素默认有8px的margin。若滚动条来自<body>元素，则滚动条与页面则应该有8px的间距，实际上并没有间距，所以滚动条来自<html>元素 ***
-clientWidth 获取对象的宽度，不计算任何边距、边框、滚动条，但包括该对象的补白。
-所以 父元素宽度 - 子元素clientWidth = 子元素滚动条宽度 （除了IE7，因为它的html纵向滚动条是某认出现的）
-
-
-// 绝大多数的页面间布局都是水平居中布局，主体定个宽度，然后margin: 0 auto
-然而，这种布局有一个隐患。现代浏览器滚动条默认是overflow:auto类型的，也就是如果尺寸不足一屏，没有滚动条；超出，出现滚动条。
-1)信息流页面，如新浪微博，是从上往下push渲染的。开始只有头部一些信息加载，此时页面高度有限，没有滚动条；然后，更多内容显示，滚动条出现，占据可用宽度，margin: 0 auto主体元素自然会做偏移——跳动产生。
-2)JS交互，本来默认页面高度不足一屏，结果点击了个“加载更多”，内容超过一屏，滚动条出现，页面主体就会左侧跳动。
-3)结构类似几个页面通过头部的水平导航刷新切换，结果有的页面有滚动条，有的没有。造成的结果就是，导航跳来跳去！
-解决办法：overflow-y: scroll，但在页面高度较小的时候，依然会保留一个丑陋的灰色的滚动栏，这其实又回到了IE当道的旧社会时代。现代浏览器做的那些默认视觉优化岂不是白费...
-.wrap-outer {
-  padding-left: calc(100vw - 100%);  // 或者margin-left
-}
-.wrap-outer指的是居中定宽主体的父级，如果没有，创建一个（使用主体也是可以实现类似效果，不过本着宽度分离原则，不推荐）；
-然后，calc是CSS3中的计算，IE10+浏览器支持，IE9浏览器基本支持(不能用在background-position上)；
-最后，100vw相对于浏览器的window.innerWidth，是浏览器的内部宽度，注意，滚动条宽度也计算在内！而100%是可用宽度，是不含滚动条的宽度。
-于是，calc(100vw - 100%)就是浏览器滚动条的宽度大小（如果有，如果没有则是0）！左右都有一个滚动条宽度（或都是0）被占用，主体内容就可以永远居中浏览器啦，从而没有任何跳动！
-
-
-1. vertical-align只影响inline或者inline-block的，所以div.child设置vertical-align就能居中了
-2. 元素被当成行内元素排版的时候，元素之间的空白符（空格、回车换行等）都会被浏览器处理，根据
-CSS中white-space属性的处理方式（默认是normal，合并多余空白），原来 HTML代码中的回车换行被转
-成一个空白符 ，在字体不为0的情况下，空白符占据一定宽度，所以inline-block的元素之间就出现了空
-隙。 * 只要元素紧挨着不换行即可。
-
-
-屏幕宽1920，字体40px，要求随屏伸缩：
-  font-size: calc(100vw * 40 / 1920);
+.wrap-outer指的是居中定宽主体的父级，如果没有，创建一个（使用主体也是可以实现类似效果，不过本着宽度分离原则，不推荐）； 然后，calc是CSS3中的计算，IE10+浏览器支持，IE9浏览器基本支持(不能用在background-position上)； 最后，100vw相对于浏览器的window.innerWidth，是浏览器的内部宽度，注意，滚动条宽度也计算在内！而100%是可用宽度，是不含滚动条的宽度。 于是，calc(100vw - 100%)就是浏览器滚动条的宽度大小（如果有，如果没有则是0）！左右都有一个滚动条宽度（或都是0）被占用，主体内容就可以永远居中浏览器啦，从而没有任何跳动！ #设置div的display属性为table-cell，将它设置为表格元素，然后设置纵向对齐方式vertical-align属性为middle，在span标签中不设置高度和宽度就可以垂直居中了. 1. vertical-align只影响inline或者inline-block的，所以div.child设置vertical-align就能居中了 2. 元素被当成行内元素排版的时候，元素之间的空白符（空格、回车换行等）都会被浏览器处理，根据 CSS中white-space属性的处理方式（默认是normal，合并多余空白），原来 HTML代码中的回车换行被转 成一个空白符 ，在字体不为0的情况下，空白符占据一定宽度，所以inline-block的元素之间就出现了空 隙。 * 只要元素紧挨着不换行即可。 屏幕宽1920，字体40px，要求随屏伸缩： font-size: calc(100vw * 40 / 1920);
 
 /**
  * PostCSS 配置文件
  */
-module.exports = {
+module.exports= {
+
   // 配置要使用的 PostCSS 插件
   plugins: {
     // 配置使用 autoprefixer 插件
@@ -819,6 +698,7 @@ module.exports = {
     // 配置使用 postcss-pxtorem 插件
     // 作用：把 px 转为 rem
     'postcss-pxtorem': {
+
       // lib-flexible 的 REM 适配方案：把一行分为 10 份，每份就是十分之一
       // 所以 rootValue 应该设置为你的设计稿宽度的十分之一
       // 我们的设计稿是 750，所以应该设置为 750 / 10 = 75
@@ -832,19 +712,23 @@ module.exports = {
       //    函数：可以动态处理返回
       //          postcss-pxtorem 处理每个 CSS 文件的时候都会来调用这个函数
       //          它会把被处理的 CSS 文件相关的信息通过参数传递给该函数
-      rootValue ({ file }) {
-        return file.indexOf('vant') !== -1 ? 37.5 : 75
-      },
-      // rootValue: 75,
-      // 配置要转换的 CSS 属性
-      // * 表示所有
-      propList: ['*']
+      rootValue ({
+        file
+
+      }) {
+      return file.indexOf('vant') !==-1 ? 37.5: 75
     }
+
+    ,
+    // rootValue: 75,
+    // 配置要转换的 CSS 属性
+    // * 表示所有
+    propList: ['*']
   }
 }
+}
 
-el-select增加搜索框后缀
-/deep/ .el-select__caret.el-input__icon {
+el-select增加搜索框后缀 /deep/ .el-select__caret.el-input__icon {
   &::after {
     content: "\e778";
     transform: rotateX(180deg) rotateY(180deg);
@@ -852,24 +736,30 @@ el-select增加搜索框后缀
   }
 }
 
-el-input 与 el-textarea 提示语样式不同
-.el-textarea {
+el-input 与 el-textarea 提示语样式不同 .el-textarea {
+
   /* 设置textarea框提示内容的样式 */
   textarea::-webkit-input-placeholder {
     text-align: left;
     line-height: 20px;
     font-family: PingFang SC, Helvetica Neue, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif;
-  } /*webkit 内核浏览器*/
+  }
+
+  /*webkit 内核浏览器*/
   textarea::-moz-placeholder {
     text-align: left;
     line-height: 20px;
     font-family: PingFang SC, Helvetica Neue, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif;
-  } /*Mozilla Firefox 19+*/
+  }
+
+  /*Mozilla Firefox 19+*/
   textarea:-moz-placeholder {
     text-align: left;
     line-height: 20px;
     font-family: PingFang SC, Helvetica Neue, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif;
-  } /*Mozilla Firefox 4 to 18*/
+  }
+
+  /*Mozilla Firefox 4 to 18*/
   textarea:-ms-input-placeholder {
     text-align: left;
     line-height: 20px;
@@ -877,36 +767,40 @@ el-input 与 el-textarea 提示语样式不同
   }
 }
 
-npx sass   scss文件  css文件
-
- Ignored attempt to cancel a touchmove event with cancelable=false, for example because scrolling is in progress and cannot be interrupted
-利用cancelable 事件返回一个布尔值。如果用 preventDefault() 方法可以取消与事件关联的默认动作，则为 true，否则为 fasle。
-if (moveY > this.startY && scrollTop <=0 && e.cancelable) {
+npx sass scss文件 css文件 Ignored attempt to cancel a touchmove event with cancelable=false,
+for example because scrolling is in progress and cannot be interrupted 利用cancelable 事件返回一个布尔值。如果用 preventDefault() 方法可以取消与事件关联的默认动作，则为 true，否则为 fasle。 if (moveY > this.startY && scrollTop <=0 && e.cancelable) {
   e.preventDefault();
 }
-http://t.zoukankan.com/liguanlong-p-12558734.html
+
+http: //t.zoukankan.com/liguanlong-p-12558734.html
 
 
-pointer-events: none; 实现点击穿透, 比如图片上的水印层
+pointer-events: none;
+实现点击穿透,
+比如图片上的水印层
+
 /** 
 :active只有在鼠标按下时才会起作用，通常在点击一个按钮时，都是轻轻地点击，而不是长按，如果在:active上添加动画，
 那么在鼠标抬起的时候，动画一般都没有结束，所以会导致在鼠标抬起的时候，动画马上就停止了，如果是transition，还会有一个“回退”的过渡效果。
 
 */
 // CSS 实现“节流”其实就是控制一个动画的精准控制，假设有一个动画控制按钮从禁用->可点击的变化，每次点击时让这个动画重新执行一遍，在执行的过程中，一直处于禁用状态，这样就达到了“节流”的效果
-button{
+button {
   // pointer-events在0~2秒内的值都是none，一旦到达2秒，就立刻变成了all，由于是forwards，会一直保持all的状态
   animation: throttle 2s step-end forwards;
 }
+
 // 在点击的时候重置动画，这样在抬起的时候会重新运行动画
-button:active{
+button:active {
   animation: none;
 }
+
 @keyframes throttle {
   from {
     color: red;
     pointer-events: none;
   }
+
   to {
     color: green;
     pointer-events: all;
@@ -914,33 +808,24 @@ button:active{
 }
 
 // 还可以通过 transition 的回调函数动态设置按钮禁用态。定义一个无关紧要的过渡属性，比如opacity：
-button{
+button {
   opacity: .99;
   transition: opacity 2s;
 }
-button:not(:disabled):active{
+
+button:not(:disabled):active {
   opacity: 1;
   transition: 0s;
 }
+
 // 过渡开始，这部分禁用的逻辑是完全和业务逻辑是解耦的
-document.addEventListener('transitionstart', function(ev){
-  ev.target.disabled = true
-})
-// 过渡结束
-document.addEventListener('transitionend', function(ev){
-  ev.target.disabled = false
-})
-关于 CSS 点击动画的几个套路和一些案例，其实就是默认执行动画，点击时重置一下就行了。整体来说代码很简单，只是理解起来可能不是特别顺畅，下面总结一下实现要点：
+document.addEventListener('transitionstart', function(ev) {
+    ev.target.disabled=true
+  }) // 过渡结束
 
-简单动画用transition，其他用 animation
-transition 可以通过设置时长为 0 来重置
-animation 可以通过设置 none 来重置
-在 :active 时重置动画，点击后会再次运行动画
-复杂的动画可以借助现有的动画库，例如 anmate.css
-设置动画时长为 0 可以避免首次渲染出现动画
-
-相比 js 实现，CSS 实现代码更少，加载更快，无需等待 js 加载完成，体验更优（比如天然支持敲空格键触发），同时也更容易维护和使用，直接复制一个类名就行了。
-
+document.addEventListener('transitionend', function(ev) {
+    ev.target.disabled=false
+  }) 关于 CSS 点击动画的几个套路和一些案例，其实就是默认执行动画，点击时重置一下就行了。整体来说代码很简单，只是理解起来可能不是特别顺畅，下面总结一下实现要点： 简单动画用transition，其他用 animation transition 可以通过设置时长为 0 来重置 animation 可以通过设置 none 来重置 在 :active 时重置动画，点击后会再次运行动画 复杂的动画可以借助现有的动画库，例如 anmate.css 设置动画时长为 0 可以避免首次渲染出现动画 相比 js 实现，CSS 实现代码更少，加载更快，无需等待 js 加载完成，体验更优（比如天然支持敲空格键触发），同时也更容易维护和使用，直接复制一个类名就行了。
 
 /*单行省略*/
 // div的display: inline-block;是没有省略号的，必须是block
@@ -951,7 +836,7 @@ animation 可以通过设置 none 来重置
 }
 
 // white-space: pre-wrap; 将文本中的空格和换行保留，并且超出宽度自动换行。而pre是不换行的。
-/*多行省略，数字和英文必须用word-break: break-all;  或者  word-wrap:break-word;才能换行*/  
+/*多行省略，数字和英文必须用word-break: break-all;  或者  word-wrap:break-word;才能换行*/
 .more-ellipsis {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -983,15 +868,16 @@ animation 可以通过设置 none 来重置
 
 
 @function vw($px) {
-    
-    /*这里是以移动端PSD设计稿 宽为750px，高为1334px为例，所以这里 除以750，以便在使用时，不用去计算倍数， PSD设计稿中的尺寸是多少，我们样式就是多少！！！*/
- 
+
+  /*这里是以移动端PSD设计稿 宽为750px，高为1334px为例，所以这里 除以750，以便在使用时，不用去计算倍数， PSD设计稿中的尺寸是多少，我们样式就是多少！！！*/
+
   @return ($px / 750) * 100vw;
 }
 
 // 替换el组件内文字内容
 .el-image .el-image__error {
   font-size: 0;
+
   &::after {
     font-size: 14px;
     content: '暂无封面';
@@ -1005,94 +891,86 @@ animation 可以通过设置 none 来重置
 //       },
 //  }
 
-vue的@  alias用法：
-background: url('~@/assets/img/1-body.png') no-repeat
-
-
-图片如果想在底部撑开父元素：
-1. 做子元素背景，这必须得知道after的padding-bottom
-.bg {
+vue的@ alias用法： background: url('~@/assets/img/1-body.png') no-repeat 图片如果想在底部撑开父元素： 1. 做子元素背景，这必须得知道after的padding-bottom .bg {
   width: 100%;
   background: gray url('~@/assets/img/2-card.svg') no-repeat center;
   // 铺满必须cover，而且只有一个center
   background-size: cover;
+
   &::after {
     content: '';
     display: block;
     padding-bottom: 36%;
   }
 }
-2. 图片做img元素绝对定位bottom:0，同时提升1中子元素的 z-index，让该子元素浮在图片上。
-!3. 图片做父元素背景，但是必须沉底对齐center bottom，同时不要cover。
-.bg {
+
+2. 图片做img元素绝对定位bottom:0，同时提升1中子元素的 z-index，让该子元素浮在图片上。 !3. 图片做父元素背景，但是必须沉底对齐center bottom，同时不要cover。 .bg {
   background: url('~@/assets/img/2-card.svg') no-repeat center bottom !important;
   width: 100%;
 }
-4. flex-direction: column; 子元素flex: 1;全部填满
 
+4. flex-direction: column;
+子元素flex: 1;
 
-map和area标签
-        map用于定义一个客户端图像映射。图像映射（image-map）指带有可点击区域的一幅图像。area定义map的可点击区域。map和area同时出现。img标签可以指定usermap属性，关联map。
+全部填满 map和area标签 map用于定义一个客户端图像映射。图像映射（image-map）指带有可点击区域的一幅图像。area定义map的可点击区域。map和area同时出现。img标签可以指定usermap属性，关联map。 area有几种类型，分别是矩形、圆形和多边形。在我们这个例子中，可以通过多边形定义热区。多边形边界的坐标可以通过绘图软件获取 话不多说，直接上简易demo，重点还是在coords坐标的获取,
+coords的值是4个，分别是由，号隔开。前两个表示起始点的坐标，我们在浏览器页面中坐标系的0点是在我们的左上角，后面两个是结束点的坐标，也就是起始点对角的坐标点。 <div class="box"><img src="./demo.png" usermap="#demo-map" /><map name="demo-map"><area shape="polygon" coords="54,122,236,75,252,102,262,131,268,162,54,122" href="test()" /></map></div><script>function test() {
+  console.log('test')
+}
 
-        area有几种类型，分别是矩形、圆形和多边形。在我们这个例子中，可以通过多边形定义热区。多边形边界的坐标可以通过绘图软件获取
+</script>———————————————— 原文链接：https: //blog.csdn.net/STRIVE_LC/article/details/120792265
 
-        话不多说，直接上简易demo，重点还是在coords坐标的获取,coords的值是4个，分别是由，号隔开。前两个表示起始点的坐标，我们在浏览器页面中坐标系的0点是在我们的左上角，后面两个是结束点的坐标，也就是起始点对角的坐标点。
+如何判断图片即将进入可视区域 方案1：clientHeight+scroolTop>offsetTop document.addEventListener('scroll', ()=> {
+    const clientH=document.documentElement.clientHeight //获取屏幕可视区域的高度
+    const scrollT=document.documentElement.scrollTop //获取浏览器窗口顶部与文档顶部之间的距离，也就是滚动条滚动的距离
+    const offsetTop=document.getElementById('yellow').offsetTop //获取元素相对于文档顶部的高度
 
-
-<div class="box">
-    <img src="./demo.png" usermap="#demo-map"/>
-    <map name="demo-map">
-      <area shape="polygon" coords="54,122,236,75,252,102,262,131,268,162,54,122" href="test()"/>
-    </map>
-</div>
-<script>
-    function test() {
-        console.log('test')
+    if (clientH + scrollT > offsetTop) {
+      console.log('进入可视区域啦！！')
     }
-</script>
-————————————————
-原文链接：https://blog.csdn.net/STRIVE_LC/article/details/120792265
 
-如何判断图片即将进入可视区域
-方案1：clientHeight+scroolTop>offsetTop
-document.addEventListener('scroll', () => {
-            const clientH = document.documentElement.clientHeight//获取屏幕可视区域的高度
-            const scrollT = document.documentElement.scrollTop//获取浏览器窗口顶部与文档顶部之间的距离，也就是滚动条滚动的距离
-            const offsetTop = document.getElementById('yellow').offsetTop//获取元素相对于文档顶部的高度
-            if (clientH + scrollT > offsetTop) {
-                console.log('进入可视区域啦！！')
-            }
-        })
-方案2：下滑过程中bound.top会越来越小
-<script>
-        document.addEventListener('scroll', () => {
-            var bound = document.getElementById('yellow').getBoundingClientRect(); ////获取元素的大小及位置
-            var clientHeight = window.innerHeight;
-            if (bound.top <= clientHeight) {
-                console.log('进入可视区域啦')
-            }
-        })
-    </script>
+  }) 方案2：下滑过程中bound.top会越来越小 <script>document.addEventListener('scroll', ()=> {
+    var bound=document.getElementById('yellow').getBoundingClientRect(); ////获取元素的大小及位置
+    var clientHeight=window.innerHeight;
 
+    if (bound.top <=clientHeight) {
+      console.log('进入可视区域啦')
+    }
 
-label换行：
-  &::before {
-    content: '\A';
-    white-space: pre;
-  }
+  }) </script>label换行： &::before {
+  content: '\A';
+  white-space: pre;
+}
 
-jquery可以给动态样式，但是element.click这种写法不支持给动态元素或者样式重新绑定事件，如 $(".sex_icon").click(function() {})
-支持给动态元素和属性绑定事件的是live和on，其中live在JQUERY 1.7之后就不推荐使用了。现在主要用on，使用on的时候也要注意，on前面的元素也必须在页面加载的时候就存在于dom里面。动态的元素或者样式等，可以放在on的第二个参数里面。
-如：$("body").on("click", ".sex_icon", function() {})
+jquery可以给动态样式，但是element.click这种写法不支持给动态元素或者样式重新绑定事件，如 $(".sex_icon").click(function() {}) 支持给动态元素和属性绑定事件的是live和on，其中live在JQUERY 1.7之后就不推荐使用了。现在主要用on，使用on的时候也要注意，on前面的元素也必须在页面加载的时候就存在于dom里面。动态的元素或者样式等，可以放在on的第二个参数里面。 如：$("body").on("click", ".sex_icon", function() {}) // 属性赋值 $("#myDiv").data("appid","666");
 
-// 属性赋值 $("#myDiv").data("appid","666");
-需要注意的是，data()的值进行修改并不会影响到DOM元素上的data-*属性的改变。data()的本质其实是将一个 “cache”
-附加到了对象上，并使用了一个特殊的属性名称。
-所以上述代码中，虽然对div进行了data()赋值操作，但HTML代码中div的data-appid的值仍然为123，因为data()只是修改了缓存的那个值，此时进行$(’#myDiv’).data(“appid”)的操作，输出的结果为666.
+需要注意的是，data()的值进行修改并不会影响到DOM元素上的data-*属性的改变。data()的本质其实是将一个 “cache” 附加到了对象上，并使用了一个特殊的属性名称。 所以上述代码中，虽然对div进行了data()赋值操作，但HTML代码中div的data-appid的值仍然为123，因为data()只是修改了缓存的那个值，此时进行$(’#myDiv’).data(“appid”)的操作，输出的结果为666. 使用contenteditable 输入法无法换行： .cursor_input {
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: auto;
+}
 
-使用contenteditable 输入法无法换行：
-.cursor_input{
-    margin: 0;
-    padding: 0;
-    -webkit-user-select: auto;
-  }
+设置placeholder: <div class='rich_text' contenteditable placeholder='请输入文字'></div><style>.rich_text:empty::before {
+  content: attr(placeholder);
+}
+
+.rich_text:focus:before {
+  content: none;
+}
+
+</style><div class="btn not"
+@touchstart.stop="gostart"
+@touchmove="void 0"
+@touchend="gotouchend"
+@touchcancel="gotouchend"
+
+><img :src="isPress ? btn2 : btn" /></div>#图片按钮需要长按，但是不能弹出保存提示： img {
+  pointer-events: none;
+}
+
+.not {
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
