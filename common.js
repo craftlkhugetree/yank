@@ -687,7 +687,19 @@ function isFunction(v) {
     '[object Promise]',
   ].includes(Object.prototype.toString.call(v));
 }
-
+// 音频时长
+{
+        let timer = setInterval(() => {
+          var musicDom = document.getElementById(t); //获取audio对象
+          if (musicDom) {
+            musicDom.load();
+            musicDom.onloadedmetadata = function () {
+              let duration = parseInt(musicDom.duration);
+            };
+            clearInterval(timer);
+          }
+        }, 500);
+      }
 // 视频截图封面图
 function getVideoCanvas(videoList, fun, that) {
   var videoCanList = []; // 因为后端返回的视频数组，这里先定义一个空数组

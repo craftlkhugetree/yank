@@ -788,7 +788,7 @@ child组件：
               return this.form.provinces_id
           },
           set: function (val) {
-              this.emit('updata:form.provinces_id',val)
+              this.$emit('updata:form.provinces_id',val)
           }
       },
   }
@@ -938,7 +938,7 @@ Vue.use = function (plugin) {
   }
 }
 
-alias用法
+alias用法，这里不能再../@了，@要变为~@，src的同级要在webpack里alias定义。
 background: url('~@/assets/img/1-body.png') no-repeat
 
 // 问题：在 vue 项目中，使用了 keep-alive 后，可以缓存组件。但在实际使用中，会经常出现一个场景，那就是 列表-详情 的页面，从列表跳转到详情页后，再返回列表页时，我们就会期望列表页是缓存了的；但是如果是切换到其他列表页后再返回该列表页，我们就期望它重新获取数据；
@@ -1036,3 +1036,18 @@ mounted () {
 Angular需要学习typescript和rxjs,还用到比较多的新东西,比如装饰器,后端的注入概念,ng有自己的一整套 MVVM 流程;
 而Vue和React核心只是view,可以搭配自己喜欢的。
 React的写法偏向函数式写法,还有 jsx,官方自己有 flow,当然也能搭配ts。
+
+
+filter 里的参数在 api.js 里修改，触发了 deep:true，导致结构调用 2 次。
+mounted里必须this.$set才能触发 params的watch deep:true，但会执行两次子组件查询接口。 所以改为created，也不用$set
+ created() {
+    if (this.isLabel) {
+      // this.$set(this.params.filter, "labels", this.$route.query.name);
+      this.params.filter.labels = this.$route.query.name;
+    } else {
+      // this.$set(this.params.filter, "areaId", this.$route.query.areaId);
+      this.params.filter.areaId = this.$route.query.areaId;
+    }
+  }
+
+watch的多个props都会执行getData()，若一次更改多个props会多次调用getData(),所以把它们放在一个computed内并随便返回一个对象，然后deep:true,

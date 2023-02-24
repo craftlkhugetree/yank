@@ -479,21 +479,24 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 
 # 督导助手 2023/02/06
 
-mobile // redirectToLogin();  
- /camera.vue /contentEdit.vue /contentEditSelectList.vue
-photoItems.vue 的 roleName()
-3 roles status; removeItem
-util.isWeiXin()
+设置 setStore('roleName') 'YWZX',
+api.js depId,
+photoItems.vue 的 v-if="params.funTab !== 'yzy'"
+removeItem: form,reply
 report.vue 的$router.back
 config.js: 是否事部件；GIS 地址；
+校区：mapType;
+voiceArea alert
 
 待复查：createId； handleNode：DCJC,YWZX
 我的督察：createId；
 
 待处理：handleDeptId； handleNode：YWZX
-已转移：/workOrder/movedList
+已转移：handleDeptId；/workOrder/movedList
+全部：handleDeptId；
 
-待确认：createId； handleNode：DCGL
+待确认： handleNode：DCGL
+全部督察： 不传
 
 sort: desc；asc
 orderBy：createTime；handleStartTime
@@ -507,8 +510,11 @@ orderBy：createTime；handleStartTime
 业务中心人员
 待处理：（超时）转移、反馈
 已转移：无
-全部：（超时）转移、反馈；已处理：待复查确认；整改通过；
+全部：1（超时）转移、反馈；2 已处理：待复查确认；3 整改通过；
 
 督查管理员 1.我的督查——同督查人员 2.全部督查
 待确认：（超时）继续整改、确认通过；
 全部督查：（超时）待处理反馈；（超时）已处理：待复查确认；整改通过；
+
+eventType 事件类型 1 创建 2 反馈 3 确认 7 超时 8 转移
+status integer($int32) 状态 1 待处理 2 待确认 3 已完成
