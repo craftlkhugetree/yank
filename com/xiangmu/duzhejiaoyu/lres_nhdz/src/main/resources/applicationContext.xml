@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	    					http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+							http://www.springframework.org/schema/aop 
+							http://www.springframework.org/schema/aop/spring-aop-3.0.xsd  
+							http://www.springframework.org/schema/tx 
+							http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+							http://www.springframework.org/schema/context
+							http://www.springframework.org/schema/context/spring-context-2.5.xsd
+							http://www.springframework.org/schema/task
+							http://www.springframework.org/schema/task/spring-task-3.2.xsd
+							">
+	
+	<import resource="classpath:cfg/commAppSpring.xml" />
+	<!-- 数据库连接池配置 jndi:jdbc/oa -->
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/lres" />
+	</bean>
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean name="beetlSqlScannerConfigurer" class="org.beetl.sql.ext.spring4.BeetlSqlScannerConfigurer">
+	    <!-- 哪些类可以自动注入 -->
+	    <property name="basePackage" value="org.beetl.sql.ext.spring4"/>
+	    <!-- 通过类后缀 来自动注入Dao -->
+	    <property name="daoSuffix" value="Dao"/>
+	    <property name="sqlManagerFactoryBeanName" value="sqlManagerFactoryBean"/>
+	</bean>
+	<bean id="sqlManagerFactoryBean" class="org.beetl.sql.ext.spring4.SqlManagerFactoryBean">
+	   <property name="cs" >
+	        <bean  class="org.beetl.sql.ext.spring4.BeetlSqlDataSource">
+	            <property name="masterSource" ref="dataSource"></property>
+	        </bean>
+	    </property>
+	    <property name="dbStyle">
+	        <bean class="org.beetl.sql.core.db.MySqlStyle"/>
+	    </property>
+	    <property name="sqlLoader">
+	        <bean class="org.beetl.sql.core.ClasspathLoader">
+	            <property name="sqlRoot" value="/sql"></property>
+	        </bean>
+	    </property>
+	     <property name="nc">
+	        <bean class="org.beetl.sql.core.UnderlinedNameConversion"/>
+	    </property>
+	    <property name="interceptors">
+	        <list>
+	            <bean class="org.beetl.sql.ext.DebugInterceptor"></bean>
+	            <bean class="org.beetl.sql.ext.SimpleCacheInterceptor">
+	            	<constructor-arg>
+	            		<list>
+	            			<!-- 
+	            			<value>lresQuestion</value>
+	            			<value>lresQoption</value>
+	            			 -->
+	            		</list>
+	            	</constructor-arg>
+	            </bean>
+	        </list>
+	    </property>
+	</bean>
+	
+</beans>

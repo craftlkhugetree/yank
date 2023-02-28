@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="preload" as="style" onload="this.rel='stylesheet'" type="text/css" href="css/index.css" />
+  </head>
+
+  <body>
+    <div class="box box_ clearfloat">
+      <div class="left_top left_top_ clearfloat">
+        <span class="time">资源集合</span>
+      </div>
+      <ul class="left_down left_down_"></ul>
+    </div>
+    <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/doT.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/sign.js" type="text/javascript" charset="utf-8"></script>
+    <script id="left_down_tpl" type="text/x-dot-template">
+             {{? it.length>0}}
+             	{{ for(var prop in it) { }}
+             	<li onclick="toDetail({{!JSON.stringify(it[prop])}})" title="{{=it[prop].name}}">
+             		<i class="li_time">{{=it[prop].name}}</i>
+             	</li>
+             	{{ } }}
+             {{??}}
+      <div class="li_empty">暂无数据！</div>
+             {{?}}
+    </script>
+  </body>
+</html>

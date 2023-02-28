@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryLight">#C5CAE9</color>
+    <color name="colorAccent">#8BC34A</color>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
+    <color name="textPrimary">#212121</color>
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="green">#ff00ff00</color>
+    <color name="orange">#ffff8000</color>
+    <color name="brown">#ffc4851a</color>
+    <color name="gray">#ff808080</color>
+    <color name="lightgray">#D3D3D3</color>
+    <color name="darkgray">#3F3F3F</color>
+    <color name="almostwhite">#F5F5F5</color>
+    <color name="red">#ffff0000</color>
+    <color name="blue">#ff0000ff</color>
+    <color name="button">#ff3071b8</color>
+    <color name="cancel_button">#ff30a8b8</color>
+    <color name="info_bg_color">#ffe4e2e2</color>
+    <color name="info_text">#ff3071B8</color>
+    <color name="ecg_grid1">#ffFAD2F0</color>
+    <color name="ecg_grid2">#ffFFC0CB</color>
+    <color name="ecg_grid3">#ffFF7A7A</color>
+    <color name="bp_N">#ff6FBB5E</color>
+    <color name="bp_1">#ffFFCE37</color>
+    <color name="bp_2">#ffEB9C0B</color>
+    <color name="bp_3">#ffDC464E</color>
+    <color name="bp_sys">#ff9e2124</color>
+    <color name="bp_dia">#ffc4851a</color>
+    <color name="title">#717271</color>
+</resources>

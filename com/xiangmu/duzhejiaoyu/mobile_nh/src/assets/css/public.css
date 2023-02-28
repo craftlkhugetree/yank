@@ -1,0 +1,178 @@
+blockquote,body,button,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,input,legend,li,ol,p,pre,td,textarea,th,ul {margin:0;padding:0}
+h1,h2,h3,h4,h5,h6 {font-size:100%}
+/* address,cite,dfn,em,var {font-style:normal} */
+code,kbd,pre,samp {font-family:courier new,courier,monospace}
+small {font-size:12px}
+ol,ul {list-style:none}
+a {text-decoration:none}
+a:hover {text-decoration:underline}
+sup {vertical-align:text-top}
+sub {vertical-align:text-bottom}
+legend {color:#000}
+fieldset,img {border:0}
+button,input,select,textarea {font-size:100%}
+table {border-collapse:collapse;border-spacing:0}
+/* 清除浮动的代码 */
+.clearfix:after{
+    display:block;
+    clear:both;
+    content:"";
+    visibility:hidden;
+    height:0;
+}
+.clearfix{
+    zoom:1
+}
+input::-webkit-input-placeholder {
+    /* placeholder颜色  */
+    color: #aab2bd;
+    /* placeholder字体大小  */
+    font-size: 12px;
+    /* placeholder位置  */
+    text-align: left;
+    text-indent: 1.3rem;
+}
+.qj_text>h3,.xx_text>h3,.ks_text>h3{
+    width:6rem;
+    height:1.2rem;
+    font-size:0.85rem;
+    font-weight:500;
+    color:rgba(255,255,255,1);
+    line-height:1.2rem;
+}
+.qj_text>p,.xx_text>p,.ks_text>p{
+    width:9rem;
+    font-size:0.65rem;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    line-height:0.93rem;
+    margin-top: .5rem;
+}
+.qj_text>span,.xx_text>span,.ks_text>span{
+    display: inline-block;
+    width:3.8rem;
+    height:1.33rem;
+    border-radius:2.5rem;
+    border:0.03rem solid rgba(255,255,255,1);
+    font-size:0.65rem;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    line-height:1.33rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+.qj_text,.xx_text{
+    width: 100%;
+    height: 6rem;
+    position: absolute;
+    top: -7rem;
+    left: calc(50% + 2rem);
+}
+.ks_text{
+    width: 100%;
+    height: 6rem;
+    position: absolute;
+    top: -7rem;
+    left: -160%;
+}
+.qj_line,.xx_line{
+    width:1.73rem;
+    height:2.95rem;
+    position: absolute;
+    top: -4rem;
+    left: 50%;
+    border: none;
+    border-left: 1px dotted #fff;
+    border-top: 1px dotted #fff;
+}
+.ks_line{
+    width:1.73rem;
+    height:2.95rem;
+    position: absolute;
+    top: -4rem;
+    left: calc(50% - 1.73rem);
+    border: none;
+    border-right: 1px dotted #fff;
+    border-top: 1px dotted #fff;
+}
+.qj,.xx,.ks{
+    width: 3rem;
+    height: 3rem;
+    background: #fff;
+    border-radius: 50%;
+    margin-left: calc(50% - 1.5rem);
+    text-align: center;
+    padding-top: .5rem;
+    box-sizing: border-box;
+}
+.guide_bottom{
+    width: 100%;
+    height: 3rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-around;
+}
+.guide_bottom1{
+    width: 100%;
+    height: 3rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+.guide_index{
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .55);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+}
+.guide_bottom>li,.guide_bottom1>li{
+    width: 25%;
+    height: 100%;
+    float: left;
+    position: relative;
+}
+
+.qj img,.xx img,.ks img{
+    width: 1rem;
+    height: 1rem;
+}
+.qj span,.xx span,.ks span{
+    display: block;
+    color: #000;
+    font-size: .6rem;
+}
+.xx.xxact{
+    margin-left: calc(50% - 2.5rem);
+}
+.ks.ksatc{
+    margin-left: calc(50% - 3.6rem);
+}
+
+.qj.qjact span,.xx.xxact span{
+    color: #70A9FF;
+}
+.doc_context ol,.doc_context ul {
+    list-style: decimal !important;
+    list-style-position: inside !important;
+  }
+/* .qj.qjact{
+    margin-left: calc(50% - 2rem);
+}
+.xx.xx_index{
+    margin-left: calc(50% - 3.4rem);
+}
+.xx_indexline{
+    left: calc(25% / 2);
+}
+.xx_indextext{
+    left: calc(20% + 2rem);
+}
+.ks_index{
+    margin-left: calc(50% - 4.5rem);
+} */
+

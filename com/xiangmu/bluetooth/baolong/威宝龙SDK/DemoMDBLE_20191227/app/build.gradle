@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    compileSdkVersion 28
+    defaultConfig {
+        multiDexEnabled true
+        applicationId "com.mdbiomedical.app.demomdble"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 8
+        versionName "@string/version"
+
+    }
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDir "src/main/jniLibs"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:23.0.1'
+    implementation 'com.google.firebase:firebase-appindexing:10.2.1'
+    //compile project(':mdcontroller')
+    //compile files('libs/MDController.jar')
+    implementation 'com.github.barteksc:android-pdf-viewer:2.4.0'
+    implementation 'com.android.support:multidex:1.0.2'
+}

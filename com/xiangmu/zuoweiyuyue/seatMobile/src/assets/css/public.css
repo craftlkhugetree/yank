@@ -1,0 +1,984 @@
+blockquote, body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, hr, input, legend, li, ol, p, pre, td, textarea, th, ul {
+    margin: 0;
+    padding: 0
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%
+}
+
+/* address,cite,dfn,em,var {font-style:normal} */
+code, kbd, pre, samp {
+    font-family: courier new, courier, monospace
+}
+
+small {
+    font-size: 12px
+}
+
+ol, ul {
+    list-style: none
+}
+
+a {
+    text-decoration: none
+}
+
+a:hover {
+    text-decoration: underline
+}
+
+sup {
+    vertical-align: text-top
+}
+
+sub {
+    vertical-align: text-bottom
+}
+
+legend {
+    color: #000
+}
+
+fieldset, img {
+    border: 0
+}
+
+button, input, select, textarea {
+    font-size: 100%
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+/* 清除浮动的代码 */
+.clearfix:after {
+    display: block;
+    clear: both;
+    content: "";
+    visibility: hidden;
+    height: 0;
+}
+
+.clearfix {
+    zoom: 1
+}
+
+/* pre标签在浏览器不换行 */
+pre {
+    white-space: pre-wrap;
+    /* css-3 */
+    white-space: -moz-pre-wrap;
+    /* Mozilla, since 1999 */
+    white-space: -pre-wrap;
+    /* Opera 4-6 */
+    white-space: -o-pre-wrap;
+    /* Opera 7 */
+    word-wrap: break-word;
+    /* Internet Explorer 5.5+ */
+}
+
+.nodata {
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    line-height: 80px;
+    font-size: 28px;
+    background: #fff;
+
+}
+
+/* 首页和预约的占座列表的公共样式 */
+.now_emptyseat {
+    padding: 0 30px;
+    margin-top: 56px;
+}
+
+.occupy_seat {
+    width: 100%;
+}
+
+.occupy_seat>div>div.single_occupy_seat {
+    width: 100%;
+    /* height: 5.2rem; */
+    padding: 24px 0;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.occupy_seat>div>div.occupySeat_line {
+    width: 100%;
+    height: 1px;
+    background: #EEEEEE;
+    margin: 0 auto;
+}
+
+.occupy_seat>div>div>h3 {
+    font-size: 30px;
+    font-weight: 550;
+    color: #333333;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center
+}
+
+.occupy_seat>div>div>h3>span {
+    display: inline-block;
+    /* width: calc(100% - 2rem); */
+}
+
+.occupy_seat>div>div>h3>i {
+    display: inline-block;
+    /* padding: 0px 2px; */
+    font-size: 18px;
+    font-weight: 400;
+    color: #ffa033;
+    border-radius: 4px;
+    border: 1px solid #ffa033;
+    text-align: center;
+    font-style: normal;
+    margin-left: 24px;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    /* line-height: 42px; */
+    /* display: inline-block;
+    width:78px;
+    height: 30px;
+    background: url(../../../static/img/cabinet.png) no-repeat center center;
+    background-size: contain;
+  border-radius: 4px;
+    font-size: 18px;
+    font-weight: 400;
+    color: #FFA033;
+    line-height: 30px;
+    text-align: center;
+    font-style: normal; */
+    /* position: absolute;
+    top: 15px; */
+    margin-left: 12px;
+    right: 0;
+}
+
+.occupy_seat>div>div>h4 {
+    width: 100%;
+    font-size: 24px;
+    font-weight: 400;
+    color: #1DC11D;
+    line-height: 26px;
+}
+
+.occupy_seat>div>div>h4.fulltext {
+    color: #F23C3C;
+}
+
+.occupy_seat>div>div>h4.noseat {
+    color: #F23C3C;
+}
+
+.occupy_seat>div>div>p {
+    width: 100%;
+    height: 26px;
+    font-size: 26px;
+    font-weight: 400;
+    color: #999999;
+    line-height: 26px;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+}
+
+.occupy_seat>div>div>i {
+    display: inline-block;
+    width: 144px;
+    ;
+    height: 60px;
+    background: #FFFFFF linear-gradient(90deg, #FFD200 0%, #FFA033 100%);
+    box-shadow: 0px 5px 10px 0px rgba(255, 160, 51, 0.25);
+    border-radius: 30px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #FFFFFF;
+    line-height: 60px;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    bottom: 24px;
+    font-style: normal;
+}
+
+.occupy_seat>div>div>i.isBlack,
+.occupy_seat>div>div>i.full {
+    background: #EEEEEE;
+    color: #999999;
+    box-shadow: none;
+}
+
+.appointSelectContent .van-popup {
+    border-radius: 0.25rem 0.25rem 0rem 0rem;
+}
+
+.monitor_select input::-webkit-input-placeholder {
+    /* placeholder颜色  */
+    color: #ccc;
+    /* placeholder字体大小  */
+    font-size: 12px;
+    /* placeholder位置  */
+    text-align: left;
+}
+
+.monitorRoom>.icons {
+    width: 100%;
+    height: 86px;
+    background: #F8F7F5;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.monitorRoom>div.hastimebox {
+    /* height: calc(100% - 2.15rem); */
+    height: 90%;
+    overflow: auto;
+}
+
+.monitorRoom>.icons>span {
+    display: inline-block;
+    height: 100%;
+    font-size: 18px;
+    font-weight: 400;
+    color: #666666;
+    margin-right: 30px;
+}
+
+.monitorRoom>.icons>span:last-of-type {
+    margin-right: 0;
+}
+
+
+.monitorRoom>.icons>span>i {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    margin-right: 8px;
+    margin-top: 30px;
+}
+
+.seatMapwrapper>div>p>span>i {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    margin-right: 8px;
+}
+
+.seatMapwrapper>div>p>span>i.wall,
+.monitorRoom>.icons>span>i.wall {
+    background: url(../../../static/img/wall.png) no-repeat center center;
+    background-size: cover;
+}
+
+.seatMapwrapper>div>p>span>i.window,
+.monitorRoom>.icons>span>i.window {
+    background: url(../../../static/img/window.png) no-repeat center center;
+    background-size: cover;
+}
+
+.seatMapwrapper>div>p>span>i.door,
+.monitorRoom>.icons>span>i.door {
+    background: url(../../../static/img/door.png) no-repeat center center;
+    background-size: cover;
+}
+
+.seatMapwrapper>div>p>span>i.pass,
+.monitorRoom>.icons>span>i.pass {
+    background: url(../../../static/img/pass.png) no-repeat center center;
+    background-size: cover;
+}
+
+.seatMapwrapper>div>p>span>i.pillar,
+.monitorRoom>.icons>span>i.pillar {
+    background: url(../../../static/img/pillar.png) no-repeat center center;
+    background-size: cover;
+}
+
+.appointroomDetail>.appointbottom>h3>span>i.selected,
+.roomDetail>.bottom>h3>span>i.selected,
+.selectseat_top>span>i.selected {
+    background: url(../../../static/img/selected.png) no-repeat center center;
+    background-size: cover;
+}
+
+.appointroomDetail>.appointbottom>h3>span>i.epidemic,
+.roomDetail>.bottom>h3>span>i.epidemic,
+.selectseat_top>span>i.epidemic {
+    background: url(../../../static/img/epidemicseat.png) no-repeat center center;
+    background-size: cover;
+}
+
+.selectseat_top>span>i.nosign {
+    background: url(../../../static/img/nosign.png) no-repeat center center;
+    background-size: cover;
+}
+
+.appointroomDetail>.appointbottom>h3>span>i.noseat,
+.roomDetail>.bottom>h3>span>i.noseat,
+.selectseat_top>span>i.monitor {
+    background: url(../../../static/img/monitor.png) no-repeat center center;
+    background-size: cover;
+}
+
+.selectseat_top>span>i.leave {
+    background: url(../../../static/img/leave.png) no-repeat center center;
+    background-size: cover;
+}
+
+.appointroomDetail>.appointbottom>h3>span>i.empty,
+.selectseat_top>span>i.empty,
+.roomDetail>.bottom>h3>span>i.empty {
+    background: url(../../../static/img/empty.png) no-repeat center center;
+    background-size: cover;
+}
+
+.appointroomDetail>.appointbottom>h3>span>i.partSeat,
+.roomDetail>.bottom>h3>span>i.partSeat {
+    background: url(../../../static/img/half.png) no-repeat center center;
+    background-size: cover;
+}
+
+.van-tabs__nav--line {
+    padding-bottom: 18px !important;
+}
+
+.cancel_time_top .van-tab__text--ellipsis {
+    overflow: visible;
+}
+
+.cancel_time_top .van-tabs,
+.cancel_time_top .cancel_time_top .van-tabs {
+    /* height: calc(100% - 211px); */
+}
+
+.cancel_time_top .van-tabs--line .van-tabs__wrap {
+    height: 100%;
+}
+
+.cancel_time_top .van-hairline--top-bottom::after {
+    border: none;
+}
+
+.cancel_time_top .van-tabs__line {
+    background-color: rgba(255, 160, 51, 1);
+    width: 60px !important;
+}
+
+/* 选座的上面的窗户、墙这些的样式 */
+.appointSelectContent {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.appointSelect_top {
+    width: 100%;
+    /* height: 3.5rem; */
+    padding: 30px;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.appointSelect_top>h3 {
+    display: inline-block;
+    font-size: 32px;
+    font-weight: 400;
+    color: #4A4A4A;
+    line-height: 44px;
+    position: relative;
+}
+
+.appointSelect_top>h3>i {
+    width: 80px;
+    height: 40px;
+    display: inline-block;
+    padding: 0px 8px;
+    font-size: 18px;
+    font-weight: 400;
+    color: #ffa033;
+    border-radius: 4px;
+    border: 1px solid #ffa033;
+    text-align: center;
+    font-style: normal;
+    margin-left: 24px;
+    position: absolute;
+    top: 2px;
+    font-style: normal;
+    right: 0;
+}
+
+.appointSelect_top>p {
+    display: inline-block;
+    /* height: 37px; */
+    font-size: 24px;
+    font-weight: 400;
+    color: #8E8E8E;
+    line-height: 37px;
+    margin-left: 10px;
+}
+
+/* 选座得li的样式 */
+.appointroomDetail>div>.seatDetail,
+.monitorRoom>div>.seatDetail,
+.roomDetail>div>.seatDetail {
+    /* width: 100%;
+    height: 100%; */
+    background: #F8F7F5;
+    padding: 0 30px 30px 30px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.seatMapwrapper>div>div>.seatDetail.scale,
+.appointroomDetail>div>.seatDetail.scale,
+.monitorRoom>div>.seatDetail.scale,
+.roomDetail>div>.seatDetail.scale {
+    transform-origin: 0 0;
+    transform: scale(2);
+}
+
+.monitorRoom>div>.seatDetail>ul,
+.appointroomDetail>div>.seatDetail>ul,
+.roomDetail>div>.seatDetail>ul {
+    width: 100%;
+    height: 39px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+    /* flex-wrap: nowrap; */
+}
+
+.appointroomDetail>div>.seatDetail>ul>li,
+.monitorRoom>div>.seatDetail>ul>li,
+.roomDetail>div>.seatDetail>ul>li {
+    width: 50px;
+    height: 50px;
+    margin-right: 12px;
+
+    float: left;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333333;
+    line-height: 39px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* 选座下面的icon，选中，部分选中的样式 */
+.appointroomDetail>.appointbottom>h3,
+.roomDetail>.bottom>h3 {
+    width: 100%;
+    height: 87px;
+    line-height: 87px;
+    text-align: center;
+}
+
+.appointroomDetail>.appointbottom>.line,
+.roomDetail>.bottom>.line {
+    width: calc(100% - 60px);
+    height: 1px;
+    background: #EEEEEE;
+    margin: 0 auto;
+}
+
+.appointroomDetail>.appointbottom>.selectSeatBox,
+.roomDetail>.bottom>.selectSeatBox {
+    width: 100%;
+    height: 116px;
+    line-height: 116px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    padding: 0 30px;
+    box-sizing: border-box;
+}
+
+.appointroomDetail>.appointbottom>.selectSeatBox>span,
+.roomDetail>.bottom>.selectSeatBox>span {
+    display: inline-block;
+    width: 174px;
+    height: 56px;
+    background: #EEEEEE;
+    border-radius: 6px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 56px;
+    text-align: center;
+    margin-left: 24px;
+    position: relative;
+}
+
+.appointroomDetail>.appointbottom>.selectSeatBox>span>i,
+.roomDetail>.bottom>.selectSeatBox>span>i {
+    /* display: inline-block; */
+    width: 14px;
+    height: 14px;
+    background: url(../../../static/img/smallclose.png) no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    right: 15px;
+    top: 22px
+        /* margin-left: 20px; */
+}
+
+.appointroomDetail>.appointbottom>h3>span,
+.roomDetail>.bottom>h3>span {
+    display: inline-block;
+    height: 39px;
+    font-size: 18px;
+    font-weight: 400;
+    color: #666666;
+    line-height: 39px;
+    margin-right: 24px;
+}
+
+.appointroomDetail>.appointbottom>h3>span:last-of-type,
+.roomDetail>.bottom>h3>span:last-of-type {
+    margin-right: 0;
+}
+
+.appointroomDetail>.appointbottom>h3>span>i,
+.roomDetail>.bottom>h3>span>i {
+    display: inline-block;
+    width: 39px;
+    height: 39px;
+    background: linear-gradient(90deg, #80E81D 0%, #1DC11D 100%);
+    float: left;
+    margin-right: 6px;
+}
+
+.appointroomDetail>.appointbottom>.bottom_,
+.roomDetail>.bottom>.bottom_ {
+    width: calc(100% - 60px);
+    height: 84px;
+    background: #DDDDDD;
+    border-radius: 44px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #999999;
+    line-height: 84px;
+    text-align: center;
+    position: fixed;
+    left: 30px;
+    bottom: 40px;
+
+}
+
+.appointroomDetail>.appointbottom>.bottom_.bottom_1,
+.roomDetail>.bottom>.bottom_1 {
+    width: calc(100% - 60px);
+    height: 84px;
+    border-radius: 44px;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 84px;
+    text-align: center;
+    position: fixed;
+    left: 30px;
+    bottom: 40px;
+    background: #FFA033;
+    color: #fff;
+}
+
+
+
+/* 座位样式的显示：墙，门，窗，过道 */
+.monitorRoom>div>.seatDetail>ul>li.type1,
+.seatMapwrapper>div>div>div>ul>li.type1,
+.appointroomDetail>div>.seatDetail>ul>li.type1,
+.roomDetail>div>.seatDetail>ul>li.type1 {
+    background: url(../../../static/img/empty.png) no-repeat center center;
+    background-size: contain;
+}
+
+.monitorRoom>div>.seatDetail>ul>li.type1.epidemic.nosign,
+.monitorRoom>div>.seatDetail>ul>li.type1.epidemic,
+.roomDetail>div>.seatDetail>ul>li.type1.epidemic,
+.appointroomDetail>div>.seatDetail>ul>li.type1.epidemic {
+    background: url(../../../static/img/epidemicseat.png) no-repeat center center;
+    background-size: contain;
+    color: #fff;
+}
+
+.monitorRoom>div>.seatDetail>ul>li.type1.selected,
+.appointroomDetail>div>.seatDetail>ul>li.type1.selected,
+.appointroomDetail>div>.seatDetail>ul>li.type1.part.selected,
+.roomDetail>div>.seatDetail>ul>li.type1.part.selected,
+.roomDetail>div>.seatDetail>ul>li.type1.selected {
+    background: url(../../../static/img/selected.png) no-repeat center center;
+    background-size: contain;
+    color: transparent;
+}
+
+.seatMapwrapper>div>div>div>ul>li.myselected.type1 {
+    background: url(../../../static/img/myseat.png) no-repeat center center;
+    background-size: contain;
+    color: transparent;
+}
+
+.appointroomDetail>div>.seatDetail>ul>li.type1.full,
+.monitorRoom>div>.seatDetail>ul>li.type1.full,
+.roomDetail>div>.seatDetail>ul>li.type1.full {
+    background: url(../../../static/img/monitor.png) no-repeat center center;
+    background-size: contain;
+    color: #fff;
+}
+
+.appointroomDetail>div>.seatDetail>ul>li.type1.part,
+.roomDetail>div>.seatDetail>ul>li.type1.part {
+    background: url(../../../static/img/half.png) no-repeat center center;
+    background-size: contain;
+    color: #fff;
+}
+
+.monitorRoom>div>.seatDetail>ul>li.type1.leave {
+    background: url(../../../static/img/leave.png) no-repeat center center;
+    background-size: contain;
+    color: #fff;
+}
+
+.monitorRoom>div>.seatDetail>ul>li.type1.nosign {
+    background: url(../../../static/img/nosign.png) no-repeat center center;
+    background-size: contain;
+    color: #fff;
+}
+
+.monitorRoom>div>.seatDetail>ul>li.type2,
+.appointroomDetail>div>.seatDetail>ul>li.type2,
+.seatMapwrapper>div>div>div>ul>li.type2,
+.roomDetail>div>.seatDetail>ul>li.type2 {
+    background: url(../../../static/img/pass.png) no-repeat center center;
+    background-size: contain;
+}
+
+.monitorRoom>div>.seatDetail>ul>li.type3,
+.appointroomDetail>div>.seatDetail>ul>li.type3,
+.seatMapwrapper>div>div>div>ul>li.type3,
+.roomDetail>div>.seatDetail>ul>li.type3 {
+    background: url(../../../static/img/pillar.png) no-repeat center center;
+    background-size: contain;
+}
+
+.monitorRoom>div>.seatDetail>ul>li.type4,
+.appointroomDetail>div>.seatDetail>ul>li.type4,
+.seatMapwrapper>div>div>div>ul>li.type4,
+.roomDetail>div>.seatDetail>ul>li.type4 {
+    background: url(../../../static/img/wall.png) no-repeat center center;
+    background-size: contain;
+    visibility: hidden
+}
+
+.monitorRoom>div>.seatDetail>ul>li.type5,
+.appointroomDetail>div>.seatDetail>ul>li.type5,
+.seatMapwrapper>div>div>div>ul>li.type5,
+.roomDetail>div>.seatDetail>ul>li.type5 {
+    background: url(../../../static/img/door.png) no-repeat center center;
+    background-size: contain;
+}
+
+.monitorRoom>div>.seatDetail>ul>li.type6,
+.appointroomDetail>div>.seatDetail>ul>li.type6,
+.seatMapwrapper>div>div>div>ul>li.type6,
+.roomDetail>div>.seatDetail>ul>li.type6 {
+    background: url(../../../static/img/window.png) no-repeat center center;
+    background-size: contain;
+}
+
+.monitorRoom>div>.seatDetail>ul>li.type7.nosign,
+.monitorRoom>div>.seatDetail>ul>li.type7,
+.roomDetail>div>.seatDetail>ul>li.type7,
+.appointroomDetail>div>.seatDetail>ul>li.type7 {
+    background: url(../../../static/img/epidemicseat.png) no-repeat center center;
+    background-size: contain;
+    color: #fff;
+}
+
+/* 监督举报跟添加常用座位的样式 */
+.selectmonitor_content {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #F8F7F5;
+}
+
+.selectmonitor_top {
+    width: 100%;
+    /* height: 166px; */
+    padding-top: 24px;
+    position: relative;
+    background: #fff;
+    padding-bottom: 40px;
+}
+
+.monitor_picker.van-cell {
+    width: calc(100% - 60px);
+    /* height: 102px; */
+    background: #F8F7F5;
+    border-radius: 8px;
+    margin: 0 auto;
+    line-height: 30px;
+
+}
+
+.selectmonitor_content input::-webkit-input-placeholder {
+    font-size: 30px;
+    font-weight: 400;
+    color: #999999;
+}
+
+.selectmonitor_top>span {
+    display: inline-block;
+    width: 24px;
+    height: 0.35rem;
+    background: url(../../../static/img/downarr.png) no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    top: 1.8rem;
+    right: 60px;
+}
+
+.selectmonitor_content>.monitorRoom {
+    width: 100%;
+    height: calc(100% - 494px);
+}
+
+.selectmonitor_content>.selectseat {
+    width: 100%;
+    height: 328px;
+    background: #fff;
+    box-shadow: 0px -2px 10px 0px rgba(238, 238, 238, 0.4);
+    border-radius: 60px 60px 0px 0px;
+}
+
+.selectseat_top {
+    width: 100%;
+    height: 87px;
+    line-height: 87px;
+    text-align: center;
+    overflow: auto;
+}
+
+.selectseat_top>span {
+    display: inline-block;
+    /* height: 39px; */
+    font-size: 18px;
+    font-weight: 400;
+    color: #666666;
+    line-height: 78px;
+    margin-right: 20px;
+}
+
+.selectseat_top>span:last-of-type {
+    margin-right: 0;
+}
+
+.selectseat_top>span>i {
+    display: inline-block;
+    width: 39px;
+    height: 39px;
+    margin-top: 19px;
+    float: left;
+    margin-right: 6px;
+}
+
+.selectseat_num {
+    padding: 0 30px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    margin-top: 24px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #4A4A4A;
+}
+
+.selectseat_num>span {
+    background: #EEEEEE;
+    border-radius: 4px;
+    text-align: center;
+    padding: 12px 18px;
+    padding-right: 60px;
+    position: relative;
+    margin-left: 24px;
+}
+
+.selectseat_num>span>i {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../../../static/img/smallclose.png) no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    right: 15px;
+    top: 22px;
+}
+
+.selectseat>.bottom {
+    width: calc(100% - 60px);
+    height: 84px;
+    background: #FFA033;
+    border-radius: 44px;
+    font-size: 30px;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 84px;
+    text-align: center;
+    position: fixed;
+    bottom: 40px;
+    left: 30px;
+}
+
+.selectseat>.bottom.noselect {
+    background: #DDDDDD;
+    color: #999999;
+}
+
+.selectseat>.line {
+    width: calc(100% - 60px);
+    height: 1px;
+    background: #EEEEEE;
+    margin: 0 auto;
+}
+
+
+.roomDetail>div.notimebox,
+.monitorRoom>div.notimebox {
+    width: 100%;
+    /* height: calc(100% - 494px); */
+    overflow: auto;
+    padding: 20px;
+}
+
+.monitorRoom>div.notimebox>div,
+.roomDetail>div.notimebox>div {
+    /* width: 5.69rem;
+    height: 5rem; */
+    width: 4.69rem;
+    height: 4rem;
+    background: url(../../../static/img/emptytime.png) no-repeat center center;
+    background-size: cover;
+    margin: 15% auto 0;
+}
+
+.notimebox>p {
+    width: 100%;
+    height: 36px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+    line-height: 40px;
+    margin-top: .7rem;
+    text-align: center;
+}
+
+/* 预约历史+排行榜+通知公告+通知公告详情
+底部的返回按钮样式 */
+.noticeDetailbox>div.bottom,
+.noticebox>div.bottom,
+.rankbox>div.bottom,
+.orderHistoryContent>div.bottom {
+    width: 100%;
+    height: 132px;
+    background: #FFFFFF;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.noticeDetailbox>div.bottom>div,
+.noticebox>div.bottom>div,
+.rankbox>div.bottom>div,
+.orderHistoryContent>div.bottom>div {
+    width: calc(100% - 60px);
+    height: 84px;
+    background: #FFFFFF;
+    border-radius: 44px;
+    border: 2px solid #CCCCCC;
+    font-size: 30px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 84px;
+    text-align: center;
+    margin: 24px auto;
+}
+
+
+
+/* 排行榜 */
+.rankbox .van-progress__portion {
+    background: linear-gradient(90deg, #FFC733 0%, #FF9633 100%) !important;
+}
+
+.rankbox .van-progress__pivot {
+    display: none;
+}
+
+/* 占座的时间显示 */
+.selectOccupyTime {
+    width: 100%;
+    height: 198px;
+    background: #fff;
+    margin-top: 24px;
+    padding: 24px 30px;
+    box-sizing: border-box;
+
+}
+
+.selectOccupyTime>h3 {
+    width: 100%;
+    line-height: 40px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    margin-bottom: 24px;
+}
+
+.selectOccupyTime>ul {
+    width: 100%;
+    /* height: 80px; */
+    display: flex;
+    justify-content: flex-start;
+    overflow: auto;
+}
+
+.selectOccupyTime>ul>li {
+    width: 162px;
+    /* height:80px; */
+    background: #EEEEEE;
+    border-radius: 4px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 80px;
+    text-align: center;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.selectOccupyTime>ul>li.selectact {
+    width: 162px;
+    /* height:80px; */
+    line-height: 80px;
+    background: #FFECD6;
+    border: 1px solid #FFA033;
+    color: #FFA033;
+}

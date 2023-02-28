@@ -479,7 +479,6 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 
 # 督导助手 2023/02/06
 
-设置 setStore('roleName') 'YWZX',
 api.js depId,
 photoItems.vue 的 v-if="params.funTab !== 'yzy'"
 removeItem: form,reply

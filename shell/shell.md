@@ -1,47 +1,51 @@
 root@root k@123
 
-碰到 shell 命令里诸如  if [[ "$STR1" =~ "$STR2" ]]; then
+碰到 shell 命令里诸如 if [["$STR1" =~ "$STR2"]]; then
 这样的代码在 ubuntu 里执行显示 “[[ : not found” 时，往往是从 linux 移植过来的。
 
 往往 linux 使用的是 sh ，而 ubuntu 使用的是 bash 。
-而"[[]]"是bash脚本中的命令，因此在执行时，使用sh命令会报错，将sh替换为bash命令即可。
+而"[[]]"是 bash 脚本中的命令，因此在执行时，使用 sh 命令会报错，将 sh 替换为 bash 命令即可。
 
 解决方法：
-如果是 shell 文件的话，开头的 “ #!/bin/sh ”  改为 “ #!/bin/bash ” 。
+如果是 shell 文件的话，开头的 “ #!/bin/sh ” 改为 “ #!/bin/bash ” 。
 或者改用 bash 来执行特定的 .sh 文件，比如 “ bash test.sh ”
 ————————————————
 
-标准输入(stdin)	0	< 或 <<
-标准输出(stdout)	1	>，>>，1> 或 1>>
-标准错误输出(stderr)	2	2> 或 2>>
+标准输入(stdin) 0 < 或 <<
+标准输出(stdout) 1 >，>>，1> 或 1>>
+标准错误输出(stderr) 2 2> 或 2>>
 编写一个测试脚本 test.sh
 #!/bin/bash
-date         #打印当前时间
-while true   #死循环
-do
-    #每隔2秒打印一次
-    sleep 2
-    whatthis    #不存在的命令
-    echo -e "std output"
+date #打印当前时间
+while true #死循环
+do #每隔 2 秒打印一次
+sleep 2
+whatthis #不存在的命令
+echo -e "std output"
 done
-输出结果如下，可以看到标准输出stdout 和标准错误输出 stderr 同时输出在了控制台上：
-[root@zzz]# ./test.sh 
+输出结果如下，可以看到标准输出 stdout 和标准错误输出 stderr 同时输出在了控制台上：
+[root@zzz]# ./test.sh
 Thu Jun 11 17:45:36 CST 2020
 test.sh: line 7: whatthis: command not found
 std output
 
 输出重定向，./test.sh > log.txt，其中 > 就等同于 1>。即将标准输出 stdout 重定向到文件 log.txt，标准错误输出 stderr 仍然为屏幕终端。
-接下来将标准输出 stdout 和标准错误输出 stderr 都重定向到文件 log.txt：   ./test.sh > log.txt 2>&1
-# 每个程序在运行后，都会至少打开三个文件描述符，分别是0：标准输入；1：标准输出；2：标准错误。
-# 2>&1表明将文件描述符2（标准错误输出 stderr）的内容重定向到文件描述符1（标准输出 stdout），为什么1前面需要&？当没有&时，1会被认为是一个普通的文件，有&表示重定向的目标不是一个文件，而是一个文件描述符。
-用 ps -au | grep test.sh 查到进程号pid，
-ls /proc/pid/fd -l 可以看到1，2都指向 log.txt,  /dev/tty1为屏幕
+接下来将标准输出 stdout 和标准错误输出 stderr 都重定向到文件 log.txt： ./test.sh > log.txt 2>&1
+
+# 每个程序在运行后，都会至少打开三个文件描述符，分别是 0：标准输入；1：标准输出；2：标准错误。
+
+# 2>&1 表明将文件描述符 2（标准错误输出 stderr）的内容重定向到文件描述符 1（标准输出 stdout），为什么 1 前面需要&？当没有&时，1 会被认为是一个普通的文件，有&表示重定向的目标不是一个文件，而是一个文件描述符。
+
+用 ps -au | grep test.sh 查到进程号 pid，
+ls /proc/pid/fd -l 可以看到 1，2 都指向 log.txt, /dev/tty1 为屏幕
 
 # ./testStderr.sh 2>log.txt 1>&2 和 ./test.sh 1>log.txt 2>&1 还有两种等价写法：
-./test.sh  >& log.txt
-./test.sh  &> log.txt
 
-# echo 123 1>/dev/null 2>&1  
+./test.sh >& log.txt
+./test.sh &> log.txt
+
+# echo 123 1>/dev/null 2>&1
+
 ————————————————
 
 九个字符，每三个字符构成一组。 （rwx）. 它们分别代表了文件所有者（missing），用户组（users） 以及其他所有人具有的权限。其中 - 表示该用户不具备相应的权限。从上面的信息来看，只有文件所有者可以修改（w）missing 文件夹 （例如，添加或删除文件夹中的文件）。为了进入某个文件夹，用户需要具备该文件夹以及其父文件夹的“搜索”权限（以“可执行”：x）权限表示。为了列出它的包含的内容，用户必须对该文件夹具备读权限（r）。对于文件来说，权限的意义也是类似的。
@@ -51,13 +55,12 @@ su（super user 或 root 的简写）
 tee 覆写文件
 which tee
 
-在bash中为变量赋值的语法是foo=bar，访问变量中存储的数值，其语法为 $foo。 需要注意的是，foo = bar （使用空格隔开）是不能正确工作的，因为解释器会调用程序foo 并将 = 和 bar作为参数。 总的来说，在shell脚本中使用空格会起到分割参数的作用，有时候可能会造成混淆，请务必多加检查。
+在 bash 中为变量赋值的语法是 foo=bar，访问变量中存储的数值，其语法为 $foo。 需要注意的是，foo = bar （使用空格隔开）是不能正确工作的，因为解释器会调用程序 foo 并将 = 和 bar 作为参数。 总的来说，在 shell 脚本中使用空格会起到分割参数的作用，有时候可能会造成混淆，请务必多加检查。
 
-Bash中的字符串通过' 和 "分隔符来定义，但是它们的含义并不相同。以'定义的字符串为原义字符串，其中的变量不会被转义，而 "定义的字符串会将变量值进行替换。
-
+Bash 中的字符串通过' 和 "分隔符来定义，但是它们的含义并不相同。以'定义的字符串为原义字符串，其中的变量不会被转义，而 "定义的字符串会将变量值进行替换。
 
 mcd () {
-    mkdir -p "$1"
+mkdir -p "$1"
     cd "$1"
 }
 这里 $1 是脚本的第一个参数。与其他脚本语言不同的是，bash使用了很多特殊的变量来表示参数、错误代码和相关变量。下面是列举来其中一些变量:
@@ -66,7 +69,9 @@ $1 到 $9 - 脚本的参数。 $1 是第一个参数，依此类推。
 $@ - 所有参数
 $# - 参数个数
 $? - 前一个命令的返回值
-$$ - 当前脚本的进程识别码
+
+$$
+- 当前脚本的进程识别码
 !! - 完整的上一条命令，包括参数。常见应用：当你因为权限不足执行命令失败时，可以使用 sudo !!再尝试一次。
 $_ - 上一条命令的最后一个参数。如果你正在使用的是交互式 shell，你可以通过按下 Esc 之后键入 . 来获取这个值。
 
@@ -141,6 +146,17 @@ find . -type f -name "*.html" | xargs -d '\n'  tar -cvzf html.zip
 # 递归的查找文件夹中最近使用的文件, print0变成一行, ls -t按修改时间对文件进行排序
 $ find . -type f -mmin -60 -print0 | xargs -0 ls -lt | head -10
 
+1、递归查找（find 命令 是递归遍历文件夹的）
+命令：find . -name “*.txt”
+2、不递归查找
+find . -name “*.txt” -maxdepth 1
+
+find . -type d  -name ".git" | xargs rm -rf &&
+find . -type d  -name ".vscode" | xargs rm -rf &&
+find . -type d  -name ".idea" | xargs rm -rf &&
+find . -type d  -name "node_modules" | xargs rm -rf &&
+find . -type d  -name "dist" | xargs rm -rf
+
 sleep 10     // 秒数，  sleep 1h 2m 0.5s
 ctrl + Z    // [1]+  Stopped                 sleep 10
 jobs
@@ -198,10 +214,11 @@ wait.sh
 # 最常用十个命令，uniq -c 在每行开头添加重复次数
 history | awk '{$1="";print substr($0,2)}' | sort | uniq -c | sort -n | tail -n 10
 // awk{}内部=是赋值，外部==才是条件，substr字符截取，$0是所有列
-history | awk '{$1="";print substr($0,2)}' 
-history | awk '$1=="200"{print substr($0,2)}' 
+history | awk '{$1="";print substr($0,2)}'
+history | awk '$1=="200"{print substr($0,2)}'
 
 
 
 # source script.sh 和 ./script.sh 有什么区别?
 这两种情况 script.sh 都会在bash会话中被读取和执行，不同点在于哪个会话执行这个命令。 对于 source 命令来说，命令是在当前的bash会话中执行的，因此当 source 执行完毕，对当前环境的任何更改（例如更改目录或是定义函数）都会留存在当前会话中。 单独运行 ./script.sh 时，当前的bash会话将启动新的bash会话（实例），并在新实例中运行命令 script.sh。 因此，如果 script.sh 更改目录，新的bash会话（实例）会更改目录，但是一旦退出并将控制权返回给父bash会话，父会话仍然留在先前的位置（不会有目录的更改）。 同样，如果 script.sh 定义了要在终端中访问的函数，需要用 source 命令在当前bash会话中定义这个函数。否则，如果你运行 ./script.sh，只有新的bash会话（进程）才能执行定义的函数，而当前的shell不能。
+$$

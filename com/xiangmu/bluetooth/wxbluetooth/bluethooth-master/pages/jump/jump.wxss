@@ -1,0 +1,8 @@
+/* pages/jump/jump.wxss */
+.container {
+  font-size: 20px;
+}
+
+.pageH5 {
+  margin: 0 auto;
+}

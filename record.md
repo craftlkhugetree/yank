@@ -1,4 +1,5 @@
 # Git
+
 git svn clone -r HEAD --username=liken svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
 
 git show（查看上一次修改）
@@ -26,13 +27,14 @@ git log --since=2022-04-27 --until=2023-02-01 --author="liken" --pretty=tformat:
 
 git stash save ''
 git stash list
-git stash apply stash@{0} 不像pop一样删除
-git stash show stash@{0} 加上-p可以看详细差异
+git stash apply stash@{0} 不像 pop 一样删除
+git stash show stash@{0} 加上-p 可以看详细差异
 
 ssh-keygen -t rsa -C "345823102@qq.com"
 ssh -T git@github.com // 测试
 
 # npm
+
 npm uninstall element-ui
 npm install element-ui@2.15.8 -s
 
@@ -43,17 +45,17 @@ npm config list
 npm config ls -l 查看所有
 npm config set registry https://registry.npm.taobao.org
 
-npm ls; npm list 查看安装哪些包   npm ls package 或者 npm info package
+npm ls; npm list 查看安装哪些包 npm ls package 或者 npm info package
 
 npm root 当前项目安装位置
 npm root -g
 npm outdated package 查看是否过时
 
-npm view react versions  查看版本信息
-如果改了package.json，且package.json和lock文件不同，那么执行npm i时npm会根据package中的版本号以及语义含义去下载最新的包，并更新至lock。如果两者是同一状态，那么执行npm i 都会根据lock下载，不会理会package实际包的版本是否有新。
+npm view react versions 查看版本信息
+如果改了 package.json，且 package.json 和 lock 文件不同，那么执行 npm i 时 npm 会根据 package 中的版本号以及语义含义去下载最新的包，并更新至 lock。如果两者是同一状态，那么执行 npm i 都会根据 lock 下载，不会理会 package 实际包的版本是否有新。
 
-npm uninstall element-ui -S   
-npm install element-ui@2.15.8 -S   // 2.15.9的el-date-pick有placement问题
+npm uninstall element-ui -S  
+npm install element-ui@2.15.8 -S // 2.15.9 的 el-date-pick 有 placement 问题
 ————————————————
 npm 的缓存机制到底是怎么样的呢？现在我们就来总结下：
 在安装资源的时候，npm 会根据 package-lock.json 中的 integrity、version、name 信息生成一个唯一的 key。
@@ -66,12 +68,13 @@ A: 首先，我们应该尽量避免冲突，在我们需要更新 package.json 
 在遇到 lock 文件冲突的时候，那么应该先手动解决 package.json 的冲突，然后执行 npm install --package-lock-only，让 npm 自动帮你解冲突。
 
 # vscode
-要打开正则按钮才能使用：      ('|")9100002(.*?)('|")   `${this.util.webUserID}$2`
+
+要打开正则按钮才能使用： ('|")9100002(.\*?)('|") `${this.util.webUserID}$2`
 
 没有配置前 如果代码过长，vetur 会把尖括号整理到第二行换行， "prettier.htmlWhitespaceSensitivity": "ignore", //包裹文字时候结束标签的结尾尖括号掉到了下一行
 感叹号后回车，快捷生成 html
 
-ctrl + shift + o 查找函数、css类名、变量等
+ctrl + shift + o 查找函数、css 类名、变量等
 ctrl + p 打开文件
 ctrl + i 触发关联文字
 
@@ -236,16 +239,17 @@ document.querySelector('.infinite-scroll-component').scrollTo(0,0)
 //选中当前想要回到 dom 元素，使用 scrollTo(0,0),实现能够在切换中始终保持第一栏在顶部显示。
 
 # jquery
-1、原生js获取的dom，通过id获取到的就是当前对应的节点，而 通过class获取返回的是 HTMLCollection 对象。HTMLCollection 对象类似包含所有 HTML 元素的一个数组。通过索引获取到自己想要的节点。
-2、jQuery哪种方式获取dom返回的都是一个数组。可以通过length检查是否存在当前节点。可以直接 jqdom.click();而原生需要循环每一个来点击。
-3、原生js获取的dom与jQuery获取的dom转换。
-        var jqdom = $('.demo');// jquery获取的dom
-        var dom1 = jqdom.eq(0)[0]; // 转换成原生节点
-        var dom2 = jqdom.get(0);// 转换成原生节点
 
+1、原生 js 获取的 dom，通过 id 获取到的就是当前对应的节点，而 通过 class 获取返回的是 HTMLCollection 对象。HTMLCollection 对象类似包含所有 HTML 元素的一个数组。通过索引获取到自己想要的节点。
+2、jQuery 哪种方式获取 dom 返回的都是一个数组。可以通过 length 检查是否存在当前节点。可以直接 jqdom.click();而原生需要循环每一个来点击。
+3、原生 js 获取的 dom 与 jQuery 获取的 dom 转换。
+var jqdom = $('.demo');// jquery 获取的 dom
+var dom1 = jqdom.eq(0)[0]; // 转换成原生节点
+var dom2 = jqdom.get(0);// 转换成原生节点
 
         var jsdom = document.getElementsByClassName('demo'); //原生获取的节点
         var jsdom1 = $(jsdom[0]);//转换成jquery的dom对象
+
 ————————————————
 
 $('selector1, selector2... , selectorN')    // 每一个选择器匹配到的元素合并后一起返回 (返回集合元素)
@@ -332,105 +336,110 @@ $("input :checked").length;//不正确的用法。不管任何时候，这个选
 $("input:checked");//这样才是正确的
 
 # 原型链 constructor
+
 var obj = {};
-obj.constructor    //ƒ Object() { [native code] }
-obj.constructor === Object    //true
+obj.constructor //ƒ Object() { [native code] }
+obj.constructor === Object //true
 
 var arr = [];
-arr.constructor    //ƒ Array() { [native code] }
-arr.constructor === Array    //true
+arr.constructor //ƒ Array() { [native code] }
+arr.constructor === Array //true
 
 function Fun(){
-    console.log('function');
+console.log('function');
 }
-*** fun本身是没有construtor的，它的__proto__指向Fun.prototype， 而Fun.prototype.constructor指向Fun，所以顺着原型链fun.constructor === Fun ***
-var fun = new Fun();    //实例化
-fun.constructor    //ƒ Fun(){console.log('function')}    【打印出来的引用是Fun函数，说明fun的引用是Fun函数】
-Fun.constructor    //ƒ Function() { [native code] }      【打印出来的引用是Funcion函数，说明Fun的引用是Function函数】
-fun.constructor === Fun    //true    【再次证明fun的constructor属性引用了fun对象的构造函数】
-fun.constructor === Fun.constructor    //false
+**_ fun 本身是没有 construtor 的，它的**proto**指向 Fun.prototype， 而 Fun.prototype.constructor 指向 Fun，所以顺着原型链 fun.constructor === Fun _**
+var fun = new Fun(); //实例化
+fun.constructor //ƒ Fun(){console.log('function')} 【打印出来的引用是 Fun 函数，说明 fun 的引用是 Fun 函数】
+Fun.constructor //ƒ Function() { [native code] } 【打印出来的引用是 Funcion 函数，说明 Fun 的引用是 Function 函数】
+fun.constructor === Fun //true 【再次证明 fun 的 constructor 属性引用了 fun 对象的构造函数】
+fun.constructor === Fun.constructor //false
 
-constructor常用于判断未知对象的类型,如下:
+constructor 常用于判断未知对象的类型,如下:
 function isArray (val){
-    var isTrue = typeof val === 'object' && val.constructor === Array;
-    return isTrue?true:false;
+var isTrue = typeof val === 'object' && val.constructor === Array;
+return isTrue?true:false;
 }
-或者用new obj.constructor()构造函数新建一个空的对象，而不是使用{}或者[],这样可以保持原形链的继承。
+或者用 new obj.constructor()构造函数新建一个空的对象，而不是使用{}或者[],这样可以保持原形链的继承。
 
 # 小程序
-openid不能用ajax获取，得是url的方式，后面加上登录页：
+
+openid 不能用 ajax 获取，得是 url 的方式，后面加上登录页：
 const redirectUri = encodeURIComponent(window.location.href);
 let url = `https://open.weixin.qq.com/connect/oauth2/authorize?response_type=code&scope=snsapi_userinfo&state=123&redirect_uri=${redirectUri}`
 window.location.href = url;
 
 function getUrlCode(name) {
-      return (
-        (new RegExp("[?|&]" + name + "=" + "([^&;]+?)(&|#|;|$)").exec(    // exec得到的数组零元素为匹配串，同时括号里的内容也会被exec保存下来
-          location.href
-        ) || [, ""])[1].replace(/\+/g, "%20") || null             
-        // 调用decodeURIComponent函数之前要先把+替换为%20，在对 URL 进行编码时，若 URL 中存在空格，则空格会被转换成了＋，导致对方识别不成空格。
-      );
-    }
+return (
+(new RegExp("[?|&]" + name + "=" + "([^&;]+?)(&|#|;|$)").exec( // exec 得到的数组零元素为匹配串，同时括号里的内容也会被 exec 保存下来
+location.href
+) || [, ""])[1].replace(/\+/g, "%20") || null  
+ // 调用 decodeURIComponent 函数之前要先把+替换为%20，在对 URL 进行编码时，若 URL 中存在空格，则空格会被转换成了＋，导致对方识别不成空格。
+);
+}
 +-------------------+---------------------+
-|        Part       |       Data          |
+| Part | Data |
 +-------------------+---------------------+
-|  Scheme           | https               |
-|  User             | bob                 |
-|  Password         | bobby               |
-|  Host             | www.lunatech.com    |
-|  Port             | 8080                |
-|  Path             | /file;p=1           |
-|  Path parameter   | p=1                 |
-|  Query            | q=2                 |
-|  Fragment         | third               |
+| Scheme | https |
+| User | bob |
+| Password | bobby |
+| Host | www.lunatech.com |
+| Port | 8080 |
+| Path | /file;p=1 |
+| Path parameter | p=1 |
+| Query | q=2 |
+| Fragment | third |
 +-------------------+---------------------+
 
 https://bob:bobby@www.lunatech.com:8080/file;p=1?q=2#third
-\___/   \_/ \___/ \______________/ \__/\_______/ \_/ \___/
-  |      |    |          |          |      | \_/  |    |
-Scheme User Password    Host       Port  Path |   | Fragment
-        \_____________________________/       | Query
-                       |               Path parameter
-                   Authority
+\_**/ \_/ \_**/ \_******\_******/ \_\_/\_**\_\_**/ \_/ \_**/
+| | | | | | \_/ | |
+Scheme User Password Host Port Path | | Fragment
+\_************\_\_**************/ | Query
+| Path parameter
+Authority
 
 # 路径
-HTML代码中的相对路径就是以本HTML文件所在目录开始计算。
-* JS文件内的相对路径是以引用该js文件的页面为基准，也是从HTML文件所在位置开始计算的。
-CSS文件内如果写相对路径，是基于CSS文件本身的，跟谁引入了这个CSS无关。
+
+HTML 代码中的相对路径就是以本 HTML 文件所在目录开始计算。
+
+- JS 文件内的相对路径是以引用该 js 文件的页面为基准，也是从 HTML 文件所在位置开始计算的。
+  CSS 文件内如果写相对路径，是基于 CSS 文件本身的，跟谁引入了这个 CSS 无关。
 
 总结一下
-http缓存可以减少宽带流量，加快响应速度。
-关于强缓存，cache-control是Expires的完全替代方案，在可以使用cache-control的情况下不要使用expires
-关于协商缓存,etag并不是last-modified的完全替代方案，而是补充方案，具体用哪一个，取决于业务场景。
+http 缓存可以减少宽带流量，加快响应速度。
+关于强缓存，cache-control 是 Expires 的完全替代方案，在可以使用 cache-control 的情况下不要使用 expires
+关于协商缓存,etag 并不是 last-modified 的完全替代方案，而是补充方案，具体用哪一个，取决于业务场景。
 有些缓存是从磁盘读取，有些缓存是从内存读取，有什么区别？答：从内存读取的缓存更快。
-所有带304的资源都是协商缓存，所有标注（从内存中读取/从磁盘中读取）的资源都是强缓存。
+所有带 304 的资源都是协商缓存，所有标注（从内存中读取/从磁盘中读取）的资源都是强缓存。
 
 # figma
+
 Ctrl+Shift+?
 
-Ctrl+/  quick action
+Ctrl+/ quick action
 I pick color
 
-双击menu前#，定位到设计图
-/   menu parent
+双击 menu 前#，定位到设计图
+/ menu parent
 Enter menu children
 Tab menu next sibling
 Shift+Tab menu previos sibling
-Alt+L 收起所有menu
+Alt+L 收起所有 menu
 
-n/Shift+n  Home/End   next
-Shift+1/2  Ctrl+0/+/-   zoom
-ctrl + alt + \      隐藏其余鼠标
+n/Shift+n Home/End next
+Shift+1/2 Ctrl+0/+/- zoom
+ctrl + alt + \ 隐藏其余鼠标
+ctrl + shift + \ 隐藏左侧栏
+
 # moment
+
 moment.utc(毫秒).format('HH:mm:ss')
 
+编程语言的发展历史和适用范围，C 语言/C++一直是系统级编程的不二之选，在操作系统，编译器，网络，数据库，高性能服务器端软件等领域无人可以争锋，也许在将来，Rust 能对他们产生威胁吧。在 Web 编程领域则是百花齐放，PHP, Python, Ruby 各自争鸣，Java 在企业应用开发方面表现抢眼，以 Spring 为首的生态吸引了无数程序员。由于网络编程的瓶颈不再是 CPU，而是 I/O，所以 Java 也在一些服务器端的软件上突破了 C/C++的重围。在大数据领域，Java 一马当先，完成了数据的收集，存储，计算，Python 等语言在此基础上发挥了自己擅长的本事：数据分析。Go 语言则令人吃惊地渗入到了云计算和后端编程领域，前途不可限量。 总的来说，我觉得有这两个需要注意的点：1. 每门语言都有自己的特点和适用的范围，并没有什么高下之分。2. 应用层编程变化剧烈（JS 尤其为甚），底层编程变化比较小。
 
-
-编程语言的发展历史和适用范围，C语言/C++一直是系统级编程的不二之选，在操作系统，编译器，网络，数据库，高性能服务器端软件等领域无人可以争锋，也许在将来，Rust能对他们产生威胁吧。在Web编程领域则是百花齐放，PHP, Python, Ruby各自争鸣，Java在企业应用开发方面表现抢眼，以Spring为首的生态吸引了无数程序员。由于网络编程的瓶颈不再是CPU，而是I/O，所以Java也在一些服务器端的软件上突破了C/C++的重围。在大数据领域，Java一马当先，完成了数据的收集，存储，计算，Python等语言在此基础上发挥了自己擅长的本事：数据分析。Go语言则令人吃惊地渗入到了云计算和后端编程领域，前途不可限量。 总的来说，我觉得有这两个需要注意的点：1. 每门语言都有自己的特点和适用的范围，并没有什么高下之分。2. 应用层编程变化剧烈（JS尤其为甚），底层编程变化比较小。 
-
-
-用退格键删掉的span标签，因为span后面的&nbsp; 结果继续输入时，在谷歌浏览器上变成了font标签， 而span和font的nodeType都是1， 光标在span内部时或用Delete删掉时，不会变font。
+用退格键删掉的 span 标签，因为 span 后面的&nbsp; 结果继续输入时，在谷歌浏览器上变成了 font 标签， 而 span 和 font 的 nodeType 都是 1， 光标在 span 内部时或用 Delete 删掉时，不会变 font。
 搜索了一下竟然是因为谷歌浏览器的翻译功能？？？？？？？？？？？
 所以谨记纵使不用这翻译功能也要记得勾选“一律不翻译此网站”。。。。免得被坑。
-在网上还搜到有个方法会避免此错误的发生，就是在html页面的开头
+在网上还搜到有个方法会避免此错误的发生，就是在 html 页面的开头
 写这样<html lang="zh-CN">而不是<html lang="en">
