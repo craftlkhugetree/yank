@@ -1,31 +1,33 @@
 # win
+
 win + i 打开设置
 win + x 打开系统快捷菜单-网络连接
 win + s 搜索‘代理’
 win + r ncpa.cpl
-*** snippingtool截图；control控制面板，calc计算器，eventvwr事件查看器，gpedit.msc组策略，mstsc远程桌面，dxdiag诊断；**
+**\* snippingtool 截图；control 控制面板，calc 计算器，eventvwr 事件查看器，gpedit.msc 组策略，mstsc 远程桌面，dxdiag 诊断；**
 
-win + x + a 打开设置菜单，可选管理员cmd
- 管理员shell： 输入cmd后 ctrl+shift+enter
+win + x + a 打开设置菜单，可选管理员 cmd
+管理员 shell： 输入 cmd 后 ctrl+shift+enter
 taskkill /PID 19768 /F
 
 # chrome
+
 To activate search completion, type o to activate vomnibar and then type the search completion keyword as defined in settings (such as 'g') and press space.
 map ` visitPreviousTab
 map d removeTab
 map u restoreTab
 
 "chrome.exe" --test-type --ignore-certificate-errors
-代理设置  socks=127.0.0.1   10808
+代理设置 socks=127.0.0.1 10808
 switchy Omega：https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
-pdf reader插件设置：
-.active, .textLayer { 
-  background-color: green; /* 设置成你想要的背景色 */
+pdf reader 插件设置：
+.active, .textLayer {
+background-color: green; /_ 设置成你想要的背景色 _/
 }
 
-模拟微信浏览器：network conditions界面去掉user agernt的勾选，选择custom，并在输入框中输入设备模拟参数
-iPhone手机模拟参数：
+模拟微信浏览器：network conditions 界面去掉 user agernt 的勾选，选择 custom，并在输入框中输入设备模拟参数
+iPhone 手机模拟参数：
 Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12A365 MicroMessenger/5.4.1 NetType/WIFI
 
 安卓手机模拟参数：
@@ -33,17 +35,19 @@ Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTM
 
 查看本地已安装的插件源码路径：C:\Users\用户名\AppData\Local\Google\Chrome\User Data\Default\Extensions
 
-chrome://flags  webgl
+chrome://flags webgl
+
 # stylus
-^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.1.251|172.20|testseat.xuanhaozuo.com|tsgyy.sjzc.edu.cn/)).*$
+
+^(?!._(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.1.251|172.20|testseat.xuanhaozuo.com|tsgyy.sjzc.edu.cn/))._$
 ^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.)).*$
 html,
 body {
-/*     font-family: "SF UI Text", "BlinkMacSystemFont", "Helvetica Neue", "Source Han Sans SC", "Segoe UI", "Roboto", "Microsoft Yahei", sans-serif; */
-    font-weight: bold;
-    background-color: #C7EDCC !important;
-     filter: brightness(0.8);
-    /*         background-color:#606266 !important; */
+/_ font-family: "SF UI Text", "BlinkMacSystemFont", "Helvetica Neue", "Source Han Sans SC", "Segoe UI", "Roboto", "Microsoft Yahei", sans-serif; _/
+font-weight: bold;
+background-color: #C7EDCC !important;
+filter: brightness(0.8);
+/_ background-color:#606266 !important; _/
 }
 
 table,
@@ -52,17 +56,16 @@ p,
 i,
 a,
 article, section {
-    /*          //兼容不同浏览器 */
-/*     -webkit-filter: brightness(0.8);
-    -o-filter: brightness(0.8);
-    -moz-filter: brightness(0.8);
-    filter: brightness(0.8); */
-    /*     //设置亮度值，范围：0-1 */
+/_ //兼容不同浏览器 _/
+/_ -webkit-filter: brightness(0.8);
+-o-filter: brightness(0.8);
+-moz-filter: brightness(0.8);
+filter: brightness(0.8); _/
+/_ //设置亮度值，范围：0-1 _/
 }
-.hx-warp,.left-toolbox,._1Jdfvb {
-    display: none !important
+.hx-warp,.left-toolbox,.\_1Jdfvb {
+display: none !important
 }
-
 
 @-moz-document domain("zhihu.com") {
 body {

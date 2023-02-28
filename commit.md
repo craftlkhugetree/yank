@@ -517,3 +517,15 @@ orderBy：createTime；handleStartTime
 
 eventType 事件类型 1 创建 2 反馈 3 确认 7 超时 8 转移
 status integer($int32) 状态 1 待处理 2 待确认 3 已完成
+
+全部督查： "/admin"
+督查反馈： /ywzx
+督查报告： /paper
+
+系统配置 children: [
+角色权限："/settings/roles",
+业务领域： "/settings/business-area",
+督查地点:/settings/location,
+参数配置：/settings/arguments,
+督导小组：/settings/group
+]

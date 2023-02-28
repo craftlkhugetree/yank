@@ -974,3 +974,26 @@ jquery可以给动态样式，但是element.click这种写法不支持给动态�
   -moz-user-select: none;
   -ms-user-select: none;
 }
+
+// border-radius 外翻角： 
+<li><div v-if="nowIndex === index" class="pre"><div></div></div> {
+    {
+    item.name
+  }
+}
+
+<div v-if="nowIndex === index" class="after"><div></div></div></li>.pre {
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  position: absolute;
+  bottom: 0;
+  left: -16px;
+
+  >div {
+    width: 16px;
+    height: 16px;
+    border-radius: 0 0 8px 0;
+    background: $c-green;
+  }
+}

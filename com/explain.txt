@@ -93,9 +93,13 @@ husky; pnpm; npm;  验证码 const ctx = dom.getContext("2d"); ctx使用的大�
 # 1.MVVM框架设计及实现
 大量注释解释了模板引擎，get，set
 
-# 督导助手
+# 督导助手mobile
 preview，delImg css, voice, camera, BMap
 把div容器变成可编辑的，用 contenteditable="true"，实现标签#下拉框，nodeType=1是span，3是textNode，根据childNode设置光标位置，字数超出限制则设置innerText。正则判断节点内有几个#。
 微信语音多个接口、定位。
 双图层叠加，v-show：如果先显示BMap，那么之后切换显示GIS时会被遮挡一半，所以mounted必须先加载GIS并且显示，再关掉永久开关，并加载显示BMap。
 语音波浪样式！
+
+# 督导助手pc
+border-radius外翻角; 
+总路由是layout.vue, 然后一级菜单在顶部header.vue,二级菜单是一级菜单路由的子路由在左侧。
