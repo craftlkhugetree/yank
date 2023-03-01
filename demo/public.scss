@@ -164,6 +164,10 @@ left: 0;
 // &:not(:last-child) {
 //   margin-right: 0;
 // }
+// &:nth-child(5n) {
+//   margin-right: 0 !important;
+//   margin-left: auto;
+// }
 .even {
   display: flex;
   justify-content: space-evenly;

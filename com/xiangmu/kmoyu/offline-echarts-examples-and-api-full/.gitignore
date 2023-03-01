@@ -1,8 +1,0 @@
-
-.vscode/launch.json
-nginx-1.17.9/logs/access.log
-nginx-1.17.9/logs/error.log
-nginx-1.17.9/logs/nginx.pid
-echarts/
-echarts-doc/node_modules/
-echarts-examples/node_modules/
