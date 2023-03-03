@@ -120,4 +120,36 @@ npm publish vue install 库包 base-upload
 
 仿写 vue MVVM，类似 v-model 元素属性编译。
 
-双图层叠加，v-show：如果先显示 BMap，那么之后切换显示 GIS 时会被遮挡一半，所以 mounted 必须先加载 GIS 并且 v-show 为 true 显示，再关掉永久开关，并加载显示 BMap。
+双图层叠加，v-show：如果先显示 BMap，那么之后切换显示 GIS 时会被遮挡一半，所以 mounted 必须先加载 GIS 并且 v-show 为 true 显示，再关掉永久开关，并加载显示 BMap。而且双图层叠加不能用 BMapGL，会导致百度地图 bg.png 灰图，所以要自定义覆盖物，
+只能用 BMap 新建类的方法： CustomOverlay.prototype = new BMap.Overlay();
+https://blog.csdn.net/qq_29176825/article/details/79120530
+而不能用
+https://lbs.baidu.com/jsdemo.htm#gl-overlay
+// var label = new BMapGL.CustomOverlay(createDOM, {
+// point: new BMapGL.Point(c.longitude, c.latitude),
+// opacity: 0.5,
+// offsetY: -40,
+// offsetX: 50
+// });
+
+移动端 touch click 事件的比较
+
+    1、touch click事件的执行顺序: touchstart > touchmove > touchend > click
+    2、touchmove click事件互斥,即touchmove触发执行，click事件不再执行
+
+    3、touch阶段取消掉 click 事件：touch事件内调用：e.preventDefault()
+
+点透现象
+点透发生的条件:
+
+       A 和 B不是后代继承关系(如果是后代继承关系的话，就直接是冒泡之类的话题了)
+       A发生touch(也可以是click)后立即消失,B事件绑定click
+
+       A z-index大于B，即A显示在B浮层之上
+
+    点透发生的原因:
+
+       当手指触摸到屏幕的时候，系统生成两个事件，一个是touch 一个是click，touch先执行，touch执行完成后，A从文档树上面消失了，而且由于移动端click还有延迟200-300ms的关系，当系统要触发click的时候，发现在用户点击的位置上面，目前离用户最近的元素是B，所以就直接把click事件作用在B元素上面了
+
+————————————————
+原文链接：https://blog.csdn.net/tjcjava/article/details/80835252

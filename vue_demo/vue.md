@@ -238,6 +238,14 @@ props: route => ({
 id: route.params.id,
 }),
 },
+重复路由解决办法：
+//添加以下代码
+import Router from "vue-router";
+Vue.use(Router);
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+return originalPush.call(this, location).catch(err => err);
+};
 
 // iframe 内部输入框校验（富文本）,如果跨了子域，要在父页面跟子页面都设置 document.domain,值都是域名，不要前面的 www 什么的
 mounted() {

@@ -99,7 +99,9 @@ preview，delImg css, voice, camera, BMap
 微信语音多个接口、定位。
 双图层叠加，v-show：如果先显示BMap，那么之后切换显示GIS时会被遮挡一半，所以mounted必须先加载GIS并且显示，再关掉永久开关，并加载显示BMap。
 语音波浪样式！
+van-steps 自定义
 
 # 督导助手pc
-border-radius外翻角; 
+border-radius外翻角; 图片上传和删除及样式mapCard.vue
 总路由是layout.vue, 然后一级菜单在顶部header.vue,二级菜单是一级菜单路由的子路由在左侧。
+el-steps 自定义

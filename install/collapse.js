@@ -1,73 +1,76 @@
-const elTransition = '.5s height ease-in-out, .5s padding-top ease-in-out,.5s padding-bottom ease-in-out'
+// import myCollapse from '../assets/js/collapse.js';
+//         <my-collapse></my-collapse>
+const elTransition =
+  '.5s height ease-in-out, .5s padding-top ease-in-out,.5s padding-bottom ease-in-out';
 const Transition = {
-  'before-enter' (el) {
-    el.style.transition = elTransition
-    if (!el.dataset) el.dataset = {}
+  'before-enter'(el) {
+    el.style.transition = elTransition;
+    if (!el.dataset) el.dataset = {};
 
-    el.dataset.oldPaddingTop = el.style.paddingTop
-    el.dataset.oldPaddingBottom = el.style.paddingBottom
+    el.dataset.oldPaddingTop = el.style.paddingTop;
+    el.dataset.oldPaddingBottom = el.style.paddingBottom;
 
-    el.style.height = 0
-    el.style.paddingTop = 0
-    el.style.paddingBottom = 0
+    el.style.height = 0;
+    el.style.paddingTop = 0;
+    el.style.paddingBottom = 0;
   },
 
-  'enter' (el) {
-    el.dataset.oldOverflow = el.style.overflow
+  enter(el) {
+    el.dataset.oldOverflow = el.style.overflow;
     if (el.scrollHeight !== 0) {
-      el.style.height = el.scrollHeight + 'px'
-      el.style.paddingTop = el.dataset.oldPaddingTop
-      el.style.paddingBottom = el.dataset.oldPaddingBottom
+      el.style.height = el.scrollHeight + 'px';
+      el.style.paddingTop = el.dataset.oldPaddingTop;
+      el.style.paddingBottom = el.dataset.oldPaddingBottom;
     } else {
-      el.style.height = ''
-      el.style.paddingTop = el.dataset.oldPaddingTop
-      el.style.paddingBottom = el.dataset.oldPaddingBottom
+      el.style.height = '';
+      el.style.paddingTop = el.dataset.oldPaddingTop;
+      el.style.paddingBottom = el.dataset.oldPaddingBottom;
     }
 
-    el.style.overflow = 'hidden'
+    el.style.overflow = 'hidden';
   },
 
-  'after-enter' (el) {
-    el.style.transition = ''
-    el.style.height = ''
-    el.style.overflow = el.dataset.oldOverflow
+  'after-enter'(el) {
+    el.style.transition = '';
+    el.style.height = '';
+    el.style.overflow = el.dataset.oldOverflow;
   },
 
-  'before-leave' (el) {
-    if (!el.dataset) el.dataset = {}
-    el.dataset.oldPaddingTop = el.style.paddingTop
-    el.dataset.oldPaddingBottom = el.style.paddingBottom
-    el.dataset.oldOverflow = el.style.overflow
+  'before-leave'(el) {
+    if (!el.dataset) el.dataset = {};
+    el.dataset.oldPaddingTop = el.style.paddingTop;
+    el.dataset.oldPaddingBottom = el.style.paddingBottom;
+    el.dataset.oldOverflow = el.style.overflow;
 
-    el.style.height = el.scrollHeight + 'px'
-    el.style.overflow = 'hidden'
+    el.style.height = el.scrollHeight + 'px';
+    el.style.overflow = 'hidden';
   },
 
-  'leave' (el) {
+  leave(el) {
     if (el.scrollHeight !== 0) {
-      el.style.transition = elTransition
-      el.style.height = 0
-      el.style.paddingTop = 0
-      el.style.paddingBottom = 0
+      el.style.transition = elTransition;
+      el.style.height = 0;
+      el.style.paddingTop = 0;
+      el.style.paddingBottom = 0;
     }
   },
 
-  'after-leave' (el) {
-    el.style.transition = ''
-    el.style.height = ''
-    el.style.overflow = el.dataset.oldOverflow
-    el.style.paddingTop = el.dataset.oldPaddingTop
-    el.style.paddingBottom = el.dataset.oldPaddingBottom
-  }
-}
+  'after-leave'(el) {
+    el.style.transition = '';
+    el.style.height = '';
+    el.style.overflow = el.dataset.oldOverflow;
+    el.style.paddingTop = el.dataset.oldPaddingTop;
+    el.style.paddingBottom = el.dataset.oldPaddingBottom;
+  },
+};
 
 export default {
   name: 'collapseTransition',
   functional: true,
-  render (h, { children }) {
+  render(h, { children }) {
     const data = {
-      on: Transition
-    }
-    return h('transition', data, children)
-  }
-}
+      on: Transition,
+    };
+    return h('transition', data, children);
+  },
+};
