@@ -308,7 +308,7 @@ return this.methodGetByteLen(value, 20)
 }
 }
 
-data 在 computed 之前，所以不能用 computed 给 template 里的 data 赋值。
+data 在 computed 之前，所以不能用 computed 给 template 里的 data 赋值。也不能用 data 里的值给 data 赋值，得放到 mounted。
 computed 里的匿名函数是找不到 this 的，function 可以。
 
 watch 数组 list，可以 computed: {
@@ -349,8 +349,8 @@ v-model="form.projectname"
 filterable
 remote
 placeholder="请输入或选择"
-:remote-method="remoteMethodProject"
-@change="dataFilterProject"
+:remote-method="remoteMethodProject" //默认传递输入框的值，所以不必填上 v-model
+@change="dataFilterProject" // 选中下拉后，自动格式化
 :loading="selectLoading"
 style="width: 100%" >
 <el-option
@@ -1059,3 +1059,140 @@ mounted里必须this.$set才能触发 params的watch deep:true，但会执行两
   }
 
 watch的多个props都会执行getData()，若一次更改多个props会多次调用getData(),所以把它们放在一个computed内并随便返回一个对象，然后deep:true,
+
+# 带样式的确认框：
+    deleteGroup(row) {
+      const h = this.$createElement;
+      this.$confirm("", {
+        message: h("div", null, [
+          h("i", {
+            class: "el-icon-question",
+            style: "color:#f90;font-size:30px;"
+          }),
+          h(
+            "span",
+            {
+              style:
+                "margin-left:10px;font-size:16px;line-height:30px;font-weight:600;vertical-align:top;"
+            },
+            `确认要删除督导小组吗？`
+          ),
+          h(
+            "p",
+            {
+              style:
+                "margin:10px 0 0 40px;font-family: 'PingFang SC';font-style: normal;font-weight: 400;font-size: 14px;line-height: 20px;"
+            },
+            "此操作会将该督导小组下的人员移动到未分组，确认要删除吗？"
+          )
+        ]),
+        // `确认要删除督导小组『 ${row.name} 』吗？`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+        // type: "warning"
+      })
+        .then(() => {
+          this.groupLoading = true;
+          workGroup("delete", row.id)
+            .then(res => {
+              this.groupLoading = false;
+              this.common.dealRes(
+                res,
+                () => {
+                  this.$message({
+                    showClose: true,
+                    type: "success",
+                    message: `删除成功！`
+                  });
+                  this.getGroupData();
+                },
+                () =>
+                  this.$message({
+                    showClose: true,
+                    type: "error",
+                    message: `删除失败：${res.data.message}`
+                  })
+              );
+            })
+            .catch(err => {
+              this.groupLoading = false;
+              this.$message({
+                showClose: true,
+                type: "error",
+                message: `删除失败：${err}`
+              });
+            });
+        })
+        .catch(() => {
+          return;
+        });
+    },
+    // 打开添加地点弹窗
+    openDrawer(type, row) {
+      if (this.selectGroupId) {
+        let userDrawer = this.$refs.userDrawer;
+        if (type === "add") {
+          this.title = "新增督查地点";
+          this.editForm = {
+            workCampusId: this.selectGroupId,
+            name: ""
+          };
+        } else {
+          this.title = "编辑督查地点";
+          this.editForm = row;
+        }
+        userDrawer.drawer = true;
+      } else {
+        this.$message({
+          showClose: true,
+          type: "error",
+          message: "请选择一个校区！"
+        });
+      }
+    },
+    // 删除
+    delArea(row) {
+      this.$confirm(
+        `是否确认将『 ${row.name} 』从『 ${this.selectGroupName} 』中删除？`,
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      )
+        .then(() => {
+          this.loading = true;
+          fetchUserList("delete", row.id)
+            .then(res => {
+              this.loading = false;
+              this.common.dealRes(res, () => {
+                this.$message({
+                  showClose: true,
+                  type: "success",
+                  message: "删除成功！"
+                });
+                this.getTableData(1, this.pageSize);
+              });
+            })
+            .catch(err => {
+              this.loading = true;
+              this.$message({
+                showClose: true,
+                type: "error",
+                message: "删除失败！" + err
+              });
+            });
+        })
+        .catch(() => {
+          return;
+        });
+    },
+    // 初始化表格高度
+    initTableHeight() {
+      this.tableHeight = this.$refs.mainDiv.offsetHeight - 92;
+    }
+  },
+
+关闭表格内的popOver:
+	scope._self.$refs[`popover-${scope.$index}`].doClose()

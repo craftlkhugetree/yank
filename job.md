@@ -153,3 +153,38 @@ https://lbs.baidu.com/jsdemo.htm#gl-overlay
 
 ————————————————
 原文链接：https://blog.csdn.net/tjcjava/article/details/80835252
+
+```javascript
+chrome.cookies.onChanged.addListener(function (event) {
+  const cookie = event.cookie;
+  refreshDomain(cookie.domain);
+});
+function refreshDomain(domain) {
+  chrome.cookies.getAll({ domain: domain }, function (cookies) {});
+}
+```
+
+chrome 中 Copy -> Copy as cURL，能用 curl 模拟登录，可以编写一个 chrome 插件，当 cookie 的变化触发了本地 node 服务器接口并存储 cookie。
+然后本地在 shell 脚本中访问接口，并获取该域名的 IDSTGC，然后覆写 util.js 里对应的变量。
+
+history 输错路由 返回根目录，是 ngnix 配置的.
+hash 模式下路由改变后手动刷新页面不会报错（404），因为 hash 模式请求页面的地址永远是# 前面的内容，所以总是能请求成功，得到 index.html 页面，再通过路由渲染显示对应得组件
+
+```javascript
+router.beforeEach((to, from, next) => {
+  if (to.matched.length === 0) {
+    //匹配前往的路由不存在
+    from.path
+      ? next({
+          path: from.path,
+        })
+      : next('/errorinfo'); //判断此跳转路由的来源路由是否存在，存在的情况跳转到来源路由，否则跳转到404页面
+  } else {
+    next(); //如果匹配到正确跳转
+  }
+});
+[
+  { path: '*', component: NotFound }, //全不匹配的情况下，匹配NotFound组件，路由按顺序从上到下，依次匹配。最后一个*能匹配全部，
+  { path: '*', redirect: '/' }, //路由按顺序从上到下，依次匹配。最后一个*能匹配全部，然后重定向到主页面
+];
+```

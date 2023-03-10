@@ -482,13 +482,10 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 
 # 督导助手 2023/02/06
 
-api.js depId,
 photoItems.vue 的 v-if="params.funTab !== 'yzy'"
 removeItem: form,reply
 report.vue 的$router.back
 config.js: 是否事部件；GIS 地址；
-校区：mapType;
-voiceArea alert
 
 待复查：createId； handleNode：DCJC,YWZX
 我的督察：createId；

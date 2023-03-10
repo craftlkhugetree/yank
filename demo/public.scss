@@ -1001,3 +1001,11 @@ jquery可以给动态样式，但是element.click这种写法不支持给动态�
     background: $c-green;
   }
 }
+
+小三角： {
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  z-index: 1;
+  border-top-color: green
+}
