@@ -4,10 +4,11 @@ read -p "服务监督请填写IDSTGC:" msg
 path='/d/kxiangmu/njauLogistics/fuwujiandu'
 filename1=$path'/hq-ddzs-pc/src/assets/js/util.js'
 filename2=$path'/hq-ddzs-mobile/src/assets/js/util.js'
+filename3=$path'/hq-wyxxgl-pc/src/assets/js/util.js'
 
 IDSTGC="var IDSTGC"
 
-arr=($filename1 $filename2)
+arr=($filename1 $filename2 $filename3)
 
 for filename in ${arr[*]}
 do
@@ -17,4 +18,5 @@ done
 
 # code $path'/netRepair-mobile_njit'
 # code $path'/netRepair_njit'
-cd $path'/hq-ddzs-mobile/'
+cd $path'/hq-ddzs-pc/'
+# cd $path'/hq-wyxxgl-pc/'

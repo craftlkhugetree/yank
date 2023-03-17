@@ -529,3 +529,14 @@ status integer($int32) 状态 1 待处理 2 待确认 3 已完成
 参数配置：/settings/arguments,
 督导小组：/settings/group
 ]
+
+# 物业管理
+fix: menus flag
+社会企业信息          path: "/society-company",
+物业工作岗位          path: "/service-position",
+物业服务人员          path: "/service-people",
+物业服务区域          path: "/area",
+角色权限          path: "/roles",
+物业合同          path: "/contractor",
+       
+       throw(123)

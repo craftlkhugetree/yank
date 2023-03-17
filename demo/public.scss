@@ -130,6 +130,36 @@ letter-spacing: 1px;
   overflow: hidden;
 }
 
+// 每行两个，每个左侧下部为图片，右侧为最多三行文字：
+.item {
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  margin-bottom: $fixed_side;
+  width: 48%;
+  height: 80px;
+  line-height: 24px;
+  text-align: left;
+  color: #595959;
+
+  .imgs {
+    width: 80px;
+    height: 100%;
+    background: url("~@static/images/jz.svg") no-repeat bottom;
+    // 铺满必须cover，而且只有一个center
+    background-size: cover;
+  }
+
+  span {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    width: calc(100% - 80px); // 关键宽度
+    padding-right: $fixed_side;
+  }
+}
+
 
 module.exports= {
   "plugins": {

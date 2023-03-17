@@ -5,6 +5,10 @@ git svn clone -r HEAD --username=liken svn://160.255.0.56/01module/seatreser/03c
 git show（查看上一次修改）
 git svn rebase === git pull
 
+git clean -fd
+git checkout -- 要清除的文件 // 对新增文件无效
+git checkout . // 对新增文件无效
+
 git checkout master(切换分支)
 git merge new_branch（将分支 new_branch 合并到 master 分支）
 git svn dcommit（然后将所有已经合并到 master 分支的本地修改提交到 svn）
@@ -348,7 +352,7 @@ arr.constructor === Array //true
 function Fun(){
 console.log('function');
 }
-**_ fun 本身是没有 construtor 的，它的**proto**指向 Fun.prototype， 而 Fun.prototype.constructor 指向 Fun，所以顺着原型链 fun.constructor === Fun _**
+**\_ fun 本身是没有 construtor 的，它的**proto**指向 Fun.prototype， 而 Fun.prototype.constructor 指向 Fun，所以顺着原型链 fun.constructor === Fun \_**
 var fun = new Fun(); //实例化
 fun.constructor //ƒ Fun(){console.log('function')} 【打印出来的引用是 Fun 函数，说明 fun 的引用是 Fun 函数】
 Fun.constructor //ƒ Function() { [native code] } 【打印出来的引用是 Funcion 函数，说明 Fun 的引用是 Function 函数】
@@ -392,10 +396,10 @@ location.href
 +-------------------+---------------------+
 
 https://bob:bobby@www.lunatech.com:8080/file;p=1?q=2#third
-\_**/ \_/ \_**/ \_******\_******/ \_\_/\_**\_\_**/ \_/ \_**/
+\_**/ \_/ \_**/ \_**\*\***\_**\*\***/ \_\_/\_**\_\_**/ \_/ \_**/
 | | | | | | \_/ | |
 Scheme User Password Host Port Path | | Fragment
-\_************\_\_**************/ | Query
+\_\*\***\*\***\*\***\_\_**\*\***\*\***\*\***/ | Query
 | Path parameter
 Authority
 

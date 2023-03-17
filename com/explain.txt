@@ -101,6 +101,7 @@ preview，delImg css, voice, camera, BMap
 BMap 自定义dom，marker。移动端需要touchstart才能绑定地图的自定义dom点击事件。
 语音波浪样式！
 van-steps 自定义
+ios14及以上对微信sdk的signature中的url有特殊要求。
 
 # 督导助手pc
 border-radius外翻角; 图片上传和删除及样式imgCard.vue
