@@ -274,3 +274,21 @@ class DistFilter {
   }
 }
 module.exports = DistFilter;
+
+
+
+```javascript
+plugins: [
+    new webpack.DefinePlugin({
+      "process.env": require("../config/dev.env")
+    }),
+  ]
+// 这才有process.env.NODE_ENV  
+'use strict'
+const merge = require('webpack-merge')
+const prodEnv = require('./prod.env')
+
+module.exports = merge(prodEnv, {
+  NODE_ENV: '"development"'
+})
+```

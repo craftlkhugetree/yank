@@ -14,6 +14,13 @@ closeable: true
 });
 },
 
+import ElImageViewer from "element-ui/packages/image/src/image-viewer";
+ <el-image-viewer
+      v-if="showViewer"
+      :on-close="() => (showViewer = false)"
+      :url-list="[urls]"
+    />
+
 <van-overlay :show="true">
     <div class="loading" @click.stop>
       <van-loading size="36px" vertical>加载中...</van-loading>
@@ -1196,3 +1203,99 @@ watch的多个props都会执行getData()，若一次更改多个props会多次�
 
 关闭表格内的popOver:
 	scope._self.$refs[`popover-${scope.$index}`].doClose()
+
+
+```el-table某一行编辑或新增时，动态合并。
+/deep/ .el-table__cell[colspan="2"] {
+  .cell {
+    width: 100% !important;
+  }
+}
+objectSpanMethods({ row, column, rowIndex, columnIndex }) {
+      console.log(row, column, rowIndex, columnIndex);
+      if (row.isEdit) {
+        if (columnIndex === 0)
+          return {
+            rowspan: 1, //合并的行数
+            colspan: 2 //合并的列数，设为０则直接不显示
+          };
+        return {
+          rowspan: 0,
+          colspan: 0
+        };
+      }
+    },
+<el-table
+        ref="groupTable"
+        :data="groupData"
+        style="width:100%"
+        row-key="id"
+        header-row-class-name="table-header"
+        :row-class-name="tableRowClassName"
+        v-loading="groupLoading"
+        @row-click="rowClick"
+        :height="tableHeight"
+        :highlight-current-row="true"
+        :span-method="objectSpanMethods"
+      >
+        <el-table-column prop="name" label="工作岗位" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <div v-if="scope.row.solid">{{ scope.row.name }}</div>
+            <div v-else-if="scope.row.isEdit" class="input_area">
+              <el-input
+                v-model="scope.row.editName"
+                placeholder="请输入工作岗位名称"
+                autofocus
+                size="small"
+                class="ip"
+              ></el-input>
+              <el-input
+                v-model="scope.row.editName"
+                placeholder="请输入工作内容"
+                autofocus
+                size="small"
+                class="ip"
+              ></el-input>
+              <div class="campus-btn div_flex">
+                <span @click.stop="editRow(scope.row, false)" class="cancel"
+                  >取消</span
+                >
+                <span @click.stop="editRow(scope.row, true)">保存</span>
+              </div>
+            </div>
+            <span v-else style="color:#606266;">{{ scope.row.name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center" width="100">
+          <template slot-scope="scope">
+            <div v-if="scope.row.solid"></div>
+            <div v-else-if="!scope.row.isEdit" class="campus-btn">
+              <span @click.stop="addCampus(scope.row)">编辑</span>
+              <span @click.stop="deleteGroup(scope.row)">删除</span>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+```
+
+
+```javascript
+watch: {
+    '$route.path'() {
+      this.redirect();
+    },
+},
+// 对于详情页，可以在接口返回的路由后面直接加 /:id, 比如path: '/tc/specialSponser/:id', 这样就不用去urls[0]了，因为这个路由肯定比原路由长且包含，同时不需要在router.js里用beforeEach来判断，在router.js判断是为了在跳转前就next(正确的路由)，但是layout.vue是父路由，所以并不会出现两次跳转，而是直接去了该去的页面。
+    redirect() {
+      // 如果当前链接不在菜单中 则跳转到第一个菜单
+      if (this.urls.length > 0) {
+        if (!this.urls.some(i => this.$route.path.includes(i))) {
+          this.$router.push(this.urls[0]);
+        }
+      } else {
+        this.$router.push('/no-right');
+      }
+    },
+```
+
+# this.$slots.default 判断 <slot />是否传入； this.$slots.slotName

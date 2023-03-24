@@ -116,7 +116,7 @@ h('img', { attrs: { src: require('./image.png') }})
 typescript 类型推导及其内部 api
 百度语音识别 node sdk 服务器，前端录音，后端识别。
 
-npm publish vue install 库包 base-upload
+vue上传插件，npm publish; vue install 库包 base-upload;   万年历 d.setDate(-3)
 
 仿写 vue MVVM，类似 v-model 元素属性编译。
 

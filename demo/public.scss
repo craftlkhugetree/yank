@@ -975,29 +975,36 @@ coords的值是4个，分别是由，号隔开。前两个表示起始点的坐�
   white-space: pre;
 }
 
-jquery可以给动态样式，但是element.click这种写法不支持给动态元素或者样式重新绑定事件，如 $(".sex_icon").click(function() {}) 支持给动态元素和属性绑定事件的是live和on，其中live在JQUERY 1.7之后就不推荐使用了。现在主要用on，使用on的时候也要注意，on前面的元素也必须在页面加载的时候就存在于dom里面。动态的元素或者样式等，可以放在on的第二个参数里面。 如：$("body").on("click", ".sex_icon", function() {}) // 属性赋值 $("#myDiv").data("appid","666");
+jquery可以给动态样式，但是element.click这种写法不支持给动态元素或者样式重新绑定事件，如 $(".sex_icon").click(function() {}) 
+支持给动态元素和属性绑定事件的是live和on，其中live在JQUERY 1.7之后就不推荐使用了。现在主要用on，使用on的时候也要注意，
+on前面的元素也必须在页面加载的时候就存在于dom里面。动态的元素或者样式等，可以放在on的第二个参数里面。 如：$("body").on("click", ".sex_icon", function() {}) // 属性赋值 $("#myDiv").data("appid","666");
 
-需要注意的是，data()的值进行修改并不会影响到DOM元素上的data-*属性的改变。data()的本质其实是将一个 “cache” 附加到了对象上，并使用了一个特殊的属性名称。 所以上述代码中，虽然对div进行了data()赋值操作，但HTML代码中div的data-appid的值仍然为123，因为data()只是修改了缓存的那个值，此时进行$(’#myDiv’).data(“appid”)的操作，输出的结果为666. 使用contenteditable 输入法无法换行： .cursor_input {
+需要注意的是，data()的值进行修改并不会影响到DOM元素上的data-*属性的改变。data()的本质其实是将一个 “cache” 附加到了对象上，并使用了一个特殊的属性名称。 
+所以上述代码中，虽然对div进行了data()赋值操作，但HTML代码中div的data-appid的值仍然为123，因为data()只是修改了缓存的那个值，此时进行$(’#myDiv’).data(“appid”)的操作，输出的结果为666.
+
+使用contenteditable 输入法无法换行： .cursor_input {
   margin: 0;
   padding: 0;
   -webkit-user-select: auto;
 }
-
-设置placeholder: <div class='rich_text' contenteditable placeholder='请输入文字'></div><style>.rich_text:empty::before {
+设置placeholder: 
+<div class='rich_text' contenteditable placeholder='请输入文字'></div>
+<style>.rich_text:empty::before {
   content: attr(placeholder);
 }
-
 .rich_text:focus:before {
   content: none;
 }
+</style>
 
-</style><div class="btn not"
+<div class="btn not"
 @touchstart.stop="gostart"
 @touchmove="void 0"
 @touchend="gotouchend"
 @touchcancel="gotouchend"
+>
 
-><img :src="isPress ? btn2 : btn" /></div>#图片按钮需要长按，但是不能弹出保存提示： img {
+<img :src="isPress ? btn2 : btn" /></div>#图片按钮需要长按，但是不能弹出保存提示： img {
   pointer-events: none;
 }
 
@@ -1039,3 +1046,5 @@ jquery可以给动态样式，但是element.click这种写法不支持给动态�
   z-index: 1;
   border-top-color: green
 }
+
+margin-right: 100%   flex里独占一行

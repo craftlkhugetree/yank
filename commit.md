@@ -481,7 +481,7 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 # debian ngnix, ts-challenge, moyu vue3, vue 源码重写
 
 # 督导助手 2023/02/06
-
+HeaderBar.vue隐藏了 /paper
 photoItems.vue 的 v-if="params.funTab !== 'yzy'"
 removeItem: form,reply
 report.vue 的$router.back

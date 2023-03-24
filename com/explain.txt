@@ -109,3 +109,8 @@ border-radius外翻角; 图片上传和删除及样式imgCard.vue
 el-steps 自定义; el-select 搜索下拉框的filter和remote都是自带参数，不需要设置。
 2级路由的嵌套，都有redirect: ""; Router.beforeEach里判断和跳转以及路由权限。 对/  /index 以及*的分类讨论与ngnix的配合。
 自定义this.$confirm()
+gis只能设置一次center，而且不能setZoom()，否则会灰屏。
+
+# 物业管理信息系统
+万年历；el-table合并行列
+fileUpload.vue 上传文件，列表横排或竖排！
