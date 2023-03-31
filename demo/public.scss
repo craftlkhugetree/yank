@@ -1,3 +1,12 @@
+一个元素的width值,不包括padding,border,margin值。只是最核心的内容的宽度。 
+盒子3D模型，由上到下（由表及里）为：
+边框（border）
+内容＋填充（content＋padding）
+背景图片（background-image）
+背景颜色（background-color）
+边界（margin）
+
+
 每台电脑的尺寸大小不一样。当页面获取的数据跟电脑屏幕刚好一致时，他就会出现这个问题，伸展/收缩， 伸展收缩，出现滚动条，隐藏滚动条，一直在不停的变换才导致页面一直闪。这个场景其实可以模拟出来，我们把一个页面先缩放/扩大到跟屏幕产不多大的时候，找到这个页面的样式。加个margin-bottom,
 把数值一直加，加到跟屏幕一样大小的时候，他就会闪动了。 .el-container {
   // overflow:scroll;
@@ -1048,3 +1057,5 @@ on前面的元素也必须在页面加载的时候就存在于dom里面。动态
 }
 
 margin-right: 100%   flex里独占一行
+
+td内想不设置line-height而垂直居中，需要vertical-align: middle;

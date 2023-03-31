@@ -1,9 +1,9 @@
 # !/bin/sh
 #不能有空格
-read -p "督导助手请填写IDSTGC:" msg
+read -p "物业请填写IDSTGC:" msg
 path='/d/kxiangmu/njauLogistics/fuwujiandu'
-filename1=$path'/hq-ddzs-pc/src/assets/js/util.js'
-filename2=$path'/hq-ddzs-mobile/src/assets/js/util.js'
+filename1=$path'/hq-wyxxgl-pc/src/assets/js/util.js'
+filename2=$path'/hq-spgl-njit-pc/src/assets/js/util.js'
 
 IDSTGC="var IDSTGC"
 
@@ -17,4 +17,5 @@ done
 
 # code $path'/netRepair-mobile_njit'
 # code $path'/netRepair_njit'
-cd $path'/hq-ddzs-pc/'
+cd $path'/hq-spgl-njit-pc/'
+# cd $path'/hq-wyxxgl-pc/'

@@ -7,6 +7,9 @@ APIKey：1fe443319e96410ffb4f9989ed7cafdc
 账号：NJAngke
 密码：Angke@52333181
 
+wifi: dkr84813279
+
+http://ddzs.njau.edu.cn/ddzsmobile   1993032/HBli123456
 # Project
 
 https://z.angke.com.cn/ 账户 liken 密码 Liken123
@@ -531,7 +534,7 @@ status integer($int32) 状态 1 待处理 2 待确认 3 已完成
 ]
 
 # 物业管理
-fix: menus flag
+fix: sidebar.vue (menus flag)
 社会企业信息          path: "/society-company",
 物业工作岗位          path: "/service-position",
 物业服务人员          path: "/service-people",
@@ -539,4 +542,16 @@ fix: menus flag
 角色权限          path: "/roles",
 物业合同          path: "/contractor",
        
-       throw(123)
+# 后勤审批管理
+fix: sidebar.vue (menus flag)
+ICONCLS
+
+角色管理： /roles
+用户组管理： /group
+流程中心：
+    流程申请 /apply
+    流程查询 /search
+    全部流程 /all
+数据备份： /data_bk
+流程管理： /process
+部门管理： /dep

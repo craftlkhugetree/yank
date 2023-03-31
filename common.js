@@ -338,7 +338,7 @@ export default {
     Axios({
       url: window.g.ApiUrl2 + url,
       method: isGet ? 'GET' : 'POST',
-      responseType: 'blob',
+      responseType: 'blob', // 最关键！！！！
       headers: { IDSTGC: getCookie('IDSTGC') || '7d237f2b3db14c6eb4994258fd83aa8a' },
       data: params,
     })

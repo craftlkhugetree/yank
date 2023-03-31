@@ -188,3 +188,5 @@ router.beforeEach((to, from, next) => {
   { path: '*', redirect: '/' }, //路由按顺序从上到下，依次匹配。最后一个*能匹配全部，然后重定向到主页面
 ];
 ```
+
+el-table内若用了v-if ，就必须有key来防止串行。
