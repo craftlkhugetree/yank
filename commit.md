@@ -531,10 +531,10 @@ status integer($int32) 状态 1 待处理 2 待确认 3 已完成
 督查地点:/settings/location,
 参数配置：/settings/arguments,
 督导小组：/settings/group
+评估标准管理：/settings/assume
 ]
 
 # 物业管理
-fix: sidebar.vue (menus flag)
 社会企业信息          path: "/society-company",
 物业工作岗位          path: "/service-position",
 物业服务人员          path: "/service-people",

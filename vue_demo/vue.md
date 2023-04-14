@@ -1072,28 +1072,29 @@ watch的多个props都会执行getData()，若一次更改多个props会多次�
       const h = this.$createElement;
       this.$confirm("", {
         message: h("div", null, [
-          h("i", {
-            class: "el-icon-question",
-            style: "color:#f90;font-size:30px;"
-          }),
-          h(
-            "span",
-            {
-              style:
-                "margin-left:10px;font-size:16px;line-height:30px;font-weight:600;vertical-align:top;"
-            },
-            `确认要删除督导小组吗？`
-          ),
+          h("div", { style: "display:flex; align-items:center" }, [
+            h("i", {
+              class: "el-icon-warning",
+              style: "color:#f90;font-size:20px;"
+            }),
+            h(
+              "span",
+              {
+                style:
+                  "margin-left:10px;font-size:16px;line-height:30px;font-weight:600;vertical-align:top;"
+              },
+              `确认要删除工作岗位『 ${row.name} 』吗？`
+            )
+          ]),
           h(
             "p",
             {
               style:
                 "margin:10px 0 0 40px;font-family: 'PingFang SC';font-style: normal;font-weight: 400;font-size: 14px;line-height: 20px;"
             },
-            "此操作会将该督导小组下的人员移动到未分组，确认要删除吗？"
+            "此操作会影响该工作岗位下的人员，确认要删除吗？"
           )
         ]),
-        // `确认要删除督导小组『 ${row.name} 』吗？`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
         // type: "warning"

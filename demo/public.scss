@@ -237,7 +237,6 @@ p~ul选择器 p之后出现的所有ul，p不一定有ul子元素。两种元素
   // <!--<lable>标签的for属性，绑定到input标签上-->
   // css中加号表示选择相邻兄弟,叫做“相邻兄弟选择器”,该选择器能够匹配指定元素后面相邻的兄弟元素。
   <input id="check1" type="checkbox" /> <label for="check1" ></label>
-
   /*当input框为选中状态时，lable标签的样式，其中在css选择时，“：”表示当前input框的值，即checked；
       \2714代表对号*/
   #check1:checked + label::before {
@@ -1059,3 +1058,20 @@ on前面的元素也必须在页面加载的时候就存在于dom里面。动态
 margin-right: 100%   flex里独占一行
 
 td内想不设置line-height而垂直居中，需要vertical-align: middle;
+
+
+scroll事件内：当滚动到顶部时将scollTop 设置成1 当到底部时 scrollTop 减去1像素，就是不让元素 到不了顶部或底部:
+robotScroll(e){
+        console.log(e);
+        var chatlist = document.getElementsByClassName('robot-box')[0];
+        // console.log(chatlist.clientHeight);
+        // console.log(chatlist.scrollHeight);
+        // console.log(chatlist.scrollTop);
+        if(chatlist.scrollTop <= 0){
+          chatlist.scrollTop = 1
+        }
+        // console.log(`差${chatlist.scrollHeight - chatlist.clientHeight - chatlist.scrollTop}`);
+        if((chatlist.scrollHeight - chatlist.clientHeight - chatlist.scrollTop) <= 0){
+          chatlist.scrollTop = chatlist.scrollHeight - chatlist.clientHeight - 1;
+        }
+      },

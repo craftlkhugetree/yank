@@ -271,7 +271,12 @@ export default {
         type: 'binary',
       });
       const wsname = workbook.SheetNames[0];
-      const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]);
+      let op = 1
+        ? {}
+        : {
+            range: -1, // 全是数据，没有表头
+          };
+      const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname], op);
       console.log('ws:', ws); // 转换成json的数据
     };
     fileReader.readAsBinaryString(f);
@@ -357,6 +362,29 @@ export default {
       .catch(e => {
         loading.close();
       });
+  },
+  apiDownloadFile() {
+    function download(res, fileName) {
+      let f = fileName.split('.');
+      let ext = f[f.length - 1];
+      f.splice(f.length - 1, 1);
+      let blob = new Blob([res]);
+      // let blob = new Blob([res], { type: ext });
+      if (blob.size > 0) {
+        let url = window.URL.createObjectURL(blob);
+        let link = document.createElement('a');
+        link.href = url;
+        link.style.display = 'none';
+        link.setAttribute('download', fileName);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
+    }
+    downFileId(item.id).then(res => {
+      download(res, item.fileName);
+    });
   },
   // 二进制读取文件
   readFile(url) {
@@ -689,17 +717,17 @@ function isFunction(v) {
 }
 // 音频时长
 {
-        let timer = setInterval(() => {
-          var musicDom = document.getElementById(t); //获取audio对象
-          if (musicDom) {
-            musicDom.load();
-            musicDom.onloadedmetadata = function () {
-              let duration = parseInt(musicDom.duration);
-            };
-            clearInterval(timer);
-          }
-        }, 500);
-      }
+  let timer = setInterval(() => {
+    var musicDom = document.getElementById(t); //获取audio对象
+    if (musicDom) {
+      musicDom.load();
+      musicDom.onloadedmetadata = function () {
+        let duration = parseInt(musicDom.duration);
+      };
+      clearInterval(timer);
+    }
+  }, 500);
+}
 // 视频截图封面图
 function getVideoCanvas(videoList, fun, that) {
   var videoCanList = []; // 因为后端返回的视频数组，这里先定义一个空数组
@@ -827,36 +855,35 @@ this.tableData = tmp.sort((a, b) => {
 });
 
 // js控制全屏，必须是主动触发，比如按按钮
-  function requestFullScreen() {
-    let element = window.document.documentElement;
-    let requestMethod =
-      element.requestFullScreen || //W3C
-      element.webkitRequestFullScreen || //Chrome
-      element.mozRequestFullScreen || //FireFox
-      element.msRequestFullScreen; //IE11
-    if (requestMethod) {
-      // console.log(element, element.webkitRequestFullScreen);
-      requestMethod.call(element, { navigationUI: 'hide' });
-      // element.requestMethod({ navigationUI: 'hide' });
-    } else if (typeof window.ActiveXObject !== 'undefined') {
-      //for Internet Explorer
-      let wscript = new ActiveXObject('WScript.Shell');
-      if (wscript !== null) {
-        wscript.SendKeys('{F11}');
-      }
+function requestFullScreen() {
+  let element = window.document.documentElement;
+  let requestMethod =
+    element.requestFullScreen || //W3C
+    element.webkitRequestFullScreen || //Chrome
+    element.mozRequestFullScreen || //FireFox
+    element.msRequestFullScreen; //IE11
+  if (requestMethod) {
+    // console.log(element, element.webkitRequestFullScreen);
+    requestMethod.call(element, { navigationUI: 'hide' });
+    // element.requestMethod({ navigationUI: 'hide' });
+  } else if (typeof window.ActiveXObject !== 'undefined') {
+    //for Internet Explorer
+    let wscript = new ActiveXObject('WScript.Shell');
+    if (wscript !== null) {
+      wscript.SendKeys('{F11}');
     }
-};
+  }
+}
 // 一旦窗口变化就检查是否全屏
-    window.onresize = () => {
-      // console.log(this.isFull, document.fullscreenElement, document.fullscreen);
-        if (!document.fullscreen) {
-          isFull = true;
-          document.getElementsByClassName('full')[0].hidden = false;
-        } else {
-          document.getElementsByClassName('full')[0].hidden = true;
-        }
-    };
-
+window.onresize = () => {
+  // console.log(this.isFull, document.fullscreenElement, document.fullscreen);
+  if (!document.fullscreen) {
+    isFull = true;
+    document.getElementsByClassName('full')[0].hidden = false;
+  } else {
+    document.getElementsByClassName('full')[0].hidden = true;
+  }
+};
 
 const Vue = {
   /**
@@ -874,20 +901,22 @@ const Vue = {
   methods: {
     //数据大屏自适应函数
     handleScreenAuto() {
-      const designDraftWidth = 1920;//设计稿的宽度
-      const designDraftHeight = 960;//设计稿的高度
+      const designDraftWidth = 1920; //设计稿的宽度
+      const designDraftHeight = 960; //设计稿的高度
       //根据屏幕的变化适配的比例
-      const scale = document.documentElement.clientWidth / document.documentElement.clientHeight < designDraftWidth / designDraftHeight ?
-        (document.documentElement.clientWidth / designDraftWidth) :
-        (document.documentElement.clientHeight / designDraftHeight);
+      const scale =
+        document.documentElement.clientWidth / document.documentElement.clientHeight <
+        designDraftWidth / designDraftHeight
+          ? document.documentElement.clientWidth / designDraftWidth
+          : document.documentElement.clientHeight / designDraftHeight;
       //缩放比例
-      (document.querySelector('#screen')).style.transform = `scale(${scale}) translate(-50%)`;
-    }
-  }
-}
-    /*
+      document.querySelector('#screen').style.transform = `scale(${scale}) translate(-50%)`;
+    },
+  },
+};
+/*
       CSS部分  --除了设计稿的宽高是根据您自己的设计稿决定以外，其他复制粘贴就完事
-    */  
+    */
 /***
  <style>
   .screen-root {

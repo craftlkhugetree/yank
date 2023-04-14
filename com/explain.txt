@@ -98,7 +98,10 @@ preview，delImg css, voice, camera, BMap
 把div容器变成可编辑的，用 contenteditable="true"，实现标签#下拉框，nodeType=1是span，3是textNode，根据childNode设置光标位置，字数超出限制则设置innerText。正则判断节点内有几个#。
 微信语音多个接口、定位。
 双图层叠加，v-show：如果先显示BMap，那么之后切换显示GIS时会被遮挡一半，所以mounted必须先加载GIS并且显示，再关掉永久开关，并加载显示BMap。
-BMap 自定义dom，marker。移动端需要touchstart才能绑定地图的自定义dom点击事件。
+BMap 自定义dom，marker。移动端需要touchend才能绑定地图的自定义dom点击事件。但是会与拖动和缩放重叠，所以要监听：
+      this.mp.addEventListener("touchstart", this._onTouchStart);
+      this.mp.addEventListener("touchmove", this._onTouchMove);
+      this.mp.addEventListener("touchend", this._onTouchEnd);  在这些事件中控制点击dom事件的touchend是否执行。
 语音波浪样式！
 van-steps 自定义
 ios14及以上对微信sdk的signature中的url有特殊要求。
@@ -113,9 +116,9 @@ gis只能设置一次center，而且不能setZoom()，否则会灰屏。
 
 # 物业管理信息系统
 万年历；el-table合并行列
-fileUpload.vue 上传文件，列表横排或竖排！
-imgCard.vue 待删除的图片上传
+fileUpload.vue 上传文件，上传文件列表横排或竖排！
+imgCard.vue 带删除的图片上传
 
 # 后勤审批管理
-el-tree        :render-content="renderContent"
+el-tree自定义渲染   :render-content="renderContent"
 竖分割线带浮动文字

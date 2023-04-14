@@ -46,6 +46,7 @@
 
     .text::after {
       /*after小块始终在最后，超过maxHeight的话，就被挤到下方，所以不会遮挡省略号和按钮。*/
+      /* 当文字较少时就会浮动起来遮挡展开按钮 */
       content: "";
       width: 100%;
       height: 100%;
@@ -53,7 +54,7 @@
         height: 999vh; */
       position: absolute;
       /* box-shadow: inset calc(100px - 999vw) calc(30px - 999vw) 0 0 #fff; */
-      margin-left: -100px;
+      /* margin-left: -100px; */
       background-color: red;
     }
 
@@ -297,6 +298,7 @@
             <div class="text">
               <label class="btn" for="exp2"></label>
               浮动元素是如何定位的
+              
             </div>
           </div>
 
