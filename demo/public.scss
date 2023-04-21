@@ -588,6 +588,7 @@ CSS 改变文本可以采用伪元素生成
         word-wrap: break-word;
       }
 
+      // height: 100%是无法触发滚动条的，必须有足够高才行，否则即便设置了overflow: auto也没有滚动！！！
       // 隐藏滚动条
       .list::-webkit-scrollbar,
       .list::-webkit-scrollbar-thumb,
@@ -1075,3 +1076,24 @@ robotScroll(e){
           chatlist.scrollTop = chatlist.scrollHeight - chatlist.clientHeight - 1;
         }
       },
+
+// 父元素高度铺满屏幕，同时能自适应子元素高度
+.main-div {
+  height: auto;
+  min-height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 0;
+  display: flex;
+  align-items: top; // 子元素左右两列，其宽度可用媒体查询适应屏幕，然后用flex gap间隔。
+  &::-webkit-scrollbar,
+  &::-webkit-scrollbar-thumb,
+  &::-webkit-scrollbar-track {
+    display: none;
+    margin-top: -1px;
+    width: 0;
+    height: 0;
+    background: transparent;
+  }
+}

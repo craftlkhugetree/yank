@@ -61,7 +61,7 @@ export default {
           ...sheet[key].s,
           fill: {
             //背景色
-            fgColor: { rgb: '9e9e9e' },
+            fgColor: { rgb: '#9e9e9e' },
             // fgColor: { rgb: 'EBF1DE' },
           },
           font: {
@@ -72,31 +72,32 @@ export default {
           },
         };
       }
-      // if (key === 'A1') {
-      //   sheet[key].s = {
-      //     ...sheet[key].s,
-      //     fill: {
-      //       //背景色
-      //       fgColor: { rgb: 'E4DFEC' },
-      //     },
-      //   };
-      // }
-      // if (
-      //   key === 'C1' ||
-      //   key === 'D1' ||
-      //   key === 'E1' ||
-      //   key === 'F1' ||
-      //   key === 'G1' ||
-      //   key === 'H1'
-      // ) {
-      //   sheet[key].s = {
-      //     ...sheet[key].s,
-      //     fill: {
-      //       //背景色
-      //       fgColor: { rgb: 'FDE9D9' },
-      //     },
-      //   };
-      // }
+      if (key === 'A1') {
+        sheet[key].s = {
+          ...sheet[key].s,
+          fill: {
+            //背景色
+            fgColor: { rgb: '#E4DFEC' },
+          },
+        };
+      }
+      if (
+        key === 'C1' ||
+        key === 'B1' ||
+        key === 'D1' ||
+        key === 'E1' ||
+        key === 'F1' ||
+        key === 'G1' ||
+        key === 'H1'
+      ) {
+        sheet[key].s = {
+          ...sheet[key].s,
+          fill: {
+            //背景色
+            fgColor: { rgb: '#FDE9D9' },
+          },
+        };
+      }
     }
     //列宽
     let colsP = [
@@ -933,3 +934,26 @@ const Vue = {
     }
    <style>
  */
+
+// 监听浏览器关闭事件，适应ios，android
+{
+  function unloadHander() {
+    localStorage.setItem('abc', '我监听到了浏览器的返回按钮事件啦'); //根据自己的需求实现自己的功能
+  }
+  window.addEventListener(
+    'unload',
+    function (e) {
+      unloadHander();
+    },
+    false
+  );
+  window.addEventListener(
+    'pagehide',
+    function (e) {
+      unloadHander();
+    },
+    false
+  );
+  let tmp = localStorage.getItem('abc');
+  tmp && alert(tmp);
+}

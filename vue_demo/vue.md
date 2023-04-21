@@ -2,6 +2,14 @@ meta 就是元
 meta data 就是元数据，用来描述数据的数据；如一个数据 1.70，我们并不知道它代表什么，但是身高：1.70 我们就知道 1.70 表示身高，而身高就是元数据，用来描述数据 1.70
 
 # vant
+<van-popup>的lock-scroll会锁定背景滚动，需要关闭。
+
+  <van-tabbar-item icon="setting-o" badge="20">标签</van-tabbar-item>
+  import { Badge } from 'vant';
+        name: 'index',
+        components: {
+            [Badge.name]: Badge
+        },
 
 预览图片：
 import { ImagePreview } from 'vant';
@@ -1300,3 +1308,22 @@ watch: {
 ```
 
 # this.$slots.default 判断 <slot />是否传入； this.$slots.slotName
+
+
+tabs抽取为组件后，可以:
+  beforeDestroy() {
+    this.$store.commit('setActiveName', this.activeTab)
+  }
+这样就能在页面转回来后，展示刚才的tab。同时this.activeTab要被放到computed中，及时计算页面所需参数！ 而且要找到时机清空setActiveName
+
+
+// removeEventListener不能对闭包用，必须是固定地址。
+mounted() {
+    let that = this;
+    this.fun = that.debounce(that.handleScroll, 100);
+    document.querySelector("#app").addEventListener("scroll", that.fun);
+  },
+  beforeDestroy() {
+    let that = this;
+    document.querySelector("#app").removeEventListener("scroll", that.fun);
+  }

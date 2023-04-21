@@ -555,3 +555,14 @@ ICONCLS
 数据备份： /data_bk
 流程管理： /process
 部门管理： /dep
+
+applyStatus 0草稿1处理中2已完成
+filter: {isDraft:0, currentTaskUser: userId}
+filter: {isDraft:0, historyTaskUser: userId}
+filter: {isDraft:0, createId: userId}
+filter: {isDraft:1, createId: userId}
+
+
+currentTaskName含有经办，不可编辑
+events内最新的taskName为撤回，才可重新发起
+内外高度滚动自适应
