@@ -24,6 +24,6 @@ do
 done
 
 #sed正则内的括号必须转义
-# cd '/D/kxiangmu/appointment/appointmentFrontEnd_v2/' 
-cd '/D/kxiangmu/nangongcheng/web/pc' 
+cd '/D/kxiangmu/appointment/appointmentFrontEnd_v2/' 
+# cd '/D/kxiangmu/nangongcheng/web/pc' 
 # cd '/D/kxiangmu/nangongcheng/web/screen' 

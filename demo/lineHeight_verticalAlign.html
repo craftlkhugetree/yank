@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    div {
+      outline: 1px solid saddlebrown;
+      text-align: justify;
+      /* 首先第一个i标签基线与第二行的span标签中的数字的基线对其，所以其位置在中间。其次最后一行的i标签基线对齐幽灵空白节点字母x的基线，没有错位，所以此时最后一行的间隙高度就是字母x的高度。所以很容易想到把幽灵空白节点的行高设为 0 来解决问题 */
+      line-height: 0;
+    }
+    span {
+      display: inline-block;
+      width: 100px;
+      line-height: 100px;
+      border-bottom: 1px solid cyan;
+      text-align: center;
+      background-color: #dadada;
+    }
+    i {
+      width: 100px;
+      display: inline-block;
+      outline: 1px dashed blueviolet;
+      /* 然而间隙虽然缩小了，但是还是存在。此时由于行高为 0 ，幽灵空白节点也就是字母x在页面中占用的真实位置其实是红线所示。也就是说虽然字母 x 还显示在页面上，但是其真实高度已经为0，此时其中线、上边缘线、下边缘线合一，都在红线位置，其真实位置自然也就在红线位置。然而其基线却不会改变，在字母 x 下边缘。
+此时i标签的基线发生错位，位移到下面与幽灵空白节点基线对齐，导致产生了间隙。
+所以只需要再改变i标签的对齐方式，就能彻底清除间隙 */
+
+      vertical-align: bottom;
+    }
+  </style>
+  <body>
+    <div>
+      <span>1</span>
+      <span>2</span>
+      <span>3</span>
+      <span>4</span>
+      <span>5</span>
+      <i></i>
+      <i></i>
+      <i></i>
+      x
+    </div>
+  </body>
+</html>

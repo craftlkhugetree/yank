@@ -11,6 +11,7 @@ win + x + a 打开设置菜单，可选管理员 cmd
 taskkill /PID 19768 /F
 
 # chrome
+ctrl + shift + m 切换移动端
 
 To activate search completion, type o to activate vomnibar and then type the search completion keyword as defined in settings (such as 'g') and press space.
 map ` visitPreviousTab

@@ -460,29 +460,6 @@ obj.hq = 1;
 }
 sessionStorage.setItem('url4bizNode', JSON.stringify(obj))
 }
-
-require，import 动态 静态
-webpack cjs/esm 导入导出 通用
-项目 minipack 模块过程
-Amazon deepracer
-
-form 有初始值才能输入，才能双向绑定？
-doLayout 才能保证移动端 el-table 某列可以用 v-if，否则这一行不对齐。
-
-项目 new 从上往下拖；全量编辑
-
-netRepair: findId 重复 4 次
-
-card 项目 printbox 打印预览窗口 vue 父子组件传值 在 ie 不行。得用原生 js 来修改 img 的 src，才能展示图片。
-
-Vue.component 全局挂载的组件，破坏了 export default new Vue({})
-
-# @media 1920, home 浮动遮挡 el-footer, 插件 BaseUpload, videoCover, 组件 s-form.
-
-数据和图形的分离， 图形小片的组合
-
-# debian ngnix, ts-challenge, moyu vue3, vue 源码重写
-
 # 督导助手 2023/02/06
 HeaderBar.vue隐藏了 /paper
 photoItems.vue 的 v-if="params.funTab !== 'yzy'"
@@ -561,8 +538,28 @@ filter: {isDraft:0, currentTaskUser: userId}
 filter: {isDraft:0, historyTaskUser: userId}
 filter: {isDraft:0, createId: userId}
 filter: {isDraft:1, createId: userId}
-
-
 currentTaskName含有经办，不可编辑
 events内最新的taskName为撤回，才可重新发起
-内外高度滚动自适应
+
+
+# 内外高度滚动自适应
+require，import 动态 静态
+webpack cjs/esm 导入导出 通用
+项目 minipack 模块过程
+Amazon deepracer
+
+form 有初始值才能输入，才能双向绑定？
+doLayout 才能保证移动端 el-table 某列可以用 v-if，否则这一行不对齐。
+
+项目 new 从上往下拖；全量编辑
+
+netRepair: findId 重复 4 次
+
+card 项目 printbox 打印预览窗口 vue 父子组件传值 在 ie 不行。得用原生 js 来修改 img 的 src，才能展示图片。
+
+Vue.component 全局挂载的组件，破坏了 export default new Vue({})
+
+# @media 1920, home 浮动遮挡 el-footer, 插件 BaseUpload, videoCover, 组件 s-form.
+
+数据和图形的分离， 图形小片的组合
+# debian ngnix, ts-challenge, moyu vue3, vue 源码重写

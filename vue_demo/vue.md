@@ -1310,7 +1310,7 @@ watch: {
 # this.$slots.default 判断 <slot />是否传入； this.$slots.slotName
 
 
-tabs抽取为组件后，可以:
+tabs抽取为组件后，可以在该组件内:
   beforeDestroy() {
     this.$store.commit('setActiveName', this.activeTab)
   }
