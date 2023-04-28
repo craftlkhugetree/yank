@@ -982,6 +982,7 @@ coords的值是4个，分别是由，号隔开。前两个表示起始点的坐�
   }) </script>label换行： &::before {
   content: '\A';
   white-space: pre;
+  word-break: break-all;
 }
 
 jquery可以给动态样式，但是element.click这种写法不支持给动态元素或者样式重新绑定事件，如 $(".sex_icon").click(function() {}) 
@@ -1080,13 +1081,14 @@ robotScroll(e){
 // 父元素高度铺满屏幕，同时能自适应子元素高度
 .main-div {
   height: auto;
-  min-height: 100%;
+  min-height: 100%; 
+  //可以合并为 height: 100%;
   width: 100%;
   margin: 0 auto;
   background: #ffffff;
   padding: 0;
   display: flex;
-  align-items: top; // 子元素左右两列，其宽度可用媒体查询适应屏幕，然后用flex gap间隔。
+  align-items: top; // 子元素左右两列，其宽度可用媒体查询适应屏幕，然后用flex gap间隔。而且可以不自动滚动
   &::-webkit-scrollbar,
   /*滚动条滑块的样式*/
   &::-webkit-scrollbar-thumb,
@@ -1116,3 +1118,36 @@ robotScroll(e){
 包含盒子：就是包含块。多行文字组成一个包含块，一个包含块有若干个行框盒子。
 幽灵空白节点：内联元素的每个行框盒子前面有一个“空白节点”，这个“空白节点”不占据任何宽度，无法选中获取，但是又实实在在存在，表现就如同文本节点一样（本文中大量例子会用字母x模拟幽灵空白节点）。
 // 链接：https://juejin.cn/post/6844903894313598989
+
+加上word-break: break-all; 才能保证中英文都可以正常换行。
+
+
+
+// background-clip 属性定义背景颜色或背景图像应该超出元素的内边距的程度，text 是这个属性是个有意思的值，让文字变得生动。
+// <p>DevPoint</p>
+p {
+  font-family: "Bungee", cursive;
+  font-size: 8rem;
+  color: transparent;
+    font-weight:bolder;
+  /* --开始background-clip设置-- */
+  background-image: url("https://crayon.devpoint.cn/assets/images/bgs/main.jpg");
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* --结束background-clip设置-- */
+  background-size: cover;
+  background-position: center;
+}
+
+:target 是 CSS3 新增的一个伪类，可用于选取当前活动的目标元素。当 URL 末尾带有锚名称 #，就可以指向文档内某个具体的元素。这个被链接的元素就是目标元素(target element)。它需要一个 id 去匹配文档中的 target 。
+// 无需 JavaScript的模态：
+.modal {
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease-in;
+}
+
+.modal:target {
+  opacity: 1;
+  visibility: visible;
+}

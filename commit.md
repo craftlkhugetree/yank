@@ -503,12 +503,12 @@ status integer($int32) 状态 1 待处理 2 待确认 3 已完成
 督查报告： /paper
 
 系统配置 children: [
-角色权限："/settings/roles",
-业务领域： "/settings/business-area",
-督查地点:/settings/location,
-参数配置：/settings/arguments,
-督导小组：/settings/group
-评估标准管理：/settings/assume
+角色权限："/settings/roles",    iconCls: iconjiaose
+业务领域： "/settings/business-area",  iconCls: iconfenlei
+督查地点:/settings/location, iconCls: iconfenlei
+参数配置：/settings/arguments, iconCls: iconpeizhi
+督导小组：/settings/group, iconCls: iconfenlei
+评估标准管理：/settings/assume, iconCls: iconpeizhi
 ]
 
 # 物业管理

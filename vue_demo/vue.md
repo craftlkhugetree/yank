@@ -1327,3 +1327,10 @@ mounted() {
     let that = this;
     document.querySelector("#app").removeEventListener("scroll", that.fun);
   }
+或者：
+@click.stop="dddd()"
+data() {
+  return {
+    dddd: this.common.debounce(this.next, 500), //得到闭包
+  }
+}

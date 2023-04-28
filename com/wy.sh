@@ -4,10 +4,11 @@ read -p "物业请填写IDSTGC:" msg
 path='/d/kxiangmu/njauLogistics/fuwujiandu'
 filename1=$path'/hq-wyxxgl-pc/src/assets/js/util.js'
 filename2=$path'/hq-spgl-njit-pc/src/assets/js/util.js'
+filename3=$path'/hq-spgl-njit-mobile/src/assets/js/util.js'
 
 IDSTGC="var IDSTGC"
 
-arr=($filename1 $filename2)
+arr=($filename1 $filename2 $filename3)
 
 for filename in ${arr[*]}
 do

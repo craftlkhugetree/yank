@@ -34,6 +34,7 @@
       line-height: 1.5;
       max-height: 4.5em;
       transition: .3s max-height;
+      word-break: break-all;
     }
 
     .text::before {
@@ -75,9 +76,10 @@
       /* margin-top: -30px; */
     }
 
-    .btn::after {
-      content: "展开";
-    }
+  .btn::after {
+    content: "展开 \e67d";
+    font-family: 'iconfont';
+  }
 
     .exp {
       display: none;
@@ -96,7 +98,8 @@
     }
 
     .exp:checked+.text .btn::after {
-      content: "收起";
+ content: "收起 \e694";
+    font-family: 'iconfont';
     }
 
     .btn::before {

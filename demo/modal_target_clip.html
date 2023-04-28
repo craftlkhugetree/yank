@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Microsoft YaHei', '微软雅黑', 'pingfang sc', '宋体', Arial, Helvetica,
+        sans-serif;
+      font-size: 14px;
+    }
+    a {
+      text-decoration: none;
+    }
+    .link {
+      display: block;
+      text-align: center;
+      margin-top: 1em;
+    }
+    /* --- */
+    .modal {
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s ease-in;
+    }
+    .modal:target {
+      opacity: 1;
+      visibility: visible;
+    }
+    /* --- */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.25);
+      display: grid;
+      place-items: center;
+    }
+    .content {
+      position: relative;
+      width: 320px;
+      padding: 1em;
+      background-color: #efefef;
+      border-radius: 5px;
+      text-align: justify;
+      color: #262626;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      line-height: 1.5;
+    }
+    .content > *:not(.close) {
+      margin: 1em 0;
+    }
+    .close {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      color: #f93154;
+    }
+
+    .grid-wrapper {
+      display: grid;
+      height: 98vh;
+      background-color: #efefef;
+    }
+    .bk_clip {
+      display: grid;
+      place-items: center;
+      font-family: 'Bungee', cursive;
+      font-size: 8rem;
+      color: transparent;
+      font-weight: bolder;
+      /* --开始background-clip设置-- */
+      background-image: url('https://crayon.devpoint.cn/assets/images/bgs/main.jpg');
+      -webkit-background-clip: text;
+      background-clip: text;
+      /* --结束background-clip设置-- */
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+  <body>
+    <a href="#modal" class="link">打开窗口</a>
+    <div class="grid-wrapper">
+      <p class="bk_clip">DevPoint</p>
+    </div>
+
+    <div class="modal" id="modal">
+      <div class="overlay">
+        <div class="content">
+          <h3>窗口标题</h3>
+          <p>
+            卡耐基对微笑有这样的描述：“它在家中产生，他不能买，不能求，不能借，不能偷，因为在人们得到它之前，对谁都是无用的东西，他给予后人之后，会使你得到别人的好感，它是疲倦者的休息，希望的阳光，悲哀者的力量，又是大自然免费赋予人们的一种解除苦难的良药。”
+          </p>
+
+          <a href="#" class="close">✖</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
