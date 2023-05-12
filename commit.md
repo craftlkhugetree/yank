@@ -10,6 +10,7 @@ APIKey：1fe443319e96410ffb4f9989ed7cafdc
 wifi: dkr84813279
 
 http://ddzs.njau.edu.cn/ddzsmobile   1993032/HBli123456
+孟丽丽：T2015152  密码：basili951008!
 # Project
 
 https://z.angke.com.cn/ 账户 liken 密码 Liken123
@@ -512,12 +513,14 @@ status integer($int32) 状态 1 待处理 2 待确认 3 已完成
 ]
 
 # 物业管理
-社会企业信息          path: "/society-company",
-物业工作岗位          path: "/service-position",
-物业服务人员          path: "/service-people",
-物业服务区域          path: "/area",
-角色权限          path: "/roles",
-物业合同          path: "/contractor",
+sideBar.vue flag
+社会企业信息          path: "/society-company",  ICONCLS: iconfenlei
+物业工作岗位          path: "/service-position",  ICONCLS: iconfenlei
+物业服务人员          path: "/service-people",ICONCLS: iconjiaose
+物业服务区域          path: "/area",ICONCLS: iconfenlei
+角色权限          path: "/roles",ICONCLS: iconjiaose
+物业合同          path: "/contractor",ICONCLS: iconwenjian
+企业考核信息          path: "/company-verify",ICONCLS: iconbaifenkaohe
        
 # 后勤审批管理
 fix: sidebar.vue (menus flag)
@@ -563,3 +566,4 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 
 数据和图形的分离， 图形小片的组合
 # debian ngnix, ts-challenge, moyu vue3, vue 源码重写
+? van-image el-image 与下方的div之间有2-5px的白边

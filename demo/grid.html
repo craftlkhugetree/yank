@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        .container {
-            display: grid;
-            /* grid-template-columns: 300px 10px 1fr; */
-            grid-template-columns: 300px;
-            gap: 10px;
-            grid-template-rows: auto;
-            justify-items: center;
-            /* align-items: center; */
-            /* justify-content: center; */
-        }
+      .container {
+        display: grid;
+        /* grid-template-columns: 300px 10px 1fr; */
+        grid-template-columns: 300px;
+        gap: 10px;
+        grid-template-rows: auto;
+        justify-items: center;
+        /* align-items: center; */
+        /* justify-content: center; */
+      }
+      .all {
+        display: grid;
+        /* 计算得到缩放时最小的宽度 */
+        grid-template-columns: repeat(5, minmax(146px, 1fr));
+        grid-gap: 24px 24px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <img src="https://ts1.cn.mm.bing.net/th?id=OIP-C.f-8HMC9JiH6RibpRnCXhIwHaFj&w=187&h=170&c=8&rs=1&qlt=90&o=6&dpr=1.25&pid=3.1&rm=2" alt />
-        <span>1234</span>
+      <img
+        src="https://ts1.cn.mm.bing.net/th?id=OIP-C.f-8HMC9JiH6RibpRnCXhIwHaFj&w=187&h=170&c=8&rs=1&qlt=90&o=6&dpr=1.25&pid=3.1&rm=2"
+        alt
+      />
+      <span>1234</span>
     </div>
-</body>
+  </body>
 </html>

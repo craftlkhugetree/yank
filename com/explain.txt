@@ -114,11 +114,29 @@ el-steps 自定义; el-select 搜索下拉框的filter和remote都是自带参�
 2级路由的嵌套，都有redirect: ""; Router.beforeEach里判断和跳转以及路由权限。 对/  /index 以及*的分类讨论与ngnix的配合。
 自定义this.$confirm()
 gis只能设置一次center，而且不能setZoom()，否则会灰屏。
+    /* 计算得到缩放时最小的宽度 */grid-template-columns: repeat(5, minmax(146px, 1fr));
+border dashed的替代，可以设置宽度、间隔。
 
 # 物业管理信息系统
 万年历；el-table合并行列
 fileUpload.vue 上传文件，上传文件列表横排或竖排！
 imgCard.vue 带删除的图片上传
+:row-class-name="tableRowClassName"
+	objectSpanMethods({ row, column, rowIndex, columnIndex }) {
+      // console.log(row, column, rowIndex, columnIndex);
+      if (row.isEdit) {
+        if (columnIndex === 0)
+          return {
+            rowspan: 1, //合并的行数
+            colspan: 2 //合并的列数，设为０则直接不显示
+          };
+        return {
+          rowspan: 0,
+          colspan: 0
+        };
+      }
+    },
+      
 
 # 后勤审批管理
 el-tree自定义渲染   :render-content="renderContent"

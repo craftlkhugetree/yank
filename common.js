@@ -5,6 +5,45 @@ import tVue from '@/main.js';
 import Axios from 'axios';
 
 export default {
+  confirm(obj = {}) {
+    let { that, title, body } = obj;
+    const h = that.$createElement;
+    return that.$confirm('', {
+      message: h('div', null, [
+        h(
+          'div',
+          {
+            style: 'display:flex; align-items:center',
+          },
+          [
+            h('i', {
+              class: 'el-icon-warning',
+              style: 'color:#f90;font-size:21px;height:24px;line-height:24px;',
+            }),
+            h(
+              'span',
+              {
+                style:
+                  'margin-left:17.5px;font-size:16px;height:24px;line-height:24px;font-weight:700;',
+              },
+              title
+            ),
+          ]
+        ),
+
+        h(
+          'p',
+          {
+            style:
+              'margin:16px 0 0 38.5px;font-style: normal;font-weight: 400;font-size: 14px;line-height: 22px;',
+          },
+          body
+        ),
+      ]),
+      confirmButtonText: '确 定',
+      cancelButtonText: '取 消',
+    });
+  },
   /********************************************1.导入导出Excel文件，二进制导出文件********************************************/
   // 二维数组导出Excel
   exportExcel(arr, fileName) {
@@ -885,6 +924,9 @@ window.onresize = () => {
     document.getElementsByClassName('full')[0].hidden = true;
   }
 };
+// vue 多个组件中同时使用window.onresize时，只有一个组件起作用时，解决办法
+// 将 window.onresize 替换成 window.addEventListener(“resize”, () => { })
+
 
 const Vue = {
   /**
