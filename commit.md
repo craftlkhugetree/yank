@@ -566,4 +566,7 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 
 数据和图形的分离， 图形小片的组合
 # debian ngnix, ts-challenge, moyu vue3, vue 源码重写
-? van-image el-image 与下方的div之间有2-5px的白边
+? van-image el-image 与下方的div之间有2-5px的白边，因为img是inline-block而不是block。
+
+！！列表页scroll加载，当从详情页返回列表页时，若详情页有滚动距离，那么回到列表页时，即便scrollTop为0，也会触发列表页的滚动，会有两次参数一样的加载。
+

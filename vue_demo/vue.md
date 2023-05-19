@@ -2,6 +2,10 @@ meta 就是元
 meta data 就是元数据，用来描述数据的数据；如一个数据 1.70，我们并不知道它代表什么，但是身高：1.70 我们就知道 1.70 表示身高，而身高就是元数据，用来描述数据 1.70
 
 # vant
+van-search 的clearable图标失效，是被输入框给遮蔽了，只要设置      /deep/ .van-field__control {
+        margin-right: 30px;
+      }; 即可
+
 <van-popup>的lock-scroll会锁定背景滚动，需要关闭。
 
   <van-tabbar-item icon="setting-o" badge="20">标签</van-tabbar-item>
@@ -1334,3 +1338,31 @@ data() {
     dddd: this.common.debounce(this.next, 500), //得到闭包
   }
 }
+
+
+
+beforeCreated：在实例初始化之后，当前阶段 data、methods、watch、computed 都不能被访问。
+ 
+created：实例创建之后，这里没有 el, 如果非要访问 DOM，可以使用 vm.nextTick。
+ 
+beforeMount：挂载前，render 首次调用。
+ 
+Mounted：挂载之后，真实的 DOM 挂载完毕，完成数据双向绑定，可以访问 DOM 节点。
+ 
+# beforeUpdate：数据更新时调用，完成虚拟DOM 重新渲染和打补丁（patch），在钩子函数中进一步改变状态，不会重新渲染。
+eg.当等待某接口数据，而该接口不在当前组件时，可以把接口数据的store放到本组件的computed，然后在beforeUpdate操作computed中定义的数据。
+ 
+# Updated：当前阶段DOM 更新完成。注意在些期间不要更新数据，会出现循环更新，该钩子在服务渲染之前不会被调用。
+ 
+beforeDistory：实例还是可以用的，可以在这里清除定时器。
+ 
+Distoryed：vue 实例完全销毁。所有的东西解绑，事件监听移除，左右的子实例也会被销毁，钩子在服务器渲染不被调用。
+ 
+# actived：keep-alive 专属，组件激活被调用。
+ 
+# deactived：keep-alive 专属，组件销毁被调用。
+
+
+
+index.html必须有 content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover, user-scalable=no"
+并且.postcssrc.js必须有注销的内容，否则postcss.config.js里的postcss-px-to-viewport就会起作用。导致px只能在设计图尺寸为整数。

@@ -141,3 +141,4 @@ imgCard.vue 带删除的图片上传
 # 后勤审批管理
 el-tree自定义渲染   :render-content="renderContent"
 竖分割线带浮动文字; height: auto; min-height: 100%; 父元素高度铺满屏幕且不会被子元素撑破
+移动端：keepAlive带动画
