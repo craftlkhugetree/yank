@@ -72,6 +72,7 @@ A: 首先，我们应该尽量避免冲突，在我们需要更新 package.json 
 在遇到 lock 文件冲突的时候，那么应该先手动解决 package.json 的冲突，然后执行 npm install --package-lock-only，让 npm 自动帮你解冲突。
 
 # vscode
+alt+f5 可以在未提交的修改间跳转，类似vim的`[]
 
 要打开正则按钮才能使用： ('|")9100002(.\*?)('|") `${this.util.webUserID}$2`
 
