@@ -1366,3 +1366,21 @@ Distoryed：vue 实例完全销毁。所有的东西解绑，事件监听移除�
 
 index.html必须有 content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover, user-scalable=no"
 并且.postcssrc.js必须有注销的内容，否则postcss.config.js里的postcss-px-to-viewport就会起作用。导致px只能在设计图尺寸为整数。
+
+// main.js中加入如下指令，防止el-button重复点击
+Vue.directive('preventReClick', {
+	inserted(el, binding) {
+   	  el.addEventListener('click', () => {
+     	if (!el.disabled) {
+      	 el.disabled = true;
+      	 el.style.cursur='not-allowed'
+      	 setTimeout(() => {
+        	 el.disabled = false
+        	 el.style.cursor ='pointer'
+       	}, binding.value || 2000)
+     	}
+   	})
+	 }
+});
+
+# 本页面的beforeDestroy晚于下一个页面的beforeRouteEnter

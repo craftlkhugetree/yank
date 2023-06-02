@@ -556,7 +556,7 @@ doLayout 才能保证移动端 el-table 某列可以用 v-if，否则这一行�
 
 项目 new 从上往下拖；全量编辑
 
-netRepair: findId 重复 4 次
+netRepair: findId 重复 4 次？可以在created完成参数修改，避免多次调用接口。
 
 card 项目 printbox 打印预览窗口 vue 父子组件传值 在 ie 不行。得用原生 js 来修改 img 的 src，才能展示图片。
 
@@ -567,6 +567,21 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 数据和图形的分离， 图形小片的组合
 # debian ngnix, ts-challenge, moyu vue3, vue 源码重写
 ? van-image el-image 与下方的div之间有2-5px的白边，因为img是inline-block而不是block。
+# 幽灵空白节点：内联元素的每个行框盒子前面有一个“空白节点”，这个“空白节点”不占据任何宽度，无法选中获取，但是又实实在在存在，表现就如同文本节点一样（本文中大量例子会用字母x模拟幽灵空白节点）。 
 
 ！！列表页scroll加载，当从详情页返回列表页时，若详情页有滚动距离，那么回到列表页时，即便scrollTop为0，也会触发列表页的滚动，会有两次参数一样的加载。
 
+
+fixed: HeaderBar.vue
+督导报告
+ISLEAF: 0,
+children: [
+    督导报告："/paper/index",    iconCls: iconwenjian
+]
+
+统计分析
+ISLEAF: 0,
+children: [
+    督查分析："/stats/supervision",    iconCls: icona-tongjifenxi_nor
+    反馈分析："/stats/feedback",    iconCls: icona-tongjifenxi_nor
+]

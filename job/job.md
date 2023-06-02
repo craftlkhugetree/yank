@@ -192,3 +192,6 @@ router.beforeEach((to, from, next) => {
 el-table内若用了v-if ，就必须有key来防止串行。
 
 代码结构必须解耦、健康，防止未知的更多的需求，比如新增需求“每个tab都要数量角标”，那么对每一个this.params需要call真正的this。
+
+
+python Selenium 模拟302 重定向 location 登录

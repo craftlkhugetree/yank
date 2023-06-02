@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: grid;
+        /* grid-template-columns: 300px 10px 1fr; */
+        grid-template-columns: 300px;
+        gap: 10px;
+        grid-template-rows: auto;
+        justify-items: center;
+        /* align-items: center; */
+        /* justify-content: center; */
+      }
+      .all {
+        display: grid;
+        /* 计算得到缩放时最小的宽度 */
+        grid-template-columns: repeat(5, minmax(146px, 1fr));
+        grid-gap: 24px 24px;
+      }
+      .father {
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        background-color: #00b5ee;
+      }
+      .child {
+        /* display: inline-block; */
+        width: 50px;
+        height: 50px;
+        vertical-align: middle;
+        background-color: #10375e;
+      }
+      .test {
+        width: 100%;
+        height: 30px;
+        margin: 20px;
+        /* background-color: green; */
+        padding: 30px;
+      }
+      p {
+        line-height: 96px;
+      }
+      p span {
+        line-height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img
+        src="https://ts1.cn.mm.bing.net/th?id=OIP-C.f-8HMC9JiH6RibpRnCXhIwHaFj&w=187&h=170&c=8&rs=1&qlt=90&o=6&dpr=1.25&pid=3.1&rm=2"
+        alt
+      />
+      <span>1234</span>
+    </div>
+    <div class="father">
+      <span class="child">111</span>
+    </div>
+
+    1
+    <div>我在之前</div>
+    2
+    <div style="border: 1px solid black; background-color: Red; line-height: 1px">
+      3
+      <span style="line-height: 10px">叶小钗</span>
+      空格
+    </div>
+    4
+    <div>我在之和</div>
+    <!-- <input  type="checkbox" style=" vertical-align: -50px;"/> -->
+
+    <span class="test">测试height,margin等</span>
+    <div style="display: inline-block; height: 40px; vertical-align: middle">end</div>
+
+    <img src="./行框盒子.png" alt="" class="src">
+    <p>
+      <span>
+        内联盒子没有行高这一属性，给它设置line-height，最终是作用在行框盒子上，而行框盒子最终会取内部行高最高的那个作为最终行高，而此行高将在其内部所有内联盒子中生效！
+        span的line-height属性确实设置上了，并且覆盖了继承的来自父元素p的line-height:96px;但是从换行来看，span的表现，高度依然是line-height:96px;
+        !! 因为幽灵空白节点继承了父元素p的行高，所以撑起了p元素的高，所以整个的高度为96px。
+        span的行高应该是24px，幽灵空白节点的行高为96px，行高撑起了高度，所以父元素的高度（大值特性）为最高的高度。
+        这里通过换行我们可以发现span表现的并不是20px,而是96px！而且通过调试器我们发现，上下调整span的line-height页面根本一点变化都没有，纹丝不动！除非超过96px。
+      </span>
+    </p>
+  </body>
+</html>
