@@ -497,7 +497,8 @@ orderBy：createTime；handleStartTime
 全部督查：（超时）待处理反馈；（超时）已处理：待复查确认；整改通过；
 
 eventType 事件类型 1 创建 2 反馈 3 确认 7 超时 8 转移
-status integer($int32) 状态 1 待处理 2 待确认 3 已完成
+status integer($int32) 状态  0草稿1待处理2待确认3已完成9组长不同意
+leaderCheck	integer($int32)组长检查 1不需要检查2未检查3已检查
 
 全部督查： "/admin"
 督查反馈： /ywzx
@@ -572,7 +573,7 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 ！！列表页scroll加载，当从详情页返回列表页时，若详情页有滚动距离，那么回到列表页时，即便scrollTop为0，也会触发列表页的滚动，会有两次参数一样的加载。
 
 
-fixed: HeaderBar.vue
+# fixed: HeaderBar.vue两处; 路由修改为/paper/index后router.js去掉premise: ['/paper']
 督导报告
 ISLEAF: 0,
 children: [

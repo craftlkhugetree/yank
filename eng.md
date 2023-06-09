@@ -104,6 +104,7 @@ cloak 斗篷
 16. a bit verbose 有点麻烦或啰嗦
 17. Augmented Reality，即增强现实
 18. decoupling 解耦、脱钩
+19. premise 前提
 
 减肥=减脂 ≠ 减重
 健身先健脑,减肥先增智

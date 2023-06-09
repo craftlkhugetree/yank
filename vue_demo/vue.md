@@ -1362,6 +1362,9 @@ Distoryed：vue 实例完全销毁。所有的东西解绑，事件监听移除�
  
 # deactived：keep-alive 专属，组件销毁被调用。
 
+执行的生命周期钩子：
+父beforeCreate→父created→父beforeMount→子bereforeCreate→子created→子beforeMound→子mounted→父mounted
+父beforeUpdate→子beforeUpdate→子updated→父updated
 
 
 index.html必须有 content="width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover, user-scalable=no"

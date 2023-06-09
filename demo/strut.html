@@ -6,15 +6,34 @@
     <style type="text/css">
       .box {
         background-color: yellow;
-        /* // font-size: 0;  // 注1
-        // line-height: 0; // 注2 */
+        /* // 注1 */
+        /* font-size: 0; */
+        /* // 注2 */
+        line-height: 0;
       }
       .box,
       .box > span {
         outline: 1px solid #333;
       }
       .box > span {
-        /* vertical-align: top; // 注3 */
+        /* // 注3 */
+        vertical-align: top;
+      }
+
+      .lh1 {
+        line-height: 1.2;
+        /*省略其他样式*/
+      }
+      .lh2 {
+        line-height: 2;
+        /*省略其他样式*/
+      }
+      .no-height {
+        border: 1px solid #f00;
+        line-height: 0;
+      }
+      .bigger {
+        font-size: 180px;
       }
     </style>
   </head>
@@ -28,5 +47,25 @@
       就刚好符合这种特殊情况，设置成inline-block就不符合了。题主也可以试着把display改成inline-table，或者设置非0的margin、padding、border等，总之只要不满足上述任一种情况，那么就会受“幽灵空白像素”（官方说法应该叫"strut"元素）的影响从而出现行高。
     </div>
     <code>https://segmentfault.com/q/1010000014296346?utm_source=sf-similar-question</code>
+
+    <h3>The way C works</h3>
+    <div class="lh1">
+      Computers really only understand one language: machine code,
+      <span class="lh2">a binary stream of 1s and 0s</span>
+      . You convert your C code into machine code with the aid of a compiler.
+    </div>
+
+
+    对于匿名inline box，他的高度继承了其父元素的line-height=0，所以不妨看作这个匿名inline box被压缩到了testx的content area的垂直中点，变成了一条线段。后面的那个inline box也是一样。
+由于font-family相同，而后面span元素的font-size更大，所以asdf的content area的高度更高，自然其对应的被压缩的inline box线段就处于更高的位置。
+所以这个line box就有了所谓的高度。而且这个高度=（asdf的content area的高度的一半 - asdf的baseline到其content area底部的距离 - testx的content area的高度的一半）
+237/2 - b - 21/2 = 65   b = 43  border:1px
+    <div class="no-height">
+      textx
+      <span class="bigger">asdf</span>
+    </div>
+    当 line-height 和 content area 高度一致时，他们的区域完全重合，当 line-height 设置为0，相当于其起止位置都在 content area 中心位置（inline 元素 content area 大小受字体和字号影响，不受行高影响）
+前后两者要基线对齐，但字号不同导致 content area 大小不一样，即同为 line-height: 0，但 line-height 起止位置不一样（都在 content area 中心）
+line box 高度是全部子元素中的最高点到最低点，在这里就是两个 content area 中心的距离
   </body>
 </html>
