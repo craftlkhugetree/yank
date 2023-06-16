@@ -40,15 +40,13 @@ chrome://flags webgl
 
 # stylus
 
-^(?!._(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.1.251|172.20|testseat.xuanhaozuo.com|tsgyy.sjzc.edu.cn/))._$
+^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.1.251|172.20|testseat.xuanhaozuo.com|tsgyy.sjzc.edu.cn/)).*$
 ^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.)).*$
 html,
 body {
-/_ font-family: "SF UI Text", "BlinkMacSystemFont", "Helvetica Neue", "Source Han Sans SC", "Segoe UI", "Roboto", "Microsoft Yahei", sans-serif; _/
 font-weight: bold;
 background-color: #C7EDCC !important;
 filter: brightness(0.8);
-/_ background-color:#606266 !important; _/
 }
 
 table,
@@ -57,12 +55,10 @@ p,
 i,
 a,
 article, section {
-/_ //兼容不同浏览器 _/
-/_ -webkit-filter: brightness(0.8);
+-webkit-filter: brightness(0.8);
 -o-filter: brightness(0.8);
 -moz-filter: brightness(0.8);
-filter: brightness(0.8); _/
-/_ //设置亮度值，范围：0-1 _/
+filter: brightness(0.8);
 }
 .hx-warp,.left-toolbox,.\_1Jdfvb {
 display: none !important

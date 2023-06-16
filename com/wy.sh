@@ -18,5 +18,5 @@ done
 
 # code $path'/netRepair-mobile_njit'
 # code $path'/netRepair_njit'
-cd $path'/hq-spgl-njit-mobile/'
-# cd $path'/hq-wyxxgl-pc/'
+# cd $path'/hq-spgl-njit-mobile/'
+cd $path'/hq-wyxxgl-pc/'

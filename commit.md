@@ -579,6 +579,7 @@ ISLEAF: 0,
 children: [
     督导报告："/paper/index",    iconCls: iconwenjian
 ]
+旧角色权限  path: "/settings/old_roles",
 
 统计分析
 ISLEAF: 0,

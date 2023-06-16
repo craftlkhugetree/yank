@@ -116,8 +116,9 @@ el-steps 自定义; el-select 搜索下拉框的filter和remote都是自带参�
 gis只能设置一次center，而且不能setZoom()，否则会灰屏。
     /* 计算得到缩放时最小的宽度 */grid-template-columns: repeat(5, minmax(146px, 1fr));
 border dashed的替代，可以设置宽度、间隔。.dashLine
-督导报告 getPdf.js new File()生成文件
+督导报告 getPdf.js new File()生成文件   pdf不分页导出长图; canvas导出图片; eCharts chartDemo.vue导出图片。多次nextTick
 echarts必须在mounted和watch中同时init，否则路由切换时父组件数据传递不及时会导致不渲染。
+roles el-tree rowClick js模拟点击反色
 
 # 物业管理信息系统
 万年历；el-table合并行列
