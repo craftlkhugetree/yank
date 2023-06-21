@@ -195,3 +195,6 @@ el-table内若用了v-if ，就必须有key来防止串行。
 
 
 python Selenium 模拟302 重定向 location 登录
+
+spark-echarts; ctx = canvas.getContext('2d');  
+非零填充：看一块区域是否被填充，可以从这个区域拉一条线出去，看和这条直线相交的轨迹，如果遇到顺时针轨迹加1，如果遇到逆时针轨迹减1，将所以轨迹的值计算出来，如果是非零就填充，如果等于零不填充。
