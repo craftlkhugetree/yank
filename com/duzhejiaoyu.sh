@@ -1,10 +1,10 @@
 # !/bin/sh
 #不能有空格
-read -p "督导助手请填写IDSTGC:" msg
-path='/d/kxiangmu/njauLogistics/fuwujiandu'
-filename1=$path'/hq-ddzs-pc/src/assets/js/util.js'
-filename2=$path'/hq-ddzs-mobile/src/assets/js/util.js'
-filename3=$path'/jszx-pc/src/assets/js/util.js'
+read -p "读者教育请填写IDSTGC:" msg
+path='/d/kl'
+filename1=$path'/mobile/src/assets/js/util.js'
+filename2=$path'/control/src/assets/js/util.js'
+filename3=$path'/web/src/assets/js/util.js'
 
 IDSTGC="var IDSTGC"
 
@@ -18,4 +18,4 @@ done
 
 # code $path'/netRepair-mobile_njit'
 # code $path'/netRepair_njit'
-cd $path'/hq-ddzs-pc/'
+cd $path'/control/'

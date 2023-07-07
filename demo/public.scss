@@ -52,6 +52,11 @@ vertical-align:middle这个属性必须和line-height一起使用，就是说它
 
 CSS 控制Html页面高度导致抖动，这类由高度导致页面抖动的问题，其实究其根本原因是滚动条是否显示导致的 带有client字眼的属性一般是衡量属性自身的尺寸(不包含不可见区域) 带有offset字眼的属性一般指的是元素相对于某个参照物的位置信息 带有page字眼的属性一般指的是元素相对于整个视图包括滚动未见的区域的位置信息 带有screen字眼的属性一般指的是元素相对于视图不包括不可见区域的位置信息 // css3
 如何使<pre>的内容自动换行呢？首先看一下<pre>的浏览器默认样式： 都有这个white-space: pre，看看white-space的值描述： normal：默认。空白会被浏览器忽略。 pre：空白会被浏览器保留。其行为方式类似 HTML 中的 <pre>标签。 nowrap：文本不会换行，文本会在在同一行上继续，直到遇到 <br>标签为止。 pre-wrap：保留空白符序列，但是正常地进行换行。 pre-line：合并空白符序列，但是保留换行符。 inherit：规定应该从父元素继承 white-space 属性的值。 ———————————————— 原文链接：https: //blog.csdn.net/a1056244734/article/details/113882278
+所以要在before加空格需要     &::before {
+      content: " ";
+      white-space: pre;
+      margin-right: 1px !important;
+    }
 
 
 伪类的效果可以通过添加实际的类来实现 p:first-child {
@@ -628,6 +633,7 @@ CSS 改变文本可以采用伪元素生成
       // table的border='1' 没有边框，解决办法：
       .normal-table {
         background: rgba(247, 248, 249, 1);
+        // 必须要，否则td的width不起作用
         table-layout: fixed;
         width: 100%;
 
@@ -1256,3 +1262,41 @@ p {
 }
 
 //   display: flex; 使得table th/td 的colspan失效
+
+
+fixed定位是不占空间的，会导致遮挡内容区域，所以一般还需要预留头部一部分空间出来，比如这样 
+main {
+  margin-top: 头部的高度
+}
+在这里，我更推荐使用sticky定位，在吸顶的同时，还能保留原有的占位
+header {
+  position: sticky;
+  background: #fff;
+  top: 0;
+  font-size: 20px;
+  padding: 10px;
+  z-index: 1;
+}
+
+shadow::before {
+  content: '';
+  box-shadow: 0 0 10px 1px #333;
+  position: fixed;
+  width: 100%;
+}
+
+shadow::after {
+  content: '';
+  width: 100%;
+  height: 30px;
+  background: linear-gradient(to bottom, #fff 50%, transparent);
+  position: absolute;
+}
+固定头部的布局推荐用 sticky 实现，好处是可以保留头部占位，无需额外预留
+整体实现思路是CSS 障眼法和 CSS 层级，相互遮挡
+fixed 定位在不设置 top 或者 left 值时，仍然位于原先位置，但是会在这个位置固定下来
+absolute定位在不设置 top 或者 left 值时，仍然位于原先位置，也会跟随内容滚动
+纯色遮挡在滚动时有些生硬，半透明渐变遮挡在滚动时会更加柔和
+<header>LOGO</header>
+<shadow></shadow>
+<main>很多内容文本</main>

@@ -1387,3 +1387,39 @@ Vue.directive('preventReClick', {
 });
 
 # 本页面的beforeDestroy晚于下一个页面的beforeRouteEnter
+
+
+
+1.el-table-column不设置width与minwidth,每一列自适应，宽度一致
+
+2.el-table-column设置width=30%，无效。会被当成width=30px
+
+3.el-table-column设置min-width="30"或者30%，每一列都设置min-width才能实现每一列的百分比配置
+
+4.el-table-column同时设置min-width和width后，该列表格就会按照width来设置，相当于width就是一个最大宽度
+————————————————
+
+```javascript
+Vue.directive("preventReClick", {
+  inserted: function(el, binding) {
+    let timer;
+    const limit = 1000;
+    el.addEventListener("click", () => {
+      if (el.disabled === false) {
+        el.disabled = true;
+        el.style.cursor = "not-allowed";
+        setTimeout(() => {
+          el.disabled = false;
+          el.style.cursor = "pointer";
+        }, limit);
+      } else if (el.disabled === undefined) {
+        console.log(el, binding, el.disabled, timer);
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          binding.value && binding.value();
+        }, limit);
+      }
+    });
+  }
+});
+```

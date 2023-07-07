@@ -574,12 +574,55 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 
 
 # fixed: HeaderBar.vue两处; 路由修改为/paper/index后router.js去掉premise: ['/paper']
-督导报告
-ISLEAF: 0,
-children: [
-    督导报告："/paper/index",    iconCls: iconwenjian
-]
-旧角色权限  path: "/settings/old_roles",
+
+# 计算中心
+router.js      whiteList.find(w => w.path === targetUrl)
+headerBar.vue  levelOneMenu
+        // 支付接入 
+        {
+          path: "/pay",
+          children: [
+            // 支付接入管理
+            {
+              path: "/pay/payAccessManagement",
+              iconCls: 'iconzhangdan'
+            },
+            // 支付接入
+            {
+              path: "/pay/accessPay",
+              iconCls: 'iconzhangdan'
+            },
+            // 接入监测
+            {
+              path: "/pay/payMonitor",
+              iconCls: 'iconfenlei'
+            }
+          ]
+        }
+        // 业务组管理
+        {
+          path: "/yewuzuManagement",
+        },
+        // 经营组管理
+        {
+          path: "/jingyingzuManagement",
+        },
+        // 用户管理
+        {
+          path: "/userManagement",
+        },
+        // 交易查询
+        {
+          path: "/tradeSearch",
+        },
+        // 账单查询
+        {
+          path: "/billSearch",
+        },
+        // 经营分析
+        {
+          path: "/analyze",
+        },
 
 统计分析
 ISLEAF: 0,
