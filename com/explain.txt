@@ -145,3 +145,7 @@ imgCard.vue 带删除的图片上传
 el-tree自定义渲染   :render-content="renderContent"
 竖分割线带浮动文字; height: auto; min-height: 100%; 父元素高度铺满屏幕且不会被子元素撑破
 移动端：keepAlive带动画
+
+# 结算中心
+el-tree 如何横向滚动；eChart line areaStyle offset渐变；el-table 自己写的树状展开；el-select多选配合el-tree
+mixin beforeRouteEnter处理跳转前保存的参数

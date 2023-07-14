@@ -573,10 +573,9 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 ！！列表页scroll加载，当从详情页返回列表页时，若详情页有滚动距离，那么回到列表页时，即便scrollTop为0，也会触发列表页的滚动，会有两次参数一样的加载。
 
 
-# fixed: HeaderBar.vue两处; 路由修改为/paper/index后router.js去掉premise: ['/paper']
-
 # 计算中心
 router.js      whiteList.find(w => w.path === targetUrl)
+setRolesPriority  obj
 headerBar.vue  levelOneMenu
         // 支付接入 
         {
@@ -630,3 +629,6 @@ children: [
     督查分析："/stats/supervision",    iconCls: icona-tongjifenxi_nor
     反馈分析："/stats/feedback",    iconCls: icona-tongjifenxi_nor
 ]
+
+groupType	integer($int32)  1结算中心2业务组3经营组
+payType	integer($int32)    1校园卡2校内转账3一卡通
