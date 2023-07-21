@@ -632,3 +632,8 @@ children: [
 
 groupType	integer($int32)  1结算中心2业务组3经营组
 payType	integer($int32)    1校园卡2校内转账3一卡通
+schoolCardPay	string校园卡支付：1未申请2待授权3已授权4授权不通过
+schoolTransferPay	string校内转账：1未申请2待授权3已授权4授权不通过
+
+
+# <router-view v-show="isReady" :key="+new Date()" /> 为何roles页面会反复刷新，别的没事。

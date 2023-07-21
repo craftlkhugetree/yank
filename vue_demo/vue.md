@@ -1423,3 +1423,15 @@ Vue.directive("preventReClick", {
   }
 });
 ```
+
+当watch某对象this.params，而要知道对象内具体哪个属性变化，那就需要转为watch下面的计算缓存：
+  computed: {
+    expectSomeKey() {
+      return JSON.parse(JSON.stringify(this.params));
+    }
+  }
+
+通过给router-view加上key，来避免同一个组件切换路由，不走钩子函数的问题。
+<router-view v-show="isReady" :key="+new Date()" /> 
+但这会导致同一个页面不停刷新，所以改为：
+    <router-view v-show="isReady" :key="$route.path" />
