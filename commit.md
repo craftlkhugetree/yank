@@ -574,9 +574,6 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 
 
 # 计算中心
-router.js      whiteList.find(w => w.path === targetUrl)
-setRolesPriority  obj
-headerBar.vue  levelOneMenu
         // 支付接入 
         {
           path: "/pay",
@@ -637,3 +634,39 @@ schoolTransferPay	string校内转账：1未申请2待授权3已授权4授权不�
 
 
 # <router-view v-show="isReady" :key="+new Date()" /> 为何roles页面会反复刷新，别的没事。
+
+
+# 计算中心
+router.js   // doNext(res, to, from, next);
+headerBar flag
+            {
+              DISPLAYURL: "/vehicle",
+              NAME: "车辆管理",
+              ISLEAF: "0",
+              children: [
+                {
+                  iconCls: "iconche",
+                  DISPLAYURL: "/vehicle/index",
+                  NAME: "校内车辆",
+                  ISLEAF: "0",
+                  children: [
+                    {
+                      DISPLAYURL: "/vehicle/info",
+                      ISLEAF: "1",
+                      NAME: "车辆信息"
+                    },
+                    {
+                      DISPLAYURL: "/vehicle/etc",
+                      ISLEAF: "1",
+                      NAME: "加油卡/ETC"
+                    }
+                  ]
+                },
+                {
+                  DISPLAYURL: "/vehicle/outside",
+                  iconCls: "iconche",
+                  ISLEAF: "1",
+                  NAME: "校外车辆"
+                }
+              ]
+            }

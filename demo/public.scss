@@ -1303,3 +1303,53 @@ absolute定位在不设置 top 或者 left 值时，仍然位于原先位置，�
 
 
 取消点击文字时出现的可选竖杠：user-select:none;
+
+
+在网格中定位一个项目时，需要先设置它从哪根线开始，到哪儿根线结束。举个例子，我要在一个 5x5 的网格中定位一个项目，让它占据第二列和第三列，第一行到第三行。我会使用下面的 CSS 代码（注意，这里使用的是网格线，而非网格轨道）。 
+.item {
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 4;
+}
+
+上面的代码还可以简写为以下形式：斜线之前表示起始线（start line），斜线之后表示终止线（end line）。 
+.item {
+  grid-column: 2 / 4;
+  grid-row: 1 / 4;
+}
+另外，显式网格的最后一根网格线可以使用数值 -1 指代，同理倒数第二第三跟网格线分别是 -2、-3，依次类推。假设·，现在有一个项目从网格的第一列横跨到最后一列，那么可以这样写：
+.form-item {
+  display: grid;
+  // 一行只有两个元素，第一个元素是自定义auto，第二个元素填满这一行。
+  grid-template-columns: auto 1fr;
+  gap: 0 40px;
+  /* 第 6 个元素独占一行 */
+  .el-form-item {
+    &:nth-child(6) {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+align-items:stretch是一个默认值,
+永远保持在侧轴拉伸项目,
+怎么理解这句话呢? 如果侧轴是垂直方向,
+那么在垂直方向如果项目没有设置高度,
+则会拉伸至弹性父级盒子的高度,
+
+如果侧轴为水平方向,
+如果项目没有设置宽度,
+那么就会拉伸其宽度至父级弹性盒子的宽度一致。
+tr {
+        min-height: 40px;
+  // 确保改行td都能达到tr的高度，因为有的td内容高，有的低。
+  align-items: stretch !important;
+td {
+        min-height: 40px;
+  height: inherit; //不设置高度，继承父元素高度
+}
+}
+
+// 获取伪元素样式
+let before=window.getComputedStyle(dom, "before").content

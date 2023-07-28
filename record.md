@@ -430,7 +430,7 @@ I pick color
 / menu parent
 Enter menu children
 Tab menu next sibling
-Shift+Tab menu previos sibling
+Shift+Tab menu previous sibling
 Alt+L 收起所有 menu
 
 n/Shift+n Home/End next

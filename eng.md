@@ -18,8 +18,9 @@ best 也是个单音节词，但是缺少了第四个条件，所以没有浊化
 passport 四个双音节词，音节划分是 pass/port，重音在第一个音节，所以不符合第一个条件，也没有浊化现象。
 
 第二种
-1.“元+清+元” 浊化： 当清辅音/p/,/t/,/k/位于两元音之间时，实际发音浊化为其对应的浊辅音/b/,/d/,/g/ 如 water 与 getting
+1.“元+清+元” 浊化： 当清辅音/p/,/t/,/k/位于两元音之间时，实际发音浊化为其对应的浊辅音/b/,/d/,/g/ 如 water 与 getting、better
 注意：这两种浊化现象不仅针对符合以上情况的单个词汇，更可应用到句子中连读后的单词群。
+第二种清空不是绝对的干脆的d，而是一个弹舌音(介于t和d之间)，快速弹过，故如果直接读作“gedding”,“bedder”是不对的。 
 ————————————————
 
 1. _The visual viewport_ is the part of the page that’s currently shown on-screen.

@@ -148,6 +148,6 @@ el-tree自定义渲染   :render-content="renderContent"
 
 # 结算中心
 el-tree 如何横向滚动；eChart line areaStyle offset渐变；el-table 自己写的树状展开；el-select多选配合el-tree
-mixin beforeRouteEnter处理跳转前保存的参数
+mixin beforeRouteEnter处理跳转前保存的参数，同时在赋予参数后，删除该条目，同时刷新时应当初始化搜索参数，对于标题等无法初始化的，必须使用url传参而不是保存在参数里。
 router-view key保证同一组件间切换路由会运行mounted()，但要注意频繁刷新权限页面。
 el-tree &:has() 来根据子节点属性定位父元素，从而设置每个节点高度。

@@ -3,7 +3,143 @@ import JsPDF from 'jspdf';
 import * as XLSX from 'xlsx';
 import tVue from '@/main.js';
 import Axios from 'axios';
-
+export const vue = {
+  titleKey: [
+    {
+      title: '合同编号',
+      key: 'contractNo',
+      valid: [{ fun: this.isExist, msg: cantEmpty }],
+    },
+    {
+      title: '合同名称',
+      key: 'name',
+      valid: [{ fun: this.isExist, msg: cantEmpty }],
+    },
+    {
+      title: '服务期',
+      key: 'fwq',
+      valid: [
+        { fun: this.isExist, msg: cantEmpty },
+        { fun: this.checkDate, msg: dateContent },
+      ],
+      save: {
+        name: ['serviceStartDate', 'serviceEndDate'],
+        fun: this.genSpecDate,
+      },
+    },
+    {
+      title: '合同期',
+      key: 'htq',
+      valid: [
+        { fun: this.isExist, msg: cantEmpty },
+        { fun: this.checkDate, msg: dateContent },
+      ],
+      save: {
+        name: ['contractStartDate', 'contractEndDate'],
+        fun: this.genSpecDate,
+      },
+    },
+    {
+      title: '质保期',
+      key: 'zbq',
+      valid: [
+        { fun: this.isExist, msg: cantEmpty },
+        { fun: this.checkDate, msg: dateContent },
+      ],
+      save: {
+        name: ['qaStartDate', 'qaEndDate'],
+        fun: this.genSpecDate,
+      },
+    },
+    {
+      title: '乙方',
+      key: 'spName',
+      valid: [{ fun: this.isExist, msg: cantEmpty }],
+    },
+    {
+      title: '合同金额',
+      key: 'amount',
+      valid: [{ fun: this.isExist, msg: cantEmpty }],
+    },
+    { title: '合同内容', key: 'contractContent' },
+    { title: '质保内容', key: 'qaContent' },
+    { title: '备注（付款方式）', key: 'note' },
+  ],
+  computed: {
+    exeHeader() {
+      return this.titleKey.map(t => t.title);
+    },
+    propKey() {
+      return this.titleKey.map(t => t.key);
+    },
+  },
+  regCheck(item) {
+    let { obj } = item;
+    let message = '';
+    this.titleKey.forEach(tk => {
+      let vArr = tk.valid;
+      if (vArr && vArr.length) {
+        vArr.forEach(v => {
+          if (!v.fun(obj[tk.title])) {
+            message += tk.title + v.msg;
+          }
+        });
+      }
+    });
+    console.log('excelRegCheck:', obj, message);
+    return message;
+  },
+  upload(e) {
+    this.common.getFile({
+      e,
+      _this: this,
+      key: this.propKey,
+      title: this.exeHeader,
+      commonParams: {},
+      regCheck: this.regCheck,
+      callback: this.saveBatch,
+    });
+  },
+  saveBatch(arrT) {
+    let params = [];
+    for (let i = 0; i < arrT.length; i++) {
+      let a = arrT[i];
+      let camp = this.chosenRow;
+      if (camp) {
+        let obj = {
+          contractTypeName: camp.name,
+          contractTypeId: camp.id,
+        };
+        this.titleKey.forEach(tk => {
+          let key = tk.key;
+          let save = tk.save;
+          if (save) {
+            if (this.isExist(a[key])) {
+              let value = save.fun(a[key]);
+              value.forEach((v, index) => {
+                obj[save.name[index]] = v;
+              });
+            }
+          } else {
+            obj[key] = a[key] || '';
+          }
+        });
+        console.log(a, obj);
+        params.push(obj);
+      }
+    }
+    contract(params, 'saveBatch').then(res => {
+      if (res && res.code === '000000') {
+        this.$message({
+          showClose: true,
+          type: 'success',
+          message: '导入成功！',
+        });
+        this.getTableData(1);
+      }
+    });
+  },
+};
 export default {
   confirm(obj = {}) {
     let { that, title, body } = obj;
@@ -285,20 +421,20 @@ export default {
     }
   },
   // 导入Excel
-  getFile(event) {
-    let _this = this;
-    let f = event.target.files[0];
-    this.$refs.uploadDom.value = '';
-    if (!this.judgeIfExcel(f)) {
-      this.$message({
+  getFile(obj) {
+    const { e, _this } = obj;
+    let f = e.target.files[0];
+    _this.$refs.uploadDom.value = '';
+    if (!judgeIfExcel(f)) {
+      _this.$message({
         showClose: true,
         type: 'warning',
-        message: this.onlyExcel,
+        message: '仅支持xlsx、xls格式文件',
       });
       return;
     }
     if (f.size > 10 * 1000 * 1000) {
-      this.$message({
+      _this.$message({
         showClose: true,
         type: 'warning',
         message: '文件大小不能超过10M',
@@ -311,66 +447,11 @@ export default {
         type: 'binary',
       });
       const wsname = workbook.SheetNames[0];
-      let op = 1
-        ? {}
-        : {
-            range: -1, // 全是数据，没有表头
-          };
-      const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname], op);
+      const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]);
       console.log('ws:', ws); // 转换成json的数据
+      this.checkExcelData(ws, obj);
     };
     fileReader.readAsBinaryString(f);
-    // let rABS = false; //是否将文件读取为二进制字符串
-
-    // let reader = new FileReader();
-    // FileReader.prototype.readAsBinaryString = function (f) {
-    //   let binary = '';
-    //   let rABS = false; //是否将文件读取为二进制字符串
-    //   let wb; //读取完成的数据
-    //   let outdata;
-    //   let reader = new FileReader();
-    //   reader.onload = function (e) {
-    //     let bytes = new Uint8Array(reader.result);
-    //     let length = bytes.byteLength;
-    //     for (let i = 0; i < length; i++) {
-    //       binary += String.fromCharCode(bytes[i]);
-    //     }
-    //     function fixdata(data) {
-    //       //文件流转BinaryString(不需要此功能可以删掉)
-
-    //       var o = '',
-    //         l = 0,
-    //         w = 10240;
-
-    //       for (; l < data.byteLength / w; ++l)
-    //         o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)));
-
-    //       o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)));
-
-    //       return o;
-    //     }
-
-    //     if (rABS) {
-    //       wb = XLSX.read(btoa(fixdata(binary)), {
-    //         // 手动转化
-    //         type: 'base64',
-    //       });
-    //     } else {
-    //       wb = XLSX.read(binary, {
-    //         type: 'binary',
-    //       });
-    //     }
-    //     //   outdata = XLSX.utils.sheet_to_html(wb.Sheets[wb.SheetNames[0]]); //outdata就是你想要的东西
-    //     outdata = XLSX.utils.sheet_to_txt(wb.Sheets[wb.SheetNames[0]]); //outdata就是你想要的东西
-    //     _this.checkExcelData(outdata);
-    //   };
-    //   reader.readAsArrayBuffer(f);
-    // };
-    // if (rABS) {
-    //   reader.readAsArrayBuffer(f);
-    // } else {
-    //   reader.readAsBinaryString(f);
-    // }
   },
   // Function: 导出文件
   exportFile(url, isGet, params, fileName, fileType) {
@@ -926,7 +1007,6 @@ window.onresize = () => {
 };
 // vue 多个组件中同时使用window.onresize时，只有一个组件起作用时，解决办法
 // 将 window.onresize 替换成 window.addEventListener(“resize”, () => { })
-
 
 const Vue = {
   /**
