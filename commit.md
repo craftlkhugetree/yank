@@ -636,7 +636,7 @@ schoolTransferPay	string校内转账：1未申请2待授权3已授权4授权不�
 # <router-view v-show="isReady" :key="+new Date()" /> 为何roles页面会反复刷新，别的没事。
 
 
-# 计算中心
+# 车辆管理
 router.js   // doNext(res, to, from, next);
 headerBar flag
             {
@@ -669,4 +669,52 @@ headerBar flag
                   NAME: "校外车辆"
                 }
               ]
-            }
+            },
+            {
+              DISPLAYURL: "/driver",
+              ISLEAF: "1",
+              NAME: "驾驶员管理"
+            },
+
+            {
+              DISPLAYURL: "/usingCarConfig",
+              ISLEAF: "1",
+              NAME: "用车配置"
+            },
+            {
+              DISPLAYURL: "/setting",
+              ISLEAF: "1",
+              NAME: "参数配置"
+            },
+            {
+              ISLEAF: "0",
+              NAME: "班车管理",
+              children: [
+                {
+                  iconCls: "iconbanche",
+                  ISLEAF: "1",
+                  NAME: "线路管理",
+                  DISPLAYURL: "/busManage/routineMange"
+                },
+                {
+                  DISPLAYURL: "/busManage/moments",
+                  iconCls: "iconbanche",
+                  ISLEAF: "1",
+                  NAME: "班车动态"
+                },
+                {
+                  DISPLAYURL: "/busManage/status",
+                  iconCls: "iconbanche",
+                  ISLEAF: "1",
+                  NAME: "班车乘坐情况"
+                },
+                {
+                  DISPLAYURL: "/busManage/settlement",
+                  iconCls: "iconbanche",
+                  ISLEAF: "1",
+                  NAME: "班车结算"
+                },
+              ]
+            },
+              
+            

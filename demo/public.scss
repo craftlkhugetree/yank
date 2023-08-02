@@ -1353,3 +1353,15 @@ td {
 
 // 获取伪元素样式
 let before=window.getComputedStyle(dom, "before").content
+
+
+.el-table__body-wrapper {
+  tr {
+    td {
+      //item即是倒数第6个元素 又是第一个元素 就是6个元素中的第一个
+      &:nth-last-child(6):first-child {
+        border-right: 1px solid red !important;
+      }
+    }
+  }
+}

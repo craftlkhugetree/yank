@@ -180,6 +180,31 @@ export default {
       cancelButtonText: '取 消',
     });
   },
+  // file-saver 导出el-table
+  fileSaverAs(id, fileName) {
+    var xlsxParam = { raw: true }; // 导出的内容只做解析，不进行格式转换
+    var wb = XLSX.utils.table_to_book(
+      document.querySelector("#" + id),
+      xlsxParam
+    );
+
+    /* get binary string as output */
+    var wbout = XLSX.write(wb, {
+      bookType: "xlsx",
+      bookSST: true,
+      type: "array"
+    });
+    try {
+      import("file-saver").then(({ saveAs }) => {
+        saveAs.saveAs(
+          new Blob([wbout], { type: "application/octet-stream" }),
+          fileName
+        );
+      });
+    } catch (e) {
+      throw e;
+    }
+  },
   /********************************************1.导入导出Excel文件，二进制导出文件********************************************/
   // 二维数组导出Excel
   exportExcel(arr, fileName) {
@@ -344,7 +369,7 @@ export default {
     }
     let arrT = [];
     data.forEach(obj => {
-      let msg = regCheck({ obj });
+      let msg = regCheck && regCheck({ obj });
       if (msg) {
         flag++;
         _this.$message({
