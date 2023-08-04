@@ -638,7 +638,9 @@ schoolTransferPay	string校内转账：1未申请2待授权3已授权4授权不�
 
 # 车辆管理
 router.js   // doNext(res, to, from, next);
+App.vue  isReady
 headerBar flag
+
             {
               DISPLAYURL: "/vehicle",
               NAME: "车辆管理",
@@ -714,7 +716,24 @@ headerBar flag
                   ISLEAF: "1",
                   NAME: "班车结算"
                 },
+                {
+                  DISPLAYURL: "/busManage/shift",
+                  iconCls: "iconbanche",
+                  ISLEAF: "1",
+                  NAME: "班车排班"
+                },
+                {
+                  DISPLAYURL: "/busManage/applyMange",
+                  iconCls: "iconbanche",
+                  ISLEAF: "1",
+                  NAME: "班车预约管理"
+                },
               ]
             },
+            {
+              DISPLAYURL: "/userManagement",
+              ISLEAF: "1",
+              NAME: "用户管理"
+            }
               
             

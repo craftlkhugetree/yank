@@ -441,7 +441,7 @@ ctrl + shift + \ 隐藏左侧栏
 开发模式
 shift + D 切换开发
 ctrl + click 选中元素
-ctrl + hand图标拖动
+h hand-tool图标拖动
 # moment
 
 moment.utc(毫秒).format('HH:mm:ss')

@@ -1422,6 +1422,9 @@ Vue.directive("preventReClick", {
     });
   }
 });
+      <el-button type="primary" v-preventReClick="3000" @click.stop="save" size="small"
+        >提 交</el-button
+      >
 ```
 
 当watch某对象this.params，而要知道对象内具体哪个属性变化，那就需要转为watch下面的计算缓存：
