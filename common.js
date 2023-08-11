@@ -180,26 +180,49 @@ export default {
       cancelButtonText: '取 消',
     });
   },
+  // $refs导出
+  getDoc() {
+    let r = this.$refs.exportTable;
+    let arr = (r && r.$children) || [];
+
+    let info = arr.filter(a => a.label && a.prop && a.label !== '序号' && a.label !== '操作');
+    let head = info.map(i => i.label);
+    let print = [head];
+    let p = {
+      filter: {
+        keyword: this.keyword || undefined,
+      },
+      isPage: false,
+    };
+    driver(p).then(res => {
+      this.common.dealRes(res, () => {
+        let tableData = res.data || [];
+        tableData.forEach(t => {
+          t.userInfo = `${t.name}(${t.id})`;
+          let arr = [];
+          info.forEach(i => {
+            arr.push(t[i.prop]);
+          });
+          print.push(arr);
+        });
+        this.exportExcel(print, '驾驶员信息.xlsx');
+      });
+    });
+  },
   // file-saver 导出el-table
   fileSaverAs(id, fileName) {
     var xlsxParam = { raw: true }; // 导出的内容只做解析，不进行格式转换
-    var wb = XLSX.utils.table_to_book(
-      document.querySelector("#" + id),
-      xlsxParam
-    );
+    var wb = XLSX.utils.table_to_book(document.querySelector('#' + id), xlsxParam);
 
     /* get binary string as output */
     var wbout = XLSX.write(wb, {
-      bookType: "xlsx",
+      bookType: 'xlsx',
       bookSST: true,
-      type: "array"
+      type: 'array',
     });
     try {
-      import("file-saver").then(({ saveAs }) => {
-        saveAs.saveAs(
-          new Blob([wbout], { type: "application/octet-stream" }),
-          fileName
-        );
+      import('file-saver').then(({ saveAs }) => {
+        saveAs.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName);
       });
     } catch (e) {
       throw e;
@@ -447,7 +470,7 @@ export default {
   },
   // 导入Excel
   getFile(obj) {
-    const { e, _this } = obj;
+    const { e, _this, cellDates } = obj;
     let f = e.target.files[0];
     _this.$refs.uploadDom.value = '';
     if (!judgeIfExcel(f)) {
@@ -470,6 +493,7 @@ export default {
     fileReader.onload = ev => {
       const workbook = XLSX.read(ev.target.result, {
         type: 'binary',
+        cellDates,
       });
       const wsname = workbook.SheetNames[0];
       const ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]);

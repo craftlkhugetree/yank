@@ -24,6 +24,23 @@ f/F+字母  当前行搜索
 ; 重复上一个f命令
 / ? 向后/向前搜索
 
+1、翻整页命令为：
+Ctrl + f 键 （f 的英文全拼为：forward）
+Ctrl + b 键 （b 的英文全拼为：backward)
+
+2、翻半页命令为：
+Ctrl + d 键 （d 的英文全拼为：down）
+Ctrl + u 键 （u 的英文全拼为：up）
+ "vim.normalModeKeyBindings": [
+   {
+     "before": ["j", "l"],
+     "after": ["<C-f>"]
+   },
+   {
+     "before": ["k", "l"],
+     "after": ["<C-b>"]
+   }
+  ] 
 zz 当前到中间
 zb 当前到底
 zt 当前到顶

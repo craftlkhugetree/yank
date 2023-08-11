@@ -9,8 +9,9 @@ APIKey：1fe443319e96410ffb4f9989ed7cafdc
 
 wifi: dkr84813279
 
-http://ddzs.njau.edu.cn/ddzsmobile   1993032/HBli123456
-孟丽丽：T2015152  密码：basili951008!
+http://ddzs.njau.edu.cn/ddzsmobile 1993032/HBli123456
+孟丽丽：T2015152 密码：basili951008!
+
 # Project
 
 https://z.angke.com.cn/ 账户 liken 密码 Liken123
@@ -461,8 +462,10 @@ obj.hq = 1;
 }
 sessionStorage.setItem('url4bizNode', JSON.stringify(obj))
 }
+
 # 督导助手 2023/02/06
-HeaderBar.vue隐藏了 /paper
+
+HeaderBar.vue 隐藏了 /paper
 photoItems.vue 的 v-if="params.funTab !== 'yzy'"
 removeItem: form,reply
 report.vue 的$router.back
@@ -498,15 +501,15 @@ orderBy：createTime；handleStartTime
 
 eventType 事件类型 1 创建 2 反馈 3 确认 7 超时 8 转移
 status integer($int32) 状态  0草稿1待处理2待确认3已完成9组长不同意
-leaderCheck	integer($int32)组长检查 1不需要检查2未检查3已检查
+leaderCheck	integer($int32)组长检查 1 不需要检查 2 未检查 3 已检查
 
 全部督查： "/admin"
 督查反馈： /ywzx
 督查报告： /paper
 
 系统配置 children: [
-角色权限："/settings/roles",    iconCls: iconjiaose
-业务领域： "/settings/business-area",  iconCls: iconfenlei
+角色权限："/settings/roles", iconCls: iconjiaose
+业务领域： "/settings/business-area", iconCls: iconfenlei
 督查地点:/settings/location, iconCls: iconfenlei
 参数配置：/settings/arguments, iconCls: iconpeizhi
 督导小组：/settings/group, iconCls: iconfenlei
@@ -514,39 +517,41 @@ leaderCheck	integer($int32)组长检查 1不需要检查2未检查3已检查
 ]
 
 # 物业管理
+
 sideBar.vue flag
-社会企业信息          path: "/society-company",  ICONCLS: iconfenlei
-物业工作岗位          path: "/service-position",  ICONCLS: iconfenlei
-物业服务人员          path: "/service-people",ICONCLS: iconjiaose
-物业服务区域          path: "/area",ICONCLS: iconfenlei
-角色权限          path: "/roles",ICONCLS: iconjiaose
-物业合同          path: "/contractor",ICONCLS: iconwenjian
-企业考核信息          path: "/company-verify",ICONCLS: iconbaifenkaohe
-       
+社会企业信息 path: "/society-company", ICONCLS: iconfenlei
+物业工作岗位 path: "/service-position", ICONCLS: iconfenlei
+物业服务人员 path: "/service-people",ICONCLS: iconjiaose
+物业服务区域 path: "/area",ICONCLS: iconfenlei
+角色权限 path: "/roles",ICONCLS: iconjiaose
+物业合同 path: "/contractor",ICONCLS: iconwenjian
+企业考核信息 path: "/company-verify",ICONCLS: iconbaifenkaohe
+
 # 后勤审批管理
+
 fix: sidebar.vue (menus flag)
 ICONCLS
 
 角色管理： /roles
 用户组管理： /group
 流程中心：
-    流程申请 /apply
-    流程查询 /search
-    全部流程 /all
+流程申请 /apply
+流程查询 /search
+全部流程 /all
 数据备份： /data_bk
 流程管理： /process
 部门管理： /dep
 
-applyStatus 0草稿1处理中2已完成
+applyStatus 0 草稿 1 处理中 2 已完成
 filter: {isDraft:0, currentTaskUser: userId}
 filter: {isDraft:0, historyTaskUser: userId}
 filter: {isDraft:0, createId: userId}
 filter: {isDraft:1, createId: userId}
-currentTaskName含有经办，不可编辑
-events内最新的taskName为撤回，才可重新发起
-
+currentTaskName 含有经办，不可编辑
+events 内最新的 taskName 为撤回，才可重新发起
 
 # 内外高度滚动自适应
+
 require，import 动态 静态
 webpack cjs/esm 导入导出 通用
 项目 minipack 模块过程
@@ -557,7 +562,7 @@ doLayout 才能保证移动端 el-table 某列可以用 v-if，否则这一行�
 
 项目 new 从上往下拖；全量编辑
 
-netRepair: findId 重复 4 次？可以在created完成参数修改，避免多次调用接口。
+netRepair: findId 重复 4 次？可以在 created 完成参数修改，避免多次调用接口。
 
 card 项目 printbox 打印预览窗口 vue 父子组件传值 在 ie 不行。得用原生 js 来修改 img 的 src，才能展示图片。
 
@@ -566,15 +571,18 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 # @media 1920, home 浮动遮挡 el-footer, 插件 BaseUpload, videoCover, 组件 s-form.
 
 数据和图形的分离， 图形小片的组合
+
 # debian ngnix, ts-challenge, moyu vue3, vue 源码重写
-? van-image el-image 与下方的div之间有2-5px的白边，因为img是inline-block而不是block。
-# 幽灵空白节点：内联元素的每个行框盒子前面有一个“空白节点”，这个“空白节点”不占据任何宽度，无法选中获取，但是又实实在在存在，表现就如同文本节点一样（本文中大量例子会用字母x模拟幽灵空白节点）。 
 
-！！列表页scroll加载，当从详情页返回列表页时，若详情页有滚动距离，那么回到列表页时，即便scrollTop为0，也会触发列表页的滚动，会有两次参数一样的加载。
+? van-image el-image 与下方的 div 之间有 2-5px 的白边，因为 img 是 inline-block 而不是 block。
 
+# 幽灵空白节点：内联元素的每个行框盒子前面有一个“空白节点”，这个“空白节点”不占据任何宽度，无法选中获取，但是又实实在在存在，表现就如同文本节点一样（本文中大量例子会用字母 x 模拟幽灵空白节点）。
+
+！！列表页 scroll 加载，当从详情页返回列表页时，若详情页有滚动距离，那么回到列表页时，即便 scrollTop 为 0，也会触发列表页的滚动，会有两次参数一样的加载。
 
 # 计算中心
-        // 支付接入 
+
+        // 支付接入
         {
           path: "/pay",
           children: [
@@ -623,22 +631,21 @@ Vue.component 全局挂载的组件，破坏了 export default new Vue({})
 统计分析
 ISLEAF: 0,
 children: [
-    督查分析："/stats/supervision",    iconCls: icona-tongjifenxi_nor
-    反馈分析："/stats/feedback",    iconCls: icona-tongjifenxi_nor
+督查分析："/stats/supervision", iconCls: icona-tongjifenxi_nor
+反馈分析："/stats/feedback", iconCls: icona-tongjifenxi_nor
 ]
 
-groupType	integer($int32)  1结算中心2业务组3经营组
-payType	integer($int32)    1校园卡2校内转账3一卡通
-schoolCardPay	string校园卡支付：1未申请2待授权3已授权4授权不通过
-schoolTransferPay	string校内转账：1未申请2待授权3已授权4授权不通过
+groupType integer($int32)  1结算中心2业务组3经营组
+payType	integer($int32) 1 校园卡 2 校内转账 3 一卡通
+schoolCardPay string 校园卡支付：1 未申请 2 待授权 3 已授权 4 授权不通过
+schoolTransferPay string 校内转账：1 未申请 2 待授权 3 已授权 4 授权不通过
 
-
-# <router-view v-show="isReady" :key="+new Date()" /> 为何roles页面会反复刷新，别的没事。
-
+# <router-view v-show="isReady" :key="+new Date()" /> 为何 roles 页面会反复刷新，别的没事。
 
 # 车辆管理
-router.js   // doNext(res, to, from, next);
-App.vue  isReady
+
+router.js // doNext(res, to, from, next);
+App.vue isReady
 headerBar flag
 
             {
@@ -669,28 +676,60 @@ headerBar flag
                   iconCls: "iconche",
                   ISLEAF: "1",
                   NAME: "校外车辆"
+                },
+                {
+                  DISPLAYURL: "/vehicle/driver",
+                  iconCls: "iconjiaose",
+                  ISLEAF: "1",
+                  NAME: "驾驶员管理"
+                },
+                {
+                  DISPLAYURL: "/vehicle/usingCarConfig",
+                  iconCls: "iconpeizhi",
+                  ISLEAF: "1",
+                  NAME: "用车配置"
+                },
+              ]
+            },
+            {
+              DISPLAYURL: "/setting",
+              ISLEAF: "0",
+              NAME: "系统配置",
+              children: [
+                {
+                  DISPLAYURL: "/setting/params",
+                  ISLEAF: "1",
+                  NAME: "参数配置"
+                },
+                {
+                  DISPLAYURL: "/setting/userManagement",
+                  ISLEAF: "1",
+                  NAME: "用户管理"
                 }
               ]
             },
             {
-              DISPLAYURL: "/driver",
-              ISLEAF: "1",
-              NAME: "驾驶员管理"
-            },
-
-            {
-              DISPLAYURL: "/usingCarConfig",
-              ISLEAF: "1",
-              NAME: "用车配置"
-            },
-            {
-              DISPLAYURL: "/setting",
-              ISLEAF: "1",
-              NAME: "参数配置"
+              DISPLAYURL: "/news",
+              ISLEAF: "0",
+              NAME: "信息公告",
+              children: [
+                {
+                  iconCls: "iconwenjian",
+                  ISLEAF: "1",
+                  NAME: "信息公告管理",
+                  DISPLAYURL: "/news/manage"
+                },
+                {
+                  iconCls: "iconwenjian",
+                  DISPLAYURL: "/news/view",
+                  ISLEAF: "1",
+                  NAME: "信息公告查看"
+                }
+              ]
             },
             {
               ISLEAF: "0",
-              NAME: "班车管理",
+              NAME: "班车服务",
               children: [
                 {
                   iconCls: "iconbanche",
@@ -702,7 +741,7 @@ headerBar flag
                   DISPLAYURL: "/busManage/moments",
                   iconCls: "iconbanche",
                   ISLEAF: "1",
-                  NAME: "班车动态"
+                  NAME: "排班查询"
                 },
                 {
                   DISPLAYURL: "/busManage/status",
@@ -730,10 +769,4 @@ headerBar flag
                 },
               ]
             },
-            {
-              DISPLAYURL: "/userManagement",
-              ISLEAF: "1",
-              NAME: "用户管理"
-            }
-              
-            
+

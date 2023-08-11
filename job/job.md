@@ -1,4 +1,4 @@
-xss 前端防御，脚本，原生 api 改写，img.src 自定义上报，DOM 事件流，useCapture。 capture.html, compatible.html, httphijack。
+xss 前端防御，脚本，原生 api 改写，img.src 自定义上报，DOM 事件流，useCapture。 capture.html, compatible.html, httphijack。座位预约
 v-html 富文本 xss.js 白名单。
 前端异常及降级处理，https://www.jianshu.com/p/53ae5aee0859
 this 绑定规则，https://xiaohuochai.site/JS/ECMA/this/binding.html
