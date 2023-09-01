@@ -1365,3 +1365,127 @@ let before=window.getComputedStyle(dom, "before").content
     }
   }
 }
+
+// &:last-child  &:first-child 等必须是在子元素内使用，而不是父元素
+            // <div class="div_flex news">
+            //   <div>first</div>
+            //   <div>second</div>
+            // </div>
+.news {
+  div {
+    &:nth-child(1) {
+      margin-right: auto;
+    }
+  }
+}
+
+// <div class="wrapper">
+//               <input :id="'exp' + item.id" class="exp" type="checkbox" />
+//               <div class="wrapper-text">
+//                 <label
+//                   class="wrapper-btn"
+//                   :for="'exp' + item.id"
+//                   v-show="showZ(item.content)"
+//                 ></label>
+//                 {{ item.content }}
+//               </div>
+//             </div>
+
+  // showZ(str, max) {
+  //   return str && str.length > max;
+  // }
+    // getWidth() {
+    //   let timer = setInterval(() => {
+    //     let arr = $(".list-body-more>.wrapper") || [];
+    //     if (arr.length) {
+    //       this.wrapperWidth = arr[0].clientWidth;
+    //       let n = Math.floor(this.wrapperWidth / 16);
+    //       this.maxNum = n > 0 ? 2 * n : 0;
+    //       // console.log(
+    //       //   this.wrapperWidth,
+    //       //   arr,
+    //       //   arr[0].getBoundingClientRect(),
+    //       //   this.maxNum
+    //       // );
+    //       clearInterval(timer);
+    //     }
+    //   }, 500);
+    //   setTimeout(() => {
+    //     clearInterval(timer);
+    //   }, 5000);
+    // }
+.wrapper {
+  display: flex;
+  overflow: hidden;
+
+  .wrapper-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: justify;
+    position: relative;
+    line-height: 1.5;
+    max-height: 3em;
+    transition: 0.3s max-height;
+    @include fz();
+    word-break: break-all;
+  }
+
+  .wrapper-text::before {
+    content: "";
+    height: calc(100% - 20px);
+    float: right;
+  }
+
+  .wrapper-text::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: #ffff;
+  }
+
+  .wrapper-btn {
+    position: relative;
+    float: right;
+    clear: both;
+    margin-left: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: $c-base;
+    cursor: pointer;
+  }
+
+  .wrapper-btn::after {
+    content: "展开 \e67d";
+    font-family: "iconfont";
+  }
+
+  .exp {
+    display: none;
+  }
+
+  .exp:checked+.wrapper-text {
+    max-height: none;
+  }
+
+  .exp:checked+.wrapper-text::after {
+    visibility: hidden;
+  }
+
+  .exp:checked+.wrapper-text .wrapper-btn::before {
+    visibility: hidden;
+  }
+
+  .exp:checked+.wrapper-text .wrapper-btn::after {
+    content: "收起 \e694";
+    font-family: "iconfont";
+  }
+
+  .wrapper-btn::before {
+    content: "...";
+    position: absolute;
+    left: -5px;
+    color: #333;
+    transform: translateX(-100%);
+  }
+}

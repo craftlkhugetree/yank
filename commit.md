@@ -6,8 +6,12 @@ APIKey：1fe443319e96410ffb4f9989ed7cafdc
 百度地图开发申请账号：
 账号：NJAngke
 密码：Angke@52333181
+baiduToken: "a8FktrSeMsSVs4pWh3vWMQvpSohO9i0v",
 
-wifi: dkr84813279
+
+天地图：a78161064fc4c8eae8af9dcacce349cb
+  SkyToken: "f6b99f9bc16051a55b8249297e538251",
+公司wifi: dkr84813279
 
 http://ddzs.njau.edu.cn/ddzsmobile 1993032/HBli123456
 孟丽丽：T2015152 密码：basili951008!
@@ -642,6 +646,22 @@ schoolTransferPay string 校内转账：1 未申请 2 待授权 3 已授权 4 �
 
 # <router-view v-show="isReady" :key="+new Date()" /> 为何 roles 页面会反复刷新，别的没事。
 
+# 读者教育-新闻动态
+              NAME: '新闻动态',
+              ISLEAF: '0',
+              ICONCLS: 'icon-menu-train',
+              children: [
+                {
+                  ISLEAF: '1',
+                  NAME: '馆长寄语',
+                  DISPLAYURL: '/news/message',
+                },
+                {
+                  ISLEAF: '1',
+                  NAME: '新闻动态',
+                  DISPLAYURL: '/news',
+                },
+              ],
 # 车辆管理
 
 router.js // doNext(res, to, from, next);
@@ -649,13 +669,11 @@ App.vue isReady
 headerBar flag
 
             {
-              DISPLAYURL: "/vehicle",
               NAME: "车辆管理",
               ISLEAF: "0",
               children: [
                 {
                   iconCls: "iconche",
-                  DISPLAYURL: "/vehicle/index",
                   NAME: "校内车辆",
                   ISLEAF: "0",
                   children: [
@@ -689,10 +707,15 @@ headerBar flag
                   ISLEAF: "1",
                   NAME: "用车配置"
                 },
+                {
+                  DISPLAYURL: "/training/list",
+                  iconCls: "iconwenjian",
+                  ISLEAF: "1",
+                  NAME: "安全培训管理"
+                }
               ]
             },
             {
-              DISPLAYURL: "/setting",
               ISLEAF: "0",
               NAME: "系统配置",
               children: [
@@ -709,7 +732,6 @@ headerBar flag
               ]
             },
             {
-              DISPLAYURL: "/news",
               ISLEAF: "0",
               NAME: "信息公告",
               children: [
@@ -738,35 +760,48 @@ headerBar flag
                   DISPLAYURL: "/busManage/routineMange"
                 },
                 {
-                  DISPLAYURL: "/busManage/moments",
-                  iconCls: "iconbanche",
-                  ISLEAF: "1",
-                  NAME: "排班查询"
-                },
-                {
-                  DISPLAYURL: "/busManage/status",
-                  iconCls: "iconbanche",
-                  ISLEAF: "1",
-                  NAME: "班车乘坐情况"
-                },
-                {
-                  DISPLAYURL: "/busManage/settlement",
-                  iconCls: "iconbanche",
-                  ISLEAF: "1",
-                  NAME: "班车结算"
-                },
-                {
                   DISPLAYURL: "/busManage/shift",
                   iconCls: "iconbanche",
                   ISLEAF: "1",
                   NAME: "班车排班"
                 },
                 {
-                  DISPLAYURL: "/busManage/applyMange",
+                  DISPLAYURL: "/busManage/search",
                   iconCls: "iconbanche",
                   ISLEAF: "1",
-                  NAME: "班车预约管理"
+                  NAME: "排班查询"
                 },
+                {
+                  DISPLAYURL: "/busManage/status",
+                  iconCls: "icona-tongjifenxi_nor",
+                  ISLEAF: "1",
+                  NAME: "乘坐统计"
+                },
+                {
+                  DISPLAYURL: "/busManage/settlement",
+                  iconCls: "iconzhangdan",
+                  ISLEAF: "1",
+                  NAME: "班车结算"
+                },
+                {
+                  DISPLAYURL: "/busManage/applyMange",
+                  iconCls: "iconwenjian",
+                  ISLEAF: "1",
+                  NAME: "预约管理"
+                },
+                 {
+                  iconCls: "iconbanche",
+                  ISLEAF: "1",
+                  NAME: "班车线路",
+                  DISPLAYURL: "/busManage/routine-search"
+                },
+                {
+                  DISPLAYURL: "/busManage/myApply",
+                  iconCls: "iconwenjian",
+                  ISLEAF: "1",
+                  NAME: "我的预约"
+                }
               ]
             },
+
 

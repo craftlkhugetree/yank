@@ -198,3 +198,18 @@ python Selenium 模拟302 重定向 location 登录
 
 spark-echarts; ctx = canvas.getContext('2d');  
 非零填充：看一块区域是否被填充，可以从这个区域拉一条线出去，看和这条直线相交的轨迹，如果遇到顺时针轨迹加1，如果遇到逆时针轨迹减1，将所以轨迹的值计算出来，如果是非零就填充，如果等于零不填充。
+
+
+<el-input-number>没有@change，因为它要等blur后校验完再决定实际的value，所以要想在el-form内通过 trigger: change 来校验它必须另辟蹊径：
+:ref="item.prop + item.name"
+@input.native="v => inputNumberNativeChange(v, item)"
+
+    inputNumberNativeChange(ev, item) {
+      let prop = item.prop;
+      let ref = item.prop + item.name;
+      let iptNumRef = this.$refs[ref];
+      console.log(ev, iptNumRef, iptNumRef.displayValue, prop);
+      // refs in v-for are Array
+      this.form1[prop] = iptNumRef[0].displayValue;
+      this.$refs.form1.validateField(prop);
+    },

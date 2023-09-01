@@ -141,6 +141,111 @@ export const vue = {
   },
 };
 export default {
+  setStore(str, value) {
+    store.commit('set_' + str, value);
+    sessionStorage.setItem(str, JSON.stringify(value));
+  },
+  getStore(str) {
+    let vx = store.state[str];
+    let flag = vx || vx === 0;
+    if (vx instanceof Array) {
+      flag = vx.length > 0;
+    } else if (typeof vx === 'object') {
+      flag = Object.keys(vx).length;
+    }
+    let st = sessionStorage.getItem(str);
+    return flag ? vx : st && JSON.parse(st);
+  },
+  backSetStore(info = {}) {
+    let { storedKey, home, from, fun, that, replace, routeParams } = info;
+    // 加入routeParams之前，考虑的都是搜索参数，它们刷新时消失了也无所谓，但是routeParams必须一直存在，所以不能只用vuex，而是用了getStore()，
+    // 而搜索参数会在页面初始化后被backGetStore删掉，所以也不存在刷新后搜索参数还在的情况。
+    // 移动端看不到url，所以用了`/route/:id`，而且对于同一组件不同路由(add,edit)，传参不同可能会导致问题。
+    let backStore = this.getStore('backStore') || [];
+    let index = backStore.findIndex(b => b.home === home);
+    // 从home跳转到from，所以会从from返回
+    let obj = { home, from, fun, value: {} };
+    storedKey &&
+      storedKey.forEach(k => {
+        if (that[k] instanceof Array) {
+          obj.value[k] = [...that[k]];
+        } else if (that[k].constructor === Object) {
+          let name = k;
+          if (replace && replace.replaceObj) {
+            name = replace.replaceObj;
+          }
+          obj.value[name] = { ...that[k] };
+        } else {
+          obj.value[k] = that[k];
+        }
+      });
+    if (index > -1) {
+      backStore[index] = obj;
+    } else {
+      backStore.push(obj);
+    }
+    if (routeParams) {
+      let n = backStore.findIndex(b => b.unique4RouteParams);
+      if (n > -1) {
+        let arr = backStore[n].paths;
+        let flag = arr.some(a => {
+          if (a.path === from) {
+            a.routeParams = routeParams;
+          }
+          return a.path === from;
+        });
+        if (!flag) {
+          arr.push({ path: from, routeParams });
+        }
+      } else {
+        backStore.push({
+          unique4RouteParams: true,
+          paths: [{ path: from, routeParams }],
+        });
+      }
+    }
+    this.setStore('backStore', backStore);
+  },
+  backGetStore(home, from, that) {
+    let backStore = this.getStore('backStore') || [];
+    let index;
+    let obj = backStore.find((b, id) => {
+      let f = b.home === home;
+      if (f) {
+        index = id;
+      }
+      return f;
+    });
+    if (obj && (from === obj.from || from === '/' || (obj.fun && obj.fun()))) {
+      console.log('backGetStore:', obj, backStore, home, from, index);
+      for (let k in obj.value) {
+        that[k] = obj.value[k];
+      }
+      backStore.splice(index, 1);
+      this.setStore('backStore', backStore);
+    }
+    // console.log("vm", that);
+  },
+  // 刷新时路由传参消失，所以需要额外存储，当然也可以用`/route/:id`的方式，但会暴露
+  getRouteParams(route) {
+    let q = route.params;
+    let keys = Object.keys(q);
+    if (keys.length) {
+      return q;
+    } else {
+      let backStore = this.getStore('backStore') || [];
+      let obj = backStore.find(b => b.unique4RouteParams);
+      if (obj) {
+        let arr = obj.paths;
+        // a.path是跳转前保存的from，因为没用splice删除所以会一直存在，比如A → b ↔ C，A跳转b时保存的from为b，C返回b时可直接用。
+        let item = arr.find(a => a.path === route.path);
+        if (item) {
+          return item.routeParams;
+        }
+      }
+      return {};
+    }
+  },
   confirm(obj = {}) {
     let { that, title, body } = obj;
     const h = that.$createElement;

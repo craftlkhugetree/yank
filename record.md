@@ -38,6 +38,22 @@ git stash show stash@{0} 加上-p 可以看详细差异
 ssh-keygen -t rsa -C "345823102@qq.com"
 ssh -T git@github.com // 测试
 
+Git指定文件不更新
+对于git指定文件不更新，一般通过添加.gitignore文件忽略指定文件或文件夹，但是这种方式要求文件未被跟踪，若果文件已被跟踪，先要取消跟踪：
+
+git rm --cached 文件名  # 文件
+git rm --cached -r 文件夹  # 文件夹
+取消跟踪后添加到.gitignore文件中即可。
+
+如果文件已经被跟踪，只是不想提交后续的变更，可以使用以下方式：
+git update-index --assume-unchanged 文件名
+
+如果想取消，则执行：
+git update-index --no-assume-unchanged 文件名
+————————————————
+git ls-files -v | grep '^h\ '
+git ls-files -v | grep '^h\ ' | awk '{print $2}'
+git ls-files -v | grep '^h\ ' | awk '{print $2}' | xargs git update-index --no-assume-unchanged  
 # npm
 
 npm uninstall element-ui
