@@ -1489,3 +1489,8 @@ let before=window.getComputedStyle(dom, "before").content
     transform: translateX(-100%);
   }
 }
+// el-tabs的bug
+.el-tabs__item:focus.is-active.is-focus:not(:active) {
+  box-shadow: none;
+  border-radius: 0;
+}

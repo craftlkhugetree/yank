@@ -638,6 +638,9 @@ export default {
         loading.close();
       });
   },
+  // serviceOrder(p, "export").then(res => {
+  //       this.common.apiDownloadFile(res, this.NAME + ".xlsx");
+  //     });
   apiDownloadFile() {
     function download(res, fileName) {
       let f = fileName.split('.');
