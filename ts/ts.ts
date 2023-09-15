@@ -116,7 +116,7 @@ type PromiseType<T> = (args: any[]) => Promise<T>;
 type UnPromisify<T> = T extends PromiseType<infer U> ? U : never;
 
 type extractStringPromise = UnPromisify<typeof stringPromise1>; // string 就是async stringPromise1的返回值类型，也就是Promise<string>
-type extractPersonPromise = UnPromisify<typeof personPromise>; // Person
+type extractPersonPromise = UnPromisify<typeof personPromise>; // Person1
 // 原文链接：https://blog.csdn.net/semlinker/article/details/106882403/
 
 // 在ts中typeof的作用是将值转为类型，拿到一个值的类型。

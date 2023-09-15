@@ -1494,3 +1494,13 @@ let before=window.getComputedStyle(dom, "before").content
   box-shadow: none;
   border-radius: 0;
 }
+
+// 使边框不重叠
+table {
+  border: none;
+  border-collapse: collapse;
+  td {
+    margin: 0 -1px -1px 0;
+    border: 1px solid #f0f0f0;
+  }
+}

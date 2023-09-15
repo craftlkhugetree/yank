@@ -64,23 +64,26 @@
         background: #ddd;
         color: #000;
       }
-      #content1:target ~ .nav li:first-child {
+      #content1:target ~ .nav li:first-child a {
         background: #ff7300;
-        color: #fff;
+        color: yellow !important;
       }
       #content2:target ~ .nav li {
         background: #ddd;
         color: #000;
       }
-      #content2:target ~ .nav li:last-child {
+      #content2:target ~ .nav li:last-child a {
         background: #ff7300;
-        color: #fff;
+        color: blue !important;
+      }
+      [attr~="at"] {
+        color: red;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <div id="content1" class="active">列表1内容:123456</div>
+      <div id="content1" attr="12 at 35 6" class="active">列表1内容:123456</div>
       <div id="content2">列表2内容:abcdefgkijkl</div>
       <ul class="nav">
         <li class="active"><a href="#content1">列表1</a></li>

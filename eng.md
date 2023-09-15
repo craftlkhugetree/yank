@@ -107,6 +107,9 @@ cloak 斗篷
 18. decoupling 解耦、脱钩
 19. premise 前提
 
+20. explicit 显式的， implicit 隐式的
+      mutably borrowed 可变借用
+
 减肥=减脂 ≠ 减重
 健身先健脑,减肥先增智
 

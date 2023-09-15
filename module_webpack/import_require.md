@@ -335,3 +335,65 @@ math.add(2, 3);
 静态资源CDN部署 —— 优化网络请求
 资源发布路径实现非覆盖式发布  —— 平滑升级
 链接：https://www.zhihu.com/question/20790576/answer/32602154
+
+
+
+
+链接：https://www.zhihu.com/question/62791509/answer/2345796861
+# ES6 模块与 CommonJS 模块有一些重大的差异：
+CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。
+CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。
+由于 CommonJS 并不是 ECMAScript 标准的一部分，所以 类似 module 和 require 并不是 JS 的关键字，仅仅是对象或者函数而已，所以可以用这2个单词定义变量，比如： let require = 1; 但是js关键字是不可以作为变量名的。
+
+JavaScript 执行过程分为两个阶段:编译阶段、执行阶段
+在编译阶段 JS 引擎主要做了三件事：词法分析、语法分析、字节码生成，这里不详情讲这三件事的具体细节，感兴趣的读者可以阅读 the-super-tiny-compiler 这个仓库，它通过几百行的代码实现了一个微形编译器，并详细讲了这三个过程的具体细节。
+在执行阶段，会分情况创建各种类型的执行上下文，例如：全局执行上下文 (只有一个)、函数执行上下文。
+而执行上下文的创建分为两个阶段：创建阶段、执行阶段，在创建阶段会做如下事情：绑定 this、为函数和变量分配内存空间、初始化相关变量为 undefined，我们日常提到的 变量提升 和 函数提升 就是在 创建阶段 做的
+
+# JavaScript 的常见报错类型
+为了更容易理解 ESM 的模块导入，这里再补充一个知识点 —— JavaScript 的常见报错类型。1、RangeError这类错误很常见，例如栈溢出就是 RangeError；
+function a () {
+  b()
+}
+function b () {
+  a()
+}
+a()
+
+// out: 
+// RangeError: Maximum call stack size exceeded
+2、ReferenceErrorReferenceError 也很常见，打印一个不存在的值就是 ReferenceError：hello
+
+// out: 
+// ReferenceError: hello is not defined
+3、SyntaxErrorSyntaxError 也很常见，当语法不符合 JS 规范时，就会报这种错误：console.log(1));
+
+// out:
+// console.log(1));
+//               ^
+// SyntaxError: Unexpected token ')'
+4、TypeErrorTypeError 也很常见，当一个基础类型当作函数来用时，就会报这个错误：var a = 1;
+a()
+
+// out:
+// TypeError: a is not a function
+上面的各种 Error 类型中，SyntaxError 最为特殊，因为它是 编译阶段 抛出来的错误，如果发生语法错误，JS 代码一行都不会执行。而其他类型的异常都是 执行阶段 的错误，就算报错，也会执行异常之前的脚本。什么叫 编译时输出接口? 什么叫 运行时加载?
+# ESM 之所以被称为 编译时输出接口，是因为它的模块解析是发生在 编译阶段。也就是说，import 和 export 这些关键字是在编译阶段就做了模块解析，这些关键字的使用如果不符合语法规范，在编译阶段就会抛出语法错误。例如，根据 ES6 规范，import 只能在模块顶层声明，所以下面的写法会直接报语法错误，不会有 log 打印，因为它压根就没有进入 执行阶段：
+console.log('hello world');
+if (true) {
+  import { resolve } from 'path';
+}
+
+// out:
+//   import { resolve } from 'path';
+//          ^
+// SyntaxError: Unexpected token '{'
+# 与此对应的 CommonJS，它的模块解析发生在 执行阶段，因为 require 和 module 本质上就是个函数或者对象，只有在 执行阶段 运行时，这些函数或者对象才会被实例化。因此被称为 运行时加载。这里要特别强调，与CommonJS 不同，ESM 中 import 的不是对象， export 的也不是对象。例如，下面的写法会提示语法错误：// 语法错误！这不是解构！！！
+import { a: myA } from './a.mjs'
+
+// 语法错误！
+export {
+  a: "a"
+}
+import 和 export 的用法很像导入一个对象或者导出一个对象，但这和对象完全没有关系。他们的用法是 ECMAScript 语言层面的设计的，并且“恰巧”的对象的使用类似。
+所以在编译阶段，import 模块中引入的值就指向了 export 中导出的值。如果读者了解 linux，这就有点像 linux 中的硬链接，指向同一个 inode。或者拿栈和堆来比喻，这就像两个指针指向了同一个栈。
