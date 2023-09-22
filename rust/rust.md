@@ -85,3 +85,23 @@ Debug trait 允许你以格式化的方式打印结构体的值，通常用于�
     // var2 = 2; // this would not compile because `var2` is borrowed.
     ref_var2; // no-op, but counts as a use and keeps the borrow active until here
 ```
+
+
+
+在 Rust 中，使用 ..= 运算符可以创建一个范围，该范围包括起始值，并结束于指定值。因此，1..=5 表示从 1 到 5 的范围，包括 1 和 5。 没有等号就没有5。
+```rust
+fn main() {  
+    let num = 10;  
+  
+    match num {  
+        1..=5 if num % 2 == 0 => println!("Even number between 1 and 5"),  
+        1..=5 => println!("Odd number between 1 and 5"),  
+        _ => println!("Number is greater than 5"),  
+    }  
+
+    // 或者用于for循环
+    for i in 1..=5 {  
+        println!("{}", i);  
+    }
+}
+```

@@ -663,11 +663,6 @@ schoolTransferPay string 校内转账：1 未申请 2 待授权 3 已授权 4 �
                 },
               ],
 # 车辆管理
-
-router.js // doNext(res, to, from, next);
-App.vue isReady
-headerBar flag
-
             {
               NAME: "车辆管理",
               ISLEAF: "0",
@@ -803,5 +798,59 @@ headerBar flag
                 }
               ]
             },
+{
+              NAME: "专车服务",
+              ISLEAF: "0",
+              children: [
+                {
+ DISPLAYURL: "/special/apply",
+                  iconCls: "iconche",
+                  ISLEAF: "1",
+                  NAME: "专车预约"
+                },
+                {
+                  DISPLAYURL: "/special/feePay",
+                  iconCls: "iconzhangdan",
+                  ISLEAF: "1",
+                  NAME: "费用结算"
+                },
+                {
+                  DISPLAYURL: "/special/dispatch",
+                  iconCls: "iconche",
+                  ISLEAF: "1",
+                  NAME: "专车调度"
+                },
+                {
+                  DISPLAYURL: "/special/manage",
+                  iconCls: "iconche",
+                  ISLEAF: "1",
+                  NAME: "用车管理"
+                },
+                                {
+                  DISPLAYURL: "/special/feeCheck",
+                  iconCls: "iconzhangdan",
+                  ISLEAF: "1",
+                  NAME: "费用核算"
+                },
+                                {
+                  DISPLAYURL: "/special/payManage",
+                  iconCls: "iconwenjian",
+                  ISLEAF: "1",
+                  NAME: "结算管理"
+                },
+              ]
+            },
+# headerBar flag
+用车预约
+预约申请单字段：用车类型、用车单位、用车经办人、经办人联系电话、用车人姓名、用车人联系电话、审批人、审批人联系电话、乘坐人数、用车数量、车型、出发地点（计划）、目的地（计划）、发车时间（计划）、预计返回时间、用车事由、附件、备注
+用车经办人、用车人、审批人，记录上次填写的联系电话，填写时自动关联
+用车人姓名，可填写校外人员
+
+预约申请单进展：
+草稿、用车申请、审批通过、审批不通过、确认收到、拒单、派车、出发、评价
+
+取消用车
+经办人在专车调度员未派车前取消，弹框确认是否取消
+经办人在专车调度员已派车后取消，弹框提示先电话联系
 
 
