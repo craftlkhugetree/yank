@@ -82,7 +82,7 @@ maxSize: 1024 * 6
 h('img', { attrs: { src: require('./image.png') }})
 
 那么动态添加 src 的时候也会使用 require 引入，为什么 src 编译过后的地址，与图片资源编译过后的资源地址不一致？
-答：因为动态引入一张图片的时候，src 后面的属性值，实际上是一个变量。webpack 会根据 v-bind 指令去解析 src 后面的属性值。并不会通过 reuqire 引入资源路径。这也是为什么需要手动的添加 require。
+答：因为动态引入一张图片的时候，src 后面的属性值，实际上是一个变量。webpack 会根据 v-bind 指令去解析 src 后面的属性值。并不会通过 require 引入资源路径。这也是为什么需要手动的添加 require。
 任何放置在 public 文件夹的静态资源都会被简单的复制，而不经过 webpack。需要通过绝对路径来引用它们。所以使用 require 引入资源的前提的该资源是 webpack 解析的模块，而 public 下的文件压根就不会走编译，也就不会使用到 require。
 
 # vue2 中的 Object.defineProperty() 实际是通过 定义 或 修改 对象属性 的描述符来实现 数据劫持，其对应的缺点也是没法被忽略的：
