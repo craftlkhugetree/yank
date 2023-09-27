@@ -111,6 +111,11 @@ cloak 斗篷
       mutably borrowed 可变借用
   -webkit-line-clamp: 3; 夹子
   
+21. rust 锈
+trait 特性
+crate 板条箱-库
+prelude /ˈpreljuːd/  前奏;序幕
+
 减肥=减脂 ≠ 减重
 健身先健脑,减肥先增智
 

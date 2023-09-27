@@ -1440,3 +1440,13 @@ Vue.directive("preventReClick", {
     <router-view v-show="isReady" :key="$route.path" />
 
 s-table传递的params若是computed产生的，那么会立刻执行，即便在父组件的beforeRouteEnter里修改也来不及，所以会调用两次，除非params是变量，可以在父组件data()中读取sessionStorage来赋值，或者在created()中修改。那么在computed的情形下，（1）隐藏 s-table，直到父组件mounted时再显示，此时beforeRouteEnter肯定修改完了params；（2）s-table控制接口不立刻调用，直到watch监听到params变化，但要注意该页面初始化时可能params不变化。
+
+
+// vant中引入Element
+import ElementUI from 'element-ui'
+
+ElementUI.Select.computed.readonly = function () {
+const isIE = !this.$isServer && !Number.isNaN(Number(document.documentMode));
+return !(this.filterable || this.multiple || !isIE) && !this.visible;
+};
+Vue.use(ElementUI)
