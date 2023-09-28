@@ -843,3 +843,29 @@ console.log(div.childNodes, innerDivText.length);
 
 arr.splice(index, 0, el); index 后插入 el
 arr.splice(index, 1, el); el 替换 index
+
+
+```javascript
+/**
+ * Boolean 是 JavaScript 的内置构造函数，通过传递一个值给它，可以将该值转换为布尔值。在这种情况下，Boolean 构造函数作为回调函数传递给 filter() 方法，因此会将每个数组元素转换为布尔值。只有转换结果为真值的元素才会保留在新数组中。注意：这种方式会将 0 也过滤掉，如果不需要过滤 0，需要进行额外的判断。
+ */
+let arr = [12, null, 0, 'xyz', null, -25, NaN, '', undefined, 0.5, false];
+let filterArray = arr.filter(Boolean); // [12, 'xyz', -25, 0.5]
+
+// 位非（~）运算符对除了-1之外的任何值都返回一个"真"值，对-1返回数字0。
+if(~arr.indexOf(item)) {
+}
+
+// 逻辑或赋值运算符（||=）用于为变量分配默认值。
+let count;
+count ||= 0;
+
+1e5 === 100000;
+
+// 双位非运算符有一个非常实用的用途，可以用它来替代Math.floor()函数将数字向下取整，它在执行相同的操作时速度更快。传统写法：
+Math.floor(4.9) === 4  //true
+// 简化写法：
+~~4.9 === 4  //true
+/*注意：双非位运算符只适用于 32 位整数，即范围为 -(2^31) 到 (2^31)-1，即 -2147483648 到 2147483647。对于大于 2147483647 或小于 0 的数字，双非位运算符（~~）会给出错误的结果，因此建议在这种情况下使用 Math.floor() 方法。
+*/
+```
