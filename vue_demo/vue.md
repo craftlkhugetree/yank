@@ -1450,3 +1450,37 @@ const isIE = !this.$isServer && !Number.isNaN(Number(document.documentMode));
 return !(this.filterable || this.multiple || !isIE) && !this.visible;
 };
 Vue.use(ElementUI)
+
+// vue传值
+简单来说：$attrs 与 $listeners 是两个对象，$attrs 里存放的是父组件中绑定的非 Props 属性，$listeners 里存放的是父组件中绑定的非原生事件
+provide / inject API 主要解决了跨级组件间的通信问题，不过它的使用场景，主要是子组件获取上级组件的状态。需要注意的是：provide 和 inject 绑定并不是可响应的。这是刻意为之的。然而，如果你传入了一个可监听的对象，那么其对象的属性还是可响应的----vue官方文档。
+// 使用2.6最新API Vue.observable 优化响应式 provide
+```vue
+	  // provide() {
+	  //   this.theme = Vue.observable({
+	  //     color: "blue"
+	  //   });
+	  //   return {
+	  //     theme: this.theme
+	  //   };
+	  // },
+```
+常见使用场景可以分为三类：
+
+父子通信：
+父向子传递数据是通过 props，子向父是通过 events（$emit）；通过父链 / 子链也可以通信（$parent/$children）；ref 也可以访问组件实例；provide/inject API；$attrs/$listeners
+
+兄弟通信：
+Bus；Vuex
+
+跨级通信：
+Bus；Vuex；provide/inject API、$attrs/$listeners
+
+	var Event=new Vue();
+	Event.$emit(事件名,数据);
+	Event.$on(事件名,data => {});
+创建一个bus文件夹下面新建一个bus.js文件
+// bus.js代码
+import Vue from 'vue'
+var bus = new Vue();
+export default bus;

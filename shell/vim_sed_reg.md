@@ -1,4 +1,4 @@
-.$s///g 当前行到最后一行的替换，%s所有行
+.,$s///g 当前行到最后一行的替换，%s所有行
 %s/data\((.*),(.*)\)/data(\2,\1)/g    // 真括号用转义，捕获则直接用括号
 vim的全称是Visual Interface IMproved
 # vim

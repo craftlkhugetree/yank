@@ -1174,11 +1174,32 @@ const Vue = {
     handleScreenAuto();
     //绑定自适应函数   ---防止浏览器栏变化后不再适配
     window.onresize = () => handleScreenAuto();
+    // 底部按钮栏position: sticky; bottom: -20px; 可以在resize时改变宽度，同时在左右scroll时不位移。
+    // window.onresize = () => this.getW();
+    window.onscroll = () => this.onscroll();
   },
   deleted() {
     window.onresize = null;
   },
   methods: {
+    getW() {
+      let timer = setInterval(() => {
+        let div = document.getElementsByClassName("top-a");
+        if (div && div.length && div[0].getBoundingClientRect) {
+          this.genWidth = div[0].getBoundingClientRect().width + 40 + "px";
+          clearInterval(timer);
+        }
+      }, 500);
+    },
+    onscroll() {
+      let [a, b] = [
+        document.body.scrollLeft,
+        document.documentElement.scrollLeft
+      ];
+      let div = document.getElementById("bottom");
+      // div.style.right = 20 + "px";
+      // console.log(12332, a, b, div);
+    },
     //数据大屏自适应函数
     handleScreenAuto() {
       const designDraftWidth = 1920; //设计稿的宽度

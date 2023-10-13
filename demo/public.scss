@@ -1504,3 +1504,5 @@ table {
     border: 1px solid #f0f0f0;
   }
 }
+
+// flex-grow:1; 必须配合width: xx%; 否则关不住内部的no-wrap文本。
