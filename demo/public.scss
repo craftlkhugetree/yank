@@ -1331,6 +1331,8 @@ absolute定位在不设置 top 或者 left 值时，仍然位于原先位置，�
     }
   }
 }
+// grid-template-columns: repeat(auto-fit, minmax(33.3%, 1fr)); 一行不足三个时，就会自动平分改行
+// grid-template-columns: repeat(auto-fill, minmax(33.3%, 1fr)); 一行不足三个时，还是只占1/3
 
 align-items:stretch是一个默认值,
 永远保持在侧轴拉伸项目,

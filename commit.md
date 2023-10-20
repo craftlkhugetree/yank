@@ -812,7 +812,7 @@ schoolTransferPay string 校内转账：1 未申请 2 待授权 3 已授权 4 �
                   DISPLAYURL: "/special/feePay",
                   iconCls: "iconzhangdan",
                   ISLEAF: "1",
-                  NAME: "费用支付"
+                    NAME: "费用支付"
                 },
                 {
                   DISPLAYURL: "/special/dispatch",

@@ -1484,3 +1484,6 @@ Bus；Vuex；provide/inject API、$attrs/$listeners
 import Vue from 'vue'
 var bus = new Vue();
 export default bus;
+
+
+el-select remote的 option中 若有重复key，则输入搜索查出多个重复key的项时，页面会卡死。
