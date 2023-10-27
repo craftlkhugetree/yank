@@ -1,6 +1,5 @@
 craftlkhugetree
 # Git
-
 git svn clone -r HEAD --username=liken svn://160.255.0.56/01module/seatreser/03code/seat_v2_pc
 
 git show（查看上一次修改）
@@ -469,3 +468,202 @@ moment.utc(毫秒).format('HH:mm:ss')
 所以谨记纵使不用这翻译功能也要记得勾选“一律不翻译此网站”。。。。免得被坑。
 在网上还搜到有个方法会避免此错误的发生，就是在 html 页面的开头
 写这样<html lang="zh-CN">而不是<html lang="en">
+
+
+
+# git实战，合并项目
+1. 想和远程仓库同步下当前的分支，但当前分支上有很多还没有commit的修改。
+一是用git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；另一种方式是用git stash pop，恢复的同时把stash内容也删了。
+注意:git stash不能将未被追踪的文件(untracked file)压栈,也就是从未被git add过的文件,也就是你在使用git status命令看到的提示Untracked files所列出的文件,所以在git stash之前一定要用git status确认没有Untracked files。
+————————————————
+2. 现在在dev分支上改代码，改了一周，还没有改完，要紧急处理下feature分支上的一个bug。
+3. 在把自己当前分支的commit rebase到另一个分支上的时候发生了冲突，而冲突的是个二进制文件，只想保留另一个分支的版本。
+日常摘下其他分支的commit放到另外个分支上的技巧（cherry-pick）
+# 主要讲cherry-pick的使用，先切到要摘commit的分支上，输出所有commit日志
+git log
+# 之后你找到你要pick的commit的hash值，直接复制下来,然后切换到目标分支
+git checkout [other-branch-name]
+# 这时候你处于other-branch之下，使用cherry-pick命令
+git cherry-pick [commit-hash]
+# 这时候你会发现已经把另外个分支的commit摘到你当前的分支上了。这种场景可以应对一些突发情况，
+
+# git提供了git reset 以及 git revert两种命令
+# 在使用git reset命令前，先了解一个概念：HEAD，HEAD 是当前分支引用的指针，它总是指向该分支上的最后一次提交（你代码没commit那就只是在暂存区）。
+# 回到具体的某一次提交
+git reset --hard <commit_id>
+# 回到具体的上一次提交
+git reset --hard HEAD^
+# 如果要强行同步到远程分支，那么上述命令可以配合以下命令使用（看清楚场景，不要直接强行push到主干分支上去）
+git push -f 
+git push --force
+# push目的主要是把远程分支reset历史提交，放弃之后所有的提交。
+# git revert 命令更像是redo，就是把历史改变的代码，重新redo回去，最终生成个新的commit节点，这种一般用于回滚代码但不想删除git历史提交记录的情况
+git revert -n <commit_id>
+# 使用上述命令，相当于redo代码，所以会有冲突问题，如果出现冲突需要解决完重新commit。
+
+
+4. 已经知道两个commit A和B，怎么判断B是否在A的历史版本里。
+git log --since='n weeks'
+git log -n2 --oneline
+git log --all  查看所有分支的演进历史
+git log --all --graph
+
+5. 已经明确了B在A的历史版本里，但是查看A对应的内容时却没有找到B的修改，可能有哪些原因。
+6. 在windows上克隆了一个仓库，刚克隆完立刻用git status和git diff检视，就发现有个文件被改动了，尝试了几次都是一样的表现，可能是什么原因造成的。
+可能的原因
+1) 文件属性问题
+首先，我们需要排查一下文件属性是否发生了变化。某些系统中，文件的权限、时间戳或者换行符等属性会影响Git的文件检查机制。如果源仓库和克隆仓库的环境不同，可能会导致文件属性差异，进而导致文件显示为已修改的状态。
+
+解决方案：通过以下命令将文件属性还原为源仓库的属性。
+$ git ls-files -z | xargs -0 git restore --staged
+$ git restore
+
+2) 换行符问题
+Git在处理文本文件时，会根据不同平台的换行符进行处理。如果源仓库使用了不同于克隆环境的换行符，那么Git会将这些差异作为文件修改的一部分。
+解决方案：使用Git的autocrlf配置将文件换行符转换为克隆环境的格式。
+$ git config --global core.autocrlf true
+
+3) 文件系统问题
+某些文件系统在存储文件时，可能会修改文件的时间戳或元数据，这也会导致Git识别为文件已修改。
+解决方案：将文件系统的更改限制为只读(mount filesystem as read-only)。
+
+总结
+在Git克隆后，文件直接显示为已修改的状态是一个常见的问题。可能的原因包括文件属性问题、换行符问题以及文件系统问题。为了避免这种情况的发生，我们可以通过还原文件属性、调整换行符配置以及限制文件系统更改等方法进行解决## 进一步解决方法
+
+除了上述提到的解决方案，还有一些其他方法可以进一步解决克隆后文件直接显示为已修改状态的问题。
+
+1) 使用git checkout命令
+可以尝试使用git checkout命令将文件恢复到与源仓库一致的状态。
+
+$ git checkout -- .
+这个命令会将所有文件还原为克隆前的状态，即丢弃所有未提交的更改。
+
+2) 检查文件编码问题
+有时文件的编码问题也可能导致文件显示为已修改的状态。可以尝试通过检查文件编码以及转换编码来解决问题。
+
+$ file -i file1.txt
+file1.txt: text/plain; charset=utf-8
+
+$ iconv -f utf-8 -t utf-8 file1.txt > file1.txt.tmp && mv file1.txt.tmp file1.txt
+上述命令中，file -i用于检查文件编码，iconv用于进行编码转换。
+
+3) 使用.gitattributes文件
+可以在仓库中添加一个.gitattributes文件来显式指定文件的特定属性。这样可以避免由于环境差异导致的文件显示为已修改的状态。
+
+在.gitattributes文件中，使用特定的属性指示符来定义文件属性，比如换行符类型、文件编码等。
+
+*.txt   -text eol=lf
+*.csv   -text
+*.md    text diff=markdown
+上述示例中，*.txt文件被定义为文本类型，换行符类型为lf；*.csv文件被定义为二进制类型；*.md文件被定义为文本类型，并使用Markdown格式进行差异对比。
+
+7. 有两个分支A和B，差异非常大，现在想把B分支的文件内容变得和A完全一样，可以不保留B原本的历史记录。如果要保留B原本的历史记录又该怎么做。
+大概流程
+1 进入 dayjs 文件夹，将 moment 作为远程仓库添加到 dayjs 来；
+2 合并添加的库 moment 到原本的 dayjs 项目；
+3 创建 mtool 文件夹，把 moment 的 develop 分支合并到 mtool 文件夹；
+4 完成 moment 转移提交；
+5 完成 dayjs 文件的迁移；
+6 完成项目合并并查看历史记录。
+
+测试步骤
+进入 dayjs 文件夹，将 moment 作为远程仓库添加到 dayjs 来
+使用命令：
+git remote add -f moment D:/davidsu/Desktop/GitlabTest/full/moment
+// -f 的作用是在添加后立刻 fetch。
+// D:/davidsu/Desktop/GitlabTest/full/为需要被合并 moment 项目的绝对路径 。
+
+合并添加的库 moment 到原本的 dayjs 项目
+使用命令（注意分支名）：
+git merge --strategy ours --no-commit --allow-unrelated-histories moment/develop
+
+命令说明：
+git merge 为合并分支:
+–strategy ours 解析合并，在合并时，如果遇到冲突，以我的为准。（本例是在 dayjs 中合并 moment，遇到冲突以 dayjs 的为准）。结果就是：
+moment 的历史记录被合并到 dayjs 的历史记录中。
+moment 的文件树被读取并和 dayjs 的文件树比对进行冲突解析。
+–no-commit 合并解析完成后中断，停留在最后的提交步骤之前。
+只要你还没 commit，那么 merge 的结果就暂时保存在缓存区中，只有完成提交步骤合并才算彻底完成（文件树被正式改变）。
+–allow-unrelated-histories 允许合并无关的历史记录。
+如果不添加此选项，可能会出现fatal: refusing to merge unrelated histories错误。
+
+创建 mtool 文件夹，把 moment 的 develop 分支合并到 mtool 文件夹
+使用命令：
+mkdir mtool    # 创建文件夹
+git read-tree --prefix=mtool/ -u moment/develop
+命令说明：
+git read-tree 给定的树信息读入索引
+
+–prefix 用于指定文件树读取后保存的路径，相对于当前路径并且一定要追加 /。
+-u 是说在读取后更新 index，使得 working tree 与 index 保持同步。
+这个命令的意义在于，之前的git merge命令可能会在解决冲突的时候，把 moment 的文件树弄得比较混乱，再使用read-tree去修复一下。
+
+总结
+以上，完成了两个项目合并到一个项目的示例接操作演示，后续有更多的项目想要合并，可以类似。
+
+本示例使用步驟
+
+进入 dayjs
+git remote add -f moment D:/davidsu/Desktop/GitlabTest/full/moment
+git merge –strategy ours –no-commit –allow-unrelated-histories moment/develop
+mkdir mtool
+git read-tree –prefix=mtool/ -u moment/develop
+git commit –message ‘完成 moment 的迁移，新目录为 mtool’
+mkdir dtool （还在 dayjs 下面）
+拷贝 dayjs 的原始项目文件（除了 .git/ 和 .gitignore 以外）至 dtool/；
+拷贝完之后，可以把原本文件夹名 dayjs 改为 timetools；
+把此时 mtool 下的.gitignore 文件内容，整理合并到 timetools 下的.gitignore 文件中去。
+合并完之后，再全部添加提交一次，做为整合操作的记录：git add –all; git commit –message ‘迁移整合完成！’
+
+链接：https://www.jianshu.com/p/f592691062c4
+
+
+8. 有个本地仓库，希望git fetch的时候从github上的远程仓库里拉取数据，git push的时候往gitlab的远程仓库里推送数据。
+
+方法一：多个 origin
+git remote add origin_main git@github.com:yeszao/dnmp.git
+第一种方法是，在原 origin 远程仓库地址的基础上，再加一个地址，也就是主仓库地址，例如加一个origin_mian，如下：
+git remote -v
+这样我们总共就配置了 4 个地址，2 个 push 和 2 个 pull：
+在推拉代码的时候就可以这样：
+git push origin master
+git pull origin_main master
+
+方法二：一个 origin（推荐）
+
+另外一种办法就是，我们只用一个 origin，设置主仓库为 fetch 地址，个人仓库为 push 地址：
+git remote set-url origin git@github.com:yeszao/dnmp.git
+git remote set-url --add --push origin git@github.com:MY_REPOSITY/dnmp.git
+
+再用 git remote 命令看看配置的地址：
+origin git@github.com:MY_REPOSITY/dnmp.git (push)
+origin git@github.com:yeszao/dnmp.git (fetch)
+这样推拉代码就 很简单了：
+git push origin master
+git pull origin master
+
+9. 怎么把A仓库的某个commit修改应用到B仓库分支上。
+cherry-pick
+10. 改了一周的代码，没有commit，在处理其他事情的时候使用git stash保存了下。后面git stash pop的时候却一直报错，提示有个object已经corrupt，要怎么把这一周的工作给恢复出来。
+第1步：备份.git(实际上，我在更改某些步骤的每一步之间进行此操作，但是使用新的复制到名称，例如.git-old-1，.git-old-2等) ：
+
+cp -a .git .git-old
+步骤2：执行
+git fsck --full
+您将收到此错误消息
+
+例如：
+错误：目标文件.git / objects / 0A / dsdadadadaaeer4r3434343434334f为空
+
+步骤3：删除上述空文件，该文件位于您的.git/objects/文件夹中。继续删除空文件。
+
+步骤4：删除所有空文件后，现在运行
+git fsck --full
+步骤5：尝试git reflog。由于HEAD损坏而失败。
+
+步骤6：手动获取reflog：
+git log origin/master..HEAD
+步骤7：请注意，从步骤6中我们了解到HEAD当前指向最后的提交。因此，让我们尝试仅查看父提交：
+git show commit-id
+步骤8：所以现在我们需要将HEAD指向commit-id
+git update-ref HEAD commit-id
