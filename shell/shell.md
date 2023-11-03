@@ -1,4 +1,8 @@
 root@root k@123
+sudo apt-get update
+sudo apt-get install build-essential
+sudo apt-get install make
+有makefile文件才能用make指令，执行makefile中的cc或者gcc编译。
 
 碰到 shell 命令里诸如 if [["$STR1" =~ "$STR2"]]; then
 这样的代码在 ubuntu 里执行显示 “[[ : not found” 时，往往是从 linux 移植过来的。

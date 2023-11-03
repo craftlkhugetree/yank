@@ -1509,3 +1509,14 @@ table {
 
 // flex-grow:1; 必须配合width: xx%; 否则关不住内部的no-wrap文本。
 // tr td 的display:flex 会影响rowspan合并
+
+// <el-input type="number"></el-input>隐藏上下按钮
+/deep/ .el-input {
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}

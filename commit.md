@@ -529,9 +529,94 @@ sideBar.vue flag
 物业服务区域 path: "/area",ICONCLS: iconfenlei
 角色权限 path: "/roles",ICONCLS: iconjiaose
 物业合同 path: "/contractor",ICONCLS: iconwenjian
+物业合同配置 path: "/set-contractor",ICONCLS: iconpeizhi
+设备管理 path: "/deviceManage", ICONCLS: iconfenlei
 企业考核信息 path: "/company-verify",ICONCLS: iconbaifenkaohe
+const menu = [
+            {
+              ISLEAF: "0",
+              NAME: "社会企业管理",
+              children: [
+                {
+                  DISPLAYURL: "/society-company",
+                  leaf: true,
+                  iconCls: "iconfenlei",
+                  ISLEAF: "1",
+                  NAME: "社会企业信息"
+                },
+                {
+                  DISPLAYURL: "/companyCheck",
+                  leaf: true,
+                  iconCls: "iconbaifenkaohe",
+                  ISLEAF: "1",
+                  NAME: "企业考核信息"
+                }
+              ]
+            },
+            {
+              ISLEAF: "0",
+              NAME: "服务人员管理",
+              children: [
+                {
+                  DISPLAYURL: "/service-people",
+                  leaf: true,
+                  iconCls: "iconfenlei",
+                  ISLEAF: "1",
+                  NAME: "服务人员"
+                },
+                {
+                  DISPLAYURL: "/service-position",
+                  leaf: true,
+                  iconCls: "iconfenlei",
+                  ISLEAF: "1",
+                  NAME: "工作岗位"
+                },
+                {
+                  DISPLAYURL: "/area",
+                  leaf: true,
+                  iconCls: "iconfenlei",
+                  ISLEAF: "1",
+                  NAME: "服务区域"
+                }
+              ]
+            },
+            {
+              ISLEAF: "0",
+              NAME: "合同管理",
+              children: [
+                {
+                  DISPLAYURL: "/contractor",
+                  leaf: true,
+                  iconCls: "iconfenlei",
+                  ISLEAF: "1",
+                  NAME: "合同管理"
+                },
+                {
+                  DISPLAYURL: "/set-contractor",
+                  leaf: true,
+                  iconCls: "iconpeizhi",
+                  ISLEAF: "1",
+                  NAME: "合同配置"
+                }
+              ]
+            },
+            {
+              DISPLAYURL: "/deviceManage",
+              leaf: true,
+              iconCls: "iconfenlei",
+              ISLEAF: "1",
+              NAME: "设备管理"
+            },
+            {
+              DISPLAYURL: "/roles",
+              leaf: true,
+              iconCls: "iconfenlei",
+              ISLEAF: "1",
+              NAME: "系统配置"
+            }
+          ];
 
-# 后勤审批管理
+# ngc后勤审批管理
 
 fix: sidebar.vue (menus flag)
 ICONCLS
