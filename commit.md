@@ -923,6 +923,18 @@ schoolTransferPay string 校内转账：1 未申请 2 待授权 3 已授权 4 �
                   ISLEAF: "1",
                   NAME: "结算管理"
                 },
+                {
+                  DISPLAYURL: "/special/transferVerify",
+                  iconCls: "iconzhangdan",
+                  ISLEAF: "1",
+                  NAME: "转账审批"
+                },
+                {
+                  DISPLAYURL: "/special/receiveVerify",
+                  iconCls: "iconzhangdan",
+                  ISLEAF: "1",
+                  NAME: "收账审批"
+                }
               ]
             },
 # headerBar flag

@@ -1487,3 +1487,7 @@ export default bus;
 
 
 el-select remote的 option中 若有重复key，则输入搜索查出多个重复key的项时，页面会卡死。
+
+
+父：window.addEventListener("message", this.loadFrame);
+frame传递msg给父：window.parent.postMessage(msg, '*');

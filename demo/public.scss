@@ -1520,3 +1520,14 @@ table {
     -moz-appearance: textfield;
   }
 }
+
+
+background: url("~@static/images/w.png") repeat 0 0;
+background-repeat: space; 或者background-position: round;都将无限重复背景图像，但是对于任何余数，将会优化，并在每个重复图像之间添加间隙。
+如果想重复图像5次，每张图像宽20像素，间距为5像素，你可以这样做：
+.star-rating {
+    width: 120px;
+    background-image: url('example.jpg');
+    background-repeat: space;
+    background-size: 20px auto;
+}

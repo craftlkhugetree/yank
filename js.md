@@ -666,11 +666,30 @@ return x.val
 }
 给对象 x 设置一个属性 val 并赋值为 0，并修改其 valueOf、toString 方法，在 “x == 1 && x == 2 && x == 3”判断执行时，每次等式比较都会触发 valueOf、toString 方法，都会执行 val++ ，同时把最新的 val 值用于等式比较，三次等式判断时 val 值分别为 1、2、3 与等式右侧的 1、2、3 相同，从而使等式成立。
 
-删除 cookie：
+```javascript
+% 删除 cookie：
 var expires = new Date();
 expires.setTime(expires.getTime() - 10000);
 document.cookie =
 "IDSTGC=" + escape("echo") + ";expires=" + new Date(0).toUTCString() + `;Path=/`;
+% 跨域设置cookie:
+    setCookie(cname, cValue, exDays = 1) {
+      var d = new Date();
+      d.setTime(d.getTime() + exDays * 24 * 60 * 60 * 1000);
+      var expires = "expires=" + d.toUTCString();
+      console.log(cname, cValue, expires);
+      document.cookie =
+        cname +
+        "=" +
+        escape(cValue) +
+        "; " +
+        expires +
+        ";" +
+        "path=/;domain=" +
+        window.g.innerDomain +
+        "/;";
+    },
+```
 
 顺序：
 async function async1() {

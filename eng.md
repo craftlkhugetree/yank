@@ -115,6 +115,7 @@ cloak 斗篷
 trait 特性
 crate 板条箱-库
 prelude /ˈpreljuːd/  前奏;序幕
+pivot 支点
 
 减肥=减脂 ≠ 减重
 健身先健脑,减肥先增智
