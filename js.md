@@ -936,3 +936,27 @@ const scrollToBottom = (element) =>
 const generateRandomHexColor = () =>
   \`#${Math.floor(Math.random() * 0xffffff) .toString(16)}`;
 ```
+
+
+iframe内部调用父辈location会报跨域错误
+    // this.domain =
+    //   (window.parent &&
+    //     window.parent.location &&
+    //     window.parent.location.href) ||
+    //   "*";
+
+```javascript
+// localStorage的生命周期是永久的，意思就是如果不主动清除，存储的数据将一直被保存。而sessionStorage顾名思义是针对一个session的数据存储，生命周期为当前窗口，一旦窗口关闭，那么存储的数据将被清空。最后还有一个很主要的区别同一浏览器的相同域名和端口的不同页面间可以共享相同的 localStorage，但是不同页面间无法共享sessionStorage的信息。
+created() {
+        // 跨标签页监听
+        window.addEventListener('storage', this.storageChange)
+    },
+    methods: {
+        storageChange(e) {
+            if (e && e.key == 'targetKey' && e.newValue) {
+                // 在这里更新数据
+            }
+        },
+    }
+// 多个组件依赖于同一条数据(状态)，需要即时响应更新的情况，vuex的价值就体现出来了。
+```

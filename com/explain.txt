@@ -174,5 +174,24 @@ file-saver el-table => excel;
 天地图：a78161064fc4c8eae8af9dcacce349cb, 所有地图都必须有一个 v-show再显示的过程，否则贴片不显示。
 车辆调度，打车，派车，审核，补充等；审批系统的工作流。
 ！！！pdf完美表格横竖计算切割 flex column auto page，并且合并pdf arrayBuffer到一个pdf中。jspdf waterMark以及css url() repeat水印去掉余数    background-repeat: space;
+
 frame     window.addEventListener("message", this.operate);   window.parent.postMessage(msg, 父域名);
 父传给frame： frameId.contentWindow.postMessage(data, innerDomain);
+
+    <div class="bottom_btn_gap">
+      &nbsp;
+    </div>
+    <div
+      :style="{ width: genWidth }"
+      id="bottom"
+      class="bottom"></div>
+window.onresize = () => this.getW();
+    getW() {
+      let timer = setInterval(() => {
+        let div = document.getElementsByClassName("top-a");
+        if (div && div.length && div[0].getBoundingClientRect) {
+          this.genWidth = div[0].getBoundingClientRect().width + 40 + "px";
+          clearInterval(timer);
+        }
+      }, 500);
+    }

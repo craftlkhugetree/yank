@@ -15,7 +15,7 @@ baiduToken: "a8FktrSeMsSVs4pWh3vWMQvpSohO9i0v",
 
 http://ddzs.njau.edu.cn/ddzsmobile 1993032/HBli123456
 孟丽丽：T2015152 密码：basili951008!
-
+南农物业王伟账号Q20202193、king1124
 # Project
 
 https://z.angke.com.cn/ 账户 liken 密码 Liken123
@@ -944,4 +944,55 @@ schoolTransferPay string 校内转账：1 未申请 2 待授权 3 已授权 4 �
 临时车牌对应临时icon
 评价：临时驾驶员（完成用车），系统内驾驶员（出车后）
 个人用车无需审批
+sprId查出其可用的经费本，但本内的主负责人不一定是spr。
+收方是系统配置，付方是支付单的创建者
+付方唯一：后勤的水（3020501）、电（3020601）和用车（3023901）
+没结算就可以退回，付审核->收审核->结算。
 
+BMBH： 部门编号
+			BMMC： 部门名称
+			XMBH： 项目编号
+			XMMC： 项目名称SQJZRQ： 授权截止日期
+			XMLX： 项目类型
+			GKXXM： 国库信息码
+			ZFZRBH： 主负责人编号
+			ZFZRXM： 主负责人姓名
+			XMLXMC:项目类型名称
+			YECK:余额查看标志（ 0 不允许； 1 允许； 针对网报授权项目）
+			CCLASS： 项目大类
+			GKXXM2： 国库信息码 2（ 组合模式）
+			ISGK： 是否国库
+			JJFLZCKM： 允许支出经济分类
+			NOJJFLZCKM： 不允许支出经济分类
+			ISCZZC： 是否财政支出（ 1、 财政支出； 2 非财政专项支出； 3、 其他拨款支出）
+			ISJZ： 是否竞争性经费（ 1、 是； 0 或空、 否； ）
+			XMYSSX： 项目预算属性
+[
+			{
+			"BMBH": "010100",
+			"BMMC": "工程学院",
+			"XMBH": "301840",
+			"XMMC": "合金",
+			"SQJZRQ": "20200501",
+			"XMLX": "0122",
+			"GKXXM": "22050205",
+			"ZFZRBH": "09599",
+			"ZFZRXM": "XXX",
+			"XMLXMC": "X***X",
+			"YECK": "0",
+			"CCLASS": "",
+			"GKXXM2": "","ISGK": "",
+			"JJFLZCKM":
+			"3019902,3019903,30202,30203,3020602,3020701,3020703,30211,30213,30214,30215,30216,3021
+			8,3022601,3022603,3022604,30227,30239,3029901,3029906,3029907,3029908,3030802,3030804,3
+			1003,3109902",
+			"NOJJFLZCKM": "",
+			"ISCZZC": "",
+			"ISJZ": "",
+			"XMYSSX": ""
+		}]
+var outerDomain =
+  location.protocol +
+  "//" +
+  location.hostname +
+  (location.port ? ":" + location.port : "");
