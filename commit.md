@@ -14,6 +14,7 @@ baiduToken: "a8FktrSeMsSVs4pWh3vWMQvpSohO9i0v",
 公司wifi: dkr84813279
 
 http://ddzs.njau.edu.cn/ddzsmobile 1993032/HBli123456
+https://lbsc.njau.edu.cn/jszxweb  1993032/HBli123456
 孟丽丽：T2015152 密码：basili951008!
 南农物业王伟账号Q20202193、king1124
 # Project
@@ -946,8 +947,9 @@ schoolTransferPay string 校内转账：1 未申请 2 待授权 3 已授权 4 �
 个人用车无需审批
 sprId查出其可用的经费本，但本内的主负责人不一定是spr。
 收方是系统配置，付方是支付单的创建者
-付方唯一：后勤的水（3020501）、电（3020601）和用车（3023901）
+用车付方唯一：后勤的水（3020501）、电（3020601）和用车（3023901）
 没结算就可以退回，付审核->收审核->结算。
+转账才有下载凭证，支付时会选项目编号、部门名称
 
 BMBH： 部门编号
 			BMMC： 部门名称
