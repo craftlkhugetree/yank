@@ -15,6 +15,7 @@ baiduToken: "a8FktrSeMsSVs4pWh3vWMQvpSohO9i0v",
 
 http://ddzs.njau.edu.cn/ddzsmobile 1993032/HBli123456
 https://lbsc.njau.edu.cn/jszxweb  1993032/HBli123456
+https://car.njau.edu.cn/clglweb/vehicle/info
 孟丽丽：T2015152 密码：basili951008!
 南农物业王伟账号Q20202193、king1124
 # Project
@@ -940,17 +941,6 @@ schoolTransferPay string 校内转账：1 未申请 2 待授权 3 已授权 4 �
             },
 # headerBar flag
 
-补单-紧急派车isJjyc，此预约单只有这一个派车。（申请-审批；申请。不用确认派车）
-临时驾驶员driverId
-临时车牌对应临时icon
-评价：临时驾驶员（完成用车），系统内驾驶员（出车后）
-个人用车无需审批
-sprId查出其可用的经费本，但本内的主负责人不一定是spr。
-收方是系统配置，付方是支付单的创建者
-用车付方唯一：后勤的水（3020501）、电（3020601）和用车（3023901）
-没结算就可以退回，付审核->收审核->结算。
-转账才有下载凭证，支付时会选项目编号、部门名称
-
 BMBH： 部门编号
 			BMMC： 部门名称
 			XMBH： 项目编号
@@ -998,3 +988,16 @@ var outerDomain =
   "//" +
   location.hostname +
   (location.port ? ":" + location.port : "");
+补单-紧急派车isJjyc，此预约单只有这一个派车。（申请-审批；申请。不用确认派车）
+临时驾驶员driverId
+临时车牌对应临时icon
+评价：临时驾驶员（完成用车），系统内驾驶员（出车后）
+个人用车无需审批
+sprId查出其可用的经费本，但本内的主负责人不一定是spr。
+收方是系统配置，付方是支付单的创建者
+用车付方唯一：后勤的水（3020501）、电（3020601）和用车（3023901）
+没结算就可以退回，付审核->收审核->结算。
+转账才有下载凭证，支付时会选项目编号、部门名称
+收方的  ：公务用车你收方 部门号用310 项目号用 Y020006001 ，科目号用9003，经济分类科目号没有   经费负责人编号  1994026
+部门编号 104 项目编号 61HB210011 负责人编号 2020036/123
+https://car.njau.edu.cn/hq-clgl/rest/specicalCarOrder/query?authType=default1

@@ -269,6 +269,7 @@ grep -Pzo "000(\n|.)*222(\n|.)*?111" test.log
 ^(?!._(localhost|z.angke.com.cn))._$
 ^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost)).*$
 
+``` (?=...) 不会占用位置，而是用来指定匹配的条件。```
  var pwdRegex = new RegExp('(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{8,30}');
  if (!pwdRegex.test('A3b@C2dEF')) {
  　　alert("您的密码复杂度太低（密码中必须包含大小写字母、数字、特殊字符），请及时修改密码！");
@@ -315,7 +316,7 @@ exts.replace(/(mp3\|)/g, '$1\n\r')
     let reg = /((\d([a-z]+))(\d+[A-Z]))/g
     let arr = str.match(reg)
 
-     console.log(str.replace(reg, '$1...')) 
+     console.log(str.replace(reg, '$1...')) // 222aaaa333B...bb666ccc9Z...Z
     console.log(arr) // ['2aaaa333B', '6ccc9Z']
 	    let str2 = str.replace(reg, function (match, p1, p2, p3, p4, p5, p6, p7) {
       console.log('match', match) // 2aaaa333B  // 6ccc9Z
@@ -353,11 +354,19 @@ let phoneNum = "15612345678"
 const res = phoneNum.replace(reg, '$1****$2****$3****$4')
 console.log(res) // "156****12****34****5678"
 
+ reg = /(\d{3})(?:\d{2})(?:\d*)(\d{4})/
+let phoneNum = "15612345678"
+phoneNum.replace(reg, '$1****$2')  // '156****5678'
 
 # 非捕获分组 (?:表达式)，分组匹配之后，不需要的用 “?: ”语法过滤子表达式内容。也就是代码匹配，但是不保存为$1 \1。
 var str = '2022-04-21'
 var reg = /(\d{4})-(?:\d{2})-(\d{2})/
-var result = reg.exec(str)  // 得到的数组就不包括04了
+var result = reg.exec(str)  // 得到的数组就不包括04了, exec找到所有处于括号中的匹配
+[
+    "2022-04-21",
+    "2022",
+    "21"
+]
 
 # $1只匹配小括号内的内容，\1也是。
 只保留 点和两位小数，没有四舍五入:
@@ -475,6 +484,8 @@ preg_match($preg,$str,$content);   echo $content[0];//abc
 思考：以下写法为什么不等价于“\b”
 (?<=\W)(?=\w)|(?<=\w)(?=\W)
 
+第一个正则表达式关注的是非单词字符和单词字符之间的边界，而第二个正则表达式关注的是单词字符和非单词字符之间的边界。
+
 在支持ASCII码的语言中，如JavaScript，“\w”等价于[a-zA-Z0-9_] ；
 
 在支持Unicode的语言中，如.NET，默认情况下，“\w”除可以匹配[a-zA-Z0-9_]外，还可以匹配一些Unicode字符集，如汉字，全角数字等等。
@@ -486,14 +497,16 @@ preg_match($preg,$str,$content);   echo $content[0];//abc
 此处的“\b”表示的是退格键，而不是单词边界。
 非单词与符号的边界是\B，可以匹配单个字符。
 ————————————————
-var str = "abc_123中文_d3=efg汉字%";
+var str = "abc_123中9文_d3=efg汉字%";
 var reg = /.\b./g;
 var arr = str.match(reg);
 /*-------- JavaScript中输出--------
-3中
-文_
-3=
-g汉
+[
+    "3中",
+    "9文",
+    "3=",
+    "g汉"
+]
 */
 
 

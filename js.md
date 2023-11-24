@@ -960,3 +960,32 @@ created() {
     }
 // 多个组件依赖于同一条数据(状态)，需要即时响应更新的情况，vuex的价值就体现出来了。
 ```
+```javascript
+// js 对数字加逗号处理(每三位加逗号)-正则表达式
+const toThousands = (num = 0) => {
+  return num.toString().replace(/\d+/, function(n) { 
+      console.log(n)
+      // 多个三连结尾; 
+//       (\d)：匹配一个数字，并将其捕获到第一个捕获组中。
+// (?=(?:\d{3})+$)：这是一个前瞻断言，它确保匹配的文本后面是一个或多个三位数字。 ?:表示虽然匹配，但是不捕获这个括号。
+// g：这是全局标志，表示匹配字符串中的所有实例，而不是仅匹配第一个。有了g可以多次reg.exec(str)找到所有处于括号中的匹配
+// 这个正则表达式使用 replace() 方法来替换匹配的文本。在替换字符串中，$1 表示第一个捕获组中的内容（即一个数字），而 , 是要添加的逗号。
+      return n.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,'); 
+   });
+};
+// (?=)只是条件并不占位，所以不会成为$2; 而 (\d{3})+ 表示至少有一个，但是对应的$2只是(\d{3})的最后一组。
+console.log(toThousands(1234567890.111)); //1,234,567,890.111
+```
+
+
+blur()关不掉时可以找到他，然后自己remove()
+```javascript
+        let dropList = document.getElementsByClassName("el-select-dropdown") || [];
+        for (let i = 0; i < dropList.length; i++) {
+          let attr = dropList[i].getAttribute("x-placement");
+          console.log(dropList, attr);
+          if (attr) {
+            dropList[i].remove();
+          }
+        }
+```
