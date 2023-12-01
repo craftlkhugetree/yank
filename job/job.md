@@ -218,3 +218,5 @@ spark-echarts; ctx = canvas.getContext('2d');
 浏览器的有的时候数据转换会出错；一般情况下我们看 Network里面的Preview和Response的结果似乎一模一样。
 在Preview(预览功能)中，控制台会把发送过来的json数据自动转换成javascript的对象格式；id是由雪花生成器产生，而超过16位的js Number类型会溢出。
 因为数据为Long型，返回给浏览器以后，浏览器转换数据格式的时候出现问题。
+
+initiator查看url调用链，iframe发起者为http则无所谓，若为https则调用链中不能有http。

@@ -1494,3 +1494,4 @@ frame传递msg给父：window.parent.postMessage(msg, '*');
 
 el-form一进入就会校验标红，去除方法：
       :validate-on-rule-change="false"
+      若trigger是change，那么在给对应prop赋初始值时，就会触发change，若赋的值不符合条件就会触发。
