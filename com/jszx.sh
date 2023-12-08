@@ -5,10 +5,11 @@ path='/d/kxiangmu/njauLogistics/fuwujiandu'
 filename1=$path'/clglPC/src/assets/js/util.js'
 filename2=$path'/clglMOBILE/src/assets/js/util.js'
 filename3=$path'/jszx-pc/src/assets/js/util.js'
+filename4=$path'/xnzz-jszx/src/assets/js/util.js'
 
 IDSTGC="var IDSTGC"
 
-arr=($filename1 $filename2 $filename3)
+arr=($filename1 $filename2 $filename3 $filename4)
 
 for filename in ${arr[*]}
 do
@@ -18,5 +19,6 @@ done
 
 # code $path'/netRepair-mobile_njit'
 # code $path'/netRepair_njit'
-cd $path'/clglPC/'
+cd $path'/xnzz-jszx/'
+# cd $path'/clglPC/'
 # cd $path'/jszx-pc/'

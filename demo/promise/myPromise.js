@@ -201,3 +201,22 @@ function resolvePromise(promise2, x, resolve, reject) {
 }
 //最后将我们自己创建的MyPromise对象导出
 module.exports = MyPromise;
+
+
+/**
+ *  注意：
+
+（1）await不能单独出现，其函数前面一定要有async。
+
+（2）await会干两件事：
+
+第一，将写在await后面的代码放到async创建的那个Promise里面执行。
+
+第二、将写在await下面的代码放到前一个创建的那个Promise对象的.then里面执行。
+
+（3）await返回的也是Promise对象，他只是把await下面的代码放到了await返回的promise的.then里面执行。
+
+以上就是babel和ts在打包的时候使用co模块的思路通过Promise来实现async-awiat。
+————————————————
+原文链接：https://blog.csdn.net/qq_43641110/article/details/128476296
+ */

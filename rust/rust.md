@@ -1,3 +1,7 @@
+rustup; rustc; cargo new name --bin; cargo build; cargo run # 编译和运行合在一起; cargo check 快速检查不编译
+cargo build --release # 这个属于优化编译
+cargo run --release # 同上
+
 Rust 的最佳实践包括以下几点：
 避免使用unwrap()，而是使用expect()。unwrap()在遇到错误时直接panic，而expect()会打印出错误信息并exit。
 利用From、TryFrom等标准特征。这些特征可以帮助我们更方便的进行类型转换和处理错误。
@@ -31,6 +35,7 @@ use std::fmt; // 引用std模块中的fmt子模块
 
 fn main() {
     let x = 42;
+    // println! 调用了一个 Rust 宏（macro）。如果是调用函数，则应输入 println（没有!）。
     fmt::println!("The answer is {}", x); // 使用fmt子模块中的println!宏打印输出
 }
 ```

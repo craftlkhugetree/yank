@@ -19,11 +19,11 @@ van-search 的clearable图标失效，是被输入框给遮蔽了，只要设置
 import { ImagePreview } from 'vant';
 ImagePreview({images: [url], showIndex: false});
 openImg(index) {
-ImagePreview({
-images: this.fileList.map(f => this.viewUrl + f.id),
-startPosition: index,
-closeable: true
-});
+  ImagePreview({
+    images: this.fileList.map(f => this.viewUrl + f.id),
+    startPosition: index,
+    closeable: true
+  });
 },
 
 import ElImageViewer from "element-ui/packages/image/src/image-viewer";
@@ -1495,3 +1495,65 @@ frame传递msg给父：window.parent.postMessage(msg, '*');
 el-form一进入就会校验标红，去除方法：
       :validate-on-rule-change="false"
       若trigger是change，那么在给对应prop赋初始值时，就会触发change，若赋的值不符合条件就会触发。
+
+
+# vue2 keep-alive的max问题
+根据LRU算法对cache和keys的管理：若当前激活组件在缓存中，将组件对应key先删除，再插入来更新其位置；
+若当前激活组件没有再缓存中，直接存入缓存，此时判断是否超过了缓存个数上限，如果超过了，使用pruneCacheEntry清理keys第一个位置（最旧）的组件对应的缓存。
+if (cache[key]) {
+  vnode.componentInstance = cache[key].componentInstance;
+  // make current key freshest
+  remove(keys, key);
+  keys.push(key);
+} else {
+  cache[key] = vnode;
+  keys.push(key);
+  // prune oldest entry
+  if (this.max && keys.length > parseInt(this.max)) {
+    pruneCacheEntry(cache, keys[0], keys, this._vnode);
+    console.log('cache: ', cache)
+    console.log('keys: ', keys)
+  }
+}
+
+清理缓存函数pruneCacheEntry的实现：比对当前传入组件和在缓存中的组件tag是否相同，如果不同，就去销毁组件实例，否则不销毁。
+function pruneCacheEntry (
+  cache,
+  key,
+  keys,
+  current
+) {
+  var cached$$1 = cache[key];
+  if (cached$$1 && (!current || cached$$1.tag !== current.tag)) {
+    cached$$1.componentInstance.$destroy();
+  }
+  cache[key] = null;
+  remove(keys, key);
+}
+最后发现，由于组件名称相同，导致tag相等，没有进入销毁组件实例的if判断，导致max失效，从而一直缓存组件。
+为什么针对相同组件名称不去销毁实例呢？可能是为了某些情景下组件复用吧。
+方案一：剪枝法
+维护一个全局状态（比如vuex）对话ids队列，最大长度为max，类似vue中LRU算法中的keys，在组件activated钩子函数触发时更新ids队列。
+方案二：自定义清理缓存函数
+我们不再使用keep-alive提供的max属性来清理缓存，让其将组件实例全部缓存下来，当前激活组件，activated钩子函数触发，此时通过this.$vnode.parent.componentInstance获取组件实例，进而可以获取挂载在上面的cache和keys。这样我们就可以通过LRU算法，根据key自定义精准清理缓存了。
+activated() {
+  const { cache, keys } = this.$vnode.parent.componentInstance;
+  console.log('activated cache: ', cache)
+  console.log('activated keys: ', keys)
+
+  let cacheLen = 0
+  const max = 3
+  Object.keys(cache).forEach(key => {
+    if (cache[key]) {
+      cacheLen += 1
+      if (cacheLen > max) {
+        const key = keys.shift()
+        cache[key].componentInstance.$destroy()
+        cache[key] = null
+      }
+    }
+  })
+},
+
+created中的同步任务->mounted中的同步任务–>created中的异步任务–>mounted中的异步任务
+理论上，父组件在执行完beforeMounted后就会去启动子组件的生命周期，子组件执行完mounted之后，父组件才会执行自己的mounted。

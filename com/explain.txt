@@ -142,6 +142,23 @@ imgCard.vue 带删除的图片上传
       }
     },
 点状态和椭圆框状态。
+点击文件时下载，只有点到icon图标才删除：
+    delList(item) {
+      let dom = document.getElementsByClassName("checkDel");
+      Array.from(dom).forEach(dom => {
+        let before = window.getComputedStyle(dom, "before").content;
+        let hex = "";
+        for (let i = 0; i < before.length; i++) {
+          hex += before.charCodeAt(i).toString(16);
+        }
+        // console.log(typeof before, before === "\E6DB", hex, typeof hex, dom);
+        if (hex.indexOf("e6db") > -1 || hex.indexOf("E6DB") > -1) {
+          let index = this.files.findIndex(f => f.id === item.id);
+          this.files.splice(index, 1);
+          this.$forceUpdate();
+        }
+      });
+    },
 
 # 后勤审批管理
 el-tree自定义渲染   :render-content="renderContent"
@@ -175,6 +192,7 @@ file-saver el-table => excel;
 车辆调度，打车，派车，审核，补充等；审批系统的工作流。
 ！！！pdf完美表格横竖计算切割 flex column auto page，并且合并pdf arrayBuffer到一个pdf中。jspdf waterMark以及css url() repeat水印去掉余数    background-repeat: space;
 移动端 movetouch计算缩放比例
+金额大写nzh； nzhcn.toMoney(t.amount)
 
 frame     window.addEventListener("message", this.operate);   window.parent.postMessage(msg, 父域名);
 父传给frame： frameId.contentWindow.postMessage(data, innerDomain);
