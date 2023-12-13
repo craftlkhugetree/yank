@@ -400,3 +400,19 @@ fn main() {
     println!("You guessed: {guess}");
 }
 ```
+
+在 Rust 中，每一个值都属于某一个 数据类型（data type），这告诉 Rust 它被指定为何种数据，以便明确数据处理方式。我们将看到两类数据类型子集：标量（scalar）和复合（compound）。
+
+记住，Rust 是 静态类型（statically typed）语言，也就是说在编译时就必须知道所有变量的类型。根据值及其使用方式，编译器通常可以推断出我们想要用的类型。当多种类型均有可能时，比如使用 parse 将 String 转换为数字时，必须增加类型注解，像这样：
+let guess: u32 = "42".parse().expect("Not a number!");
+
+
+Rust 有四种基本的标量类型：整型、浮点型、布尔类型和字符类型。
+另外，isize 和 usize 类型依赖运行程序的计算机架构：64 位架构上它们是 64 位的，32 位架构上它们是 32 位的。
+
+数字字面值	例子
+Decimal (十进制)	98_222
+Hex (十六进制)	0x ff
+Octal (八进制)	0o 77
+Binary (二进制)	0b 1111_0000
+Byte (单字节字符)(仅限于u8)	b 'A'
