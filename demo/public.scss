@@ -1531,3 +1531,22 @@ background-repeat: space; 或者background-position: round;都将无限重复背
     background-repeat: space;
     background-size: 20px auto;
 }
+
+
+table内部有时不能用flex，想要子元素居中，可以用table-cell
+.cell {
+  padding: 2px;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  > span {
+    width: 100%;
+    height: auto;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    line-height: 17px !important;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

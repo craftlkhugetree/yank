@@ -939,7 +939,6 @@ schoolTransferPay string 校内转账：1 未申请 2 待授权 3 已授权 4 �
                 }
               ]
             },
-# headerBar flag
 
 BMBH： 部门编号
 			BMMC： 部门名称
@@ -1001,3 +1000,37 @@ sprId查出其可用的经费本，但本内的主负责人不一定是spr。
 收方的  ：公务用车你收方 部门号用310 项目号用 Y020006001 ，科目号用9003，经济分类科目号没有   经费负责人编号  1994026
 付方的  ：部门编号 104 项目编号 61HB210011 负责人编号 2020036/123
 https://car.njau.edu.cn/hq-clgl/rest/specicalCarOrder/query?authType=default1
+
+# 后勤业务校内转账
+          let arr = [
+            {
+              DISPLAYURL: "/userManagement",
+              leaf: true,
+              ISLEAF: "1",
+              NAME: "用户管理"
+            },
+            {
+              DISPLAYURL: "/zzVerify"
+              leaf: true,
+              ISLEAF: "1",
+              NAME: "转账审批",
+            },
+            {
+              DISPLAYURL: "/szVerify"
+              leaf: true,
+              ISLEAF: "1",
+              NAME: "收账审批",
+            },
+            {
+              DISPLAYURL: "/doTransfer"
+              leaf: true,
+              ISLEAF: "1",
+              NAME: "转账",
+            },
+            {
+              DISPLAYURL: "/transferManage"
+              leaf: true,
+              ISLEAF: "1",
+              NAME: "转账单管理",
+            }
+          ];

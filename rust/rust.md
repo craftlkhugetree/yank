@@ -18,9 +18,10 @@ replace-with = 'tuna'
 [source.tuna]
 registry = "https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git"
 
+# error: the 'rustc.exe' binary, normally provided by the 'rustc' component, is not applicable to the 'stable-x86_64-pc-windows-gnu' toolchain
 ```shell
-rustup toolchain install stable-x86_64-pc-windows-gnu
-rustup default stable-x86_64-pc-windows-gnu
+rustup uninstall stable-x86_64-pc-windows-gnu and then
+rustup install stable-x86_64-pc-windows-gnu --force 
 ```
 
 在 Rust 中，两个冒号（::）被称为“路径运算符”，用于指定命名空间中的项。它通常用于引用模块、结构体、枚举、函数、常量等。
@@ -377,4 +378,25 @@ fn main() {
     let m = n; // `m`  是 `n` 的 copy
     let o = n; // same. `n` 没有被 move 或者 borrow
 
+```
+
+
+```rust
+// preclude
+use std::io;
+
+fn main() {
+    println!("Guess the number!");
+
+    println!("Please input your guess.");
+/** new 那一行的 :: 语法表明 new 是 String 类型的一个 关联函数（associated function）。关联函数是针对类型实现的，在这个例子中是 String，而不是 String 的某个特定实例。一些语言中把它称为 静态方法（static method）。
+ */
+    let mut guess = String::new();
+
+    io::stdin()
+        .read_line(&mut guess) // 追加,需要字符串作为参数,且这个字符串参数应该是可变的
+        .expect("Failed to read line");
+
+    println!("You guessed: {guess}");
+}
 ```

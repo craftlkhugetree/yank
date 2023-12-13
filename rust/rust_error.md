@@ -36,3 +36,6 @@ match x {
 }
 ```
 <!-- error: expected item, found keyword `let`;  在函数外面声明let变量，会报错。改成在函数里即可 -->
+
+
+println();  // use `!` to invoke the macro
