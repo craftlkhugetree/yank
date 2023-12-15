@@ -416,3 +416,120 @@ Hex (十六进制)	0x ff
 Octal (八进制)	0o 77
 Binary (二进制)	0b 1111_0000
 Byte (单字节字符)(仅限于u8)	b 'A'
+
+
+ let y = {
+        let x = 3;
+        x + 1
+    };
+# 这是一个代码块，它的值是 4。这个值作为 let 语句的一部分被绑定到 y 上。注意 x+1 这一行在结尾没有分号，表达式的结尾没有分号。如果在表达式的结尾加上分号，它就变成了语句，而语句不会返回值。
+Rust 是一门基于表达式（expression-based）的语言，这是一个需要理解的（不同于其他语言）重要区别。其他语言并没有这样的区别，所以让我们看看语句与表达式有什么区别以及这些区别是如何影响函数体的。
+
+语句（Statements）是执行一些操作但不返回值的指令。 表达式（Expressions）计算并产生一个值。
+
+函数可以向调用它的代码返回值。我们并不对返回值命名，但要在箭头（->）后声明它的类型。在 Rust 中，函数的返回值等同于函数体最后一个表达式的值。使用 return 关键字和指定值，可从函数中提前返回；但大部分函数隐式的返回最后的表达式。
+fn five() -> i32 {
+    5
+}
+使用 break 关键字返回值 counter * 2; 类似return
+ let result = loop {
+        counter += 1;
+
+        if counter == 10 {
+            break counter * 2;
+        }
+    };
+
+# 所有权（系统）是 Rust 最为与众不同的特性，对语言的其他部分有着深刻含义。它让 Rust 无需垃圾回收（garbage collector）即可保障内存安全，因此理解 Rust 中所有权如何工作是十分重要的。所有权以及相关功能：借用（borrowing）、slice，Rust 如何在内存中布局数据。
+
+栈中的所有数据都必须占用已知且固定的大小。在编译时大小未知或大小可能变化的数据，要改为存储在堆上。 堆是缺乏组织的：当向堆放入数据时，你要请求一定大小的空间。内存分配器（memory allocator）在堆的某处找到一块足够大的空位，把它标记为已使用，并返回一个表示该位置地址的 指针（pointer）。这个过程称作 在堆上分配内存（allocating on the heap），有时简称为 “分配”（allocating）。（将数据推入栈中并不被认为是分配）。因为指向放入堆中数据的指针是已知的并且大小是固定的，你可以将该指针存储在栈上，不过当需要实际数据时，必须访问指针。想象一下去餐馆就座吃饭。当进入时，你说明有几个人，餐馆员工会找到一个够大的空桌子并领你们过去。如果有人来迟了，他们也可以通过询问来找到你们坐在哪。
+
+
+所有权的规则：
+1. Rust 中的每一个值都有一个 所有者（owner）。
+2. 值在任一时刻有且只有一个所有者。
+3. 当所有者（变量）离开作用域，这个值将被丢弃。
+
+Rust 有一个叫做 Copy trait 的特殊注解，可以用在类似整型这样的存储在栈上的类型上。如果一个类型实现了 Copy trait，那么一个旧的变量在将其赋值给其他变量后仍然可用。
+Rust 不允许自身或其任何部分实现了 Drop trait 的类型使用 Copy trait。如果我们对其值离开作用域时需要特殊处理的类型使用 Copy 注解，将会出现一个编译时错误。
+
+作为一个通用的规则，任何一组简单标量值的组合都可以实现 Copy，任何不需要分配内存或某种形式资源的类型都可以实现 Copy 。如下是一些 Copy 的类型：
+1. 所有整数类型，比如 u32。
+2. 布尔类型，bool，它的值是 true 和 false。
+3. 所有浮点数类型，比如 f64。
+4. 字符类型，char。
+5. 元组，当且仅当其包含的类型也都实现 Copy 的时候。比如，(i32, i32) 实现了 Copy，但 (i32, String) 就没有。
+
+我们将创建一个引用的行为称为 借用（borrowing）。
+
+# 在任意给定时间，要么 只能有一个可变引用，要么 只能有多个不可变引用。引用必须总是有效的。
+不能在同一时间多次将 str 作为可变变量借用; 不能在拥有不可变引用的同时拥有可变引用; 多个不可变引用是可以的。
+
+# 悬垂引用（Dangling References）:
+在具有指针的语言中，很容易通过释放内存时保留指向它的指针而错误地生成一个 悬垂指针（dangling pointer），所谓悬垂指针是其指向的内存可能已经被分配给其它持有者。
+```rust
+fn main() {
+    let reference_to_nothing = dangle();
+}
+
+fn dangle() -> &String {
+    let s = String::from("hello");
+    &s// 返回字符串 s 的引用
+}// 这里 s 离开作用域并被丢弃。其内存被释放。
+
+fn main() {
+    let string = no_dangle();
+}
+
+fn no_dangle() -> String {
+    let s = String::from("hello");
+    s // 直接返回 String, 所有权被移动出去，所以没有值被释放
+}
+
+```
+
+slice range
+```rust
+fn main() {
+let s = String::from("hello");
+
+let slice = &s[0..2];
+let slice = &s[..2];
+
+
+let len = s.len();
+let slice = &s[3..len];
+let slice = &s[3..];
+
+let slice = &s[0..len];
+let slice = &s[..];
+}
+
+```
+
+# 字符串字面值：
+let s = "Hello, world!";
+这里 s 的类型是 &str：它是一个指向二进制程序特定位置的 slice。这也就是为什么字符串字面值是不可变的；&str 是一个不可变引用。
+
+
+```rust
+struct User {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+
+fn main() {
+    // 整个实例必须是可变的；Rust 并不允许只将某个字段标记为可变。
+    let mut user1 = User {
+        active: true,
+        username: String::from("someusername123"),
+        email: String::from("someone@example.com"),
+        sign_in_count: 1,
+    };
+
+    user1.email = String::from("anotheremail@example.com");
+}
+```
+字段初始化简写语法（field init shorthand）

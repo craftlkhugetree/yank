@@ -1034,3 +1034,20 @@ https://car.njau.edu.cn/hq-clgl/rest/specicalCarOrder/query?authType=default1
               NAME: "转账单管理",
             }
           ];
+
+`https://lbsc.njau.edu.cn/jszxweb/jszx-approval-opinions/${userName}/${userId}/${lshs}/${type}/${location.href}`
+        userName: '用户名',
+        userId: '用户Id',
+        lshs: '多个流水号使用英文逗号分隔',
+        type: '1付方2收方'
+
+window.addEventListener("message", this.operate);
+    operate(obj = {}) {
+      let v = obj.data || {};
+      if (v.isCancel === true) {
+        this.showFrame = false;
+      }
+      if (v.isConfirm === true) {
+        this.$emit("done", v.confirmData);
+      }
+    },
