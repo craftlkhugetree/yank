@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .card_item, h2 {
+        content-visibility: auto;
+        contain-intrinsic-size: 200px;
+      }
+    </style>
+</head>
+
+<body>
+    <input type="text">
+    <button id="my-button">执行卡顿任务</button>
+    <!-- box容器 -->
+    <div id="box" style="height:500px;width:400px;overflow: auto;margin-top:24px;">
+</body>
+<script>
+    // box容器溢出滚动
+    const box = document.getElementById('box')
+    for (let i = 0; i < 1000; i++) {
+        const myText = document.createElement('h2')
+        myText.innerText = i
+        // myText.className = 'card_item'
+        box.appendChild(myText)
+    }
+
+    // 执行任务
+    // 长任务执行导致页面卡顿，使用任务切片的方式解决！
+    const myButton = document.getElementById('my-button')
+    myButton.addEventListener('click', loadOP)
+    function load() {
+        const total = 300000;
+        for (let i = 0; i < total; i++) {
+            console.log(i)
+        }
+    }
+    function loadOP() {
+        let total = 1000000;
+        let length = 20;
+        let page = total / length
+        let index = 0;
+        function loop(curTotal, curIndex) {
+            if (curTotal <= 0) {
+                return false;
+            }
+            let pageCount = Math.min(curTotal, length);
+            // requestAnimationFrame
+            /**页面的Performance可以看到load函数代码分成了无数小任务（output）进行执行，每一次小任务执行完，都判断是否需要渲染（这里可以看到由于事件循环之间的间隔时间太短，浏览器选择三次事件循环才执行一次渲染任务）。 */
+            setTimeout(() => {
+                for (let i = 0; i < pageCount; i++) {
+                    console.log(i + curIndex)
+                }
+                loop(curTotal - pageCount, curIndex + pageCount)
+            }, 0)
+        }
+        loop(total, index);
+    }
+</script>
+
+</html>

@@ -1011,3 +1011,126 @@ g.next('param-c') // {value: undefined, done: true}
 // param-c this is c
 ```
 
+```javascript
+const list = [
+  { id: 2, pid: 1, name: '成都' },
+  { id: 1, pid: 0, name: '四川' },
+  { id: 3, pid: 1, name: '宜宾' },
+  { id: 4, pid: 1, name: '绵阳' },
+  { id: 5, pid: 1, name: '德阳' },
+  { id: 6, pid: 2, name: '高新区' },
+  { id: 7, pid: 2, name: '武侯区' },
+  { id: 8, pid: 3, name: '翠屏区' }
+];
+const arrayToTree = (arr, pid) => {
+  // reduce是累计，不会返回很多元素。
+  return arr.reduce((res, current) => {
+    if (current['pid'] === pid) {
+      current.children = arrayToTree(arr, current['id']); // 每次递归都是list全体
+      return res.concat(current); // 返回给其父元素
+    }
+    return res;
+  }, []);
+};
+console.log(arrayToTree(list, 0))
+
+const arrayToTree = (arr, rootId) => {
+  const map = {};
+  for (const iterator of arr) {
+    map[iterator['id']] = iterator;
+  }
+  for (const iterator of arr) {
+    const key = iterator['pid'];
+    if (!(key in map)) continue;
+    // 引用关系 在concat后不变
+    map[key].children = (map[key].children || []).concat(iterator);
+  }
+  return map[rootId];
+};
+console.log(arrayToTree(list, 1));
+```
+
+
+```js
+// JavaScript 语言本身不支持枚举
+// 这个技巧有个缺点，就是枚举项不能超过 31 个。
+const SKILLS = {
+  CSS: 1,  
+  JS: 1 << 1, // 左移运算符 (<<) 将第一个操作数左移指定位数。向左移动的多余位被丢弃。零位从右侧移入。
+  HTML: 1 << 2,
+  WEB_GL: 1 << 3
+}
+
+// Use this value to store a user's tech-stack
+let skills = 0
+
+// add a skill for the user
+function addSkill(skill) {
+  skills = skills | skill
+}
+
+addSkill(SKILLS.CSS)
+addSkill(SKILLS.JS)
+
+// If this value is not 0, it means that the user has mastered the tech
+console.log('Does he know CSS', SKILLS.CSS & skills, SKILLS, skills)
+console.log('Does he know JavaScript', SKILLS.JS & skills)
+console.log('Does he know Web GL', SKILLS.WEB_GL & skills)
+export const enum ShapeFlags {
+  ELEMENT = 1, // 表示一个普通的HTML元素
+  FUNCTIONAL_COMPONENT = 1 << 1, // 函数式组件
+  STATEFUL_COMPONENT = 1 << 2,  // 有状态组件
+  TEXT_CHILDREN = 1 << 3, // 子节点是文本
+  ARRAY_CHILDREN = 1 << 4, // 子节点是数组
+  SLOTS_CHILDREN = 1 << 5, // 子节点是插槽
+  TELEPORT = 1 << 6, // 表示vnode描述的是个teleport组件
+  SUSPENSE = 1 << 7, // 表示vnode描述的是个suspense组件
+  COMPONENT_SHOULD_KEEP_ALIVE = 1 << 8, // 表示需要被keep-live的有状态组件
+  COMPONENT_KEPT_ALIVE = 1 << 9, // 已经被keep-live的有状态组件
+  COMPONENT = ShapeFlags.STATEFUL_COMPONENT | ShapeFlags.FUNCTIONAL_COMPONENT // 组件，有状态组件和函数式组件的统称
+}
+```
+
+使用 Object.getOwnPropertyNames 可以得到对象自身的所有属性名组成的数组(包括不可枚举属性)。
+缺点：不能获取 Symbol 值作为名称的属性，包括 JSON.stringify、for in 以及 Object.keys 方法也不能获取Symbol 值作为名称的属性。
+Reflect.ownKeys(target) 方法返回一个由目标对象自身的属性组成的数组，它的返回值等同于 Object.getOwnPropertyNames(target).concat(Object.getOwnPropertySymbols(target))
+判断一个对象是否为空时，使用 Reflect.ownKeys 方法最为完美。
+Reflect.ownKeys(obj1).length === 0
+
+
+保证页面的流畅性是前端的一个主要内容，页面卡顿会严重影响用户体验。这流畅性是需要一个指标来衡量的，那就是帧率（FPS），FPS 表示的是每秒钟画面更新次数，当今大多数设备的屏幕刷新率都是60次/秒。
+想要保证页面流畅不卡顿，浏览器对每一帧画面的渲染工作需要在16ms（1000ms/60）之内完成！
+
+# 想要保证页面流畅，需要做到每16ms渲染一次！
+
+也就是说，前面在我们执行任务的时候，浏览器没有能够做到每16ms渲染一次，所以我们页面会卡顿不流畅。那么是什么导致了浏览器没有能够正常渲染呢？
+
+# 对浏览器事件循环的深入了解，我们可以知道，浏览器没能每16ms渲染一次也能被解读为没能每16ms执行完一次事件循环。
+结合我们页面的Performance可以看到，requestAnimationFrame.html中的load函数的执行花费了6s多，而事件循环中的渲染需要等待前面任务执行完毕，才会判断执行。
+也就是说，浏览器花费了6s多的时间才完成了一次事件循环，完成了一次渲染任务，而我们保持页面60FPS的最低要求是每16ms完成一次渲染，这就难怪页面会卡顿不流畅，这显然是不合理的！
+将load函数代码拆分成多个小任务，保证16ms内能执行完一次事件循环，这样才能保持页面流畅不卡顿，而这个时候，就需要应用到我们的任务切片了！
+```js
+function load() {
+    let total = 1000000;
+    let length = 20;
+    let page = total/length
+    let index = 0;
+    function loop(curTotal,curIndex){
+        if(curTotal <= 0){
+            return false;
+        }
+        let pageCount = Math.min(curTotal , length);
+        // requestAnimationFrame
+        /**页面的Performance可以看到load函数代码分成了无数小任务（output）进行执行，每一次小任务执行完，都判断是否需要渲染（这里可以看到由于事件循环之间的间隔时间太短，浏览器选择三次事件循环才执行一次渲染任务）。 */
+        setTimeout(()=>{
+            for(let i = 0; i < pageCount; i++){
+                console.log(i)
+            }
+            loop(curTotal - pageCount,curIndex + pageCount)
+        },0)
+    }
+    loop(total,index);
+  }
+```
+浏览器页面是否流畅取决于帧率FPS，帧率越高，页面越流畅，反之页面越卡顿。而页面帧率取决于浏览器执行渲染任务的频率（还有设备性能），同时我们知道，浏览器的渲染任务在事件循环中执行。因此我们想要页面流畅，就需要将事件循环花费的时间控制在16.7ms以内（一般设备）。
+此时如果我们遇到长任务导致一次事件循环时间过长，我们可以使用任务切片的方式，将其分成多次小任务执行，保证每次事件循环的时间，便能够保证页面流畅！

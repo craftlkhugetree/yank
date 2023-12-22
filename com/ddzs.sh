@@ -5,10 +5,11 @@ path='/d/kxiangmu/njauLogistics/fuwujiandu'
 filename1=$path'/hq-ddzs-pc/src/assets/js/util.js'
 filename2=$path'/hq-ddzs-mobile/src/assets/js/util.js'
 filename3=$path'/jszx-pc/src/assets/js/util.js'
+filename4=$path'/hq-ddzs-pc-ddbg/src/assets/js/util.js'
 
 IDSTGC="var IDSTGC"
 
-arr=($filename1 $filename2)
+arr=($filename1 $filename2 $filename4)
 
 for filename in ${arr[*]}
 do

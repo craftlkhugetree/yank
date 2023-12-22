@@ -664,6 +664,7 @@ v-model 其实是可以在组件上使用的，而且适用范围还是挺广的
 但是有了 v-model，这一切都变得很简单，最主要的是父组件减少了关闭的方法，如果你关闭之后需要回调，那么通过监听你的是否显示的 flag 即可，所以大可放心使用。
 
 父组件:
+```vue
 <template>
 
   <div id="app">
@@ -687,9 +688,11 @@ export default {
   }
 }
 </script>
+```
 
 这里我们引入了子组件 HelloWorld，通过 showFlag 来控制组件的显示隐藏，当然，组件上还用 v-model 绑定了 showFlag。
 这里的 showFlag 的值将会传入这个名为 checked 的 prop。同时当子组件触发一个 change 事件并附带一个新的值的时候，这个 showFlag 的 property 将会被更新。
+```vue
 <template>
 
   <div class="hello">
@@ -716,12 +719,14 @@ export default {
     }
   }
 }
+```
 // 对于子组件来说，允许自定义使用v-model时定制prop和event，v-model中的prop就是把value用作prop，input用作event，但是为了避免冲突，我们使用model的选项可以回避这些冲突，当然，你也得使用props声明checked这个prop。
 
 # 将原生事件绑定到组件,你可能有很多次想要在一个组件的根元素上直接监听一个原生事件。这时，你可以使用 v-on 的 .native 修饰符：
 <base-input v-on:focus.native="onFocus"></base-input>
 // 在有的时候这是很有用的，不过在你尝试监听一个类似 <input> 的非常特定的元素时，这并不是个好主意。比如上述 <base-input> 组件可能做了如下重构，所以根元素实际上是一个 <label> 元素：
 
+```vue
 <label>
   {{ label }}
   <input
@@ -730,6 +735,7 @@ export default {
     v-on:input="$emit('input', $event.target.value)"
   >
 </label>
+```
 // 这时，父级的 .native 监听器将静默失败。它不会产生任何报错，但是 onFocus 处理函数不会如你预期地被调用。
 // 为了解决这个问题，Vue 提供了一个 $listeners property，它是一个对象，里面包含了作用在这个组件上的所有监听器。例如：
 
@@ -1362,7 +1368,7 @@ Distoryed：vue 实例完全销毁。所有的东西解绑，事件监听移除�
  
 # deactived：keep-alive 专属，组件销毁被调用。
 
-执行的生命周期钩子：
+父子组件执行的生命周期钩子：
 父beforeCreate→父created→父beforeMount→子bereforeCreate→子created→子beforeMound→子mounted→父mounted
 父beforeUpdate→子beforeUpdate→子updated→父updated
 
@@ -1557,3 +1563,21 @@ activated() {
 
 created中的同步任务->mounted中的同步任务–>created中的异步任务–>mounted中的异步任务
 理论上，父组件在执行完beforeMounted后就会去启动子组件的生命周期，子组件执行完mounted之后，父组件才会执行自己的mounted。
+
+
+    getUserXMBH({ state }, id) {
+      return new Promise((resolve, reject) => {
+        let ygbh = id || state.userId;
+        payOrder({ ygbh }, "getFzrxmxx")
+          .then(res => {
+            common.dealRes(res, () => {
+              let data = res.data || [];
+              resolve(data);
+            });
+          })
+          .catch(e => {
+            reject(e);
+          });
+      });
+    }
+    this.$store.dispatch("getUserXMBH", id).then(r => {});

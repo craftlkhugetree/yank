@@ -1550,3 +1550,10 @@ table内部有时不能用flex，想要子元素居中，可以用table-cell
     text-overflow: ellipsis;
   }
 }
+
+// 我们只需要给添加了content-visibility: auto的元素添加上contain-intrinsic-size就能够解决滚动条抖动的问题，
+// 当然，这个高度约接近真实渲染的高度，效果会越好，如果实在无法知道准确的高度，我们也可以给一个大概的值，也会使滚动条的问题相对减少。
+.card_item {
+  content-visibility: auto;
+  contain-intrinsic-size: 200px;
+}

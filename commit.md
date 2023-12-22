@@ -999,7 +999,7 @@ sprId查出其可用的经费本，但本内的主负责人不一定是spr。
 转账才有下载凭证，支付时会选项目编号、部门名称
 收方的  ：公务用车你收方 部门号用310 项目号用 Y020006001 ，科目号用9003，经济分类科目号没有   经费负责人编号  1994026
 付方的  ：部门编号 104 项目编号 61HB210011 负责人编号 2020036/123
-https://car.njau.edu.cn/hq-clgl/rest/specicalCarOrder/query?authType=default1
+  https://car.njau.edu.cn/hq-clgl/rest/specicalCarOrder/query?authType=default1
 
 # 后勤业务校内转账
           let arr = [
