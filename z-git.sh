@@ -14,7 +14,7 @@ else
   git add -A && git commit -m "$msg(hasBuilt)"
   echo -e "\033[32m \n commit完毕，开始拉取以及推送代码 \n \033[0m"
   git svn dcommit
-  # 判断上一条命令是否成功
+  # 判断上一条命令是否成功, $? 代表上一个命令执行后的退出状态
   if [ $? -eq 0 ]; then
     echo -e "\033[32m \n流程结束，完成提交。\033[0m"
    else

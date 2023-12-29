@@ -191,7 +191,33 @@ file-saver el-table => excel;
 天地图：a78161064fc4c8eae8af9dcacce349cb, 所有地图都必须有一个 v-show再显示的过程，否则贴片不显示。
 车辆调度，打车，派车，审核，补充等；审批系统的工作流。
 ！！！pdf完美表格横竖计算切割 flex column auto page，并且合并pdf arrayBuffer到一个pdf中。jspdf waterMark以及css url() repeat水印去掉余数    background-repeat: space;
-移动端 movetouch计算缩放比例
+移动端 movetouch计算缩放比例;         
+<van-field rows="3"
+          autosize
+          type="textarea"
+          placeholder="请输入"
+          show-word-limit>
+      <template #input>
+            <div class="gold">
+              <textarea
+                class="banci_str "
+                v-model="form3[item.prop]"
+                autocomplete="off"
+                type="textarea"
+              ></textarea>
+            </div>
+            <div class="banxian">
+              <div
+                class="no-wrap"
+                v-for="item in useReasonList"
+                :key="item.combine"
+                @click.stop="clickRank(form3, item, 'useReason')"
+              >
+                {{ item.combine }}
+              </div>
+            </div>
+          </template>
+</van-field>
 金额大写nzh； nzhcn.toMoney(t.amount)
 
 frame     window.addEventListener("message", this.operate);   window.parent.postMessage(msg, 父域名);

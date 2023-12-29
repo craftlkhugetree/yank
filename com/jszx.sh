@@ -6,10 +6,11 @@ filename1=$path'/clglPC/src/assets/js/util.js'
 filename2=$path'/clglMOBILE/src/assets/js/util.js'
 filename3=$path'/jszx-pc/src/assets/js/util.js'
 filename4=$path'/xnzz-jszx/src/assets/js/util.js'
+filename5=$path'/xnzzmobile-jszx/src/assets/js/util.js'
 
 IDSTGC="var IDSTGC"
 
-arr=($filename1 $filename2 $filename3 $filename4)
+arr=($filename1 $filename2 $filename3 $filename4 $filename5)
 
 for filename in ${arr[*]}
 do
