@@ -1,10 +1,11 @@
 const puppeteer = require('puppeteer');
-const { exec } = require('child_process');
-const clipboardy = require('clipboardy');
+// const { exec } = require('child_process');
+// const clipboardy = require('clipboardy');
+const fs = require('fs');
 
 const args = process.argv;
 const arg1 = args[2];
-console.log('arg1:', arg1);
+// console.log('arg1:', arg1);
 const configs = [
   {
     userName: 'hq1',
@@ -21,40 +22,35 @@ const sleep = (time = 1000) =>
     setTimeout(resolve, time);
   });
 
+const cacheFilePath = 'D:\\yank\\puppeteer\\tmp';
 const exeBash = ids => {
   // can't use source in child_process
-  exec(`sh ${form.sh} ${ids}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return;
-    }
-    let echo = (stdout && stdout.split(/\n/)) || [];
-    let len = echo.length;
-    console.log(`stdout:\n ${stdout}`, echo, len);
-    console.log(`stderr:\n ${stderr}`);
-    let pwd = '';
-    for (let i = len - 1; i >= 0; i--) {
-      if (echo[i]) {
-        // exec(`cd ${echo[i]}`);
-        pwd = echo[i];
-        // pwd = pwd.replace('/d', 'd:');
-        // pwd = pwd.replace(/\//g, '\\');
-        // process.chdir(pwd);
-        // let currentDir = process.cwd();
-        // console.log(`切换后的工作目录：${currentDir}`);
-
-        break;
-      }
-    }
-    // 将文本复制到剪贴板
-    clipboardy.write(pwd, err => {
-      if (err) {
-        console.error('复制失败:', err);
-      } else {
-        console.log('复制成功');
-      }
-    });
-  });
+  //   exec(`sh ${form.sh} ${ids}`, (error, stdout, stderr) => {
+  //     if (error) {
+  //       console.error(`exec error: ${error}`);
+  //       return;
+  //     }
+  //     let echo = (stdout && stdout.split(/\n/)) || [];
+  //     let len = echo.length;
+  //     console.log(`stdout:\n ${stdout}`, echo, len);
+  //     console.log(`stderr:\n ${stderr}`);
+  //     let pwd = '';
+  //     for (let i = len - 1; i >= 0; i--) {
+  //       if (echo[i]) {
+  //         pwd = echo[i];
+  //         break;
+  //       }
+  //     }
+  //     // 将文本复制到剪贴板
+  //     clipboardy.write(pwd, err => {
+  //       if (err) {
+  //         console.error('复制失败:', err);
+  //       } else {
+  //         console.log('复制成功');
+  //       }
+  //     });
+  //   });
+  fs.writeFile(cacheFilePath, ids, () => {});
 };
 
 const launch = async url => {
@@ -112,7 +108,7 @@ const launch = async url => {
 
   const cookies = (await page.cookies()) || [];
   const idsObj = cookies.find(k => k.name === 'IDSTGC') || {};
-  //   console.log(idsObj.value);
+  console.log(idsObj.value);
 
   if (idsObj.value) {
     exeBash(idsObj.value);

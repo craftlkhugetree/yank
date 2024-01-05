@@ -234,6 +234,7 @@ initiator查看url调用链，iframe发起者为http则无所谓，若为https�
 
 先cd再执行命令是不行的，需要在执行命令时加入其目录参数cwd
 exec('git status', {cwd: '/home/ubuntu/distro'}, /* ... */);
+还是不行只能用 source调用sh脚本，脚本中执行node的puppeteer，node返回的ids数据存到缓存文件中，再由sh脚本msg=$(cat fileName)读取到变量$msg中，但要注意win下node里fs.writeFile保存的路径与sh脚本中cat读取的路径格式不同。
 
 
 在POSIX系统（Linux，OSX等）中，subprocess不能修改父进程的环境。 这包括修改父进程的工作目录和环境variables。
