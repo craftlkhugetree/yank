@@ -1134,3 +1134,22 @@ function load() {
 ```
 浏览器页面是否流畅取决于帧率FPS，帧率越高，页面越流畅，反之页面越卡顿。而页面帧率取决于浏览器执行渲染任务的频率（还有设备性能），同时我们知道，浏览器的渲染任务在事件循环中执行。因此我们想要页面流畅，就需要将事件循环花费的时间控制在16.7ms以内（一般设备）。
 此时如果我们遇到长任务导致一次事件循环时间过长，我们可以使用任务切片的方式，将其分成多次小任务执行，保证每次事件循环的时间，便能够保证页面流畅！
+
+
+```js
+function preciseMultiply(num1, num2) {
+  let m = 0, s1 = num1.toString(), s2 = num2.toString();
+  try { m += s1.split(".")[1].length } catch (e) { }
+  try { m += s2.split(".")[1].length } catch (e) { }
+  return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m);
+}
+
+function preciseDivide(num1, num2) {
+  let t1 = 0, t2 = 0, s1 = num1.toString(), s2 = num2.toString();
+  try { t1 = s1.split(".")[1].length } catch (e) { }
+  try { t2 = s2.split(".")[1].length } catch (e) { }
+  let r1 = Number(s1.replace(".", ""));
+  let r2 = Number(s2.replace(".", ""));
+  return (r1 / r2) * Math.pow(10, t2 - t1);
+}
+```

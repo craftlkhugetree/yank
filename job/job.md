@@ -220,3 +220,55 @@ spark-echarts; ctx = canvas.getContext('2d');
 因为数据为Long型，返回给浏览器以后，浏览器转换数据格式的时候出现问题。
 
 initiator查看url调用链，iframe发起者为http则无所谓，若为https则调用链中不能有http。
+
+
+通过 window.opener 获取到源页面的 window 对象， 这就埋下了安全隐患。 比如：
+1. 你自己的网站 A，点击如上链接打开了第三方网站 B。
+2. 此时网站 B 可以通过 window.opener 获取到 A 网站的 window 对象。
+3. 然后通过 window.opener.location.href = ‘www.baidu.com’ 这种形式跳转到一个钓鱼网站，泄露用户信息。
+为了避免这样的问题，可以添加引入了 rel=“noopener” 属性， 这样新打开的页面便获取不到来源页面的 window 对象了， 此时 window.opener 的值是 null。
+————————————————
+原文链接：https://blog.csdn.net/qq_43531694/article/details/134182789
+来自具有rel=”noreferrer”属性的链接流量将显示为直接访问的流量而不是引荐。
+
+
+先cd再执行命令是不行的，需要在执行命令时加入其目录参数cwd
+exec('git status', {cwd: '/home/ubuntu/distro'}, /* ... */);
+
+
+在POSIX系统（Linux，OSX等）中，subprocess不能修改父进程的环境。 这包括修改父进程的工作目录和环境variables。
+当你在命令行上，你去执行你的Node脚本时，你当前的进程（ bash ， zsh ，whatever）产生一个新的进程，它有自己的环境，通常是你当前环境的一个副本（可以通过改变系统调用;但这超出了本答复的范围），允许该进程完成任何需要完全隔离的操作。 当subprocess退出时，控制权交还给你的shell进程，环境没有受到影响。
+
+执行脚本时候，系统只是在当前的shell下创建了一个子进程，切换目录的操作只对该子进程中相关后续指令有效，不能改变shell父进程的工作目录，因此shell父进程的当前工作目录在workdir.sh脚本子进程退出时并没有变化。
+
+要解决这个问题，我们需要改变执行脚本的命令行输入方式
+
+一、. ./workdir.sh
+以上命令的以两点 开头，两点之间要有空格，意思如下：
+
+第一个点是bash的内部命令，表示在当前shell进程中运行
+
+后面的“./workdir.sh”是命令的参数，即要在当前shell进程中运行执行的脚本，由于当前环境是shell进程自己，因此改变目录成功。
+
+二、source workdir.sh
+        其实source命令也称为“点命令”，也就是一个点符号（.），是bash的内部命令。
+        注意：该命令通常用命令“.”来替代
+
+
+三、“source scriptfile”与“sh scriptfile”、“./scriptfile” 区别
+这三个命令都可以用于执行一个脚本文件，那么它们之间的区别如下：
+
+shell的执行方式区别
+命令方式	意义说明
+./scriptfile	是因为当前目录没有在PATH中，所以"."是用来表示当前目录的。
+会重新建立一个子shell进程，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell是新建的，其改变的变量不会被带回父shell，除非使用export；
+子shell改变的工作目录页不会影响当前shell进程
+sh scriptfile	会重新建立一个子shell进程，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell是新建的，其改变的变量不会被带回父shell，除非使用export；
+子shell改变的工作目录页不会影响当前shell进程
+source scriptfile	
+读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面。目录改变也是在当前shell进程里进行的。
+该命令等同于(点命令)：
+
+. ./scriptfile
+————————————————
+原文链接：https://blog.csdn.net/ababab12345/article/details/134325058
