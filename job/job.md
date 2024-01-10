@@ -273,3 +273,45 @@ source scriptfile
 . ./scriptfile
 ————————————————
 原文链接：https://blog.csdn.net/ababab12345/article/details/134325058
+
+
+stage1. 使用token来鉴权，打开F12开发者工具拿到IDSTGC，在application里复制cookie并复制到项目的全局文件的全局变量；
+stage2. 编写shell脚本提示输入token，并用sed正则修改多个项目（pc、移动）的全局文件中的全局变量；
+stage3. puppeteer模拟登录，提示输入验证码; 对于滑块await page.mouse.move()直接滑到底; 复杂的拼图则使用rembrandt.js 库，移动鼠标，并在找到了结果图像与初始图像差异最轻微的拼图位置时松开鼠标。
+stage4. 机器识别、ocr识别图像文字
+
+
+post请求常见的数据格式（content-type）:
+Content-Type: application/json ： 请求体中的数据会以json字符串的形式发送到后端
+Content-Type: application/x-www-form-urlencoded：请求体中的数据会以普通表单形式（键值对）发送到后端
+Content-Type: multipart/form-data： 它会将请求体的数据处理为一条消息，以标签为单元，用分隔符分开。既可以上传键值对，也可以上传文件。
+
+# vue3 vue2
+2023年底vue2停止维护。
+
+Vue2的组件系统设计中，所有Vue实例是共享一个Vue构造函数对象的，包括全局指令/全局组件，无法做到相互隔离。
+也就是说我们整个项目中，只有一个根Vue实例，其他的单文件组件创建的 Vue实例都会成为它的子实例。
+而Vue3通过createApp方法可以返回一个提供应用上下文的应用实例。不同实例注册的组件无法在不同的实例下使用。
+
+Vue3之所以能够支持组件模板具有多个根元素，是因为Vue 3在编译器层面上进行了一些改进和优化。 在Vue 3中，引入了基于标记片段（Fragment）的编译机制。 标记片段是一种特殊的数据结构，可以容纳多个子节点，并没有实际的DOM元素。 这使得Vue 3的编译器能够更好地处理具有多个根元素的组件模板。 在处理具有多个根元素的组件模板时，Vue 3的编译器会将模板中的每个根级标签（包括自定义组件）都编译为一个单独的标记片段。 然后，这些标记片段将作为一个数组，一起创建实际的渲染函数。 这样，每个根级标签都能够保留自己的作用域和响应式数据，并且它们可以并行地进行更新。
+
+# setup是Vue3 的一大特性函数, 它有几个特性:
+1、setup函数是处于 生命周期函数 beforeCreate 和 Created 两个钩子函数之间的函数
+2、setup函数是 Composition API（组合API）的入口
+3、在setup函数中定义的变量和方法最后都是需要 return 出去的 不然无法再模板中使用
+setup函数的注意点：
+vue3虽然支持vue2.x版本的写法,但也有一些要注意的地方
+1、由于在执行 setup函数的时候，还没有执行 Created 生命周期方法，所以在 setup 函数中，无法使用 data 和 methods 的变量和方法
+2、由于我们不能在 setup函数中使用 data 和 methods，所以 Vue 为了避免我们错误的使用，直接将 setup函数中的this修改成了 undefined
+3、setup函数只能是同步的不能是异步的
+
+上面的组件中用defineComponent包裹了组件;
+defineComponent函数，只是对setup函数进行封装，返回options的对象；
+defineComponent最重要的是：在TypeScript下，给予了组件 正确的参数类型推断 。
+链接：https://juejin.cn/post/7198426159478456381
+
+
+我们在vue2中使用options api时，可以使用this,但是当我们使用vue3中的composition api时，我们在setup中却无法使用this。
+原因是：我们在options api中对其中的一些属性进行绑定，但是在composition api中的setup函数的执行并没有绑定实例对象。
+————————————————
+原文链接：https://blog.csdn.net/m0_68702564/article/details/126144710

@@ -32,4 +32,6 @@
 
 const fs = require('fs');
 const cacheFilePath = 'D:\\yank\\puppeteer\\tmp.txt';
-fs.writeFile(cacheFilePath, '123123kljldskjafklasdjfkl', () => {});
+// fs.writeFile(cacheFilePath, '123123kljldskjafklasdjfkl', () => {});
+// fs.writeFile(cacheFilePath, 'yyyyy', () => {});
+fs.writeFile(cacheFilePath, 'z', () => {});

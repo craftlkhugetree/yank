@@ -40,7 +40,7 @@ chrome://flags webgl
 
 # stylus
 
-^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.1.251|172.20|testseat.xuanhaozuo.com|tsgyy.sjzc.edu.cn/)).*$
+^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.1.251|172.20|testseat.xuanhaozuo.com|tsgyy.sjzc.edu.cn|file:///)).*$
 ^(?!.*(seat.dev.angke.cn|z.angke.com.cn|localhost|127.0.0.1|172.20.)).*$
 html,
 body {

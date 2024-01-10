@@ -60,6 +60,10 @@ const launch = async url => {
     // defaultViewport: { width: 1790, height: 768 }, //默认的网页大小是800*800，可以自行设置
     // args: [`--window-size=1790,768`]
     defaultViewport: null,
+    //   args: [
+    //     '--disable-web-security',
+    //     '--disable-features=IsolateOrigins,site-per-process',
+    // ]
     // args: ['--start-fullscreen'] // 铺满整个屏幕
     args: ['--start-maximized'], // 最大化
   });
@@ -67,7 +71,7 @@ const launch = async url => {
   const page = await browser.newPage();
 
   await page.goto(url);
-  await sleep(3000);
+  await sleep(2000);
   //   await page.evaluate(_ => {
   //     let b = $('body');
   //     // let b = document.querySelector('body')
@@ -104,7 +108,7 @@ const launch = async url => {
 
   const submit_button = await page.$('div.loginarea>div.submit');
   await submit_button.click();
-  await sleep(2000);
+  await sleep(1000);
 
   const cookies = (await page.cookies()) || [];
   const idsObj = cookies.find(k => k.name === 'IDSTGC') || {};

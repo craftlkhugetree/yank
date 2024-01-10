@@ -128,7 +128,26 @@ q
 
 新建~/.bashrc：
 sh 会导致脚本里的cd命令执行成功后，又退回到执行目录，所以用source。
+alias amongod='mongod --config "/d/Program Files/MongoDB/Server/6.0/bin/mongodb.conf"'
+alias appointment='source /d/yank/com/appointment.sh'
 alias baima='source /d/yank/com/baima.sh'
+alias ddzs='source /d/yank/com/ddzs.sh'
+alias duzhejiaoyu='source /d/yank/com/duzhejiaoyu.sh'
+alias jszx='source /d/yank/com/jszx.sh'
+alias jszx-puppeteer='source /d/yank/puppeteer/jszx_pup.sh'
+alias ll='ls -l'
+alias ls='ls -F --color=auto --show-control-chars'
+alias netrepair='source /d/yank/com/netrepair.sh'
+alias njit='source /d/yank/com/njit.sh'
+alias nngnix='source /d/yank/com/node_ngnix.sh'
+alias node='winpty node.exe'
+alias orderfood='source /d/yank/com/orderfood.sh'
+alias puppeteerNode='node /d/yank/puppeteer/index.js'
+alias seat='source /d/yank/com/seat.sh'
+alias stopngnix='source /d/yank/com/stop_ngnix.sh'
+alias stp='shutdown -P'
+alias wy='source /d/yank/com/wy.sh'
+
 alias 查看增加的命令
 
 如果 dir2 目录不存在，则可以直接使用
