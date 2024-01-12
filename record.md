@@ -63,6 +63,19 @@ git update-index --no-assume-unchanged 文件名
 git ls-files -v | grep '^h\ '
 git ls-files -v | grep '^h\ ' | awk '{print $2}'
 git ls-files -v | grep '^h\ ' | awk '{print $2}' | xargs git update-index --no-assume-unchanged  
+
+
+1. git status 产看未被传送到远程代码库的提交次数
+2. git cherry -v 查看未被传送到远程代码库的提交描述和说明
+3. git reset commit_id 撤销未被传送到远程代码库的提交
+做到这里就已经可以重新添加提交了（注意一定要撤销有大文件的提交）
+
+移除大文件：
+$git rm --cached giant_file（文件名） 
+# Stage our giant file for removal, but leave it on disk  
+$git commit --amend -CHEAD  
+$git push
+
 # npm
 
 npm uninstall element-ui
